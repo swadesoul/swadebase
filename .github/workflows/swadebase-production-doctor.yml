@@ -1,0 +1,51 @@
+name: SwadeBase Production Doctor
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - "HOSTINGER_DEPLOY.md"
+      - "docker/.env.hostinger.example"
+      - "docker/docker-compose.yml"
+      - "docker/volumes/api/**"
+      - ".github/workflows/swadebase-production-doctor.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  doctor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check DNS target
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected="2.25.74.73"
+          ips="$(getent ahostsv4 swadebase.cloud | awk '{print $1}' | sort -u | tr '\n' ' ')"
+          echo "swadebase.cloud IPv4: $ips"
+          if ! grep -qw "$expected" <<<"$ips"; then
+            echo "::error::swadebase.cloud does not resolve to SwadeBase VPS $expected"
+            exit 1
+          fi
+
+      - name: Check public auth health
+        shell: bash
+        run: |
+          set -euo pipefail
+          code="$(curl -sS -o /tmp/health -w '%{http_code}' --max-time 10 https://swadebase.cloud/auth/v1/health || true)"
+          cat /tmp/health || true
+          test "$code" = "200"
+
+      - name: Check public REST gateway
+        shell: bash
+        run: |
+          set -euo pipefail
+          code="$(curl -sS -o /tmp/rest -w '%{http_code}' --max-time 10 https://swadebase.cloud/rest/v1/ || true)"
+          # A protected API may return 401/403 without a key; 404 means routing is wrong.
+          case "$code" in
+            200|401|403) exit 0 ;;
+            *) echo "::error::REST gateway returned HTTP $code"; exit 1 ;;
+          esac
