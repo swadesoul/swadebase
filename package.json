@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "build": "turbo run build",
+    "build": "turbo run build --filter=studio",
     "build:studio": "turbo run build --filter=studio",
     "build:studio:docker": "docker build . -f apps/studio/Dockerfile --target production -t supabase-studio:local --build-arg NEXT_PUBLIC_STUDIO_AUTH_MODE=supabase --no-cache",
     "build:studio:docker:tanstack": "docker build . -f apps/studio/Dockerfile --target production -t supabase-studio:local-tanstack --build-arg NEXT_PUBLIC_STUDIO_AUTH_MODE=supabase --build-arg STUDIO_FRAMEWORK=tanstack --no-cache",
@@ -46,7 +46,8 @@
     "generate:types": "supabase gen types typescript --local > ./supabase/functions/common/database-types.ts",
     "api:codegen": "cd packages/api-types && pnpm run codegen",
     "knip": "pnpx knip@~5.50.0",
-    "authorize-vercel-deploys": "tsx scripts/authorizeVercelDeploys.ts"
+    "authorize-vercel-deploys": "tsx scripts/authorizeVercelDeploys.ts",
+    "start": "pnpm --prefix apps/studio start"
   },
   "devDependencies": {
     "@aws-sdk/client-secrets-manager": "^3.1041.0",
@@ -74,6 +75,13 @@
     "pnpm": "11.13",
     "node": ">=22.13"
   },
-  "keywords": ["postgres", "firebase", "storage", "functions", "database", "auth"],
+  "keywords": [
+    "postgres",
+    "firebase",
+    "storage",
+    "functions",
+    "database",
+    "auth"
+  ],
   "packageManager": "pnpm@11.13.1"
 }
