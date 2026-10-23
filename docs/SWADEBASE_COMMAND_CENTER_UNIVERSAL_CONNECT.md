@@ -24,3 +24,12 @@ Authenticated founder opens swadebase.cloud -> Command Center -> speaks or types
 
 ## Status
 Specification only; this does not assert the command dashboard, voice intake, universal rollout, or shared Book Studio service is deployed on swadebase.cloud.
+
+## SSS Brain as a first-class SWADEBASE command client
+SSS Brain must be able to operate SWADEBASE.cloud through the **same** authenticated command contract as the SWADEBASE web voice/text interface. Both use one site registry, capability registry, job queue, policy engine and audit log. SSS Brain handles conversational intent, retrieval and user interaction; SWADEBASE owns authority, execution, persistent jobs, verification and receipts. Do not create a parallel SSS Brain deployment controller or duplicate database.
+
+Flow: SSS Brain text or speech -> existing STT if speech -> signed user-delegated SWADEBASE command request containing actor, origin, target-site scope, capability, requested operation, and idempotency key -> SWADEBASE policy/role checks -> dry-run plan and cost estimate -> approval where required -> persisted operation and per-site execution -> signed status events / polling -> SSS Brain explains verifiable outcomes. Owner approval must be tied to exact plan revision and target list, with expiration. Never trust speech or model output as authorization, never expose service-role credentials to clients, and never claim completion from accepted/queued status.
+
+Initial integration contract: POST /command-intents (read-only parsing and planning), GET /operation-runs/{id} (scoped result and progress), POST /operation-runs/{id}/approval (authorized approval), POST /operation-runs/{id}/execute (idempotent state transition). These paths are proposed interface shapes, not confirmed deployed routes; discover deployed routes first. Site adapters use service-to-service short-lived tokens and least-privilege scopes. A failure in SSS Brain must not bypass SWADEBASE safeguards or disrupt existing sites.
+
+Acceptance tests: same command in SSS Brain and SWADEBASE produces the same dry-run target list; unauthorized actors are rejected; approval is bound to the exact planned changes; duplicate requests do not duplicate deployments; user can see accurate per-site completed/failed state and rollback record. Voice and text are equivalent input channels.
