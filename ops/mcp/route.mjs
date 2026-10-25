@@ -72,7 +72,7 @@ export default function mcpRoutes({pool,auth,admin,log=()=>{},classifier=localCl
    // Existing app bridge: verifies its user's original SWADEBASE token. Never accepts MCP tokens here or forwards them upstream.
    const raw=String(req.headers.authorization||'').match(/^Bearer ([A-Za-z0-9._-]+)$/)?.[1];const u=raw&&!raw.startsWith('swmcp_')?await admin.verifyAccessToken(raw):null;
    if(!u||!await admin.isSuperAdmin(u.id))return reply(res,403,{error:'operator_access_required'});
-   if(!routing(u.id)||activePlans>=2)return reply(res,429,{error:'routing_limit'});const b=await body(req);activePlans++;try{return reply(res,200,{ok:true,data:await service.plan({id:u.id,scopes:SCOPES},{request:b.request})});}finally{activePlans--;}
+   if(!routing(u.id)||activePlans>=2)return reply(res,429,{error:'routing_limit'});const b=await body(req);activePlans++;try{return reply(res,200,{ok:true,data:await service.plan({id:u.id,scopes:SCOPES},{request:b.request,rules_only:b.rules_only===true})});}finally{activePlans--;}
   }
   let actor=await actorFromBearer(req);
   if(!actor&&session&&req.headers.origin===ORIGIN&&auth.csrfOk(req,session))actor=await actorFromSession(session);

@@ -43,3 +43,5 @@ test('tasks reuse existing queue, are idempotent, isolated and do not start prod
  await assert.rejects(f.service.createTask(actor,{...input,request:'Different request'}),/different request/);
  await assert.rejects(f.service.getTask({...actor,id:'22222222-2222-4222-8222-222222222222'},{task_id:a.task.id}),/not found/);
 });
+
+test('native chat rules-only routing never invokes the local model',async()=>{let calls=0;const {service}=fixture({classifier:async()=>{calls++;throw Error('unexpected')}});const p=await service.plan(actor,{request:'Create a school anthem',rules_only:true});assert.equal(calls,0);assert.equal(p.method,'rules');});
