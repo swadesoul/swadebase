@@ -72,7 +72,7 @@ async function llm(system, user) {
   if (provider === 'anthropic') {
     const r = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'x-api-key': env('ANTHROPIC_API_KEY'), 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
+      headers: { 'x-api-key': env('ANTHROPIC_API_KEY'), 'anthropic-version': '2023-06-01', 'content-type': 'application/json', ...(env('ANTHROPIC_WORKSPACE_ID') && env('ANTHROPIC_USE_WORKSPACE_HEADER') === 'true' ? { 'anthropic-workspace-id': env('ANTHROPIC_WORKSPACE_ID') } : {}) },
       body: JSON.stringify({ model: env('MOTION_COMPOSER_MODEL', 'claude-sonnet-4-5'), max_tokens: 16000, system, messages: [{ role: 'user', content: user }] }),
     })
     if (!r.ok) throw new Error(`anthropic ${r.status}: ${(await r.text()).slice(0, 300)}`)
@@ -83,7 +83,7 @@ async function llm(system, user) {
     const r = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: { authorization: `Bearer ${env('OPENAI_API_KEY')}`, 'content-type': 'application/json' },
-      body: JSON.stringify({ model: env('MOTION_COMPOSER_MODEL', 'gpt-4.1'), messages: [{ role: 'system', content: system }, { role: 'user', content: user }] }),
+      body: JSON.stringify({ model: env('MOTION_COMPOSER_MODEL', 'gpt-4o'), max_tokens: 16000, messages: [{ role: 'system', content: system }, { role: 'user', content: user }] }),
     })
     if (!r.ok) throw new Error(`openai ${r.status}`)
     const j = await r.json()
