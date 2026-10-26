@@ -24,9 +24,10 @@ import { AwsClient } from 'npm:aws4fetch@1.0.20'
 import { recommendStyles, normalizeRequest, styleCard, FORMATS, ADAPTER_VERSION } from './_shared/adapter.mjs'
 import { AGENT_MANIFEST, AGENT_TOOLS, ruleBasedTurn, llmMessages, validateLlmTurn } from './_shared/motion-agent.mjs'
 
-const LIB_JSON = JSON.parse(await Deno.readTextFile(new URL('./_shared/library.json', import.meta.url)))
-const FILE_LIBRARY = LIB_JSON.styles as any[]
-const APP_HTML = await Deno.readTextFile(new URL('./app.html', import.meta.url))
+// Imported (not read from disk) so the edge runtime bundles them with the function.
+import { LIBRARY as LIB_JSON } from './_shared/library.mjs'
+import { APP_HTML } from './_shared/app-html.mjs'
+const FILE_LIBRARY = (LIB_JSON as any).styles as any[]
 
 const env = (k: string, d = '') => Deno.env.get(k) ?? d
 const SUPABASE_URL = env('SUPABASE_URL', 'http://kong:8000')
