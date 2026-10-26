@@ -10,7 +10,7 @@ Founder-controlled motion-graphics factory inside SWADEBASE. Start from **an ide
 |---|---|
 | Founder / super admin (`MOTION_ADMIN_EMAILS`, or `app_metadata.role` = founder/super_admin) | Everything, plus generating the 86 style samples and seeing any project |
 | Signed-in user (OnePass Google sign-in on SWADEBASE) | Create, render and download their own projects |
-| Agent programs (SSS Brain Agent OS, the Grok-style agent adapter area, Sovereign Board, Claude/ChatGPT) | MCP tools, acting as the signed-in user whose token they carry |
+| Agent programs (Rakazo on swadebase-2, SSS Brain Agent OS, Sovereign Board, Claude/ChatGPT) | MCP tools, acting as the signed-in user whose token they carry, or a server key from `MOTION_AGENT_KEYS` (header `x-motion-key` or Bearer) |
 
 ## 3. Architecture
 ```
@@ -77,7 +77,7 @@ Every ready project has `downloads.video` (MP4) and `downloads.source` (ZIP: `in
 ## 11. Deploy checklist (founder approval required — touches production)
 1. Merge the PR → Hostinger redeploys `swadebase`.
 2. Apply migrations on the live DB in order: `20261026220000_motion_studio.sql`, then `20261026220100_motion_styles_seed.sql`. Verify `select count(*) from motion_styles` = 86.
-3. Set env vars in Hostinger (B2 values exist already for other apps; add MOTION_* and composer key). Add `https://swadebase.cloud/functions/v1/motion-studio/**` to `ADDITIONAL_REDIRECT_URLS`.
+3. Set env vars in `docker/functions.env` (the live functions env). Existing `BACKBLAZE_*` values are reused automatically; add MOTION_* and `MOTION_AGENT_KEYS`. Add `https://swadebase.cloud/functions/v1/motion-studio/**` to `ADDITIONAL_REDIRECT_URLS`.
 4. Configure the B2 bucket CORS to allow `PUT` and `GET` from `https://swadebase.cloud` (browser uploads).
 5. Restart functions: `docker compose up -d functions`.
 6. Start the worker: `docker compose -f docker-compose.yml -f docker-compose.motion.yml up -d --build motion-worker`. Check logs for `hyperframes doctor`.
@@ -87,7 +87,7 @@ Every ready project has `downloads.video` (MP4) and `downloads.source` (ZIP: `in
 ## 12. Known gaps / next
 - Not yet verified against a live HyperFrames install (sandbox had no npm access). The fallback template was tested in Chromium for all 86 styles; the full LLM → lint → render loop needs the step-7 run.
 - Word-level lyric timing (`captions`) is supported by the composer; wiring VideoSayWhat/AssemblyAI transcription into the audio flow is the next step for the Lyric Caption Karaoke style.
-- Hook-up to the "Grok-style" agent adapter area: package is ready; target repo still to be confirmed.
+- Rakazo (self-hosted Grok Bot alternative on swadebase-2) connects through its remote MCP tool source using a `MOTION_AGENT_KEYS` key.
 - Expose in SSS Brain: add Motion Studio to SSS Brain's connections via the MCP URL so "Kinetta, make…" works by voice.
 
 ## 13. Recovery

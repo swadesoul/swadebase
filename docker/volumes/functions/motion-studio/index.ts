@@ -33,14 +33,22 @@ const SUPABASE_URL = env('SUPABASE_URL', 'http://kong:8000')
 const PUBLIC_URL = env('SUPABASE_PUBLIC_URL', 'https://swadebase.cloud')
 const ANON_KEY = env('SUPABASE_ANON_KEY')
 const SERVICE_KEY = env('SUPABASE_SERVICE_ROLE_KEY')
+// Accept both naming schemes: B2_* (repo default) and BACKBLAZE_* (existing SWADEBASE functions.env).
+const pickEnv = (...keys: string[]) => keys.map((k) => env(k)).find((v) => v) || ''
 const B2 = {
-  keyId: env('B2_KEY_ID'),
-  appKey: env('B2_APP_KEY'),
-  bucket: env('B2_BUCKET_NAME'),
-  endpoint: env('B2_ENDPOINT').replace(/\/$/, ''),
-  region: env('B2_REGION', 'us-east-005'),
+  keyId: pickEnv('B2_KEY_ID', 'BACKBLAZE_KEY_ID'),
+  appKey: pickEnv('B2_APP_KEY', 'BACKBLAZE_APPLICATION_KEY'),
+  bucket: pickEnv('B2_BUCKET_NAME', 'BACKBLAZE_BUCKET_NAME'),
+  endpoint: pickEnv('B2_ENDPOINT', 'BACKBLAZE_S3_ENDPOINT').replace(/\/$/, '').replace(/^(?!https?:\/\/)/, 'https://'),
+  region: pickEnv('B2_REGION', 'BACKBLAZE_REGION') || 'us-east-005',
   prefix: env('MOTION_B2_PREFIX', 'swadesoul/motion-studio'),
 }
+// Long-lived keys for server-side agent hosts (e.g. Rakazo). Format: label:key:user_id[,label:key:user_id]
+const AGENT_KEYS = env('MOTION_AGENT_KEYS')
+  .split(',')
+  .map((s) => s.trim().split(':'))
+  .filter((p) => p.length === 3 && p[1].length >= 24)
+  .map(([label, key, userId]) => ({ label, key, userId }))
 const ADMIN_EMAILS = env('MOTION_ADMIN_EMAILS', 'swadesoul@gmail.com').toLowerCase().split(',').map((s) => s.trim())
 const AGENT_NAME = env('MOTION_AGENT_NAME', AGENT_MANIFEST.name)
 const MAX_UPLOAD_MB = Number(env('MOTION_MAX_UPLOAD_MB', '200'))
@@ -106,9 +114,23 @@ async function queueSamples(user: User, body: any) {
 
 /* ───────────── auth ───────────── */
 type User = { id: string; email: string; isAdmin: boolean }
+function safeEqual(a: string, b: string) {
+  if (a.length !== b.length) return false
+  let d = 0
+  for (let i = 0; i < a.length; i++) d |= a.charCodeAt(i) ^ b.charCodeAt(i)
+  return d === 0
+}
+
 async function getUser(req: Request): Promise<User | null> {
-  const token = (req.headers.get('authorization') || '').replace(/^Bearer\s+/i, '')
+  const token = (req.headers.get('authorization') || '').replace(/^Bearer\s+/i, '') || req.headers.get('x-motion-key') || ''
   if (!token || token === ANON_KEY) return null
+  const agentKey = AGENT_KEYS.find((k) => safeEqual(k.key, token))
+  if (agentKey) {
+    const { data } = await admin.auth.admin.getUserById(agentKey.userId)
+    if (!data?.user) return null
+    const email = (data.user.email || '').toLowerCase()
+    return { id: data.user.id, email, isAdmin: ADMIN_EMAILS.includes(email) }
+  }
   const { data, error } = await admin.auth.getUser(token)
   if (error || !data?.user) return null
   const email = (data.user.email || '').toLowerCase()

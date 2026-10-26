@@ -8,24 +8,19 @@ services:
       context: ..
       dockerfile: motion/worker/Dockerfile
     restart: unless-stopped
+    # Provider keys and storage come from functions.env (same file the edge functions use):
+    # BACKBLAZE_* or B2_*, ANTHROPIC_API_KEY / OPENAI_API_KEY / OLLAMA_URL,
+    # MOTION_COMPOSER_PROVIDER (anthropic|openai|ollama|template), MOTION_COMPOSER_MODEL.
+    env_file:
+      - path: ./functions.env
+        required: false
     depends_on:
       kong:
         condition: service_healthy
     environment:
       SUPABASE_URL: http://kong:8000
       SUPABASE_SERVICE_ROLE_KEY: ${SERVICE_ROLE_KEY}
-      B2_KEY_ID: ${B2_KEY_ID:-}
-      B2_APP_KEY: ${B2_APP_KEY:-}
-      B2_BUCKET_NAME: ${B2_BUCKET_NAME:-}
-      B2_ENDPOINT: ${B2_ENDPOINT:-}
-      B2_REGION: ${B2_REGION:-}
       MOTION_B2_PREFIX: ${MOTION_B2_PREFIX:-swadesoul/motion-studio}
-      # anthropic | openai | ollama | template (template = zero AI cost, simpler motion)
-      MOTION_COMPOSER_PROVIDER: ${MOTION_COMPOSER_PROVIDER:-}
-      MOTION_COMPOSER_MODEL: ${MOTION_COMPOSER_MODEL:-}
-      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
-      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
-      OLLAMA_URL: ${OLLAMA_URL:-}
       MOTION_RENDER_WORKERS: ${MOTION_RENDER_WORKERS:-2}
       MOTION_POLL_MS: ${MOTION_POLL_MS:-4000}
     deploy:

@@ -26,8 +26,18 @@ const RENDER_WORKERS = env('MOTION_RENDER_WORKERS', 'auto')
 const JOB_ROOT = env('MOTION_JOB_DIR', '/tmp/motion-jobs')
 
 const db = createClient(env('SUPABASE_URL'), env('SUPABASE_SERVICE_ROLE_KEY'), { auth: { persistSession: false } })
-const B2 = { bucket: env('B2_BUCKET_NAME'), endpoint: env('B2_ENDPOINT').replace(/\/$/, '') }
-const s3 = new AwsClient({ accessKeyId: env('B2_KEY_ID'), secretAccessKey: env('B2_APP_KEY'), service: 's3', region: env('B2_REGION', 'us-east-005') })
+// Accept both B2_* and BACKBLAZE_* (existing SWADEBASE functions.env names).
+const pickEnv = (...keys) => keys.map((k) => process.env[k]).find((v) => v) || ''
+const B2 = {
+  bucket: pickEnv('B2_BUCKET_NAME', 'BACKBLAZE_BUCKET_NAME'),
+  endpoint: pickEnv('B2_ENDPOINT', 'BACKBLAZE_S3_ENDPOINT').replace(/\/$/, '').replace(/^(?!https?:\/\/)/, 'https://'),
+}
+const s3 = new AwsClient({
+  accessKeyId: pickEnv('B2_KEY_ID', 'BACKBLAZE_KEY_ID'),
+  secretAccessKey: pickEnv('B2_APP_KEY', 'BACKBLAZE_APPLICATION_KEY'),
+  service: 's3',
+  region: pickEnv('B2_REGION', 'BACKBLAZE_REGION') || 'us-east-005',
+})
 const b2url = (key) => `${B2.endpoint}/${B2.bucket}/${key.split('/').map(encodeURIComponent).join('/')}`
 
 const log = (...a) => console.log(new Date().toISOString(), `[${WORKER_ID}]`, ...a)
