@@ -105,12 +105,14 @@ export const HYPERFRAMES_RULES = `HYPERFRAMES COMPOSITION RULES (must follow exa
 5. Never set a CSS transform AND tween the same property; put the start state inside gsap.fromTo.
 6. Do not tween autoAlpha/visibility on a .clip element itself — animate a child.
 7. Determinism: no Date.now(), no performance.now(), no Math.random() (use the provided seeded rand()), no network fetches at runtime, no requestAnimationFrame loops. Everything is driven by the GSAP timeline.
-8. Audio: <audio id="soundtrack" src="{AUDIO_SRC}" class="clip" data-start="0" data-duration="{DURATION}" data-track-index="9"></audio>. The id is required or the render is silent. No crossorigin attribute.
+8. {AUDIO_RULE}
 9. Images/video use the exact relative paths given in ASSETS. No crossorigin on media.
 10. Fonts: Google Fonts <link> in <head> is allowed; keep to 2 families.
 11. Text: no <br> in body copy; transformed elements are display:block with explicit size. Keep all text inside a 6% safe margin.
 12. Size everything relative to the canvas ({W}x{H}); never assume 1920x1080 if the canvas differs.
-13. Return only the HTML document — no markdown fences, no commentary.`
+13. Give every timed element and every animated element a unique id.
+14. Craft: layered background, foreground and type planes; at least 6 distinct animated elements; clear typographic hierarchy; every scene has entrance, hold and exit motion. A rich composition is usually 250-500 lines.
+15. Return only the HTML document — no markdown fences, no commentary.`
 
 export const SEEDED_RAND = `<script>/* seeded PRNG for deterministic renders */(function(){let s={SEED}>>>0;window.rand=function(){s=(s+0x6D2B79F5)>>>0;let t=s;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296}})();</script>`
 
@@ -153,7 +155,12 @@ export function compileBrief(style, rawRequest, assets = {}) {
   const rules = HYPERFRAMES_RULES.replaceAll('{DURATION}', String(r.durationSec))
     .replaceAll('{W}', String(f.width))
     .replaceAll('{H}', String(f.height))
-    .replaceAll('{AUDIO_SRC}', assets.audioSrc || 'assets/audio.mp3')
+    .replaceAll(
+      '{AUDIO_RULE}',
+      assets.audioSrc
+        ? `Audio: <audio id="soundtrack" src="${assets.audioSrc}" class="clip" data-start="0" data-duration="${r.durationSec}" data-track-index="9"></audio>. The id is required or the render is silent. No crossorigin attribute.`
+        : 'There is NO audio file for this project. Do not add any <audio> or <video> element.'
+    )
 
   const system = [
     'You are the SWADEBASE Motion Director, a senior motion designer who writes HyperFrames compositions (HTML + CSS + GSAP) that render to MP4.',
