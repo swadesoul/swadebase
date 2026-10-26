@@ -144,7 +144,7 @@ async function compose(style, request, assets, dir, onStage) {
         await writeFile(join(dir, 'index.html'), html)
         const errs = await lint(dir)
         if (!errs.length) break
-        log(`lint round ${round + 1}: ${errs.length} errors`)
+        log(`lint round ${round + 1}: ${errs.length} errors: ${[...new Set(errs.map((e) => e.code || 'unknown'))].join(', ')}`)
         onStage('composing', 25 + round * 10)
         const fix = await llm(brief.system, `${brief.user}\n\nYour previous index.html failed HyperFrames lint with these errors:\n${JSON.stringify(errs).slice(0, 6000)}\n\nPrevious file:\n${html}\n\nReturn the corrected complete index.html only.`)
         usage.push(fix.usage)
