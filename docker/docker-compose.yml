@@ -472,6 +472,21 @@ services:
       SUPABASE_DB_URL: postgresql://postgres:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
       # TODO: Allow configuring VERIFY_JWT per function.
       VERIFY_JWT: "${FUNCTIONS_VERIFY_JWT}"
+      # Motion Studio (motion-studio function). All optional; the function degrades gracefully.
+      B2_KEY_ID: ${B2_KEY_ID:-}
+      B2_APP_KEY: ${B2_APP_KEY:-}
+      B2_BUCKET_NAME: ${B2_BUCKET_NAME:-}
+      B2_ENDPOINT: ${B2_ENDPOINT:-}
+      B2_REGION: ${B2_REGION:-}
+      MOTION_B2_PREFIX: ${MOTION_B2_PREFIX:-swadesoul/motion-studio}
+      MOTION_ADMIN_EMAILS: ${MOTION_ADMIN_EMAILS:-swadesoul@gmail.com}
+      MOTION_AGENT_NAME: ${MOTION_AGENT_NAME:-Kinetta}
+      MOTION_AGENT_PROVIDER: ${MOTION_AGENT_PROVIDER:-}
+      MOTION_AGENT_MODEL: ${MOTION_AGENT_MODEL:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OLLAMA_URL: ${OLLAMA_URL:-}
+      PUBLIC_FUNCTION_GET_PATHS: ${PUBLIC_FUNCTION_GET_PATHS:-/motion-studio,/motion-studio/app,/motion-studio/health}
     command:
       [
         "start",

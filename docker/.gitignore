@@ -10,3 +10,6 @@ test.http
 docker-compose.override.yml
 .supabase-version
 backups
+# SWADEBASE Motion Studio function is versioned (deployed with the repo)
+!volumes/functions/motion-studio/
+!volumes/functions/motion-studio/**

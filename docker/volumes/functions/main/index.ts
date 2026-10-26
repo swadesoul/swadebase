@@ -108,8 +108,19 @@ async function isValidHybridJWT(jwt: string): Promise<boolean> {
   return false;
 }
 
+// Public GET paths that serve app shells / health only (no data). Every data route inside
+// those functions still requires a valid user session.
+const PUBLIC_GET_PATHS = new Set(
+  (Deno.env.get('PUBLIC_FUNCTION_GET_PATHS') ?? '/motion-studio,/motion-studio/app,/motion-studio/health')
+    .split(',')
+    .map((p) => p.trim())
+    .filter(Boolean)
+)
+
 Deno.serve(async (req: Request) => {
-  if (req.method !== 'OPTIONS' && VERIFY_JWT) {
+  const isPublicGet =
+    req.method === 'GET' && PUBLIC_GET_PATHS.has(new URL(req.url).pathname.replace(/\/$/, ''))
+  if (req.method !== 'OPTIONS' && VERIFY_JWT && !isPublicGet) {
     try {
       const token = getAuthToken(req)
       const isValidJWT = await isValidHybridJWT(token);

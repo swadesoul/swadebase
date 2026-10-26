@@ -1,0 +1,37 @@
+# Motion Studio render worker. Start alongside SWADEBASE:
+#   docker compose -f docker-compose.yml -f docker-compose.motion.yml up -d --build motion-worker
+# Scale for more parallel renders (each uses ~1-2 CPU cores + ~1.5 GB RAM):
+#   docker compose -f docker-compose.yml -f docker-compose.motion.yml up -d --scale motion-worker=2
+services:
+  motion-worker:
+    build:
+      context: ..
+      dockerfile: motion/worker/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      kong:
+        condition: service_healthy
+    environment:
+      SUPABASE_URL: http://kong:8000
+      SUPABASE_SERVICE_ROLE_KEY: ${SERVICE_ROLE_KEY}
+      B2_KEY_ID: ${B2_KEY_ID:-}
+      B2_APP_KEY: ${B2_APP_KEY:-}
+      B2_BUCKET_NAME: ${B2_BUCKET_NAME:-}
+      B2_ENDPOINT: ${B2_ENDPOINT:-}
+      B2_REGION: ${B2_REGION:-}
+      MOTION_B2_PREFIX: ${MOTION_B2_PREFIX:-swadesoul/motion-studio}
+      # anthropic | openai | ollama | template (template = zero AI cost, simpler motion)
+      MOTION_COMPOSER_PROVIDER: ${MOTION_COMPOSER_PROVIDER:-}
+      MOTION_COMPOSER_MODEL: ${MOTION_COMPOSER_MODEL:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OLLAMA_URL: ${OLLAMA_URL:-}
+      MOTION_RENDER_WORKERS: ${MOTION_RENDER_WORKERS:-2}
+      MOTION_POLL_MS: ${MOTION_POLL_MS:-4000}
+    deploy:
+      resources:
+        limits:
+          cpus: '${MOTION_WORKER_CPUS:-3}'
+          memory: ${MOTION_WORKER_MEMORY:-4g}
+    tmpfs:
+      - /tmp/motion-jobs:size=6g,mode=1777

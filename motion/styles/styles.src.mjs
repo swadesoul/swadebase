@@ -1,0 +1,1002 @@
+// SWADEBASE Motion Library — source of truth for the 86 motion-graphic styles.
+// Original style specifications written for Swade Soul Enterprise LLC.
+// Category taxonomy mirrors Futurepedia's AI Style Atlas (86 styles / 14 categories)
+// so the two can be compared; `atlas` marks the 15 styles whose public Atlas entry
+// (#NN) was used as a visual reference. No Atlas prompt text is reproduced here.
+//
+// Field guide (each becomes part of the compiled HyperFrames prompt):
+//   look        - the frame: surfaces, materials, lighting, signature details
+//   palette     - hex anchors (first = background/base)
+//   type        - typography direction (use self-hosted / Google fonts only)
+//   motion      - how things move (GSAP grammar)
+//   transitions - how scenes hand off
+//   audio       - how music/voice drives the picture (beats, energy, sections)
+//   bestFor     - prompt keywords used by the recommender
+//   fit         - Swade ecosystem properties this style suits
+//
+// Run `node motion/styles/build.mjs` after editing to regenerate library.json + seed SQL.
+
+const S = []
+const add = (o) => S.push(o)
+
+/* ───────────────────────── Hand-Drawn (7) ───────────────────────── */
+add({
+  id: 'whiteboard-marker', name: 'Whiteboard Marker', category: 'Hand-Drawn', atlas: 4,
+  look: 'Glossy white dry-erase board with a faint cool ceiling-light sheen and the ghost of an erased lesson. Chisel-tip marker strokes in black, blue and red with streaky ink and darker pooled ends; boxes and arrows are hand-traced twice and never perfectly closed.',
+  palette: ['#F6F7F5', '#1B1D22', '#1F4FD1', '#D3302F', '#2E8B57'],
+  type: 'Hand-lettered marker caps (Permanent Marker or Caveat Brush), slightly uneven baseline.',
+  motion: 'Every line is drawn on with stroke-dashoffset in the order a presenter would draw it; a marker-tip dot leads each stroke. Slight 1-2px jitter on finished lines, never on drawing lines.',
+  transitions: 'Eraser wipe: a soft white smear sweeps across, leaving a faint ghost of the previous diagram.',
+  audio: 'Stroke speed follows narration pace; underline or circle the key word on vocal emphasis. On beats, add a quick tick/checkmark rather than motion of the whole frame.',
+  bestFor: ['explainer', 'lesson', 'process', 'how it works', 'training', 'workshop', 'strategy', 'business plan'],
+  fit: ['teachvirt', 'groundlift', 'ownmode', 'sss-brain'],
+})
+add({
+  id: 'chalkboard-lecture', name: 'Chalkboard Lecture', category: 'Hand-Drawn', atlas: null,
+  look: 'Slate-green chalkboard with layered dust smudges, half-erased formulas and a wooden ledge at the bottom. Chalk lines are dry and broken with grain gaps; colored chalk in pastel yellow, pink and blue for emphasis.',
+  palette: ['#2F4A3A', '#F2F0E6', '#F6E27A', '#F2A7B8', '#9FD3F0'],
+  type: 'Chalky rounded script for headings (Gochi Hand), small caps chalk print for labels.',
+  motion: 'Chalk strokes draw on with a grainy mask; small chalk dust particles puff where strokes end. Diagrams build piece by piece, top-left to bottom-right.',
+  transitions: 'Felt-eraser swipe in wide arcs that leaves cloudy residue.',
+  audio: 'Each new idea in narration triggers a new diagram element. Strong beats tap a chalk dot or underline.',
+  bestFor: ['education', 'math', 'history', 'school', 'lecture', 'course', 'lesson', 'kids'],
+  fit: ['teachvirt', 'groundlift'],
+})
+add({
+  id: 'notebook-doodle', name: 'Notebook Doodle', category: 'Hand-Drawn', atlas: null,
+  look: 'Spiral notebook page on blue-ruled or graph paper with a red margin line, coffee ring stain and slight page curl shadow. Ballpoint pen doodles with pressure variation, cross-hatching and margin stars.',
+  palette: ['#FBFAF4', '#1D3B8F', '#C8322F', '#9DB4D6', '#E8C98A'],
+  type: 'Neat student handwriting (Patrick Hand) with highlighter swipes behind key words.',
+  motion: 'Doodles sketch in quickly; little flip-book wiggles (2-3 frame boil) on characters. Highlighter sweeps left to right.',
+  transitions: 'Page flip with spiral-binding shadow, or tear-out reveal.',
+  audio: 'Doodle wiggles lock to the beat grid (boil every beat); highlighter sweeps on downbeats.',
+  bestFor: ['tips', 'study', 'student', 'journal', 'brainstorm', 'ideas', 'casual', 'storytime'],
+  fit: ['teachvirt', 'groundlift', 'group-chat'],
+})
+add({
+  id: 'charcoal-sketch', name: 'Charcoal Sketch', category: 'Hand-Drawn', atlas: null,
+  look: 'Heavy toothy cream paper, vine and compressed charcoal with smudged blending, finger-drag tonal areas and erased highlights. Raw construction lines left visible around figures.',
+  palette: ['#EDE6D8', '#111111', '#4A4643', '#8C857C', '#B9A88E'],
+  type: 'Condensed serif in charcoal black (Playfair Display SC), set sparse like gallery labels.',
+  motion: 'Slow reveals through smudge masks; forms emerge from loose gesture lines to finished tone. Gentle camera drift over paper.',
+  transitions: 'Charcoal smear dissolve, or paper turns to the next sheet in the sketchbook.',
+  audio: 'Energy drives smudge darkness and line density; quiet passages stay as gesture lines.',
+  bestFor: ['dramatic', 'portrait', 'memorial', 'tribute', 'serious', 'documentary', 'poetry', 'sermon'],
+  fit: ['black-tales', 'resing', 'swade-soul-films'],
+})
+add({
+  id: 'sumi-ink-brush', name: 'Sumi Ink Brush', category: 'Hand-Drawn', atlas: null,
+  look: 'Rice paper with visible fibers; single confident black ink brush strokes with dry-brush splitting, wet bleeding edges and generous negative space. One vermilion seal stamp as the only color.',
+  palette: ['#F3EEE2', '#0E0E0E', '#5B5B5B', '#C1272D', '#D9CFBF'],
+  type: 'Elegant high-contrast serif or brush script, very small, placed asymmetrically.',
+  motion: 'Brush strokes paint on in one gesture each with ease-out; ink bleeds slowly outward after the stroke. Very few elements per scene.',
+  transitions: 'Ink drop spreads to fill the frame black, then recedes to reveal the next scene.',
+  audio: 'One stroke per phrase or per bar; stamp appears on the strongest hit. Silence is honored with stillness.',
+  bestFor: ['calm', 'meditation', 'philosophy', 'minimal', 'wisdom', 'quote', 'zen', 'luxury'],
+  fit: ['resing', 'sss-brain'],
+})
+add({
+  id: 'engineers-notebook', name: "Engineer's Notebook", category: 'Hand-Drawn', atlas: null,
+  look: 'Cream engineering pad with faint green grid, mechanical pencil construction lines, dimension arrows, callout leaders and small annotations. Occasional red pencil correction.',
+  palette: ['#F4F1E4', '#2D2D2D', '#7FA88A', '#C0392B', '#5B6C8F'],
+  type: 'Technical lettering in all caps (Architects Daughter or IBM Plex Mono for numbers).',
+  motion: 'Construction lines draw first at low opacity, then the solid object traces over them; dimension arrows extend outward with values counting up.',
+  transitions: 'Pan across the pad to the next sketch; pencil eraser clears a region.',
+  audio: 'Counts and measurement ticks snap to beats; build phases follow song sections.',
+  bestFor: ['engineering', 'invention', 'prototype', 'product design', 'spacecraft', 'architecture', 'technical'],
+  fit: ['frequency-run', 'swadespace', 'oathloom'],
+})
+add({
+  id: 'rotoscope-line', name: 'Rotoscope Line Boil', category: 'Hand-Drawn', atlas: null,
+  look: 'Flat off-white field with live, slightly trembling hand-inked contour lines around figures and objects (line boil). Spot fills of one or two flat colors, no shading.',
+  palette: ['#F7F3EA', '#151515', '#E4572E', '#29335C', '#F3A712'],
+  type: 'Bold hand-drawn grotesque lettering that boils with the lines.',
+  motion: 'Everything boils at 8-12 drawings per second (step the timeline with stepped ease) to feel hand-animated; figures move with snappy poses.',
+  transitions: 'Lines unravel into a single scribble that redraws as the next scene.',
+  audio: 'Boil rate doubles in high-energy sections; poses snap on beats.',
+  bestFor: ['music video', 'dance', 'performance', 'indie', 'artsy', 'character', 'lyric'],
+  fit: ['resing', 'maestro-radio', 'black-tales'],
+})
+
+/* ───────────────────────── Painterly (6) ───────────────────────── */
+add({
+  id: 'watercolor-wash', name: 'Watercolor Wash', category: 'Painterly', atlas: 2,
+  look: 'Cold-press paper texture with transparent glazes built in many soft layers: darker dried edges, wet-in-wet bleeds, granulating pigment and blooms. Lights are untouched paper; a faint graphite under-sketch shows through.',
+  palette: ['#FAF7F0', '#2B5D8A', '#E07A5F', '#81B29A', '#F2CC8F'],
+  type: 'Light humanist serif (Cormorant Garamond) or delicate script, ink-colored.',
+  motion: 'Shapes appear by washes spreading from a center with soft feathered masks; colors deepen in passes. Slow parallax between paper layers.',
+  transitions: 'A wet wash floods across and dries into the next composition.',
+  audio: 'Bloom size and saturation follow energy; new washes drop on downbeats; quiet sections stay pale.',
+  bestFor: ['gentle', 'storybook', 'nature', 'wedding', 'family', 'memory', 'soft', 'emotional'],
+  fit: ['black-tales', 'resing', 'groundlift'],
+})
+add({
+  id: 'oil-impasto', name: 'Oil Impasto', category: 'Painterly', atlas: null,
+  look: 'Thick buttery oil paint with raking light catching ridges, palette-knife slabs and visible bristle tracks; rich chiaroscuro and warm varnish glow.',
+  palette: ['#2A1E17', '#C8892B', '#7A2E1F', '#E9D7B4', '#355C4A'],
+  type: 'Classic old-style serif (EB Garamond) in gold leaf tone.',
+  motion: 'Slow push-ins; brush strokes visibly lay down to reveal forms; subtle shimmer in highlights as light rakes across.',
+  transitions: 'Knife-scrape wipe, or dissolve through wet paint smear.',
+  audio: 'Light intensity and stroke rhythm follow energy; big hits slam a heavy knife stroke.',
+  bestFor: ['epic', 'heritage', 'legacy', 'museum', 'portrait', 'ballad', 'gospel', 'history'],
+  fit: ['black-tales', 'resing', 'swade-soul-films'],
+})
+add({
+  id: 'gouache-storybook', name: 'Gouache Storybook', category: 'Painterly', atlas: null,
+  look: 'Opaque matte gouache with flat chalky color, dry-brush texture at edges and simple rounded shapes; picture-book composition with cozy interiors and warm light.',
+  palette: ['#F3E9D2', '#1E3D59', '#F5B700', '#E85D4A', '#5E9C76'],
+  type: 'Friendly rounded serif (Fraunces Soft) set like a picture-book page.',
+  motion: 'Cut-out style limited animation: characters move on simple arcs, blink, bob; background layers drift in parallax.',
+  transitions: 'Page turn or iris through a painted shape.',
+  audio: 'Characters bob on the beat; scene changes on phrase boundaries.',
+  bestFor: ['children', 'kids', 'story', 'fable', 'bedtime', 'family', 'community'],
+  fit: ['black-tales', 'teachvirt', 'groundlift'],
+})
+add({
+  id: 'soft-pastel', name: 'Soft Pastel', category: 'Painterly', atlas: null,
+  look: 'Velvety chalk pastel on toned paper, blended gradients with visible paper tooth, dreamy haze and powder edges.',
+  palette: ['#E9E1F0', '#7E6BAE', '#F4A6B7', '#9AD0C2', '#FFE3A3'],
+  type: 'Airy thin sans (Quicksand Light) with generous tracking.',
+  motion: 'Floating, weightless drifts; elements fade through powder masks; slow breathing scale.',
+  transitions: 'Powder cloud cross-dissolve.',
+  audio: 'Haze density breathes with the sustained pad energy; light sparkles on hi-hats.',
+  bestFor: ['dreamy', 'romance', 'r&b', 'lofi', 'self-care', 'beauty', 'spa'],
+  fit: ['resing', 'beauty-culture', 'maestro-radio'],
+})
+add({
+  id: 'fresco-plaster', name: 'Fresco Plaster', category: 'Painterly', atlas: null,
+  look: 'Pigment soaked into cracked lime plaster with faded earth tones, chipped edges revealing brick beneath, and gilded halos.',
+  palette: ['#E6D5B8', '#A0522D', '#5C7457', '#3B5B7A', '#C9A24B'],
+  type: 'Roman inscriptional capitals (Cinzel) carved into the plaster.',
+  motion: 'Slow reveal of sections as if restorers uncover them; gentle camera dolly along a wall.',
+  transitions: 'Plaster flakes away to reveal the next panel.',
+  audio: 'Sections uncover on phrase changes; gold glints on big hits.',
+  bestFor: ['history', 'ancestry', 'spiritual', 'church', 'myth', 'heritage', 'ancient'],
+  fit: ['black-tales', 'resing'],
+})
+add({
+  id: 'spray-mural', name: 'Spray-Paint Mural', category: 'Painterly', atlas: null,
+  look: 'Brick or concrete wall with aerosol fades, overspray halos, drips, crisp stencil edges and bold outlines; sun-bleached posters peeking at edges.',
+  palette: ['#3A3A3A', '#FF3D7F', '#00C2FF', '#FFE600', '#7CFF4F'],
+  type: 'Wildstyle-inspired chunky letters for titles, stencil caps for labels.',
+  motion: 'Paint sprays on with soft-edged masks and drips running down after; camera handheld sway.',
+  transitions: 'Roller buff paints over the wall in a fresh color.',
+  audio: 'Spray bursts on snares; drips on kick; colors swap per section.',
+  bestFor: ['hip hop', 'street', 'urban', 'rap', 'youth', 'community', 'protest', 'culture'],
+  fit: ['resing', 'abagale-tv', 'black-tales', 'maestro-radio'],
+})
+
+/* ───────────────────────── Print (6) ───────────────────────── */
+add({
+  id: 'halftone-pop-panel', name: 'Halftone Pop Panel', category: 'Print', atlas: 14,
+  look: 'Blown-up comic panel: thick tapered black ink outlines, mechanical dot screens in primary red and blue, flat yellow fills, speech balloons and burst captions, slight misregistration.',
+  palette: ['#FFFFFF', '#111111', '#E3262B', '#1D5BBF', '#FFD400'],
+  type: 'Comic lettering (Bangers) in balloons; caption boxes in yellow.',
+  motion: 'Panels slam in with overshoot; dot screens scroll subtly; action lines and impact bursts pop on emphasis.',
+  transitions: 'Panel-to-panel gutter slide or a big BAM burst wipe.',
+  audio: 'Impact bursts on kicks/snares; balloons pop with each vocal phrase.',
+  bestFor: ['fun', 'comedy', 'promo', 'announcement', 'retro', 'hype', 'pop art'],
+  fit: ['group-chat', 'beauty-culture', 'abagale-tv'],
+})
+add({
+  id: 'risograph-duotone', name: 'Risograph Duotone', category: 'Print', atlas: null,
+  look: 'Soy-ink riso print in two or three spot colors with grainy coverage, overprint blending, registration drift and paper speckle.',
+  palette: ['#F5F1E8', '#FF48B0', '#0078BF', '#FFE800', '#00A95C'],
+  type: 'Chunky grotesk (Archivo Black) overprinted in a spot color.',
+  motion: 'Layers slide independently by a few pixels (registration wobble); shapes stamp in with a slight squash.',
+  transitions: 'Color plates separate and re-register into the next layout.',
+  audio: 'Registration wobble amount follows energy; plate swaps on downbeats.',
+  bestFor: ['zine', 'indie', 'event', 'art', 'creative', 'festival', 'design'],
+  fit: ['maestro-radio', 'resing', 'abagale-tv'],
+})
+add({
+  id: 'linocut-relief', name: 'Linocut Relief', category: 'Print', atlas: null,
+  look: 'Bold carved relief print: white gouge marks, chunky black shapes, uneven ink coverage and paper texture showing through; one accent color pass.',
+  palette: ['#F2ECDD', '#121212', '#B23A2E', '#D9C9A3', '#3F5E5A'],
+  type: 'Carved-looking slab serif with irregular edges.',
+  motion: 'Carving reveals: gouge strokes cut away black to reveal white; stamp-press impacts with slight shake.',
+  transitions: 'Brayer roll inks the next block across the frame.',
+  audio: 'Stamp presses on kicks; carving speed follows tempo.',
+  bestFor: ['folk', 'labor', 'activism', 'history', 'craft', 'farm', 'community'],
+  fit: ['black-tales', 'groundlift', 'ownmode'],
+})
+add({
+  id: 'screenprint-gig-poster', name: 'Screenprint Gig Poster', category: 'Print', atlas: null,
+  look: 'Hand-pulled screenprint with flat bold layers, slight ink texture, halftone gradients and a limited flashy palette on cream stock.',
+  palette: ['#F1E9D2', '#1A1A2E', '#FF6B35', '#00A6A6', '#F7C548'],
+  type: 'Display condensed poster type (Bebas Neue) with stacked lineup hierarchy.',
+  motion: 'Each ink layer pulls in with a squeegee sweep; illustration elements loop subtly.',
+  transitions: 'Squeegee pull reveals the next print.',
+  audio: 'Headliner name hits on the drop; layers lock to bars.',
+  bestFor: ['concert', 'event', 'tour', 'show', 'flyer', 'lineup', 'party'],
+  fit: ['maestro-radio', 'resing', 'abagale-tv'],
+})
+add({
+  id: 'edo-woodblock', name: 'Edo Woodblock', category: 'Print', atlas: null,
+  look: 'Traditional woodblock print: keyline outlines, flat color blocks with wood-grain texture, bokashi gradient skies, stylized waves and clouds, washi paper.',
+  palette: ['#EFE6D2', '#1F3A5F', '#D9534F', '#6E8B74', '#E8B04B'],
+  type: 'Vertical cartouche labels; refined serif for English.',
+  motion: 'Parallax layers of waves and clouds; color blocks print in sequence; gentle looping water.',
+  transitions: 'Scroll unrolls horizontally to the next scene.',
+  audio: 'Wave crests time to beats; gradient skies shift with sections.',
+  bestFor: ['journey', 'travel', 'ocean', 'nature', 'calm', 'saga'],
+  fit: ['frequency-run', 'black-tales'],
+})
+add({
+  id: 'letterpress-type', name: 'Letterpress Type', category: 'Print', atlas: null,
+  look: 'Deep debossed metal and wood type on thick cotton paper, ink squeeze at edges, slight unevenness; ornaments and rules.',
+  palette: ['#F4EFE6', '#1C1C1C', '#B8352F', '#2F4E6E', '#CDBA96'],
+  type: 'Wood-type display faces mixed with classic serif; type is the hero.',
+  motion: 'Words press in with a deboss shadow and tiny bounce; ornaments slide into lockup.',
+  transitions: 'Platen press closes and opens on the next sheet.',
+  audio: 'One word per beat for lyric or quote sequences.',
+  bestFor: ['quote', 'announcement', 'invitation', 'poetry', 'title card', 'manifesto'],
+  fit: ['publiswade', 'resing', 'ownmode'],
+})
+
+/* ───────────────────────── Paper & Craft (7) ───────────────────────── */
+add({
+  id: 'shadow-puppet', name: 'Shadow Puppet Theatre', category: 'Paper & Craft', atlas: 3,
+  look: 'Black cut-out silhouettes with ornate punched cut-work, pin joints and thin control rods, pressed against a backlit cloth screen glowing amber at center and falling to deep red-brown at the edges; colored gel panels fill some openings.',
+  palette: ['#2A0E06', '#F2A33A', '#8E2C14', '#000000', '#3FA7A0'],
+  type: 'Ornamental serif in silhouette, cut out of the scenery.',
+  motion: 'Puppets move on rods with hinged limbs and slight sway; they press closer to the screen (sharper) or pull back (softer, larger).',
+  transitions: 'Lamp flickers down and up, or a curtain silhouette sweeps across.',
+  audio: 'Lamp flicker breathes with energy; puppet gestures land on beats; narration drives scene order.',
+  bestFor: ['folktale', 'myth', 'legend', 'story', 'theatre', 'ancestral', 'parable'],
+  fit: ['black-tales', 'resing', 'teachvirt'],
+})
+add({
+  id: 'paper-diorama', name: 'Layered Paper Diorama', category: 'Paper & Craft', atlas: null,
+  look: 'Stacked colored cardstock layers cut into landscapes and cities, real drop shadows between layers, soft top light and tiny paper details.',
+  palette: ['#FDF6EC', '#264653', '#2A9D8F', '#E9C46A', '#E76F51'],
+  type: 'Paper-cut letters with thickness and shadow (Rubik).',
+  motion: 'Deep parallax dolly through layers; elements pop up like a pop-up book with hinge rotation.',
+  transitions: 'Layers fold flat and unfold into the next scene.',
+  audio: 'Pop-ups on beats; camera depth pushes on builds.',
+  bestFor: ['journey', 'city', 'travel', 'brand story', 'timeline', 'community'],
+  fit: ['swadespace', 'ownmode', 'groundlift', 'black-tales'],
+})
+add({
+  id: 'claymation', name: 'Claymation Stop-Motion', category: 'Paper & Craft', atlas: null,
+  look: 'Handmade plasticine characters with fingerprints, soft subsurface sheen and slightly imperfect shapes on a tabletop set; warm practical lighting.',
+  palette: ['#EADFCB', '#D1495B', '#EDAE49', '#00798C', '#30638E'],
+  type: 'Clay-rolled chunky letters.',
+  motion: 'Stepped animation on twos (12fps feel), squash-and-stretch, tiny frame-to-frame jitter.',
+  transitions: 'Clay squish morph from one shape into the next.',
+  audio: 'Squash on kicks; characters lip-flap to vocal energy.',
+  bestFor: ['funny', 'kids', 'character', 'quirky', 'ad', 'mascot'],
+  fit: ['group-chat', 'beauty-culture', 'teachvirt'],
+})
+add({
+  id: 'felt-fabric', name: 'Felt & Fabric', category: 'Paper & Craft', atlas: null,
+  look: 'Felt shapes with fuzzy edges, visible blanket stitching, buttons, yarn lines and denim or corduroy backgrounds.',
+  palette: ['#E9E4D8', '#C44536', '#197278', '#EDDDD4', '#283D3B'],
+  type: 'Stitched or embroidered lettering.',
+  motion: 'Pieces flop on like felt-board cutouts; yarn lines draw as stitches.',
+  transitions: 'Fabric curtain pull or zipper reveal.',
+  audio: 'Stitches advance per beat; soft bounce on kicks.',
+  bestFor: ['cozy', 'kids', 'crafts', 'handmade', 'family', 'gentle'],
+  fit: ['teachvirt', 'groundlift'],
+})
+add({
+  id: 'origami-fold', name: 'Origami Fold', category: 'Paper & Craft', atlas: null,
+  look: 'Crisp folded paper forms with sharp creases, faceted light and shadow, subtle paper fiber, on a clean gradient sweep.',
+  palette: ['#F7F7F2', '#E63946', '#457B9D', '#1D3557', '#F1C453'],
+  type: 'Geometric sans (Montserrat) with folded-corner accents.',
+  motion: 'Objects fold and unfold along creases (3D CSS rotations), transforming one form into another.',
+  transitions: 'The frame folds into a paper crane that flies off, revealing the next scene.',
+  audio: 'Each fold lands on a beat; full transformations on bars.',
+  bestFor: ['transformation', 'change', 'growth', 'startup', 'logo reveal', 'elegant'],
+  fit: ['ownmode', 'oathloom', 'money-bar'],
+})
+add({
+  id: 'cardboard-prototype', name: 'Cardboard Prototype', category: 'Paper & Craft', atlas: null,
+  look: 'Corrugated cardboard cut-outs, masking tape, marker labels, hot-glue blobs and box-cutter edges on a workbench.',
+  palette: ['#C9A57A', '#3B2F2F', '#F4E9D8', '#2E86AB', '#F18F01'],
+  type: 'Thick marker labels on tape strips.',
+  motion: 'Pieces get taped and assembled; hand-cranked mechanisms turn.',
+  transitions: 'Box flaps open into the next scene.',
+  audio: 'Assembly steps on beats; crank speed matches tempo.',
+  bestFor: ['diy', 'maker', 'mvp', 'prototype', 'startup', 'build', 'founder'],
+  fit: ['oathloom', 'ownmode', 'money-bar'],
+})
+add({
+  id: 'kente-patchwork', name: 'Kente Patchwork', category: 'Paper & Craft', atlas: null,
+  look: 'Woven strip textiles with bold geometric blocks, gold thread sheen, wax-print patterns and quilt seams; fabric weave visible up close.',
+  palette: ['#1B1B1B', '#F2B705', '#D93D04', '#0F7B3E', '#2448A8'],
+  type: 'Strong geometric display type (Syne ExtraBold) on woven bands.',
+  motion: 'Strips weave in over and under; patterns slide along warp and weft; quilt blocks flip in grid order.',
+  transitions: 'A woven band sweeps across and unravels into the next scene.',
+  audio: 'Weave rhythm locks to drum patterns; block flips on kicks.',
+  bestFor: ['heritage', 'african', 'culture', 'celebration', 'family', 'black history', 'community'],
+  fit: ['black-tales', 'abagale-tv', 'ownmode', 'resing'],
+})
+
+/* ───────────────────────── Illustration (7) ───────────────────────── */
+add({
+  id: 'illuminated-manuscript', name: 'Illuminated Manuscript', category: 'Illustration', atlas: 10,
+  look: 'Book-of-hours page on mottled vellum with ruling lines, blackletter text in iron-gall ink with red headings, a large decorated initial on raised burnished gold, lapis and malachite pigments with white filigree, vine borders and whimsical margin creatures.',
+  palette: ['#EADCC0', '#2B1B12', '#B3261E', '#1F3C88', '#C9A227'],
+  type: 'Blackletter (UnifrakturMaguntia) for headings; humanist serif for readable body.',
+  motion: 'Gold leaf glints with a moving specular; vines grow around the border; margin creatures animate in small loops.',
+  transitions: 'Turn of the vellum page with a candle-lit shadow.',
+  audio: 'Gold glints on accents; new lines of text ink in with each phrase.',
+  bestFor: ['scripture', 'sermon', 'history', 'legend', 'chapter', 'fantasy', 'proclamation'],
+  fit: ['resing', 'black-tales', 'publiswade'],
+})
+add({
+  id: 'picture-book', name: 'Picture Book', category: 'Illustration', atlas: null,
+  look: 'Warm children\'s book illustration with soft colored pencil over flat color, expressive round characters, cozy rooms and gentle textures.',
+  palette: ['#FFF4E0', '#3D405B', '#E07A5F', '#81B29A', '#F2CC8F'],
+  type: 'Round friendly serif (Baloo 2), big and readable.',
+  motion: 'Characters wobble-walk, blink and wave; props bounce in; camera gently pans across spreads.',
+  transitions: 'Turn the page.',
+  audio: 'Bouncy movement on beats; read-along word highlights follow narration.',
+  bestFor: ['kids', 'children', 'read along', 'bedtime', 'lesson', 'family'],
+  fit: ['black-tales', 'teachvirt'],
+})
+add({
+  id: 'mid-century-cartoon', name: 'Mid-Century Cartoon', category: 'Illustration', atlas: null,
+  look: '1950s limited animation: angular stylized characters, flat offset color blocks that miss the lines, atomic starbursts, boomerang shapes and textured backgrounds.',
+  palette: ['#F2E8CF', '#386641', '#BC4749', '#F2A541', '#1B263B'],
+  type: 'Jaunty mid-century script and condensed sans (Lobster + Oswald).',
+  motion: 'Snappy holds with fast transitions between key poses; backgrounds slide on loops.',
+  transitions: 'Starburst iris or color-field wipe.',
+  audio: 'Pose snaps on beats; jazz swing timing.',
+  bestFor: ['jazz', 'retro', 'commercial', 'promo', 'playful', 'diner', 'vintage'],
+  fit: ['maestro-radio', 'beauty-culture', 'group-chat'],
+})
+add({
+  id: 'anime-cel', name: 'Anime Cel', category: 'Illustration', atlas: null,
+  look: 'Clean cel-shaded characters with two-tone shadows, sharp highlights, detailed painted backgrounds, speed lines and lens flares.',
+  palette: ['#DCEBFF', '#1E2A78', '#FF4E50', '#FCE38A', '#2EC4B6'],
+  type: 'Bold italic sans with outline stroke for impact titles.',
+  motion: 'Limited animation with dramatic held frames, smear frames, speed-line bursts and quick camera shakes.',
+  transitions: 'White flash or diagonal slash wipe.',
+  audio: 'Impact frames and flashes on drops; speed lines during builds.',
+  bestFor: ['action', 'hype', 'trailer', 'gaming', 'youth', 'battle', 'intro'],
+  fit: ['frequency-run', 'abagale-tv', 'black-tales'],
+})
+add({
+  id: 'ligne-claire', name: 'Ligne Claire Comic', category: 'Illustration', atlas: null,
+  look: 'Clear-line European comic style: uniform thin black outlines, flat bright colors, no hatching, precise backgrounds and readable panels.',
+  palette: ['#FFFFFF', '#101820', '#F2AA4C', '#4B88A2', '#D7263D'],
+  type: 'Clean hand-lettered comic caps.',
+  motion: 'Panel-by-panel camera moves across a page; characters move in clean simple poses.',
+  transitions: 'Camera glides across the gutter into the next panel.',
+  audio: 'Panel changes on phrases; sound-effect lettering on hits.',
+  bestFor: ['adventure', 'mystery', 'journey', 'story', 'explorer'],
+  fit: ['frequency-run', 'black-tales'],
+})
+add({
+  id: 'afrofuturist-illustration', name: 'Afrofuturist Illustration', category: 'Illustration', atlas: null,
+  look: 'Regal Black characters in luminous future attire, adinkra and geometric motifs as technology, gold and indigo gradients, cosmic skies and sleek architecture.',
+  palette: ['#0B0C2A', '#C89B3C', '#5B2A86', '#00B3A4', '#F25F5C'],
+  type: 'Futuristic geometric display (Orbitron or Syncopate) with gold gradients.',
+  motion: 'Symbols activate with light pulses; slow heroic push-ins; particles of gold rise.',
+  transitions: 'Geometric portal opens with gold light.',
+  audio: 'Symbol pulses on beats; portal opens on the drop.',
+  bestFor: ['future', 'heritage', 'black', 'empowerment', 'space', 'sci-fi', 'royalty', 'vision'],
+  fit: ['black-tales', 'frequency-run', 'swadespace', 'ownmode', 'resing'],
+})
+add({
+  id: 'botanical-plate', name: 'Botanical Plate', category: 'Illustration', atlas: null,
+  look: 'Victorian scientific illustration: fine engraved line, delicate watercolor tint, specimen labels, Latin captions and numbered parts on aged paper.',
+  palette: ['#F3EBDD', '#2F3A2F', '#7A9E7E', '#B5838D', '#C8A96A'],
+  type: 'Small italic serif labels; numbered callouts.',
+  motion: 'Specimens draw in line by line, then tint; callout leaders extend to labels.',
+  transitions: 'Pan to the next plate in the folio.',
+  audio: 'Labels appear on beats; gentle classical pacing.',
+  bestFor: ['science', 'nature', 'wellness', 'product ingredients', 'beauty', 'education', 'herbal'],
+  fit: ['beauty-culture', 'teachvirt'],
+})
+
+/* ───────────────────────── Art & Design Movements (6) ───────────────────────── */
+add({
+  id: 'bauhaus-geometry', name: 'Bauhaus Geometry', category: 'Art & Design Movements', atlas: null,
+  look: 'Primary-color circles, squares and triangles on off-white, strong diagonals, thick black bars and functional asymmetric balance.',
+  palette: ['#F2EFE6', '#111111', '#E1251B', '#0057B8', '#FFC20E'],
+  type: 'Geometric sans (Futura-like: Jost) lowercase, rotated 90° in places.',
+  motion: 'Shapes roll, slide and stack with mechanical easing; elements rotate in 90° steps.',
+  transitions: 'Shapes recompose into the next layout.',
+  audio: 'Each shape moves on a specific drum voice (kick=circle, snare=square, hat=triangle).',
+  bestFor: ['design', 'architecture', 'modern', 'brand', 'clean', 'process'],
+  fit: ['oathloom', 'ownmode', 'sss-brain'],
+})
+add({
+  id: 'swiss-grid', name: 'Swiss International Grid', category: 'Art & Design Movements', atlas: null,
+  look: 'Strict modular grid, huge flush-left sans type, generous white space, a single red accent and objective photography crops.',
+  palette: ['#FFFFFF', '#000000', '#E30613', '#D9D9D9', '#7F7F7F'],
+  type: 'Neo-grotesk (Inter Tight or Helvetica-like) at extreme scale contrast.',
+  motion: 'Type and blocks slide along grid lines with precise ease; counters tick; nothing decorative.',
+  transitions: 'Grid columns wipe across.',
+  audio: 'Movement quantized to the beat grid; text changes on bars.',
+  bestFor: ['corporate', 'report', 'pitch', 'data', 'clean', 'professional', 'investor'],
+  fit: ['sss-brain', 'money-bar', 'swadespace', 'dna-front'],
+})
+add({
+  id: 'art-deco-gilded', name: 'Art Deco Gilded', category: 'Art & Design Movements', atlas: null,
+  look: 'Black lacquer and champagne gold, sunbursts, stepped ziggurat frames, fan motifs, marble and chrome; 1920s glamour.',
+  palette: ['#0D0D0D', '#D4AF37', '#F5E6C4', '#1F4E5F', '#8C1C13'],
+  type: 'Deco display (Poiret One or Limelight) with wide tracking.',
+  motion: 'Symmetric reveals from center; gold lines trace frames; sunbursts rotate slowly.',
+  transitions: 'Fan opens or deco doors part.',
+  audio: 'Gold line traces on horn hits; sunburst spins with energy.',
+  bestFor: ['gala', 'luxury', 'jazz', 'premiere', 'awards', 'invitation', 'elegant'],
+  fit: ['abagale-tv', 'maestro-radio', 'swade-soul-films', 'beauty-culture'],
+})
+add({
+  id: 'constructivist-poster', name: 'Constructivist Poster', category: 'Art & Design Movements', atlas: null,
+  look: 'Bold diagonals, red and black on cream, photomontage cutouts, megaphone graphics, arrows and blocky type.',
+  palette: ['#EFE6D0', '#C1121F', '#000000', '#7D7D7D', '#F4D35E'],
+  type: 'Heavy condensed sans in diagonal stacks.',
+  motion: 'Hard slam-ins along diagonals; type blocks punch forward; camera tilts.',
+  transitions: 'Diagonal block slices.',
+  audio: 'Slams on kicks; type punches on vocal accents.',
+  bestFor: ['call to action', 'rally', 'movement', 'launch', 'manifesto', 'urgent', 'campaign'],
+  fit: ['ownmode', 'groundlift', 'money-bar'],
+})
+add({
+  id: 'memphis-pattern', name: 'Memphis Pattern', category: 'Art & Design Movements', atlas: null,
+  look: '1980s Memphis design: squiggles, confetti dots, terrazzo, zigzags and pastel plus neon shapes with thick black outlines.',
+  palette: ['#FFF5E1', '#FF6F91', '#00C9A7', '#FFC75F', '#845EC2'],
+  type: 'Playful geometric display with drop shadows.',
+  motion: 'Shapes bounce, spin and scatter; patterns scroll; elastic easing.',
+  transitions: 'Confetti burst or squiggle wipe.',
+  audio: 'Bounces on every beat; confetti on drops.',
+  bestFor: ['party', 'fun', 'social', 'celebration', 'birthday', 'pop', 'colorful'],
+  fit: ['group-chat', 'beauty-culture', 'abagale-tv'],
+})
+add({
+  id: 'harlem-renaissance', name: 'Harlem Renaissance Silhouette', category: 'Art & Design Movements', atlas: null,
+  look: 'Layered silhouetted figures in concentric light rings, cubist geometry, muted violet, sienna and gold tonal bands; jazz, labor and uplift themes.',
+  palette: ['#2E1F3E', '#C49A6C', '#7D5BA6', '#E3C27A', '#5A3E36'],
+  type: 'Elegant deco-influenced serif.',
+  motion: 'Concentric rings radiate outward; silhouettes rise and gesture; tonal bands shift.',
+  transitions: 'Rings expand to fill the frame with the next tone.',
+  audio: 'Rings pulse with bass; figures move with the swing.',
+  bestFor: ['black history', 'jazz', 'poetry', 'heritage', 'culture', 'tribute', 'gospel'],
+  fit: ['black-tales', 'resing', 'maestro-radio', 'abagale-tv'],
+})
+
+/* ───────────────────────── Retro Digital (7) ───────────────────────── */
+add({
+  id: 'pixel-8bit', name: '8-Bit Pixel', category: 'Retro Digital', atlas: null,
+  look: 'Low-res pixel art on a limited NES-like palette, chunky sprites, tile maps, scanline-free crisp pixels (image-rendering: pixelated).',
+  palette: ['#0F0F1B', '#E43B44', '#F7D51D', '#3E8948', '#5FCDE4'],
+  type: 'Pixel font (Press Start 2P).',
+  motion: 'Sprite frame animation in steps; movement snaps to the pixel grid; score counters tick.',
+  transitions: 'Pixel dissolve or screen-wipe like a level change.',
+  audio: 'Sprites jump on beats; chiptune-style blips on hits.',
+  bestFor: ['gaming', 'retro', 'fun', 'arcade', 'kids', 'levels', 'progress'],
+  fit: ['group-chat', 'teachvirt'],
+})
+add({
+  id: 'rpg-16bit', name: '16-Bit RPG', category: 'Retro Digital', atlas: null,
+  look: 'Lush 16-bit pixel landscapes with parallax layers, dialog boxes with blue gradients, menu cursors and stat bars.',
+  palette: ['#101935', '#2F5D9F', '#F5E6A8', '#6AAA64', '#C94F4F'],
+  type: 'Pixel serif dialog font; typewriter text reveal.',
+  motion: 'Parallax scrolling scenes; dialog text types out; HP/XP bars fill.',
+  transitions: 'Battle-swirl or mosaic transition.',
+  audio: 'Text speed follows narration; level-up flash on drops.',
+  bestFor: ['quest', 'journey', 'progress', 'gamified', 'story', 'onboarding'],
+  fit: ['teachvirt', 'groundlift', 'ownmode'],
+})
+add({
+  id: 'vaporwave', name: 'Vaporwave', category: 'Retro Digital', atlas: null,
+  look: 'Pastel pink and teal gradients, marble busts, palm trees, checkerboard floors, old OS windows, Japanese katakana accents and VHS tracking.',
+  palette: ['#FFB3DE', '#7AF7FF', '#B967FF', '#05FFA1', '#FFFB96'],
+  type: 'Wide serif or chrome italic with glow.',
+  motion: 'Slow floating loops, rotating busts, drifting windows, VHS jitter.',
+  transitions: 'VHS rewind glitch.',
+  audio: 'Slowed pacing; jitter on snares; color shifts on pads.',
+  bestFor: ['chill', 'lofi', 'aesthetic', 'nostalgia', 'synth', 'internet culture'],
+  fit: ['maestro-radio', 'resing'],
+})
+add({
+  id: 'y2k-chrome', name: 'Y2K Chrome', category: 'Retro Digital', atlas: null,
+  look: 'Liquid chrome blobs, iridescent bubbles, futuristic gloss, stars and tribal swooshes, lens flares, translucent plastic.',
+  palette: ['#0A0A12', '#C0C0C8', '#7DF9FF', '#FF4FD8', '#B8FF3D'],
+  type: 'Chrome-beveled futuristic type with sparkle glints.',
+  motion: 'Blobby morphs, spinning chrome logos, glint sweeps.',
+  transitions: 'Chrome splash wipe.',
+  audio: 'Glints on hats; morphs breathe with bass.',
+  bestFor: ['fashion', 'pop', 'beauty', 'hype', 'drop', 'release', 'party'],
+  fit: ['beauty-culture', 'resing', 'abagale-tv'],
+})
+add({
+  id: 'early-web', name: 'Early Web Homepage', category: 'Retro Digital', atlas: null,
+  look: '1990s personal homepage: tiled starfield backgrounds, under-construction gifs, hit counters, beveled buttons, marquee text and web-safe colors.',
+  palette: ['#000080', '#FFFF00', '#00FF00', '#FF00FF', '#C0C0C0'],
+  type: 'Times and Comic-style system fonts, blinking text.',
+  motion: 'Marquees scroll, gifs loop, counters roll.',
+  transitions: 'Page loads line by line like a slow modem.',
+  audio: 'Blinks and gif frames on beats.',
+  bestFor: ['nostalgia', 'comedy', 'internet', 'throwback', 'meme'],
+  fit: ['group-chat'],
+})
+add({
+  id: 'lowpoly-ps1', name: 'Low-Poly PS1', category: 'Retro Digital', atlas: null,
+  look: 'Late-90s console 3D: low polygon models, wobbly affine textures, vertex jitter, fog and dithering.',
+  palette: ['#1C1C24', '#6D597A', '#B56576', '#E56B6F', '#EAAC8B'],
+  type: 'Chunky beveled title text.',
+  motion: 'Stiff rotations, vertex jitter, slow orbiting camera.',
+  transitions: 'Loading-screen fade with spinning icon.',
+  audio: 'Camera orbit speed follows tempo; jitter on hits.',
+  bestFor: ['gaming', 'eerie', 'nostalgia', 'indie', 'mystery'],
+  fit: ['frequency-run', 'group-chat'],
+})
+add({
+  id: 'ascii-terminal', name: 'ASCII Art', category: 'Retro Digital', atlas: null,
+  look: 'Images built from monospaced characters on black; density ramps form shading; occasional color ANSI accents.',
+  palette: ['#000000', '#E5E5E5', '#00FF66', '#FF5F56', '#27C93F'],
+  type: 'Monospace (JetBrains Mono).',
+  motion: 'Characters re-roll like a cipher before resolving; scanning reveals.',
+  transitions: 'Character rain clears the screen.',
+  audio: 'Character density follows energy; re-rolls on beats.',
+  bestFor: ['hacker', 'code', 'developer', 'security', 'tech', 'ai'],
+  fit: ['swadepower', 'sss-brain', 'oathloom'],
+})
+
+/* ───────────────────────── Retro UI & Neon (6) ───────────────────────── */
+add({
+  id: 'synthwave-grid', name: 'Synthwave Grid', category: 'Retro UI & Neon', atlas: null,
+  look: 'Magenta-to-purple sunset with a striped sun, neon wireframe grid floor racing toward the horizon, chrome text and star fields.',
+  palette: ['#12002B', '#FF2A6D', '#05D9E8', '#D1F7FF', '#7700A6'],
+  type: 'Chrome italic display with neon outline (Monoton or Audiowide).',
+  motion: 'Grid scrolls forward continuously; sun shimmers; titles sweep with glint.',
+  transitions: 'Neon flash and grid warp.',
+  audio: 'Grid speed = tempo; sun pulses with kick; glints on snares.',
+  bestFor: ['synth', 'retro', '80s', 'driving', 'electronic', 'night'],
+  fit: ['maestro-radio', 'resing', 'frequency-run'],
+})
+add({
+  id: 'crt-terminal', name: 'CRT Green Terminal', category: 'Retro UI & Neon', atlas: null,
+  look: 'Curved phosphor screen with green text, scanlines, bloom, slight barrel distortion and flicker.',
+  palette: ['#031A09', '#33FF66', '#0B3D1C', '#A6FFB8', '#FFB000'],
+  type: 'VT323 monospace.',
+  motion: 'Typewriter output with blinking cursor; scroll and line feeds.',
+  transitions: 'CRT power-off collapse to a line, then on.',
+  audio: 'Typing cadence follows narration syllables.',
+  bestFor: ['system', 'status report', 'mission', 'hacker', 'boot up', 'briefing'],
+  fit: ['sss-brain', 'swadepower', 'frequency-run'],
+})
+add({
+  id: 'win95-ui', name: 'Classic Desktop UI', category: 'Retro UI & Neon', atlas: null,
+  look: 'Mid-90s desktop: teal background, gray beveled windows, title bars, error dialogs, hourglass cursor and pixel icons.',
+  palette: ['#008080', '#C0C0C0', '#000080', '#FFFFFF', '#000000'],
+  type: 'Pixel system sans.',
+  motion: 'Windows pop open, drag and cascade; progress bars crawl.',
+  transitions: 'Window minimize to taskbar.',
+  audio: 'Dialogs pop on beats; error stacks on drops.',
+  bestFor: ['comedy', 'tech', 'nostalgia', 'workflow', 'meme'],
+  fit: ['group-chat', 'oathloom'],
+})
+add({
+  id: 'arcade-attract', name: 'Arcade Attract Mode', category: 'Retro UI & Neon', atlas: null,
+  look: 'Arcade cabinet bezel art, blinking INSERT COIN, high-score tables, vector-glow graphics and starbursts.',
+  palette: ['#000000', '#FF0055', '#00E5FF', '#FFE600', '#7CFF00'],
+  type: 'Arcade pixel and vector fonts.',
+  motion: 'Blinking prompts, scrolling high scores, vector shapes spinning.',
+  transitions: 'Coin drop flash.',
+  audio: 'Blinks on beats; score jumps on drops.',
+  bestFor: ['leaderboard', 'sports', 'competition', 'gaming', 'scores', 'ranking'],
+  fit: ['abagale-tv', 'group-chat'],
+})
+add({
+  id: 'neon-sign', name: 'Neon Sign Tubes', category: 'Retro UI & Neon', atlas: null,
+  look: 'Bent glass neon tubes on a dark brick wall, glow halos, mounting clips, wiring and a buzzing flicker.',
+  palette: ['#0E0B10', '#FF3CAC', '#2B86C5', '#F9F871', '#7FFF00'],
+  type: 'Neon script and monoline type.',
+  motion: 'Tubes ignite segment by segment with flicker; occasional dropout.',
+  transitions: 'Lights out, next sign flickers on.',
+  audio: 'Ignite on beats; flicker on hats; full glow on chorus.',
+  bestFor: ['nightlife', 'bar', 'lounge', 'salon', 'club', 'r&b', 'open sign'],
+  fit: ['beauty-culture', 'maestro-radio', 'resing', 'abagale-tv'],
+})
+add({
+  id: 'cyberpunk-hud', name: 'Cyberpunk HUD', category: 'Retro UI & Neon', atlas: null,
+  look: 'Holographic heads-up display: scanning reticles, data readouts, corner brackets, glitch artifacts, cyan and magenta on dark rain-streaked city.',
+  palette: ['#05070F', '#00F0FF', '#FF2E88', '#F4F4F4', '#FFB800'],
+  type: 'Technical condensed mono (Rajdhani / Share Tech Mono).',
+  motion: 'Brackets lock on targets; numbers stream; glitch slices.',
+  transitions: 'Digital glitch tear.',
+  audio: 'Lock-ons on kicks; glitch on snares; data stream speed = energy.',
+  bestFor: ['tech', 'security', 'futuristic', 'surveillance', 'ai', 'trailer', 'sci-fi'],
+  fit: ['swadepower', 'frequency-run', 'sss-brain', 'dna-front'],
+})
+
+/* ───────────────────────── Dimensional (6) ───────────────────────── */
+add({
+  id: 'isometric-pastel', name: 'Isometric Pastel', category: 'Dimensional', atlas: 15,
+  look: 'Clean vector isometric scene in true 30° projection: three-tone flat face shading, soft pastel palette with one coral accent, tiny people for scale and long soft shadows on a floating tile.',
+  palette: ['#F4F1FB', '#A8B5E0', '#B8E0D2', '#FFD6A5', '#FF7A6B'],
+  type: 'Rounded geometric sans (Nunito), labels on isometric planes.',
+  motion: 'Blocks rise from the tile, pieces slide along iso axes, tiny people walk loops.',
+  transitions: 'Camera rotates around the tile or tiles connect into a bigger world.',
+  audio: 'Blocks rise on beats; new tiles on bars.',
+  bestFor: ['saas', 'workflow', 'city', 'ecosystem', 'platform', 'how it works', 'infrastructure'],
+  fit: ['sss-brain', 'oathloom', 'money-bar', 'swadespace', 'dna-front'],
+})
+add({
+  id: 'clay-3d-soft', name: 'Soft Clay 3D', category: 'Dimensional', atlas: null,
+  look: 'Matte soft-plastic 3D renders with rounded edges, pastel ambient occlusion, gentle studio lighting and toy-like proportions.',
+  palette: ['#F2F0FF', '#7C83FD', '#96BAFF', '#FFB6B9', '#FAE3D9'],
+  type: 'Puffy rounded display type.',
+  motion: 'Bouncy springs, wobble physics, objects pop with squash.',
+  transitions: 'Objects squish into each other.',
+  audio: 'Springs bounce on kicks.',
+  bestFor: ['app', 'product', 'friendly', 'onboarding', 'fintech', 'feature'],
+  fit: ['ownmode', 'swoney', 'money-bar'],
+})
+add({
+  id: 'glassmorphism', name: 'Glass Layers', category: 'Dimensional', atlas: null,
+  look: 'Frosted glass panels with backdrop blur floating over vivid gradient blobs, thin white borders, soft shadows and depth stacking.',
+  palette: ['#0F1226', '#6A5CFF', '#FF6AD5', '#38F9D7', '#FFFFFF'],
+  type: 'Modern sans (Manrope), white with subtle shadow.',
+  motion: 'Panels float on independent depths; gradients drift; cards slide in with blur ramps.',
+  transitions: 'Panels stack and slide off.',
+  audio: 'Gradient blobs pulse with bass; cards on beats.',
+  bestFor: ['app', 'dashboard', 'feature', 'ui', 'premium', 'tech', 'launch'],
+  fit: ['sss-brain', 'oathloom', 'swadepower', 'dna-front'],
+})
+add({
+  id: 'voxel-world', name: 'Voxel World', category: 'Dimensional', atlas: null,
+  look: 'Cube-built 3D worlds with bright colors, chunky shadows and tiny voxel characters.',
+  palette: ['#87CEEB', '#5DAE4F', '#8B5A2B', '#F4D35E', '#EE6C4D'],
+  type: 'Blocky pixel 3D lettering.',
+  motion: 'Voxels assemble cube by cube; camera orbits the build.',
+  transitions: 'World crumbles into cubes and rebuilds.',
+  audio: 'Cubes drop per beat.',
+  bestFor: ['build', 'gaming', 'kids', 'world building', 'construction'],
+  fit: ['teachvirt', 'oathloom'],
+})
+add({
+  id: 'exploded-view', name: 'Exploded View Tech', category: 'Dimensional', atlas: null,
+  look: 'Precise 3D exploded product diagram on dark gradient: components separated along an axis with thin callout lines, specular metal and glass.',
+  palette: ['#0B0D12', '#C9D1D9', '#3FB8FF', '#FFFFFF', '#FF6B00'],
+  type: 'Technical sans with hairline callouts.',
+  motion: 'Assembly explodes apart, labels draw on, reassembles.',
+  transitions: 'Parts fly to form the next object.',
+  audio: 'Separation on build; reassembly on drop.',
+  bestFor: ['hardware', 'product', 'spacecraft', 'engineering', 'device', 'specs'],
+  fit: ['frequency-run', 'swadespace', 'dna-front'],
+})
+add({
+  id: 'tilt-shift-miniature', name: 'Tilt-Shift Miniature', category: 'Dimensional', atlas: null,
+  look: 'Real-world scenes rendered like tiny models: strong depth-of-field blur bands, saturated colors, high viewpoint.',
+  palette: ['#DDE8F0', '#2E7D32', '#F9A825', '#C62828', '#1565C0'],
+  type: 'Clean bold sans labels with pin markers.',
+  motion: 'Sped-up tiny traffic and people; focus band shifts.',
+  transitions: 'Focus pull to the next location.',
+  audio: 'Time-lapse speed follows tempo.',
+  bestFor: ['city', 'travel', 'logistics', 'delivery', 'community', 'local business'],
+  fit: ['yourown-delivery', 'swadespace', 'groundlift'],
+})
+
+/* ───────────────────────── Light & Imaging (7) ───────────────────────── */
+add({
+  id: 'film-noir-1940s', name: '1940s Film Noir', category: 'Light & Imaging', atlas: 8,
+  look: 'High-contrast black-and-white: venetian-blind light slats, a fedora silhouette, a single practical light source, smoke hanging in beams, heavy film grain, gate weave, dust and scratches.',
+  palette: ['#050505', '#F2F2F2', '#7A7A7A', '#2B2B2B', '#BDBDBD'],
+  type: 'Bold condensed serif title cards with drop shadow.',
+  motion: 'Slow dolly moves, shadows sliding across walls, smoke drifting; flicker and gate weave constant.',
+  transitions: 'Iris out or hard cut with a flash of light.',
+  audio: 'Light flicker follows bass; dramatic stings trigger hard light changes.',
+  bestFor: ['mystery', 'detective', 'drama', 'crime', 'thriller', 'trailer', 'jazz'],
+  fit: ['black-tales', 'swade-soul-films', 'maestro-radio'],
+})
+add({
+  id: 'bioluminescent-deep-sea', name: 'Bioluminescent Deep Sea', category: 'Light & Imaging', atlas: 12,
+  look: 'Near-black ocean with drifting marine snow in parallax; the only light is living light: glowing jellyfish nerve nets, siphonophore chains, rainbow comb rows, an angler lure. Additive cyan, teal and electric blue with magenta and amber accents.',
+  palette: ['#01040A', '#00E5FF', '#14FFC8', '#3D5AFE', '#FF3D9A'],
+  type: 'Thin glowing sans that pulses like the creatures (Exo 2 Light).',
+  motion: 'Slow pulsing, gentle drifting; light travels along nerve-net paths like data.',
+  transitions: 'Darkness swallows, then a new organism lights up.',
+  audio: 'Pulses follow kick; glow intensity follows energy; ripple trails on vocals.',
+  bestFor: ['ai', 'neural', 'mystery', 'deep', 'ambient', 'ocean', 'alien', 'science'],
+  fit: ['frequency-run', 'sss-brain', 'maestro-radio'],
+})
+add({
+  id: 'golden-hour-35mm', name: 'Golden Hour 35mm', category: 'Light & Imaging', atlas: null,
+  look: 'Warm 35mm film look: halation around highlights, soft grain, lifted blacks, lens flare and sun-drenched backlight.',
+  palette: ['#2B1D14', '#F4A259', '#F7E1B5', '#8C5E3C', '#5B8E7D'],
+  type: 'Light serif lower thirds (Libre Baskerville Italic).',
+  motion: 'Handheld drift, slow push-ins, flares sweeping.',
+  transitions: 'Light leak burn.',
+  audio: 'Light leaks on chorus; drift calms in verses.',
+  bestFor: ['nostalgia', 'family', 'documentary', 'love', 'summer', 'memoir', 'ballad'],
+  fit: ['black-tales', 'resing', 'groundlift', 'swade-soul-films'],
+})
+add({
+  id: 'thermal-infrared', name: 'Thermal Infrared', category: 'Light & Imaging', atlas: null,
+  look: 'False-color thermal imaging: iron palette from black-purple through orange to white-hot, temperature readouts and crosshair overlays.',
+  palette: ['#0A0014', '#5A0A7A', '#E0472B', '#FFB000', '#FFFFFF'],
+  type: 'Mono readout text with temperature units.',
+  motion: 'Heat signatures bloom and cool; scanning crosshair.',
+  transitions: 'Palette shift sweep.',
+  audio: 'Heat follows energy; flares on drops.',
+  bestFor: ['energy', 'heat', 'tension', 'investigation', 'sports', 'science'],
+  fit: ['frequency-run', 'swadepower'],
+})
+add({
+  id: 'xray-lightbox', name: 'X-Ray Lightbox', category: 'Light & Imaging', atlas: null,
+  look: 'Glowing blue-white radiograph films clipped to a lightbox, translucent internal structures, labels and grease-pencil marks.',
+  palette: ['#04121C', '#BFE9FF', '#5FA8D3', '#FFFFFF', '#FF4D4D'],
+  type: 'Clinical mono labels.',
+  motion: 'Films slide onto the lightbox; inner layers fade in; grease pencil circles.',
+  transitions: 'Lightbox flicker to the next film.',
+  audio: 'Reveals on beats.',
+  bestFor: ['inside look', 'breakdown', 'anatomy', 'how it works', 'teardown', 'analysis'],
+  fit: ['swadepower', 'teachvirt'],
+})
+add({
+  id: 'light-painting', name: 'Long-Exposure Light Painting', category: 'Light & Imaging', atlas: null,
+  look: 'Night scene with luminous light trails drawn through the air, sparks, star trails and glowing ribbons over dark landscapes.',
+  palette: ['#03030A', '#FFDD00', '#00D4FF', '#FF2E63', '#FFFFFF'],
+  type: 'Light-trail script that writes itself.',
+  motion: 'Trails draw continuously with soft fall-off; sparks scatter.',
+  transitions: 'Trail sweeps the frame to reveal the next.',
+  audio: 'Trail speed follows tempo; sparks on hats.',
+  bestFor: ['music video', 'celebration', 'night', 'energy', 'dance', 'signature'],
+  fit: ['resing', 'maestro-radio', 'abagale-tv'],
+})
+add({
+  id: 'cyanotype', name: 'Cyanotype Darkroom', category: 'Light & Imaging', atlas: null,
+  look: 'Prussian-blue sun prints with white botanical and object silhouettes, brush-edge coating and paper texture.',
+  palette: ['#0B3C74', '#F2F5F7', '#1D5FA8', '#8FB8DE', '#E8E1D0'],
+  type: 'Typewriter labels on white tape.',
+  motion: 'Prints develop from pale to deep blue; objects lift away revealing silhouettes.',
+  transitions: 'Rinse wash across the sheet.',
+  audio: 'Develop speed follows energy.',
+  bestFor: ['archive', 'memory', 'artistic', 'blueprint', 'craft', 'history'],
+  fit: ['black-tales', 'publiswade'],
+})
+
+/* ───────────────────────── Data & Information (6) ───────────────────────── */
+add({
+  id: 'market-terminal', name: 'Market Terminal', category: 'Data & Information', atlas: null,
+  look: 'Dense financial terminal: black background, amber and green numbers, tickers, candlestick charts, panels with function keys.',
+  palette: ['#000000', '#FFB000', '#00D26A', '#FF3B30', '#4DA3FF'],
+  type: 'Condensed mono for numbers (IBM Plex Mono).',
+  motion: 'Tickers scroll, numbers roll, candles grow, alerts flash.',
+  transitions: 'Panel swaps like function-key screens.',
+  audio: 'Number rolls on beats; alerts on hits.',
+  bestFor: ['finance', 'revenue', 'market', 'crypto', 'earnings', 'investor', 'trading'],
+  fit: ['money-bar', 'swoney', 'sss-brain', 'makemycoin'],
+})
+add({
+  id: 'editorial-data', name: 'Editorial Data Graphics', category: 'Data & Information', atlas: null,
+  look: 'Newspaper-grade charts: clean axes, annotated lines, muted palette with one highlight color, serif headlines and source notes.',
+  palette: ['#FFFFFF', '#121212', '#D1495B', '#8D99AE', '#EDF2F4'],
+  type: 'Serif headline (Source Serif) + sans labels (Source Sans).',
+  motion: 'Lines draw along time, bars grow from baseline, annotations fade in with leader lines.',
+  transitions: 'Chart morphs into the next chart form.',
+  audio: 'Data reveals paced by narration; highlights on emphasis.',
+  bestFor: ['data', 'report', 'statistics', 'trend', 'news', 'research', 'impact'],
+  fit: ['sss-brain', 'groundlift', 'swadespace', 'ownmode'],
+})
+add({
+  id: 'transit-map', name: 'Transit Map Diagram', category: 'Data & Information', atlas: null,
+  look: 'Subway-map schematic: 45° lines in bold colors, station dots, interchanges and a clean legend.',
+  palette: ['#FFFFFF', '#E32017', '#0098D4', '#00782A', '#FFD300'],
+  type: 'Transport sans (Overpass) station labels.',
+  motion: 'Lines extend station to station; a train dot travels the route.',
+  transitions: 'Zoom along a line to the next map.',
+  audio: 'Stations light on beats.',
+  bestFor: ['roadmap', 'journey', 'steps', 'ecosystem', 'connections', 'network', 'pathway'],
+  fit: ['ownmode', 'sss-brain', 'groundlift', 'swade-ecosystem'],
+})
+add({
+  id: 'icon-infographic', name: 'Icon Infographic', category: 'Data & Information', atlas: null,
+  look: 'Flat icon system with pictograms, big numbers, rounded cards and soft brand colors on light background.',
+  palette: ['#F7F9FC', '#1A2B4C', '#3A86FF', '#FFBE0B', '#FB5607'],
+  type: 'Geometric sans with oversized numerals (Poppins).',
+  motion: 'Icons pop in, numbers count up, pictogram arrays fill.',
+  transitions: 'Card slide carousel.',
+  audio: 'Counts land on beats.',
+  bestFor: ['stats', 'nonprofit', 'impact', 'facts', 'summary', 'social post'],
+  fit: ['groundlift', 'ownmode', 'swadespace'],
+})
+add({
+  id: 'journal-figure', name: 'Scientific Journal Figure', category: 'Data & Information', atlas: null,
+  look: 'Academic figure panels labeled A-D, error bars, scatter plots, minimal gridlines and small caption text on white.',
+  palette: ['#FFFFFF', '#222222', '#1F77B4', '#FF7F0E', '#2CA02C'],
+  type: 'Small sans (Helvetica-like) captions and panel letters.',
+  motion: 'Panels reveal in order, points scatter in, fit lines draw.',
+  transitions: 'Next figure slides in.',
+  audio: 'Restrained; reveals per narration sentence.',
+  bestFor: ['research', 'science', 'study', 'findings', 'academic', 'evidence'],
+  fit: ['teachvirt', 'swadespace'],
+})
+add({
+  id: 'kpi-dashboard', name: 'KPI Dashboard Motion', category: 'Data & Information', atlas: null,
+  look: 'Dark modern dashboard: KPI tiles, sparklines, donut gauges, status chips and subtle glow on key numbers.',
+  palette: ['#0D1117', '#58A6FF', '#3FB950', '#F85149', '#D29922'],
+  type: 'Inter for labels, tabular numerals for metrics.',
+  motion: 'Tiles assemble, gauges sweep, sparklines draw, numbers count.',
+  transitions: 'Dashboard pans to the next panel.',
+  audio: 'Metric updates on beats; status chips flip on hits.',
+  bestFor: ['daily brief', 'status', 'report', 'metrics', 'revenue', 'whats up', 'performance'],
+  fit: ['sss-brain', 'money-bar', 'swadepower'],
+})
+
+/* ───────────────────────── Generative & Type (6) ───────────────────────── */
+add({
+  id: 'kinetic-type', name: 'Kinetic Typography', category: 'Generative & Type', atlas: null,
+  look: 'Type-only frames on solid or duotone backgrounds; words scale, stack, rotate and fill the frame with bold contrast.',
+  palette: ['#0A0A0A', '#FFFFFF', '#FF3B3B', '#FFE14D', '#3BFFB2'],
+  type: 'Heavy variable grotesk (Anton / Inter Black) with extreme scale shifts.',
+  motion: 'Words slam, slide, flip and stack phrase by phrase; emphasis words get color and scale.',
+  transitions: 'A word grows to fill the frame and becomes the next background.',
+  audio: 'One word or phrase per beat; emphasis on stressed syllables; drop = biggest word.',
+  bestFor: ['lyric', 'quote', 'speech', 'motivational', 'hype', 'announcement', 'sermon', 'promo'],
+  fit: ['resing', 'maestro-radio', 'abagale-tv', 'ownmode'],
+})
+add({
+  id: 'particle-field', name: 'Particle Field', category: 'Generative & Type', atlas: null,
+  look: 'Thousands of glowing particles on dark space forming logos, faces and words, then dispersing into flowing clouds.',
+  palette: ['#05050C', '#7DF9FF', '#B388FF', '#FFFFFF', '#FFD166'],
+  type: 'Thin modern sans assembled from particles.',
+  motion: 'Particles swarm into shapes (seeded positions for determinism) and explode outward.',
+  transitions: 'Disperse and reform as the next shape.',
+  audio: 'Particle speed and spread follow energy; reform on downbeats.',
+  bestFor: ['logo reveal', 'ai', 'intro', 'futuristic', 'brand', 'transformation'],
+  fit: ['sss-brain', 'swadepower', 'oathloom', 'frequency-run'],
+})
+add({
+  id: 'flow-field', name: 'Flow Field Lines', category: 'Generative & Type', atlas: null,
+  look: 'Thousands of fine curved lines following a noise flow field, like wind or magnetism, in a limited elegant palette.',
+  palette: ['#0E0E10', '#E8E6E3', '#F25C54', '#43AA8B', '#F7B267'],
+  type: 'Elegant light serif overlay.',
+  motion: 'Lines advect continuously along the field; field morphs slowly (seeded noise).',
+  transitions: 'Field direction flips, revealing the next composition.',
+  audio: 'Field turbulence follows energy; color shifts on sections.',
+  bestFor: ['ambient', 'abstract', 'art', 'calm', 'meditative', 'background', 'visualizer'],
+  fit: ['maestro-radio', 'resing', 'sss-brain'],
+})
+add({
+  id: 'mosaic-grid', name: 'Generative Mosaic Grid', category: 'Generative & Type', atlas: null,
+  look: 'A tile grid where each cell holds a shape, glyph or color that flips and recombines; Truchet tiles and pattern logic.',
+  palette: ['#111111', '#F4F1DE', '#E07A5F', '#3D405B', '#81B29A'],
+  type: 'Monospace or geometric glyphs inside cells.',
+  motion: 'Waves of cell flips sweep across; patterns resolve into images or words.',
+  transitions: 'Cell cascade reveal.',
+  audio: 'Flip waves triggered by beats; density with energy.',
+  bestFor: ['visualizer', 'pattern', 'tech', 'loop', 'background', 'brand'],
+  fit: ['maestro-radio', 'oathloom'],
+})
+add({
+  id: 'variable-font-morph', name: 'Variable Font Morph', category: 'Generative & Type', atlas: null,
+  look: 'Large letterforms whose weight, width and slant morph fluidly; minimal backgrounds with soft gradient light.',
+  palette: ['#F5F5F0', '#141414', '#5B5BFF', '#FF5BA7', '#FFD45B'],
+  type: 'A variable font (Roboto Flex or Fraunces) animated across axes.',
+  motion: 'Font axes tween with GSAP on CSS font-variation-settings; letters breathe and stretch.',
+  transitions: 'Word squeezes to a line and expands into the next.',
+  audio: 'Weight follows energy; width follows bass.',
+  bestFor: ['brand', 'title', 'typography', 'name reveal', 'fashion', 'elegant'],
+  fit: ['beauty-culture', 'resing', 'publiswade'],
+})
+add({
+  id: 'lyric-karaoke', name: 'Lyric Caption Karaoke', category: 'Generative & Type', atlas: null,
+  look: 'Full-screen lyric display over a blurred or gradient background; current line bright, next line dim; word-by-word fill highlight.',
+  palette: ['#0B0B12', '#FFFFFF', '#FF4D8D', '#6C63FF', '#FFC857'],
+  type: 'Bold rounded sans (Poppins ExtraBold) centered.',
+  motion: 'Lines roll up; words fill left to right in sync; background breathes.',
+  transitions: 'Line roll to the next verse; chorus gets a color change.',
+  audio: 'Requires word timestamps (transcribe step); fills exactly on word onsets; chorus color swap.',
+  bestFor: ['lyric video', 'song', 'sing along', 'music', 'release', 'single'],
+  fit: ['resing', 'maestro-radio', 'mydistribution'],
+})
+
+/* ───────────────────────── Popular Explainer Looks (7) ───────────────────────── */
+add({
+  id: 'flat-vector-science', name: 'Flat-Vector Science', category: 'Popular Explainer Looks', atlas: 1,
+  look: 'Science-explainer vector art: deep navy-to-violet space gradients, chunky outline-free shapes with rich multi-stop gradients, crescent shadows and rim highlights, soft radial glows, sparkling stars, banded ringed planets and cute round characters with big eyes.',
+  palette: ['#0D1B4C', '#5B2A86', '#F9C80E', '#43BCCD', '#EA3546'],
+  type: 'Bold rounded sans (Nunito Black) with soft shadow.',
+  motion: 'Smooth, bouncy character animation; planets orbit; stars twinkle; diagrams assemble with spring.',
+  transitions: 'Zoom through a planet or star into the next scene.',
+  audio: 'Twinkle on hats; character reactions on vocal emphasis; orbit speed with tempo.',
+  bestFor: ['science', 'space', 'explainer', 'education', 'kids', 'how it works', 'universe'],
+  fit: ['frequency-run', 'swadespace', 'teachvirt'],
+})
+add({
+  id: 'tech-glow', name: 'Tech Glow Explainer', category: 'Popular Explainer Looks', atlas: 6,
+  look: 'Polished AI/tech YouTube look: deep navy-indigo space with drifting electric glows and a perspective grid, gradient-stroked icon tiles wired into node diagrams with light pulses racing along connectors, dark cards with thin neon borders, gradient headline type and bloom on bright elements.',
+  palette: ['#070B1F', '#4F7CFF', '#A35BFF', '#22D3EE', '#F5F7FF'],
+  type: 'Inter / Space Grotesk headings with gradient fill.',
+  motion: 'Nodes connect, pulses travel paths, cards slide with blur, numbers count; subtle camera parallax.',
+  transitions: 'Zoom into a node to reveal its inner diagram.',
+  audio: 'Pulses fire on beats; node activations on hits; glow follows energy.',
+  bestFor: ['ai', 'tech', 'saas', 'workflow', 'agents', 'automation', 'architecture', 'product'],
+  fit: ['sss-brain', 'oathloom', 'swadepower', 'dna-front', 'money-bar'],
+})
+add({
+  id: 'papercraft-models', name: 'Papercraft Models', category: 'Popular Explainer Looks', atlas: 7,
+  look: 'Printed cardstock kit models — boxy low-poly robots, animals and charts — with printed faces, dotted fold lines, glue tabs and hairline seams, lit by a warm key light on a green cutting mat with craft tools at the edges.',
+  palette: ['#2F6B4F', '#F4EBDD', '#E85D3F', '#3B82C4', '#F2C14E'],
+  type: 'Printed label type on paper tags (Space Mono).',
+  motion: 'Models fold up from flat sheets, rotate on the mat, hinge-animate.',
+  transitions: 'Model unfolds flat; next sheet folds up.',
+  audio: 'Folds on beats; completion pop on bar ends.',
+  bestFor: ['explainer', 'diy', 'tutorial', 'product', 'kids', 'build', 'concept'],
+  fit: ['teachvirt', 'oathloom', 'groundlift'],
+})
+add({
+  id: 'manim-math', name: 'Manim-Style Math', category: 'Popular Explainer Looks', atlas: 9,
+  look: 'Pure black background, crisp anti-aliased vector lines, restrained blue, teal, yellow, red and green palette, italic serif math, axes with ticks, curves, arrows, braces and highlight rectangles (the open-source Manim look).',
+  palette: ['#000000', '#58C4DD', '#83C167', '#FFFF00', '#FC6255'],
+  type: 'Computer Modern-style serif (CMU Serif / KaTeX fonts) for math; italics for variables.',
+  motion: 'Write-on strokes, transforms between equations, graphs plotting, smooth camera zooms.',
+  transitions: 'Equation transforms into the next concept.',
+  audio: 'Restrained: steps follow narration; key reveals land on emphasis.',
+  bestFor: ['math', 'physics', 'algorithm', 'proof', 'explain', 'ai learning', 'education'],
+  fit: ['teachvirt', 'sss-brain'],
+})
+add({
+  id: 'editorial-collage', name: 'Editorial Essay Collage', category: 'Popular Explainer Looks', atlas: 11,
+  look: 'Animated video-essay collage: warm grainy paper, archival halftone photos with torn white borders and soft shadows, newspaper clippings with yellow highlighter sweeps, masking tape, flat color blocks and big cut-out condensed headlines.',
+  palette: ['#EFE7DA', '#151515', '#F2C14E', '#D1495B', '#2E86AB'],
+  type: 'Condensed cut-out headlines (Oswald) + serif clipping text (Merriweather).',
+  motion: 'Cutouts slide and tape down, highlighter sweeps, photos pan Ken-Burns style.',
+  transitions: 'Paper tear or new clipping slaps on top.',
+  audio: 'Cutouts land on beats; highlighter on emphasized words.',
+  bestFor: ['documentary', 'history', 'essay', 'news', 'commentary', 'biography', 'culture'],
+  fit: ['black-tales', 'ownmode', 'publiswade', 'abagale-tv'],
+})
+add({
+  id: 'product-launch', name: 'Product Launch Reveal', category: 'Popular Explainer Looks', atlas: 13,
+  look: 'Keynote product film: one glossy hero object on a near-black stage with soft key, rim light, sweeping specular highlight and floor reflection; huge tight-tracked headlines, gradient key numbers with soft glow and hairline spec callouts.',
+  palette: ['#000000', '#F5F5F7', '#86868B', '#2997FF', '#BF5AF2'],
+  type: 'Tight-tracked neo-grotesk (Inter Display) at massive scale.',
+  motion: 'Slow hero rotation, specular sweeps, numbers count with glow, callouts draw.',
+  transitions: 'Fade to black then reveal; light sweep wipe.',
+  audio: 'Big reveals on drops; specular sweeps on swells.',
+  bestFor: ['launch', 'product', 'app', 'reveal', 'announcement', 'premium', 'features'],
+  fit: ['oathloom', 'sss-brain', 'dna-front', 'resing', 'money-bar'],
+})
+add({
+  id: 'social-captions', name: 'Social Short Captions', category: 'Popular Explainer Looks', atlas: null,
+  look: 'Vertical-first short-form: bold auto-captions with word highlight, emoji pops, punchy zooms, progress bar and sticker callouts over footage or brand backgrounds.',
+  palette: ['#000000', '#FFFFFF', '#FFE600', '#FF2D55', '#00E676'],
+  type: 'Heavy sans captions (Montserrat Black) with thick stroke.',
+  motion: 'Caption words pop with scale; jump zooms; stickers bounce.',
+  transitions: 'Whip pan or zoom punch.',
+  audio: 'Captions synced to transcript; zooms on emphasis words; beat-matched cuts.',
+  bestFor: ['tiktok', 'reels', 'shorts', 'social', 'clip', 'vertical', 'ad'],
+  fit: ['abagale-tv', 'resing', 'videosaywhat', 'beauty-culture', 'group-chat'],
+})
+
+/* ───────────────────────── Cosmic & Psychedelic (2) ───────────────────────── */
+add({
+  id: 'psychedelic-poster', name: 'Psychedelic Poster', category: 'Cosmic & Psychedelic', atlas: 5,
+  look: '1960s concert-poster psychedelia: full-strength inks in vibrating complementary pairs, liquid churning ring bands, sunbursts, a mirror-symmetric eye-flower and bulbous melting lettering on worn poster stock.',
+  palette: ['#FF6B00', '#00B3FF', '#FF00A8', '#B8FF00', '#4B0082'],
+  type: 'Melting bulbous display (Shrikhand), warped along curves.',
+  motion: 'Liquid rings churn, colors cycle, symmetry kaleidoscopes, letters wobble.',
+  transitions: 'Color cycle melt.',
+  audio: 'Ring churn speed with tempo; color cycles on bars; wobble on bass.',
+  bestFor: ['concert', 'festival', 'trippy', 'funk', 'rock', 'soul', 'retro'],
+  fit: ['maestro-radio', 'resing', 'abagale-tv'],
+})
+add({
+  id: 'cosmic-mandala', name: 'Cosmic Nebula Mandala', category: 'Cosmic & Psychedelic', atlas: null,
+  look: 'Deep-space nebula clouds with a sacred-geometry mandala of light at the center, star fields, frequency rings and glowing sigils.',
+  palette: ['#050014', '#7B2FF7', '#F107A3', '#00F5D4', '#FEE440'],
+  type: 'Spaced ethereal caps (Cinzel Decorative or Josefin Sans Thin).',
+  motion: 'Mandala rotates in counter-rotating rings; nebula drifts; rings ripple outward.',
+  transitions: 'Zoom through the mandala center.',
+  audio: 'Rings ripple on kicks; rotation speed with energy; frequency rings react to bands.',
+  bestFor: ['frequency', 'meditation', 'spiritual', 'cosmic', 'frequency music', 'ambient', 'manifest'],
+  fit: ['resing', 'maestro-radio', 'frequency-run', 'thefreq'],
+})
+
+export const STYLES = S
+export const CATEGORIES = [
+  ['Hand-Drawn', 7], ['Painterly', 6], ['Print', 6], ['Paper & Craft', 7], ['Illustration', 7],
+  ['Art & Design Movements', 6], ['Retro Digital', 7], ['Retro UI & Neon', 6], ['Dimensional', 6],
+  ['Light & Imaging', 7], ['Data & Information', 6], ['Generative & Type', 6],
+  ['Popular Explainer Looks', 7], ['Cosmic & Psychedelic', 2],
+]
