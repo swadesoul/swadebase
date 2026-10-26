@@ -13,6 +13,6 @@
   "dependencies": {
     "@supabase/supabase-js": "2.45.4",
     "aws4fetch": "1.0.20",
-    "hyperframes": "latest"
+    "hyperframes": "0.8.206"
   }
 }
