@@ -1,6 +1,6 @@
 # SWADEBASE Motion Studio — PRD and System Bible
 
-Owner: Swade Soul Enterprise LLC · Status: built on branch `feat/motion-studio`, not yet deployed · Date: 2026-10-26
+Owner: Swade Soul Enterprise LLC · Status: deployed to swadebase.cloud on 2026-10-26 from branch `feat/motion-studio` (PR #4, not yet merged) · Date: 2026-10-26
 
 ## 1. Purpose
 Founder-controlled motion-graphics factory inside SWADEBASE. Start from **an idea**, **an audio file**, or **a start image**; pick one of **86 styles** (or let **Kinetta**, the motion graphics agent, pick); get a rendered **MP4 plus the editable HyperFrames source ZIP**, always downloadable. Any ecosystem app or agent can call it through the API or MCP.
@@ -85,7 +85,8 @@ Every ready project has `downloads.video` (MP4) and `downloads.source` (ZIP: `in
 8. Pin `hyperframes` in `motion/worker/package.json` to the version that passes step 7.
 
 ## 12. Known gaps / next
-- Not yet verified against a live HyperFrames install (sandbox had no npm access). The fallback template was tested in Chromium for all 86 styles; the full LLM → lint → render loop needs the step-7 run.
+- Verified live 2026-10-26: idea project composed by the LLM, lint-repaired, rendered (8s 1080p draft in ~40s on CPU), uploaded to B2, MP4 and source ZIP downloaded with attachment filenames. hyperframes pinned to 0.8.206.
+- Composer quality: the server's Anthropic key fails ("not scoped to a workspace" / workspace not found), so the composer runs on OpenAI gpt-4o, whose compositions are sparse. A workspace-scoped Anthropic key, then MOTION_COMPOSER_PROVIDER=anthropic, is the biggest quality lever. Hold the 86 style samples until then.
 - Word-level lyric timing (`captions`) is supported by the composer; wiring VideoSayWhat/AssemblyAI transcription into the audio flow is the next step for the Lyric Caption Karaoke style.
 - Rakazo (self-hosted Grok Bot alternative on swadebase-2) connects through its remote MCP tool source using a `MOTION_AGENT_KEYS` key.
 - Expose in SSS Brain: add Motion Studio to SSS Brain's connections via the MCP URL so "Kinetta, make…" works by voice.
