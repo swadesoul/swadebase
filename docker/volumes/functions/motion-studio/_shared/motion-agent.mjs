@@ -135,7 +135,7 @@ You manage SWADEBASE Motion Studio only. Choose ONLY from this style catalog (id
 ${catalog}
 
 Reply with strict JSON, no prose outside JSON:
-{"reply": "<what you say to the user, 1-3 sentences>",
+{"reply": "<what you say to the user, 1-3 sentences; refer to styles by their names, never their ids>",
  "picks": ["<style id>", "<style id>", "<style id>"],
  "chosen": "<style id or null — set only if the user named a style or asked you to pick>",
  "title": "<short project title or null>",
@@ -164,12 +164,16 @@ export function validateLlmTurn(library, raw, fallback) {
     const ids = new Set(library.map((s) => s.id))
     const picks = (j.picks || []).filter((id) => ids.has(id)).slice(0, 3)
     if (!picks.length) return fallback
-    const chosen = j.chosen && ids.has(j.chosen) ? j.chosen : null
+    // Only lock a style when the user named one or asked Kinetta to pick (detected by the rule brain).
+    const chosen = fallback.chosen ? (j.chosen && ids.has(j.chosen) ? j.chosen : fallback.chosen) : null
+    // Speak in style names, never raw ids.
+    let reply = String(j.reply || fallback.reply)
+    for (const s of library) reply = reply.replaceAll(`'${s.id}'`, s.name).replaceAll(`"${s.id}"`, s.name).replaceAll(s.id, s.name)
     const hints = { ...fallback.hints }
     if (FORMATS[j.format]) hints.format = j.format
     if (Number(j.durationSec) > 0) hints.durationSec = Number(j.durationSec)
     return {
-      reply: String(j.reply || fallback.reply).slice(0, 1200),
+      reply: reply.slice(0, 1200),
       picks: picks.map((id) => {
         const s = library.find((x) => x.id === id)
         return { id, name: s.name, category: s.category, reasons: [] }
