@@ -1,0 +1,13 @@
+# Pending production connection — requires approval
+
+These changes were blocked by automatic approval review and have NOT been applied. This document makes the exact requested approval reviewable. No public customer access, paid inference, automatic deployment or broad repository tool is included.
+
+1. Capture dated backups of `/opt/swadebase-adapters/routes/registry.mjs` and `/opt/swadebase/ops/mcp/core.mjs`. Preserve unrelated changes.
+2. Register `swade-openhands-pilot` in the existing adapter registry as `kind=worker`, `status=in_progress`, `enabled=true`, `enforcing=true`. Describe fixed candidate-only scope, manual dispatch, tested native-model readiness and the limits accurately. Keep `rea-build` and REA's disabled dispatcher unchanged.
+3. In registry.mjs, import `openhandsRoutes` from `../../swadebase/ops/openhands/route.mjs`; instantiate `const openhands=openhandsRoutes({pool,auth})`; invoke the returned handler before the existing promo/MCP routes and continue when it returns false. This exposes owner-only `/adapters/openhands` and `/adapters/api/openhands`. Existing opaque owner sessions are reused. Mutations require same-origin CSRF and explicit fixed-pilot confirmation. No browser-accessible shell endpoint exists.
+4. Add one PROGRAMS record in existing MCP core.mjs: id `openhands`, name `OpenHands Voice Pilot`, adapter `swade-openhands-pilot`, terms OpenHands/coding agent/voice engineering/cancellation/recovery. State operator dispatch and no automatic deployment in role text. Discovery is not execution permission.
+5. Run six route policy tests, existing MCP tests and existing adapter tests. Restart only `swadebase-adapters` after syntax checks. Probe anonymous page/API rejection, signed-in owner queue/replay/limit/status, native-model run, candidate download and unrelated health.
+6. An authorized server operator runs `node /opt/swadebase/ops/openhands/cli.mjs JOB_ID`. It checks registry state, fixed approved scope and the existing handoff row; claims once under advisory lock; writes receipts back to the same handoff. `--create` creates an operator-authorized fixed pilot with the same daily bound. No scheduler is added.
+7. Update current Bibles, knowledge retrieval and What's New to the verified result. A successful candidate remains staged until each target product's separate integration and device tests pass.
+
+Rollback: pause the registry entry to stop new jobs; reconcile any active bounded worker. Restore only the scoped router/planner edits from the dated backup after checking concurrent changes, syntax-test, restart the existing adapter service, and probe health. Preserve handoff history and candidate/test receipts. No user or media tables are altered.
