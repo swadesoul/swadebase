@@ -1,0 +1,32 @@
+# Motion Studio render worker. Start alongside SWADEBASE:
+#   docker compose -f docker-compose.yml -f docker-compose.motion.yml up -d --build motion-worker
+# Scale for more parallel renders (each uses ~1-2 CPU cores + ~1.5 GB RAM):
+#   docker compose -f docker-compose.yml -f docker-compose.motion.yml up -d --scale motion-worker=2
+services:
+  motion-worker:
+    build:
+      context: ..
+      dockerfile: motion/worker/Dockerfile
+    restart: unless-stopped
+    # Provider keys and storage come from functions.env (same file the edge functions use):
+    # BACKBLAZE_* or B2_*, ANTHROPIC_API_KEY / OPENAI_API_KEY / OLLAMA_URL,
+    # MOTION_COMPOSER_PROVIDER (anthropic|openai|ollama|template), MOTION_COMPOSER_MODEL.
+    env_file:
+      - path: ./functions.env
+        required: false
+    depends_on:
+      kong:
+        condition: service_healthy
+    environment:
+      SUPABASE_URL: http://kong:8000
+      SUPABASE_SERVICE_ROLE_KEY: ${SERVICE_ROLE_KEY}
+      MOTION_B2_PREFIX: ${MOTION_B2_PREFIX:-swadesoul/motion-studio}
+      MOTION_RENDER_WORKERS: ${MOTION_RENDER_WORKERS:-2}
+      MOTION_POLL_MS: ${MOTION_POLL_MS:-4000}
+    deploy:
+      resources:
+        limits:
+          cpus: '${MOTION_WORKER_CPUS:-3}'
+          memory: ${MOTION_WORKER_MEMORY:-4g}
+    tmpfs:
+      - /tmp/motion-jobs:size=6g,mode=1777

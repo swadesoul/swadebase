@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#17121F">
+<title>Motion Studio · SWADEBASE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#17121F; --panel:#211A2C; --panel-2:#2B2338; --line:#3A3049;
+  --paper:#EEE7F4; --muted:#A99DB8; --tally:#E8B43A; --tally-ink:#2A1E05;
+  --ready:#4FC6B8; --warn:#F07A63;
+  --r-lg:22px; --r-md:14px; --r-sm:9px;
+  --display:'Bricolage Grotesque', system-ui, sans-serif;
+  --body:'Instrument Sans', system-ui, sans-serif;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;background:var(--ink);color:var(--paper);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,textarea,select{font:inherit;color:inherit}
+a{color:var(--tally)}
+:focus-visible{outline:2px solid var(--tally);outline-offset:2px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-left))}
+
+/* top bar */
+header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--ink) 88%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:20px;height:64px}
+.brand{font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:-.02em;display:flex;align-items:center;gap:10px;white-space:nowrap}
+.brand i{width:14px;height:14px;border-radius:50%;background:var(--tally);box-shadow:0 0 16px var(--tally)}
+nav{display:flex;gap:4px;margin-left:auto}
+nav button{background:none;border:0;padding:8px 14px;border-radius:999px;color:var(--muted);cursor:pointer;font-weight:500}
+nav button[aria-current="page"]{background:var(--panel-2);color:var(--paper)}
+.who{color:var(--muted);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px}
+
+/* sign-in */
+.gate{min-height:calc(100vh - 64px);display:grid;place-items:center;text-align:center;padding:40px 16px}
+.gate h1{font-family:var(--display);font-weight:800;font-size:clamp(44px,8vw,96px);line-height:.95;letter-spacing:-.04em;margin:0 0 18px;max-width:12ch}
+.gate p{color:var(--muted);max-width:46ch;margin:0 auto 28px}
+.strip-hero{display:flex;height:10px;max-width:520px;margin:0 auto 36px;border-radius:5px;overflow:hidden}
+.strip-hero span{flex:1}
+
+/* buttons & fields */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:12px 22px;font-weight:600;cursor:pointer;background:var(--panel-2);color:var(--paper);min-height:44px}
+.btn.primary{background:var(--tally);color:var(--tally-ink)}
+.btn.ghost{background:none;border:1px solid var(--line)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+label.f{display:block;font-size:14px;color:var(--muted);margin:0 0 6px}
+input[type=text],input[type=number],textarea,select{width:100%;background:var(--ink);border:1px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;font-size:16px}
+textarea{min-height:120px;resize:vertical}
+.row{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+.field{margin-bottom:18px}
+
+/* create */
+.create{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:24px;padding:28px 0 60px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px}
+h2{font-family:var(--display);font-weight:600;font-size:28px;letter-spacing:-.02em;margin:0 0 6px}
+.lede{color:var(--muted);margin:0 0 22px}
+.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
+.mode{background:var(--ink);border:1px solid var(--line);border-radius:var(--r-md);padding:14px;text-align:left;cursor:pointer}
+.mode b{display:block;font-family:var(--display);font-size:18px;font-weight:600}
+.mode span{color:var(--muted);font-size:13px}
+.mode[aria-pressed="true"]{border-color:var(--tally);box-shadow:inset 0 0 0 1px var(--tally)}
+.drop{border:1.5px dashed var(--line);border-radius:var(--r-md);padding:22px;text-align:center;cursor:pointer;background:var(--ink)}
+.drop.has{border-style:solid;border-color:var(--ready);text-align:left}
+.drop small{color:var(--muted)}
+.wave{display:flex;align-items:flex-end;gap:2px;height:46px;margin-top:12px}
+.wave i{flex:1;background:var(--tally);border-radius:2px;opacity:.85}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.fact{background:var(--panel-2);border-radius:999px;padding:4px 12px;font-size:13px}
+.thumb{max-width:100%;max-height:220px;border-radius:var(--r-sm);display:block;margin-top:10px}
+.chosen{display:flex;gap:14px;align-items:center;background:var(--ink);border:1px solid var(--line);border-radius:var(--r-md);padding:12px}
+.chosen .mini{width:64px;height:40px;border-radius:7px;display:flex;overflow:hidden;flex:none}
+.chosen .mini span{flex:1}
+.chosen b{font-family:var(--display);font-weight:600}
+.chosen small{display:block;color:var(--muted)}
+.chosen .btn{margin-left:auto;padding:8px 14px;min-height:36px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:8px}
+.note{color:var(--muted);font-size:14px}
+.err{color:var(--warn);font-size:14px;margin-top:10px}
+
+/* Kinetta */
+.agent{display:flex;flex-direction:column;min-height:560px;position:sticky;top:88px;max-height:calc(100vh - 110px)}
+.agent-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.orb{width:42px;height:42px;border-radius:50%;background:conic-gradient(from 200deg,var(--tally),#E26DA8,#7E6BF2,var(--ready),var(--tally));filter:saturate(1.1)}
+.agent-head b{font-family:var(--display);font-size:20px;font-weight:600}
+.agent-head small{display:block;color:var(--muted)}
+.log{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding-right:4px}
+.log>*{flex:none}
+.msg{max-width:92%;padding:12px 14px;border-radius:16px;font-size:15px}
+.msg.m-agent{background:var(--panel-2);border-top-left-radius:4px}
+.msg.m-user{background:var(--tally);color:var(--tally-ink);align-self:flex-end;border-top-right-radius:4px}
+.picks{display:grid;gap:8px;margin-top:10px}
+.pick{display:flex;gap:10px;align-items:center;width:100%;text-align:left;background:var(--ink);border:1px solid var(--line);border-radius:var(--r-sm);padding:8px;cursor:pointer}
+.pick:hover{border-color:var(--tally)}
+.pick .mini{width:44px;height:28px;border-radius:5px;display:flex;overflow:hidden;flex:none}
+.pick .mini span{flex:1}
+.pick small{display:block;color:var(--muted);font-size:12px}
+.say{display:flex;gap:8px;margin-top:12px}
+.say input{flex:1}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.chip{background:none;border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13px;color:var(--muted);cursor:pointer}
+
+/* library: the wall of palette strips */
+.lib-head{display:flex;gap:14px;align-items:end;flex-wrap:wrap;padding:28px 0 18px}
+.lib-head h2{font-size:clamp(34px,5vw,56px);font-weight:800;letter-spacing:-.035em;margin:0;line-height:1}
+.lib-head .tools{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.lib-head input{width:220px}
+.cats{display:flex;gap:6px;overflow-x:auto;padding-bottom:14px;scrollbar-width:none}
+.cats button{flex:none;background:none;border:1px solid var(--line);border-radius:999px;padding:7px 14px;color:var(--muted);cursor:pointer;font-size:14px}
+.cats button[aria-pressed="true"]{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;padding-bottom:60px}
+.style{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;cursor:pointer;text-align:left;padding:0;display:flex;flex-direction:column}
+.style:hover{border-color:var(--muted)}
+.strip{display:flex;height:84px}
+.preview{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--ink)}
+.preview video,.preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.preview .strip{position:absolute;inset:0;height:auto}
+.preview .strip span{transform-origin:bottom;animation:breathe 2.4s ease-in-out infinite alternate}
+.preview .strip span:nth-child(2){animation-delay:-.6s}.preview .strip span:nth-child(3){animation-delay:-1.2s}.preview .strip span:nth-child(4){animation-delay:-1.8s}.preview .strip span:nth-child(5){animation-delay:-.3s}
+@keyframes breathe{from{transform:scaleY(.55)}to{transform:scaleY(1)}}
+.preview .tag{position:absolute;left:8px;bottom:8px;background:rgba(23,18,31,.78);border-radius:999px;padding:2px 10px;font-size:12px;color:var(--paper)}
+.strip span{flex:1}
+.strip span:first-child{flex:2.2}
+.style .meta{padding:12px 14px 14px}
+.style b{font-family:var(--display);font-weight:600;font-size:17px;display:block;line-height:1.2}
+.style small{color:var(--muted);font-size:13px}
+
+/* projects */
+.plist{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;padding:28px 0 60px}
+.proj{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
+.proj video,.proj .ph{width:100%;aspect-ratio:16/9;background:var(--ink);display:block;object-fit:contain}
+.proj .ph{display:grid;place-items:center;color:var(--muted);font-size:14px}
+.proj .body{padding:16px}
+.proj b{font-family:var(--display);font-weight:600;font-size:18px}
+.status{display:inline-block;font-size:13px;border-radius:999px;padding:3px 10px;background:var(--panel-2);margin-left:6px}
+.status.ready{background:color-mix(in srgb,var(--ready) 22%,transparent);color:var(--ready)}
+.status.failed{background:color-mix(in srgb,var(--warn) 22%,transparent);color:var(--warn)}
+.bar-prog{height:4px;background:var(--panel-2);border-radius:2px;margin-top:10px;overflow:hidden}
+.bar-prog i{display:block;height:100%;background:var(--tally);transition:width .6s}
+.dl{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.dl .btn{padding:9px 16px;min-height:40px;font-size:14px}
+.empty{padding:60px 0;text-align:center;color:var(--muted)}
+
+/* style detail sheet */
+dialog{background:var(--panel);color:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:0;max-width:640px;width:calc(100% - 32px)}
+dialog::backdrop{background:rgba(10,6,16,.7)}
+dialog .strip{height:120px}
+dialog video{width:100%;display:block;aspect-ratio:16/9;background:var(--ink)}
+dialog .in{padding:22px}
+dialog h3{font-family:var(--display);font-size:30px;font-weight:800;letter-spacing:-.02em;margin:0}
+dialog dl{display:grid;grid-template-columns:110px 1fr;gap:8px 14px;font-size:15px;margin:18px 0}
+dialog dt{color:var(--muted)}
+dialog dd{margin:0}
+
+@media (max-width:900px){
+  .create{grid-template-columns:1fr}
+  .agent{position:static;max-height:none;min-height:420px}
+  .who{display:none}
+}
+@media (max-width:560px){
+  .modes{grid-template-columns:1fr}
+  .row{grid-template-columns:1fr}
+  nav button{padding:6px 9px;font-size:15px}
+  .brand span{display:none}
+  .brand{font-size:16px;gap:8px}
+  .bar{gap:10px}
+  .lib-head input{width:100%}
+  .lib-head .tools{width:100%}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap bar">
+    <div class="brand"><i aria-hidden="true"></i>Motion Studio <span style="color:var(--muted);font-weight:400">SWADEBASE</span></div>
+    <nav id="nav" hidden>
+      <button data-view="create" aria-current="page">Create</button>
+      <button data-view="library">Library</button>
+      <button data-view="projects">Projects</button>
+    </nav>
+    <div class="who" id="who"></div>
+  </div>
+</header>
+
+<main id="gate" class="gate" hidden>
+  <div>
+    <div class="strip-hero" id="heroStrip" aria-hidden="true"></div>
+    <h1>Turn a song, a still or an idea into motion.</h1>
+    <p>86 styles, one agent who knows them all, and a download waiting at the end of every build.</p>
+    <button class="btn primary" id="signin">Sign in with Google</button>
+  </div>
+</main>
+
+<main id="app" hidden>
+  <!-- CREATE -->
+  <section id="v-create" class="wrap create">
+    <div class="panel">
+      <h2>New motion graphic</h2>
+      <p class="lede">Start from whatever you have. Kinetta matches the style to it.</p>
+
+      <div class="modes" role="group" aria-label="Start from">
+        <button class="mode" data-mode="idea" aria-pressed="true"><b>An idea</b><span>Describe it in your words</span></button>
+        <button class="mode" data-mode="audio" aria-pressed="false"><b>Audio</b><span>A song, beat or voice track</span></button>
+        <button class="mode" data-mode="start_image" aria-pressed="false"><b>A start image</b><span>The first frame comes to life</span></button>
+      </div>
+
+      <div class="field" id="audioField" hidden>
+        <label class="f">Audio file</label>
+        <label class="drop" id="audioDrop">
+          <input type="file" id="audioFile" accept="audio/*,.mp3,.wav,.m4a,.aac,.ogg" hidden>
+          <span id="audioLabel"><b>Choose an audio file</b><br><small>MP3, WAV, M4A or AAC. We read the tempo and energy right here in your browser.</small></span>
+          <div class="wave" id="wave" hidden></div>
+          <div class="facts" id="audioFacts"></div>
+        </label>
+      </div>
+
+      <div class="field" id="imageField" hidden>
+        <label class="f">Start image</label>
+        <label class="drop" id="imageDrop">
+          <input type="file" id="imageFile" accept="image/png,image/jpeg,image/webp" hidden>
+          <span id="imageLabel"><b>Choose an image</b><br><small>PNG, JPG or WebP. It becomes frame one.</small></span>
+          <img class="thumb" id="imagePreview" alt="" hidden>
+        </label>
+        <div class="field" style="margin-top:12px">
+          <label class="f" for="imageDesc">What's in the image</label>
+          <input type="text" id="imageDesc" placeholder="Larry at the launch console, red alarm light">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="f" for="title">Title</label>
+        <input type="text" id="title" placeholder="Frequency Run · Season trailer">
+      </div>
+      <div class="field">
+        <label class="f" for="idea" id="ideaLabel">The idea</label>
+        <textarea id="idea" placeholder="A family escapes NASA through a dimensional portal. Open on the countdown, end on the new planet's sunrise."></textarea>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label class="f" for="format">Shape</label>
+          <select id="format">
+            <option value="16:9">Widescreen 16:9</option>
+            <option value="9:16">Vertical 9:16</option>
+            <option value="1:1">Square 1:1</option>
+            <option value="4:5">Portrait 4:5</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="f" for="duration">Length in seconds</label>
+          <input type="number" id="duration" min="3" max="600" value="15" inputmode="numeric">
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label class="f" for="property">For</label>
+          <select id="property">
+            <option value="">Anything</option>
+            <option value="black-tales">Black Tales</option>
+            <option value="frequency-run">Frequency Run</option>
+            <option value="beauty-culture">Beauty Culture</option>
+            <option value="group-chat">Group Chat</option>
+            <option value="abagale-tv">ABAGALE TV</option>
+            <option value="resing">ReSing Lab</option>
+            <option value="maestro-radio">Maestro Radio Factory</option>
+            <option value="sss-brain">SSS Brain</option>
+            <option value="oathloom">OATHLOOM</option>
+            <option value="teachvirt">TeachVirt</option>
+            <option value="groundlift">GroundLift</option>
+            <option value="swadespace">SwadeSpace</option>
+            <option value="ownmode">OwnMode</option>
+            <option value="dna-front">DNA Front</option>
+            <option value="money-bar">Money Bar</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="f" for="quality">Render quality</label>
+          <select id="quality">
+            <option value="draft">Draft (fast check)</option>
+            <option value="standard" selected>Standard</option>
+            <option value="high">High (final delivery)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="f">Style</label>
+        <div class="chosen" id="chosen">
+          <div class="mini" id="chosenMini"></div>
+          <div><b id="chosenName">Kinetta picks</b><small id="chosenWhy">She'll match a style when you build, or ask her below.</small></div>
+          <button class="btn ghost" id="browse">Browse 86</button>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" id="build">Build motion graphic</button>
+        <span class="note" id="buildNote">Renders as MP4 with the HyperFrames source, both downloadable.</span>
+      </div>
+      <div class="err" id="buildErr" role="alert"></div>
+    </div>
+
+    <aside class="panel agent" aria-label="Kinetta, motion graphics agent">
+      <div class="agent-head"><div class="orb" aria-hidden="true"></div><div><b id="agentName">__AGENT_NAME__</b><small>Motion graphics agent</small></div></div>
+      <div class="log" id="log" aria-live="polite"></div>
+      <div class="chips" id="chips">
+        <button class="chip">You pick</button>
+        <button class="chip">Make it vertical for Reels</button>
+        <button class="chip">Something cinematic</button>
+        <button class="chip">Show me retro looks</button>
+      </div>
+      <form class="say" id="say"><input type="text" id="sayInput" placeholder="Tell her what you're making" autocomplete="off"><button class="btn primary" type="submit">Send</button></form>
+    </aside>
+  </section>
+
+  <!-- LIBRARY -->
+  <section id="v-library" class="wrap" hidden>
+    <div class="lib-head">
+      <h2 id="libCount">86 styles</h2>
+      <div class="tools"><input type="text" id="libSearch" placeholder="Search: gospel, retro, data"><button class="btn ghost" id="genSamples" hidden>Generate samples</button></div>
+    </div>
+    <div class="cats" id="cats" role="group" aria-label="Categories"></div>
+    <div class="wall" id="wall"></div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="v-projects" class="wrap" hidden>
+    <div class="plist" id="plist"></div>
+  </section>
+</main>
+
+<dialog id="sheet">
+  <div class="strip" id="sheetStrip"></div>
+  <div class="in">
+    <h3 id="sheetName"></h3>
+    <small id="sheetCat" style="color:var(--muted)"></small>
+    <dl id="sheetDl"></dl>
+    <div class="actions"><button class="btn primary" id="sheetUse">Use this style</button><button class="btn ghost" id="sheetClose">Close</button></div>
+  </div>
+</dialog>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+const API = '__SWADEBASE_URL__/functions/v1/motion-studio'
+const sb = supabase.createClient('__SWADEBASE_URL__', '__SWADEBASE_ANON_KEY__')
+const $ = (s) => document.querySelector(s)
+const el = (tag, props = {}, kids = []) => { const n = Object.assign(document.createElement(tag), props); for (const k of [].concat(kids)) n.append(k); return n }
+const strip = (palette, cls = 'strip') => el('div', { className: cls }, palette.map((c) => { const s = el('span'); s.style.background = c; return s }))
+
+const state = { mode: 'idea', styles: [], cats: [], cat: null, styleId: null, stylePick: 'agent', audio: null, audioKey: null, imageKey: null, session: null, poll: null }
+
+/* ── auth ── */
+async function boot() {
+  const hero = $('#heroStrip')
+  ;['#E8B43A', '#E26DA8', '#7E6BF2', '#4FC6B8', '#F07A63', '#EEE7F4'].forEach((c) => { const s = el('span'); s.style.background = c; hero.append(s) })
+  const { data } = await sb.auth.getSession()
+  state.session = data.session
+  sb.auth.onAuthStateChange((_e, s) => { state.session = s; render() })
+  render()
+}
+function render() {
+  const signed = !!state.session
+  $('#gate').hidden = signed
+  $('#app').hidden = !signed
+  $('#nav').hidden = !signed
+  $('#who').textContent = signed ? state.session.user.email : ''
+  if (signed && !state.styles.length) { loadStyles(); greet() }
+}
+$('#signin').onclick = () => sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: location.href.split('#')[0] } })
+
+async function api(path, opts = {}) {
+  const r = await fetch(API + path, { ...opts, headers: { 'content-type': 'application/json', authorization: 'Bearer ' + state.session.access_token, ...(opts.headers || {}) } })
+  const j = await r.json().catch(() => ({}))
+  if (!r.ok) throw new Error(j.error || j.msg || 'Request failed (' + r.status + ')')
+  return j
+}
+
+/* ── views ── */
+$('#nav').addEventListener('click', (e) => {
+  const v = e.target.closest('button')?.dataset.view
+  if (!v) return
+  show(v)
+})
+function show(v) {
+  for (const b of document.querySelectorAll('#nav button')) {
+    if (b.dataset.view === v) b.setAttribute('aria-current', 'page')
+    else b.removeAttribute('aria-current')
+  }
+  for (const id of ['create', 'library', 'projects']) $('#v-' + id).hidden = id !== v
+  if (v === 'projects') loadProjects()
+  window.scrollTo({ top: 0 })
+}
+
+/* ── modes ── */
+document.querySelector('.modes').addEventListener('click', (e) => {
+  const b = e.target.closest('.mode'); if (!b) return
+  state.mode = b.dataset.mode
+  for (const m of document.querySelectorAll('.mode')) m.setAttribute('aria-pressed', String(m === b))
+  $('#audioField').hidden = state.mode !== 'audio'
+  $('#imageField').hidden = state.mode !== 'start_image'
+  $('#ideaLabel').textContent = state.mode === 'idea' ? 'The idea' : 'Direction (optional)'
+})
+
+/* ── audio: analyze locally, upload original ── */
+$('#audioFile').onchange = async (e) => {
+  const file = e.target.files[0]; if (!file) return
+  $('#audioLabel').innerHTML = '<b>' + escapeHtml(file.name) + '</b><br><small>Listening for tempo and energy…</small>'
+  $('#audioDrop').classList.add('has')
+  try {
+    const feats = await analyzeAudio(file)
+    state.audio = feats
+    $('#duration').value = Math.round(feats.duration)
+    drawWave(feats.energy)
+    $('#audioFacts').replaceChildren(...[
+      Math.floor(feats.duration / 60) + ':' + String(Math.round(feats.duration % 60)).padStart(2, '0'),
+      feats.bpm ? feats.bpm + ' BPM' : 'Free tempo',
+      feats.sections.length + ' sections',
+      'Energy ' + Math.round(feats.energyMean * 100) + '%',
+    ].map((t) => el('span', { className: 'fact', textContent: t })))
+    $('#audioLabel').innerHTML = '<b>' + escapeHtml(file.name) + '</b><br><small>Uploading to your library…</small>'
+    state.audioKey = await upload(file, 'audio')
+    $('#audioLabel').innerHTML = '<b>' + escapeHtml(file.name) + '</b><br><small>Ready. The video will follow this track.</small>'
+  } catch (err) {
+    $('#audioLabel').innerHTML = '<b>That file didn\'t work.</b><br><small>' + escapeHtml(err.message) + ' Try an MP3 or WAV.</small>'
+    state.audio = null; state.audioKey = null
+  }
+}
+function drawWave(energy) {
+  const n = 64, step = Math.max(1, Math.floor(energy.length / n)), w = $('#wave')
+  w.hidden = false
+  w.replaceChildren(...Array.from({ length: Math.min(n, energy.length) }, (_, i) => {
+    const v = Math.max(...energy.slice(i * step, i * step + step)); const b = el('i'); b.style.height = Math.max(6, v * 100) + '%'; return b
+  }))
+}
+
+async function analyzeAudio(file) {
+  const AC = window.AudioContext || window.webkitAudioContext
+  const ctx = new AC()
+  const buf = await new Promise((res, rej) => file.arrayBuffer().then((ab) => ctx.decodeAudioData(ab, res, rej)).catch(rej))
+  const sr = buf.sampleRate, len = buf.length, ch = buf.numberOfChannels
+  const mono = new Float32Array(len)
+  for (let c = 0; c < ch; c++) { const d = buf.getChannelData(c); for (let i = 0; i < len; i++) mono[i] += d[i] / ch }
+  ctx.close && ctx.close()
+  // energy per 100 ms
+  const hop = Math.floor(sr * 0.1), energy = []
+  for (let i = 0; i + hop <= len; i += hop) { let s = 0; for (let j = i; j < i + hop; j++) s += mono[j] * mono[j]; energy.push(Math.sqrt(s / hop)) }
+  const emax = Math.max(...energy, 1e-6)
+  const en = energy.map((v) => v / emax)
+  // onset envelope at ~23 ms
+  const fh = 1024, rms = []
+  for (let i = 0; i + fh <= len; i += fh) { let s = 0; for (let j = i; j < i + fh; j++) s += mono[j] * mono[j]; rms.push(Math.sqrt(s / fh)) }
+  const onset = rms.map((v, i) => Math.max(0, v - (rms[i - 1] || 0)))
+  const fps = sr / fh
+  // tempo by autocorrelation over 70–180 BPM
+  let best = 0, bestLag = 0
+  const lo = Math.floor((60 / 180) * fps), hi = Math.ceil((60 / 70) * fps)
+  const N = Math.min(onset.length, Math.floor(fps * 90))
+  for (let lag = lo; lag <= hi; lag++) { let s = 0; for (let i = lag; i < N; i++) s += onset[i] * onset[i - lag]; if (s > best) { best = s; bestLag = lag } }
+  let bpm = bestLag ? 60 * fps / bestLag : null
+  if (bpm && bpm < 85) bpm *= 2
+  const period = bpm ? 60 / bpm : null
+  // phase: offset with the most onset energy on the grid
+  const beats = [], downbeats = []
+  if (period) {
+    let bestOff = 0, bestSum = -1
+    for (let k = 0; k < 24; k++) {
+      const off = (k / 24) * period; let s = 0
+      for (let t = off; t < Math.min(buf.duration, 60); t += period) s += onset[Math.round(t * fps)] || 0
+      if (s > bestSum) { bestSum = s; bestOff = off }
+    }
+    let i = 0
+    for (let t = bestOff; t < buf.duration; t += period, i++) { beats.push(+t.toFixed(3)); if (i % 4 === 0) downbeats.push(+t.toFixed(3)) }
+  }
+  // sections from smoothed energy
+  const win = 40, smooth = en.map((_, i) => { const a = en.slice(Math.max(0, i - win / 2), i + win / 2); return a.reduce((x, y) => x + y, 0) / a.length })
+  const mean = en.reduce((a, b) => a + b, 0) / en.length
+  const sections = []; let start = 0
+  for (let i = win; i < smooth.length; i += 10) {
+    const prev = smooth[i - win / 2], cur = smooth[i]
+    if (Math.abs(cur - prev) > 0.18 && i / 10 - start > 6) { sections.push([start, i / 10]); start = i / 10 }
+  }
+  sections.push([start, buf.duration])
+  const labeled = sections.map(([s, e], idx) => {
+    const seg = en.slice(Math.floor(s * 10), Math.floor(e * 10)); const avg = seg.reduce((a, b) => a + b, 0) / Math.max(1, seg.length)
+    const label = idx === 0 ? 'intro' : idx === sections.length - 1 ? 'outro' : avg > mean * 1.15 ? 'drop' : avg < mean * 0.85 ? 'verse' : 'build'
+    return { start: +s.toFixed(2), end: +e.toFixed(2), label, energy: +avg.toFixed(2) }
+  })
+  return { duration: +buf.duration.toFixed(2), bpm: bpm ? Math.round(bpm) : null, beats, downbeats, energy: en.map((v) => +v.toFixed(2)), energyMean: +mean.toFixed(2), sections: labeled, hasVocals: null }
+}
+
+/* ── image ── */
+$('#imageFile').onchange = async (e) => {
+  const file = e.target.files[0]; if (!file) return
+  const img = $('#imagePreview'); img.src = URL.createObjectURL(file); img.hidden = false
+  $('#imageDrop').classList.add('has')
+  $('#imageLabel').innerHTML = '<b>' + escapeHtml(file.name) + '</b><br><small>Uploading…</small>'
+  try {
+    state.imageKey = await upload(file, 'start_image')
+    $('#imageLabel').innerHTML = '<b>' + escapeHtml(file.name) + '</b><br><small>Ready. This is frame one.</small>'
+    img.onload = () => { if (img.naturalHeight > img.naturalWidth) $('#format').value = '9:16'; else if (img.naturalHeight === img.naturalWidth) $('#format').value = '1:1' }
+  } catch (err) { $('#imageLabel').innerHTML = '<b>Upload failed.</b><br><small>' + escapeHtml(err.message) + '</small>'; state.imageKey = null }
+}
+
+async function upload(file, kind) {
+  const type = file.type || (kind === 'audio' ? 'audio/mpeg' : 'image/png')
+  const u = await api('/uploads', { method: 'POST', body: JSON.stringify({ kind, filename: file.name, contentType: type, size: file.size }) })
+  const r = await fetch(u.uploadUrl, { method: 'PUT', headers: u.headers, body: file })
+  if (!r.ok) throw new Error('Storage refused the upload (' + r.status + ').')
+  return u.key
+}
+
+/* ── library ── */
+async function loadStyles() {
+  try {
+    const j = await api('/styles')
+    state.styles = j.styles; state.cats = j.categories
+    const missing = j.styles.filter((x) => x.sample_status !== 'ready').length
+    $('#genSamples').hidden = !j.is_admin
+    $('#genSamples').textContent = missing ? 'Generate ' + missing + ' samples' : 'Re-render samples'
+    $('#genSamples').onclick = async () => {
+      const force = !missing
+      if (force && !confirm('Every style has a sample. Re-render all 86?')) return
+      $('#genSamples').disabled = true
+      try { const r = await api('/styles/samples', { method: 'POST', body: JSON.stringify({ all: true, force }) }); $('#genSamples').textContent = r.queued + ' samples queued'; setTimeout(loadStyles, 4000) }
+      catch (e) { alert(e.message) } finally { $('#genSamples').disabled = false }
+    }
+    $('#libCount').textContent = j.count + ' styles'
+    const cats = $('#cats')
+    cats.replaceChildren(el('button', { textContent: 'All', ariaPressed: 'true', onclick: () => setCat(null) }), ...state.cats.map((c) => el('button', { textContent: c.name + ' ' + c.count, ariaPressed: 'false', onclick: () => setCat(c.name) })))
+    drawWall()
+  } catch (e) { $('#wall').replaceChildren(el('p', { className: 'empty', textContent: e.message })) }
+}
+function setCat(c) {
+  state.cat = c
+  for (const b of document.querySelectorAll('#cats button')) b.setAttribute('aria-pressed', String((c === null && b.textContent === 'All') || (c && b.textContent.startsWith(c + ' '))))
+  drawWall()
+}
+$('#libSearch').oninput = drawWall
+function drawWall() {
+  const q = $('#libSearch').value.toLowerCase()
+  const list = state.styles.filter((s) => (!state.cat || s.category === state.cat) && (!q || (s.name + ' ' + s.bestFor.join(' ') + ' ' + s.summary).toLowerCase().includes(q)))
+  $('#wall').replaceChildren(...(list.length ? list.map((s) => {
+    const b = el('button', { className: 'style', onclick: () => openSheet(s.id) })
+    b.append(previewFor(s), el('div', { className: 'meta' }, [el('b', { textContent: s.name }), el('small', { textContent: s.category })]))
+    return b
+  }) : [el('p', { className: 'empty', textContent: 'No style matches that. Try a mood like "calm" or a use like "lyric".' })]))
+}
+function previewFor(s) {
+  const box = el('div', { className: 'preview' })
+  if (s.sample_status === 'ready' && s.sample_video) {
+    if (s.sample_poster) box.append(el('img', { src: s.sample_poster, alt: '', loading: 'lazy' }))
+    const v = el('video', { muted: true, loop: true, playsInline: true, preload: 'none', src: s.sample_video })
+    v.setAttribute('muted', ''); v.setAttribute('playsinline', '')
+    box.append(v)
+    const play = () => v.play().catch(() => {}), stop = () => { v.pause() }
+    box.addEventListener('mouseenter', play); box.addEventListener('mouseleave', stop)
+    // Phones: play samples as they scroll into view
+    if (matchMedia('(hover: none)').matches) new IntersectionObserver((es) => es.forEach((e) => (e.isIntersecting ? play() : stop())), { threshold: 0.6 }).observe(box)
+  } else {
+    box.append(strip(s.palette))
+    box.append(el('span', { className: 'tag', textContent: s.sample_status === 'queued' || s.sample_status === 'rendering' ? 'Sample rendering' : 'Color preview' }))
+  }
+  return box
+}
+async function openSheet(id) {
+  const s = await api('/styles/' + id)
+  const top = s.sample_status === 'ready' && s.sample_video
+    ? Object.assign(el('video', { src: s.sample_video, controls: true, autoplay: true, muted: true, loop: true, playsInline: true }), { id: 'sheetStrip' })
+    : Object.assign(strip(s.palette), { id: 'sheetStrip' })
+  if (top.tagName === 'VIDEO') { top.setAttribute('muted', ''); top.setAttribute('playsinline', '') }
+  $('#sheetStrip').replaceWith(top)
+  $('#sheetName').textContent = s.name
+  $('#sheetCat').textContent = s.category
+  const rows = [['Look', s.look], ['Type', s.type], ['Motion', s.motion], ['Transitions', s.transitions], ['With audio', s.audio], ['Best for', s.bestFor.join(', ')]]
+  $('#sheetDl').replaceChildren(...rows.flatMap(([k, v]) => [el('dt', { textContent: k }), el('dd', { textContent: v })]))
+  $('#sheetUse').onclick = () => { chooseStyle(s.id, 'user'); $('#sheet').close(); show('create') }
+  $('#sheet').showModal()
+}
+$('#sheetClose').onclick = () => $('#sheet').close()
+$('#browse').onclick = () => show('library')
+
+function chooseStyle(id, by, why) {
+  const s = state.styles.find((x) => x.id === id); if (!s) return
+  state.styleId = id; state.stylePick = by
+  $('#chosenMini').replaceChildren(...s.palette.map((c) => { const x = el('span'); x.style.background = c; return x }))
+  $('#chosenName').textContent = s.name
+  $('#chosenWhy').textContent = why || (by === 'agent' ? 'Picked by Kinetta' : s.category)
+}
+
+/* ── Kinetta ── */
+function say(role, text, picks) {
+  const m = el('div', { className: 'msg m-' + role, textContent: text })
+  if (picks?.length) m.append(el('div', { className: 'picks' }, picks.map((p) => {
+    const s = state.styles.find((x) => x.id === p.id) || p.card || { palette: [] }
+    const b = el('button', { className: 'pick', onclick: () => { chooseStyle(p.id, 'agent', 'You chose it from Kinetta\'s picks'); say('agent', 'Locked in ' + p.name + '. Hit build when you\'re ready.') } })
+    b.append(el('div', { className: 'mini' }, (s.palette || []).map((c) => { const x = el('span'); x.style.background = c; return x })), el('div', {}, [el('b', { textContent: p.name }), el('small', { textContent: (p.reasons && p.reasons[0]) || p.category })]))
+    return b
+  })))
+  $('#log').append(m); $('#log').scrollTop = $('#log').scrollHeight
+}
+function greet() { say('agent', 'Tell me what you\'re making and who it\'s for. I\'ll pull three looks from the library, or just say "you pick".') }
+function context() {
+  return { mode: state.mode, idea: $('#idea').value, title: $('#title').value, property: $('#property').value || null, format: $('#format').value, durationSec: Number($('#duration').value), audio: state.audio ? { bpm: state.audio.bpm, energyMean: state.audio.energyMean, duration: state.audio.duration } : null, startImage: $('#imageDesc').value ? { description: $('#imageDesc').value } : null, styleId: state.styleId }
+}
+async function talk(text) {
+  if (!text.trim()) return
+  say('user', text)
+  try {
+    const t = await api('/agent', { method: 'POST', body: JSON.stringify({ message: text, context: context() }) })
+    say('agent', t.reply, t.chosen ? [] : t.picks)
+    if (t.chosen) chooseStyle(t.chosen, 'agent', 'Picked by Kinetta')
+    if (t.hints?.format) $('#format').value = t.hints.format
+    if (t.hints?.durationSec && state.mode !== 'audio') $('#duration').value = t.hints.durationSec
+    if (t.hints?.quality) $('#quality').value = t.hints.quality
+    if (t.title && !$('#title').value) $('#title').value = t.title
+  } catch (e) { say('agent', 'I couldn\'t reach Motion Studio: ' + e.message) }
+}
+$('#say').onsubmit = (e) => { e.preventDefault(); const v = $('#sayInput').value; $('#sayInput').value = ''; talk(v) }
+$('#chips').onclick = (e) => { const b = e.target.closest('.chip'); if (b) talk(b.textContent) }
+
+/* ── build ── */
+$('#build').onclick = async () => {
+  $('#buildErr').textContent = ''
+  if (state.mode === 'audio' && !state.audioKey) return ($('#buildErr').textContent = 'Add an audio file first, and wait for it to finish uploading.')
+  if (state.mode === 'start_image' && !state.imageKey) return ($('#buildErr').textContent = 'Add a start image first.')
+  if (state.mode === 'idea' && !$('#idea').value.trim() && !$('#title').value.trim()) return ($('#buildErr').textContent = 'Describe the idea or give it a title.')
+  $('#build').disabled = true; $('#buildNote').textContent = 'Queuing your render…'
+  try {
+    const p = await api('/projects', { method: 'POST', body: JSON.stringify({
+      mode: state.mode, title: $('#title').value, idea: $('#idea').value, format: $('#format').value, duration_sec: Number($('#duration').value),
+      property: $('#property').value || null, quality: $('#quality').value, style_id: state.styleId || 'auto', style_pick: state.stylePick,
+      audio_b2_key: state.audioKey, audio_features: state.audio, start_image_b2_key: state.imageKey, start_image_description: $('#imageDesc').value || null, render: true,
+    }) })
+    const s = state.styles.find((x) => x.id === p.style_id)
+    say('agent', 'Building "' + p.title + '" in ' + (s ? s.name : p.style_id) + '. I\'ll have the MP4 and source ready in Projects.')
+    show('projects')
+  } catch (e) { $('#buildErr').textContent = e.message }
+  finally { $('#build').disabled = false; $('#buildNote').textContent = 'Renders as MP4 with the HyperFrames source, both downloadable.' }
+}
+
+/* ── projects ── */
+const LABEL = { draft: 'Draft', queued: 'Queued', composing: 'Composing', rendering: 'Rendering', ready: 'Ready', failed: 'Failed', cancelled: 'Cancelled' }
+async function loadProjects() {
+  clearTimeout(state.poll)
+  try {
+    const { projects } = await api('/projects')
+    const list = $('#plist')
+    if (!projects.length) { list.replaceChildren(el('div', { className: 'empty', textContent: 'Nothing built yet. Start one in Create.' })); return }
+    list.replaceChildren(...projects.map((p) => {
+      const card = el('article', { className: 'proj' })
+      card.append(p.downloads?.video_preview ? el('video', { src: p.downloads.video_preview, controls: true, playsInline: true, preload: 'metadata', poster: p.downloads.poster || '' }) : el('div', { className: 'ph', textContent: p.status === 'failed' ? 'Render failed' : 'Your video appears here' }))
+      const body = el('div', { className: 'body' })
+      const s = state.styles.find((x) => x.id === p.style_id)
+      body.append(el('div', {}, [el('b', { textContent: p.title }), el('span', { className: 'status ' + p.status, textContent: LABEL[p.status] || p.status })]))
+      body.append(el('small', { style: 'color:var(--muted)', textContent: (s ? s.name : p.style_id || 'Style pending') + ', ' + p.format + ', ' + Math.round(p.duration_sec) + 's' }))
+      if (['queued', 'composing', 'rendering'].includes(p.status)) { const bar = el('div', { className: 'bar-prog' }); const i = el('i'); i.style.width = (p.progress || 4) + '%'; bar.append(i); body.append(bar) }
+      if (p.status === 'failed' && p.error_message) body.append(el('p', { className: 'err', textContent: p.error_message }))
+      const dl = el('div', { className: 'dl' })
+      if (p.downloads?.video) dl.append(el('a', { className: 'btn primary', href: p.downloads.video, textContent: 'Download MP4' }))
+      if (p.downloads?.source) dl.append(el('a', { className: 'btn ghost', href: p.downloads.source, textContent: 'Download source' }))
+      if (['ready', 'failed'].includes(p.status)) dl.append(el('button', { className: 'btn ghost', textContent: p.status === 'failed' ? 'Try again' : 'Render again', onclick: async () => { await api('/projects/' + p.id + '/render', { method: 'POST', body: JSON.stringify({}) }); loadProjects() } }))
+      body.append(dl); card.append(body)
+      return card
+    }))
+    if (projects.some((p) => ['queued', 'composing', 'rendering'].includes(p.status)) && !$('#v-projects').hidden) state.poll = setTimeout(loadProjects, 5000)
+  } catch (e) { $('#plist').replaceChildren(el('p', { className: 'empty', textContent: e.message })) }
+}
+
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]) }
+boot()
+</script>
+</body>
+</html>

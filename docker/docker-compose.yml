@@ -472,6 +472,8 @@ services:
       SUPABASE_DB_URL: postgresql://postgres:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
       # TODO: Allow configuring VERIFY_JWT per function.
       VERIFY_JWT: "${FUNCTIONS_VERIFY_JWT}"
+      # Motion Studio reads BACKBLAZE_*/B2_*, MOTION_* and provider keys from the functions env (see .env.hostinger.example).
+      PUBLIC_FUNCTION_GET_PATHS: ${PUBLIC_FUNCTION_GET_PATHS:-/motion-studio,/motion-studio/app,/motion-studio/health}
     command:
       [
         "start",
