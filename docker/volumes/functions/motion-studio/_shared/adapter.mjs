@@ -56,6 +56,9 @@ const tokenize = (s) =>
     .split(/\s+/)
     .filter(Boolean)
 
+// Words that describe a format rather than a look score lower than subject/mood words.
+const GENERIC_WORDS = new Set(['intro', 'promo', 'ad', 'video', 'music', 'song', 'clip', 'brand', 'product', 'explainer', 'title', 'background', 'loop', 'social'])
+
 const MOOD_HINTS = [
   { when: (a) => a && a.bpm >= 120 && a.energyMean >= 0.55, boost: ['hype', 'dance', 'party', 'energy', 'drop', 'action', 'trailer'] },
   { when: (a) => a && a.bpm && a.bpm < 90 && a.energyMean < 0.45, boost: ['calm', 'ambient', 'dreamy', 'gentle', 'chill', 'meditation', 'ballad'] },
@@ -72,7 +75,7 @@ export function recommendStyles(library, brief = {}, limit = 5) {
     for (const k of s.bestFor) {
       const hit = k.includes(' ') ? text.includes(' ' + k + ' ') : words.has(k)
       if (hit) {
-        score += 3
+        score += GENERIC_WORDS.has(k) ? 1 : 3
         reasons.push(`matches "${k}"`)
       }
     }
