@@ -197,14 +197,32 @@ async function resolveStyle(body: any, styles: any[]) {
   return { style_id: top.id, style_pick: 'agent', reasons: top.reasons }
 }
 
+// Every referenced upload must sit under the caller's own prefix and respect the size limit.
+// The presigned PUT can't bind Content-Length, so the real object size is checked here (and again by the worker).
+async function assertUploads(user: User, body: any) {
+  for (const k of ['audio_b2_key', 'start_image_b2_key']) {
+    const key = body[k]
+    if (!key) continue
+    if (typeof key !== 'string' || key.includes('..')) throw new Error(`${k} is invalid`)
+    if (!key.startsWith(`${B2.prefix}/${user.id}/uploads/`) && !user.isAdmin) throw new Error(`${k} is not yours`)
+    if (!s3) throw new Error('Backblaze B2 is not configured on SWADEBASE')
+    const head = await s3.fetch(`${B2.endpoint}/${B2.bucket}/${enc(key)}`, { method: 'HEAD' })
+    if (!head.ok) throw new Error(`${k} was not found in storage; upload it again`)
+    const bytes = Number(head.headers.get('content-length') || 0)
+    if (bytes > MAX_UPLOAD_MB * 1024 * 1024) {
+      await s3.fetch(`${B2.endpoint}/${B2.bucket}/${enc(key)}`, { method: 'DELETE' }).catch(() => {})
+      throw new Error(`${k} is larger than ${MAX_UPLOAD_MB} MB and was removed`)
+    }
+  }
+}
+
 async function createProject(user: User, body: any) {
   const styles = await library()
   const mode = ['idea', 'audio', 'start_image'].includes(body.mode) ? body.mode : 'idea'
   if (mode === 'audio' && !body.audio_b2_key) throw new Error('Audio mode needs an uploaded audio file')
   if (mode === 'start_image' && !body.start_image_b2_key) throw new Error('Start-image mode needs an uploaded image')
   if (mode === 'idea' && !String(body.idea || body.title || '').trim()) throw new Error('Describe the idea first')
-  for (const k of ['audio_b2_key', 'start_image_b2_key'])
-    if (body[k] && !String(body[k]).startsWith(`${B2.prefix}/${user.id}/`) && !user.isAdmin) throw new Error(`${k} is not yours`)
+  await assertUploads(user, body)
   const style = await resolveStyle({ ...body, mode }, styles)
   const audioDur = Number(body.audio_features?.duration) || 0
   const row = {
@@ -418,7 +436,9 @@ Deno.serve(async (req) => {
       const type = String(body.contentType || '')
       if (kind === 'audio' && !/^audio\//.test(type) && !/^video\/(mp4|quicktime)$/.test(type)) return fail(400, 'Upload an audio file (mp3, wav, m4a, aac, ogg)')
       if (kind === 'start_image' && !/^image\/(png|jpe?g|webp)$/.test(type)) return fail(400, 'Upload a PNG, JPG or WebP image')
-      if (Number(body.size) > MAX_UPLOAD_MB * 1024 * 1024) return fail(413, `Max ${MAX_UPLOAD_MB} MB`)
+      const size = Number(body.size)
+      if (!Number.isFinite(size) || size <= 0) return fail(400, 'File size is required')
+      if (size > MAX_UPLOAD_MB * 1024 * 1024) return fail(413, `Max ${MAX_UPLOAD_MB} MB`)
       const key = `${B2.prefix}/${user.id}/uploads/${crypto.randomUUID()}-${safeName(String(body.filename || kind))}`
       return json({ key, uploadUrl: await presign('PUT', key, 900, type), headers: { 'content-type': type }, expiresIn: 900 })
     }
@@ -443,6 +463,7 @@ Deno.serve(async (req) => {
       if (!c && req.method === 'PATCH') {
         if (['queued', 'composing', 'rendering'].includes(project.status)) return fail(409, 'Wait for the current render to finish')
         const patch = pick(await req.json())
+        await assertUploads(user, patch)
         if (patch.style_id) {
           const styles = await library()
           if (!styles.find((s) => s.id === patch.style_id)) return fail(400, 'Unknown style')

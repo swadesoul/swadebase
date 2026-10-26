@@ -42,7 +42,11 @@ const b2url = (key) => `${B2.endpoint}/${B2.bucket}/${key.split('/').map(encodeU
 
 const log = (...a) => console.log(new Date().toISOString(), `[${WORKER_ID}]`, ...a)
 
+const MAX_UPLOAD_BYTES = Number(env('MOTION_MAX_UPLOAD_MB', '200')) * 1024 * 1024
 async function b2Get(key, dest) {
+  const head = await s3.fetch(b2url(key), { method: 'HEAD' })
+  if (!head.ok) throw new Error(`Uploaded file not found (${head.status})`)
+  if (Number(head.headers.get('content-length') || 0) > MAX_UPLOAD_BYTES) throw new Error('Uploaded file is over the size limit')
   const r = await s3.fetch(b2url(key))
   if (!r.ok) throw new Error(`B2 download failed ${r.status} for ${key}`)
   await writeFile(dest, Buffer.from(await r.arrayBuffer()))
