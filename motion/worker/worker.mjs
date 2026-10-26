@@ -106,15 +106,24 @@ const cleanHtml = (s) => {
 }
 
 async function lint(dir) {
+  // `hyperframes lint --json` prints one JSON document; errors are any finding objects with
+  // severity "error" (warnings are fine). Walk the whole document so key names don't matter.
   const r = await run('npx', ['--no-install', 'hyperframes', 'lint', dir, '--json'], { timeoutMs: 120000 })
-  let findings = []
-  try {
-    const j = JSON.parse(r.out.slice(r.out.indexOf('{'), r.out.lastIndexOf('}') + 1) || r.out.slice(r.out.indexOf('['), r.out.lastIndexOf(']') + 1))
-    findings = (Array.isArray(j) ? j : j.findings || j.results || []).filter((f) => (f.severity || f.level) === 'error')
-  } catch {
-    if (r.code !== 0) findings = [{ message: (r.err || r.out).slice(0, 2000) }]
+  const text = r.out.slice(r.out.indexOf('{'), r.out.lastIndexOf('}') + 1)
+  const errors = []
+  const walk = (v) => {
+    if (Array.isArray(v)) v.forEach(walk)
+    else if (v && typeof v === 'object') {
+      if (v.severity === 'error') errors.push({ code: v.code, message: v.message, fixHint: v.fixHint })
+      else Object.values(v).forEach(walk)
+    }
   }
-  return findings
+  try {
+    walk(JSON.parse(text))
+  } catch {
+    if (r.code !== 0) errors.push({ message: (r.err || r.out).slice(0, 2000) })
+  }
+  return errors
 }
 
 async function compose(style, request, assets, dir, onStage) {
