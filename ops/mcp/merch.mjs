@@ -6,7 +6,7 @@ export function makeMerch({pool,guard,readSnapshot=async()=>JSON.parse(await rea
  async function snapshot(){const d=await readSnapshot();if(d.store_id!==MERCH_STORE||d.shop_id!==MERCH_SHOP||!Array.isArray(d.items)||d.items.length>200)throw err('unavailable','The scoped catalog snapshot is unavailable.');return d;}
  async function catalog(actor,{limit=10,offset=0}={}){
   await guard(actor,'merch:read');if(!Number.isInteger(limit)||limit<1||limit>20||!Number.isInteger(offset)||offset<0||offset>200)throw err('invalid_input','Invalid catalog page.');
-  const d=await snapshot();return {shop_id:MERCH_SHOP,store_id:MERCH_STORE,as_of:d.checked_at,items:d.items.slice(offset,offset+limit),next_offset:d.items.length>offset+limit?offset+limit:null,source:'SWADEBASE catalog snapshot; freshness and visual QA are separate',production_enabled:false};
+  const d=await snapshot();return {shop_id:MERCH_SHOP,store_id:MERCH_STORE,as_of:d.checked_at,approved_logo:d.approved_logo??null,items:d.items.slice(offset,offset+limit),next_offset:d.items.length>offset+limit?offset+limit:null,source:'SWADEBASE catalog snapshot; freshness and visual QA are separate',production_enabled:false};
  }
  async function report(actor,input){
   await guard(actor,'merch:report');const {idempotency_key,product_ids=[],outcome,summary}=input;
