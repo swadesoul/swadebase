@@ -3,11 +3,13 @@ export const BASE='/adapters/mcp';
 export const ORIGIN='https://swadebase.cloud';
 export const RESOURCE=ORIGIN+BASE;
 export const SCOPES=['ecosystem:read','operator:plan','tasks:write'];
+export const MERCH_SCOPES=['merch:read','merch:report'];
+export const SUPPORTED_SCOPES=[...SCOPES,...MERCH_SCOPES];
 export const sha=s=>createHash('sha256').update(s).digest('hex');
 export const opaque=()=>randomBytes(32).toString('base64url');
 export const pkce=s=>createHash('sha256').update(s).digest('base64url');
 export function equal(a,b){const x=Buffer.from(String(a)),y=Buffer.from(String(b));return x.length===y.length&&timingSafeEqual(x,y);}
-export function scopeList(s){const a=String(s||'ecosystem:read operator:plan').split(/\s+/).filter(Boolean);if(!a.length||a.some(x=>!SCOPES.includes(x))||(a.includes('operator:plan')&&!a.includes('ecosystem:read'))||(a.includes('tasks:write')&&(!a.includes('operator:plan')||!a.includes('ecosystem:read'))))throw Error('invalid_scope');return [...new Set(a)];}
+export function scopeList(s){const a=String(s||'ecosystem:read operator:plan').split(/\s+/).filter(Boolean);if(!a.length||a.some(x=>!SUPPORTED_SCOPES.includes(x))||(a.includes('operator:plan')&&!a.includes('ecosystem:read'))||(a.includes('merch:report')&&!a.includes('merch:read'))||(a.includes('tasks:write')&&(!a.includes('operator:plan')||!a.includes('ecosystem:read'))))throw Error('invalid_scope');return [...new Set(a)];}
 export function redirectUri(s){const u=new URL(s);if(u.username||u.password||u.hash||s.length>2000||!(u.protocol==='https:'||(u.protocol==='http:'&&['127.0.0.1','[::1]'].includes(u.hostname))))throw Error('invalid_redirect_uri');return s;}
 export function requireScope(actor,scope){if(!actor?.scopes?.includes(scope))throw Object.assign(Error('Required permission: '+scope),{code:'forbidden',status:403});}
 export const PROGRAMS=[

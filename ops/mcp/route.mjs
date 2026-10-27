@@ -1,6 +1,6 @@
 import {randomUUID} from 'node:crypto';
 import {readFile} from 'node:fs/promises';
-import {BASE,ORIGIN,RESOURCE,SCOPES,sha,opaque,pkce,equal,scopeList,redirectUri,limiter} from './core.mjs';
+import {BASE,ORIGIN,RESOURCE,SCOPES,SUPPORTED_SCOPES,sha,opaque,pkce,equal,scopeList,redirectUri,limiter} from './core.mjs';
 import {makeService,localClassifier} from './service.mjs';
 import {serveProtocol} from './protocol.mjs';
 const S='swadebase_ops',COOKIE='swade_mcp_pending';
@@ -9,13 +9,13 @@ function reply(res,status,data,headers={}){res.writeHead(status,{'content-type':
 function go(res,url,cookie){res.writeHead(303,{location:url,'cache-control':'no-store',...(cookie?{'set-cookie':cookie}:{})});res.end();}
 function cookie(req){return String(req.headers.cookie||'').split(/;\s*/).find(x=>x.startsWith(COOKIE+'='))?.slice(COOKIE.length+1)||'';}
 async function body(req){let n=0,out=[];for await(const part of req){n+=part.length;if(n>16000)throw Object.assign(Error('Request too large.'),{status:413});out.push(part);}const text=Buffer.concat(out).toString();try{return String(req.headers['content-type']||'').startsWith('application/x-www-form-urlencoded')?Object.fromEntries(new URLSearchParams(text)):JSON.parse(text||'{}');}catch{throw Object.assign(Error('Invalid request.'),{status:400});}}
-const issuerMetadata={issuer:RESOURCE,authorization_endpoint:RESOURCE+'/oauth/authorize',token_endpoint:RESOURCE+'/oauth/token',registration_endpoint:RESOURCE+'/oauth/register',revocation_endpoint:RESOURCE+'/oauth/revoke',response_types_supported:['code'],grant_types_supported:['authorization_code'],token_endpoint_auth_methods_supported:['none'],code_challenge_methods_supported:['S256'],authorization_response_iss_parameter_supported:true,scopes_supported:SCOPES};
-const protectedMetadata={resource:RESOURCE,authorization_servers:[RESOURCE],scopes_supported:SCOPES,bearer_methods_supported:['header'],resource_name:'SWADEBASE Ecosystem MCP'};
+const issuerMetadata={issuer:RESOURCE,authorization_endpoint:RESOURCE+'/oauth/authorize',token_endpoint:RESOURCE+'/oauth/token',registration_endpoint:RESOURCE+'/oauth/register',revocation_endpoint:RESOURCE+'/oauth/revoke',response_types_supported:['code'],grant_types_supported:['authorization_code'],token_endpoint_auth_methods_supported:['none'],code_challenge_methods_supported:['S256'],authorization_response_iss_parameter_supported:true,scopes_supported:SUPPORTED_SCOPES};
+const protectedMetadata={resource:RESOURCE,authorization_servers:[RESOURCE],scopes_supported:SUPPORTED_SCOPES,bearer_methods_supported:['header'],resource_name:'SWADEBASE Ecosystem MCP'};
 export default function mcpRoutes({pool,auth,admin,log=()=>{},classifier=localClassifier}){
  const publicLimit=limiter(30,3600000),calls=limiter(60,60000),routing=limiter(10,3600000),modelLimit=limiter(10,3600000);let activePlans=0,activeModels=0;
  const service=makeService({pool,classifier,admitPlan:actor=>{if(activeModels>=2||!modelLimit(actor.id))return null;activeModels++;return ()=>activeModels--;}});
  const query=async(sql,args=[])=> (await pool.query(sql,args)).rows;
- const actorFromSession=async s=>{if(!s?.userId||!await admin.isSuperAdmin(s.userId))return null;return {id:s.userId,scopes:SCOPES};};
+ const actorFromSession=async s=>{if(!s?.userId||!await admin.isSuperAdmin(s.userId))return null;return {id:s.userId,scopes:SUPPORTED_SCOPES};};
  async function actorFromBearer(req){const raw=String(req.headers.authorization||'').match(/^Bearer (swmcp_[A-Za-z0-9_-]{43})$/)?.[1];if(!raw)return null;const row=(await query(`select actor_id,scopes,client_id from ${S}.mcp_tokens where token_hash=$1 and issuer=$2 and audience=$2 and revoked_at is null and expires_at>now()`,[sha(raw),RESOURCE]))[0];if(!row||!await admin.isSuperAdmin(row.actor_id))return null;return {id:row.actor_id,scopes:row.scopes,clientId:row.client_id};}
  function validHost(req){const host=String(req.headers.host||'').split(':')[0];return ['swadebase.cloud','127.0.0.1','localhost'].includes(host);}
  function validOrigin(req){return !req.headers.origin||req.headers.origin===ORIGIN;}

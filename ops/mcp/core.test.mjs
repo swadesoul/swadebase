@@ -45,3 +45,5 @@ test('tasks reuse existing queue, are idempotent, isolated and do not start prod
 });
 
 test('native chat rules-only routing never invokes the local model',async()=>{let calls=0;const {service}=fixture({classifier:async()=>{calls++;throw Error('unexpected')}});const p=await service.plan(actor,{request:'Create a school anthem',rules_only:true});assert.equal(calls,0);assert.equal(p.method,'rules');});
+
+test('merch-only scopes are narrow and require report/read dependency',()=>{assert.deepEqual(scopeList('merch:read merch:report'),['merch:read','merch:report']);assert.throws(()=>scopeList('merch:report'));assert.throws(()=>requireScope({scopes:['merch:read','merch:report']},'ecosystem:read'));assert.throws(()=>requireScope({scopes:['merch:read','merch:report']},'tasks:write'));});
