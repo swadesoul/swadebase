@@ -1,0 +1,16 @@
+BEGIN;
+GRANT SELECT ON sssbrain.knowledge_entries,sssbrain.brain_wiki_pages TO swadebase_adapters;
+DROP POLICY IF EXISTS swadebase_learning_owner_read ON sssbrain.knowledge_entries;
+CREATE POLICY swadebase_learning_owner_read ON sssbrain.knowledge_entries FOR SELECT TO swadebase_adapters USING (user_id=auth.uid());
+DROP POLICY IF EXISTS swadebase_learning_owner_read ON sssbrain.brain_wiki_pages;
+CREATE POLICY swadebase_learning_owner_read ON sssbrain.brain_wiki_pages FOR SELECT TO swadebase_adapters USING (user_id=auth.uid());
+DROP POLICY IF EXISTS swadebase_mcp_reference_read ON sssbrain.swadebase_docs;
+CREATE POLICY swadebase_mcp_reference_read ON sssbrain.swadebase_docs FOR SELECT TO swadebase_adapters USING (doc_path LIKE 'site-bibles/%' OR doc_path='STANDING_RULES.md' OR doc_path LIKE 'learning-approved/%');
+DROP POLICY IF EXISTS swadebase_mcp_reference_read ON sssbrain.swadebase_knowledge_chunks;
+CREATE POLICY swadebase_mcp_reference_read ON sssbrain.swadebase_knowledge_chunks FOR SELECT TO swadebase_adapters USING (doc_path LIKE 'site-bibles/%' OR doc_path='STANDING_RULES.md' OR doc_path LIKE 'learning-approved/%');
+GRANT EXECUTE ON FUNCTION sssbrain.is_admin_like(uuid) TO swadebase_adapters;
+DROP POLICY IF EXISTS swadebase_learning_owner_boundary ON sssbrain.brain_wiki_pages;
+CREATE POLICY swadebase_learning_owner_boundary ON sssbrain.brain_wiki_pages AS RESTRICTIVE FOR SELECT TO swadebase_adapters USING (user_id=auth.uid());
+DROP POLICY IF EXISTS swadebase_learning_owner_boundary ON sssbrain.knowledge_entries;
+CREATE POLICY swadebase_learning_owner_boundary ON sssbrain.knowledge_entries AS RESTRICTIVE FOR SELECT TO swadebase_adapters USING (user_id=auth.uid());
+COMMIT;

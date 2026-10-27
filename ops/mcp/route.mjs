@@ -79,6 +79,7 @@ export default function mcpRoutes({pool,auth,admin,log=()=>{},classifier=localCl
   if(!actor){res.setHeader('www-authenticate',`Bearer resource_metadata="${ORIGIN}/.well-known/oauth-protected-resource/adapters/mcp"`);return reply(res,401,{error:'unauthorized'});}
   if(!calls(actor.id))return reply(res,429,{error:'rate_limited'});
   if(p===BASE){return serveProtocol(req,res,service,actor);}
+  if(p===BASE+'/knowledge'&&req.method==='POST'){const b=await body(req);return reply(res,200,{ok:true,data:await service.askKnowledge(actor,{question:b.question,generate:b.generate!==false})});}
   if(p===BASE+'/plan'&&req.method==='POST'){
    if(!routing(actor.id)||activePlans>=2)return reply(res,429,{error:'routing_limit'});const b=await body(req);activePlans++;try{return reply(res,200,{ok:true,data:await service.plan(actor,{request:b.request})});}finally{activePlans--;}
   }
