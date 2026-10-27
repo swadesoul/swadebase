@@ -29,24 +29,33 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           persist-credentials: false
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+      - name: Motion Studio present
+        id: present
+        run: |
+          if [ -f motion/styles/build.mjs ]; then echo "yes=true" >> "$GITHUB_OUTPUT"; else echo "Motion Studio not on this branch yet; nothing to check."; fi
+      - if: steps.present.outputs.yes == 'true'
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '22'
       - name: Library builds (86 styles, 14 categories, valid palettes)
+        if: steps.present.outputs.yes == 'true'
         run: node motion/styles/build.mjs
       - name: Generated copies are up to date
+        if: steps.present.outputs.yes == 'true'
         run: |
           if ! git diff --exit-code -- motion docker/volumes/functions/motion-studio supabase/migrations; then
             echo "::error::Run 'node motion/styles/build.mjs' and commit the regenerated files."
             exit 1
           fi
       - name: Worker, agent and adapter parse
+        if: steps.present.outputs.yes == 'true'
         run: |
           node --check motion/worker/worker.mjs
           node --check motion/worker/template.mjs
           node --check motion/agent/motion-agent.mjs
           node --check motion/adapter/adapter.mjs
       - name: Recommender and brief compiler smoke test
+        if: steps.present.outputs.yes == 'true'
         run: |
           node --input-type=module -e "
           import { recommendStyles, compileBrief } from './motion/adapter/adapter.mjs'
