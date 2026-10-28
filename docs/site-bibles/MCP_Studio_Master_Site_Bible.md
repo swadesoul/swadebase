@@ -24,7 +24,9 @@ GitHub default master a5cb19244c72394ee7be1ddce708da8eb98aa3b3 does not contain 
 ## Verification
 Isolated npm run check passed. All 45 tests passed on existing Node 22.23.3 and installed pinned MCP dependencies: existing 32 tests plus 13 added Studio model/route/protocol tests. They include SDK discovery/invocation/schema rejection, anonymous and ordinary-user denial, hostile-origin denial, super-admin inventory, kill switch, read-only SQL, pagination, CSP, sensitive-field omission and unavailable/unpriced usage. Existing services were not restarted and no live identities, sends or paid generations were created by these tests.
 
-Authenticated browser/iPad rendering, the real ledger database role integration, public HTTPS Studio behavior, app-health coverage and production deployment are NOT VERIFIED. The phase must remain a draft until those release checks and source reconciliation pass. Do not describe the complete cross-app MCP or coding-repair system as delivered.
+A separate BEGIN READ ONLY / SET LOCAL ROLE swadebase_adapters probe passed the inventory, ledger-field and active-rate-card SELECT contracts: 20 registered adapters, 16 active rate cards and no visible usage records. This proves those SQL permissions/contracts, not authenticated Studio delivery or complete metering.
+
+Authenticated browser/iPad rendering, full service-to-database integration, public HTTPS Studio behavior, app-health coverage and production deployment are NOT VERIFIED. The phase must remain a draft until those release checks and source reconciliation pass. Do not describe the complete cross-app MCP or coding-repair system as delivered.
 
 ## Recovery and documentation
 Rollback only the Studio additions to service, protocol, routes and console plus its new files; preserve the baseline MCP behavior, customer data, source snapshot and audit history. Update this Bible and SWADEBASE with actual release SHA, deployment, verification and rollback evidence after an approved release. Refresh current knowledge indexing then verify retrieval. Source-only review is not a shipped release or a refreshed knowledge index.
