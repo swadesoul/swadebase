@@ -21,3 +21,8 @@ Deployed 2026-10-25 inside the existing swadebase-adapters process. No new hosti
 Apply `schema.sql` with the database owner. Keep `node_modules` out of git; use the exact lockfile. Install imports/hooks in existing registry routes and retain `userId` on the existing verified admin session. Nginx exact OAuth metadata routes proxy to the existing 18795 service. Backups of edited registry/SSO/index and nginx files have `pre-mcp-<timestamp>` names. Syntax-check before restarting adapters and gracefully reloading nginx. Brainiak server/brain-api backups sit beside the current release.
 
 For immediate stop, disable registry `swadebase-mcp`; all six tool services fail closed. Already issued tokens do not bypass it. Revoke tokens if needed. For code rollback, restore the specific pre-mcp backups (review concurrent edits first), restart the two existing services and validate nginx before reload. Retain schema, audit history and handoff records; do not drop shared data. A deploy must not overwrite concurrent mail/backend changes.
+
+## Cost tools (added 2026-10-28)
+- `swade_cost_report` — spend by project, provider/model and feature for today/7d/30d/mtd/all, plus each provider's recorded credit balance. Scope `ecosystem:read`. Read-only.
+- `swade_rate_cards` — price per unit for each provider/model, with verified/unverified flags.
+Source: `costs.mjs` over `swadebase_ops.ai_*` (schema `../costs/schema.sql`). Live check: load the adapter env and run `node costs-live-smoke.mjs`.
