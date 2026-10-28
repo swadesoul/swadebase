@@ -25,10 +25,13 @@ export function makeCosts({ pool, guard }) {
         from swadebase_ops.ai_usage_ledger where ${filt} group by 1,2 order by 3 desc limit 25`, args);
     const byFeature = await q(`select project, feature, round(sum(cost_usd),4)::float8 cost_usd, count(*)::int calls
         from swadebase_ops.ai_usage_ledger where ${filt} group by 1,2 order by 3 desc limit 20`, args);
-    const balances = await q(`select provider, display_name, billing, round(credit_usd,4)::float8 credit_usd,
-        round(spent_usd,4)::float8 spent_usd, round(balance_usd,4)::float8 balance_usd, round(month_to_date_usd,4)::float8 month_to_date_usd,
-        opening_balance_recorded, (balance_usd is not null and balance_usd < low_balance_usd) low_balance, last_used_at
-        from swadebase_ops.ai_provider_balances where ($1 = '' or provider = $1) order by provider`, [provider]);
+    const balances = await q(`select b.provider, b.display_name, b.billing, round(b.credit_usd,4)::float8 credit_usd,
+        round(b.spent_usd,4)::float8 spent_usd, round(b.balance_usd,4)::float8 balance_usd, round(b.month_to_date_usd,4)::float8 month_to_date_usd,
+        b.opening_balance_recorded, (b.balance_usd is not null and b.balance_usd < b.low_balance_usd) low_balance, b.last_used_at,
+        a.quota_amount::float8 quota_amount, a.quota_unit, a.quota_remaining_pct::float8 quota_remaining_pct, a.quota_resets_at, a.quota_checked_at,
+        a.backend_use_allowed, a.usage_terms, swadebase_ops.ai_can_spend(b.provider, 0) paid_calls_allowed
+        from swadebase_ops.ai_provider_balances b join swadebase_ops.ai_provider_accounts a using (provider)
+        where ($1 = '' or b.provider = $1) order by b.provider`, [provider]);
     return {
       period, project: project || "all", provider: provider || "all",
       totals, by_project: byProject, by_provider_model: byProviderModel, by_feature: byFeature, provider_balances: balances,
