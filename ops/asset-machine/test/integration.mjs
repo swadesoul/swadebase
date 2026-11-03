@@ -57,6 +57,30 @@ try{
   const {out:audio}=await request('client','/api/cases/'+id+'/speak',{method:'POST',data:{text:'This is a synthetic evidence review test.'}});assert.ok(audio.length>500);console.log('PASS: native CPU speech returned audio.');
   const form=new FormData();form.append('file',new Blob([audio],{type:'audio/mpeg'}),'test.mp3');const r=await realFetch(base+'/api/cases/'+id+'/transcribe',{method:'POST',headers:{Origin:origin,Cookie:sessions.client.cookie,'X-CSRF-Token':sessions.client.csrf},body:form});const t=await r.json();assert.equal(r.status,200,JSON.stringify(t));assert.ok(t.text.length>5);console.log('PASS: native speech-to-text roundtrip with synthetic audio.');
  }
+
+ const delegateEmail=users['synthetic-other-'+tag].email,inviteEmail='asset-test-invited-'+tag+'@example.invalid';
+ await request('owner','/api/members',{method:'POST',data:{email:delegateEmail,role:'admin',can_invite:true,payment_exempt:true}});
+ const delegate=(await request('other','/api/session')).out.user;assert.equal(delegate.can_invite,true);assert.equal(delegate.payment_exempt,true);assert.equal(delegate.can_delete_users,false);
+ await request('other','/api/members',{method:'DELETE',status:404});
+ for(const data of [{email:inviteEmail,role:'admin'},{email:delegateEmail,role:'client',active:false},{email:inviteEmail,role:'client',payment_exempt:true}])await request('other','/api/members',{method:'POST',data,status:403});
+ const invited=(await request('other','/api/members',{method:'POST',data:{email:inviteEmail,role:'client'}})).out;assert.equal(invited.invite_url,origin+BASE+'/auth/google');
+ const invitedMember=(await pool.query('select role,can_invite,payment_exempt from swadebase_ops.machine_members where email=$1',[inviteEmail])).rows[0];assert.equal(invitedMember.role,'client');assert.equal(invitedMember.can_invite,false);assert.equal(invitedMember.payment_exempt,false);
+ assert.deepEqual((await request('other','/api/cases/'+id+'/evidence/'+evidence.id)).out,file);assert.equal((await request('other','/api/cases/'+id)).out.review,null);
+ const ecase=(await request('other','/api/cases',{method:'POST',data:{title:'SYNTHETIC TEST ONLY - '+tag,asset_type:'digital',description:'SYNTHETIC EXEMPT PROJECT ONLY'},status:201})).out.case;
+ await pool.query('update swadebase_ops.machine_cases set reviewer_id=$2 where id=$1',[ecase.id,reviewer]);
+ assert.equal((await request('other','/api/cases/'+ecase.id)).out.case.payment_exempt,true);
+ await request('other','/api/cases/'+ecase.id+'/manifest');
+ await request('reviewer','/api/cases/'+ecase.id+'/engagement',{method:'POST',data:{accept:true,conflicts_checked:true,jurisdiction_checked:true}});
+ await request('reviewer','/api/cases/'+ecase.id+'/review',{method:'POST',data:{draft,notes:'PRIVATE SYNTHETIC NOTES',version:0}});
+ await request('reviewer','/api/cases/'+ecase.id+'/approve',{method:'POST',data:{version:1,confirm:true}});
+ await request('owner','/api/members',{method:'POST',data:{email:delegateEmail,role:'admin',payment_exempt:false}});
+ await request('reviewer','/api/cases/'+ecase.id+'/release',{method:'POST',data:{version:1,confirm:true},status:409});
+ await request('owner','/api/members',{method:'POST',data:{email:delegateEmail,role:'admin',payment_exempt:true,can_invite:false}});
+ await request('other','/api/members',{method:'POST',data:{email:inviteEmail,role:'client'},status:403});
+ await request('reviewer','/api/cases/'+ecase.id+'/release',{method:'POST',data:{version:1,confirm:true}});
+ const releasedExempt=(await request('other','/api/cases/'+ecase.id)).out;assert.equal(releasedExempt.reports.length,1);assert.equal(releasedExempt.case.payment_status,'not_recorded');
+ console.log('PASS: scoped client invitations, no promotion/deletion/payment escalation, downloads, private-note isolation, payment exemption without fabricated receipts, and immediate permission revocation.');
+
  // Owner-only grants; revoked identities lose access on the next request.
  const otherEmail=users['synthetic-other-'+tag].email;
  await request('owner','/api/members',{method:'POST',data:{email:otherEmail,role:'admin'}});

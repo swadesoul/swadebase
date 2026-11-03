@@ -19,6 +19,8 @@ begin
  delete from swadebase_ops.machine_cases where id=any(case_ids);
  delete from swadebase_ops.machine_sessions s where s.email in ('asset-test-owner-'||test_tag||'@example.invalid','asset-test-client-'||test_tag||'@example.invalid','asset-test-other-'||test_tag||'@example.invalid','asset-test-reviewer-'||test_tag||'@example.invalid') and not exists(select 1 from auth.users u where u.id=s.user_id);
  delete from swadebase_ops.machine_members m where m.user_id=any(ids);
+ delete from swadebase_ops.machine_members m where m.email='asset-test-invited-'||test_tag||'@example.invalid' and m.user_id is null;
+ delete from swadebase_ops.machine_events e where e.case_id is null and e.details->>'email' in ('asset-test-invited-'||test_tag||'@example.invalid','asset-test-other-'||test_tag||'@example.invalid') and not exists(select 1 from auth.users u where u.id::text=e.actor_id);
 end $$;
 revoke all on function swadebase_ops.cleanup_asset_machine_fixture(text) from public;
 grant execute on function swadebase_ops.cleanup_asset_machine_fixture(text) to swadebase_adapters;

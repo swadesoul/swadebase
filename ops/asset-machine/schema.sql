@@ -3,6 +3,8 @@ create table if not exists swadebase_ops.machine_members (
  id uuid primary key default gen_random_uuid(), email text not null unique check(email=lower(email)),
  user_id uuid unique, role text not null check(role in ('admin','reviewer','client')),
  active boolean not null default true, created_at timestamptz not null default now());
+alter table swadebase_ops.machine_members add column if not exists can_invite boolean not null default false;
+alter table swadebase_ops.machine_members add column if not exists payment_exempt boolean not null default false;
 insert into swadebase_ops.machine_members(email,role) values ('danny@dannybyers.com','reviewer') on conflict(email) do nothing;
 create table if not exists swadebase_ops.machine_sessions (
  id_hash text primary key, user_id uuid not null, email text not null, token_cipher text not null,
