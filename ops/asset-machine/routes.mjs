@@ -1,3 +1,4 @@
+import publicVoiceRoutes from './public-voice.mjs';
 import {readFile,writeFile,mkdtemp,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join,dirname} from 'node:path';
@@ -23,6 +24,7 @@ async function extract(data,mime){if(mime==='text/plain')return{status:'complete
 export default function assetMachineRoutes({pool,admin,auth,publicOrigin,log}){
  const rootKey=process.env.ASSET_REVIEW_FILE_KEY; const key=/^[0-9a-f]{64}$/.test(rootKey||'')?createHmac('sha256',Buffer.from(rootKey,'hex')).update('asset-machine:v1').digest('hex'):undefined,rate=bucket(),pending=new Map();
  const configured=typeof key==='string'&&/^[0-9a-f]{64}$/.test(key);
+ const homepageVoice=publicVoiceRoutes({BASE,publicOrigin,json,body,rate,voice});
  const q=async(sql,args=[])=> (await pool.query(sql,args)).rows;
  const invalidate=id=>q('update swadebase_ops.machine_reviews set approved_version=null,approved_hash=null,approved_at=null where case_id=$1',[id]);
  const event=(a,id,action,details={})=>q('insert into swadebase_ops.machine_events(case_id,actor_id,action,details) values($1,$2,$3,$4)',[id,a.id,action,JSON.stringify(details)]);
@@ -44,9 +46,10 @@ export default function assetMachineRoutes({pool,admin,auth,publicOrigin,log}){
   if(url.pathname!==BASE&&!url.pathname.startsWith(BASE+'/'))return false;
   const p=url.pathname.slice(BASE.length)||'/';
   try{
-   if(req.method==='GET'&&['/','/app.css','/app.js','/hero.webp','/logo.webp','/editorial.webp'].includes(p)){
-    const file=p==='/'?'index.html':p.slice(1),type=p==='/app.css'?'text/css':p==='/app.js'?'text/javascript':['/hero.webp','/logo.webp','/editorial.webp'].includes(p)?'image/webp':'text/html; charset=utf-8';const b=await readFile(join(HERE,'public',file));res.writeHead(200,{'Content-Type':type,'Cache-Control':file==='index.html'?'no-store':'public,max-age=3600','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer','X-Frame-Options':'DENY','Content-Security-Policy':"default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"});res.end(b);return true;}
+   if(req.method==='GET'&&['/','/app.css','/app.js','/public-voice.js','/hero.webp','/logo.webp','/editorial.webp'].includes(p)){
+    const file=p==='/'?'index.html':p.slice(1),type=p==='/app.css'?'text/css':['/app.js','/public-voice.js'].includes(p)?'text/javascript':['/hero.webp','/logo.webp','/editorial.webp'].includes(p)?'image/webp':'text/html; charset=utf-8';const b=await readFile(join(HERE,'public',file));res.writeHead(200,{'Content-Type':type,'Cache-Control':file==='index.html'?'no-store':'public,max-age=3600','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer','X-Frame-Options':'DENY','Content-Security-Policy':"default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"});res.end(b);return true;}
    if(p==='/health'&&req.method==='GET'){json(res,200,{status:'ok',service:'asset-machine'});return true;}
+   if(await homepageVoice(req,res,p))return true;
    if(!configured)throw error(503,'Private review is not configured.');
    if(p==='/auth/google'&&req.method==='GET'){
     const ip=req.headers['x-real-ip']||req.socket.remoteAddress;if(!rate('oauth:'+ip,12,900000))throw error(429,'Please retry sign-in later.');for(const[k,v]of pending)if(v.exp<Date.now())pending.delete(k);if(pending.size>=2000)throw error(429,'Sign-in busy.');await config();const state=randomBytes(32).toString('base64url'),verifier=randomBytes(32).toString('base64url');pending.set(sha(state),{verifier,exp:Date.now()+600000});const target=new URL(publicOrigin+'/auth/v1/authorize');target.searchParams.set('provider','google');target.searchParams.set('redirect_to',publicOrigin+BASE+'/auth/callback?state='+state);target.searchParams.set('code_challenge',sha(verifier));target.searchParams.set('code_challenge',Buffer.from(sha(verifier),'hex').toString('base64url'));target.searchParams.set('code_challenge_method','s256');target.searchParams.set('scopes','openid email profile');res.writeHead(303,{Location:target.href,'Set-Cookie':`machine_oauth=${state}; Path=${BASE}; HttpOnly; Secure; SameSite=Lax; Max-Age=600`,'Cache-Control':'no-store'});res.end();return true;
@@ -126,4 +129,3 @@ export default function assetMachineRoutes({pool,admin,auth,publicOrigin,log}){
   }catch(e){const status=e.status||503;if(status>=500)log('asset-review operation failed: '+(e.code||e.name||'Error'));if(!res.headersSent)json(res,status,{error:{code:status>=500?'unavailable':'request_rejected',message:e.status?e.message:'This operation could not finish. Please retry; no paid fallback was used.'}});return true;}
  };
 }
-
