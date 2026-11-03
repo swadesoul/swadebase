@@ -102,6 +102,26 @@ test('leaving a loading library prevents late content and focus changes', async 
   assert.doesNotMatch(app, /await showKnowledge\(hash\);window\.scrollTo/);
 });
 
+test('contextual help and library navigation share one public-data request without sharing page state', async () => {
+  let calls = 0;
+  const {api, window} = instance(async (url, options) => {
+    calls++;
+    assert.equal(options.credentials, 'omit');
+    assert.match(url, /knowledge-base\.json/);
+    return {ok:true, json:async () => raw};
+  });
+  const first = api.load(), second = api.load();
+  assert.equal(first, second);
+  assert.equal((await first).articles.length, 52);
+  assert.equal(window.document.title, 'Asset Machine');
+  const root = container();
+  await api.show(root, 'knowledge/topic/gems');
+  assert.equal(calls, 1);
+  api.cancel();
+  assert.equal((await api.load()).articles.length, 52);
+  assert.equal(calls, 1);
+});
+
 test('failed loading offers a working retry; later navigation replaces the older request', async () => {
   let calls = 0;
   const {api} = instance(async () => { calls++; if (calls === 1) throw Error('Temporary failure'); return {ok:true, json:async () => raw}; });
@@ -125,7 +145,7 @@ test('failed loading offers a working retry; later navigation replaces the older
 test('integration retains starter routes and publishes links with fresh script versions', () => {
   assert.match(app, /hash==='learn'\|\|hash\.startsWith\('learn\/'\)/);
   assert.match(app, /window\.AssetKnowledge\.show/);
-  assert.match(index, /knowledge\.js\?v=kb20261103/);
+  assert.match(index, /knowledge\.js\?v=help20261103/);
   assert.match(index, /public-voice\.js\?v=kb20261103/);
   assert.ok(index.indexOf('knowledge.js') < index.indexOf('app.js'));
   assert.match(code, /evidence-checklists\.csv/);

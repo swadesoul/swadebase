@@ -196,7 +196,7 @@
   function renderBrowse(container, data, route, token) {
     browseState.topic = route.topic;
     const totalSources = new Set(data.sources.map(s => s.url).filter(Boolean)).size;
-    container.innerHTML = `<div class="knowledge-shell"><header class="kb-intro"><p class="eyebrow">ASSET MACHINE / THE KNOWLEDGE BASE</p><h1 id="kb-page-title" tabindex="-1">Understand the asset.<br><em>Examine the evidence.</em></h1><p class="kb-intro-copy">Explore bonds, SKRs, SBLCs, inherited documents, gold, gems, wallets and tokenization. Learn what each kind of evidence can establish and which questions still need an answer.</p><div class="kb-meta"><span>${data.articles.length} articles</span><span>${totalSources} primary source links</span><span>Research: ${escapeHTML(dateLabel(data.research_date))}</span></div><p class="fine">Educational reference. For a short introduction in plain language or professional terms, <a href="#learn">start with the introductory guides ↗</a>.</p><a class="button outline mini" href="${escapeHTML((data.base || '/adapters/asset-machine') + '/evidence-checklists.csv')}" download="Asset_Machine_Evidence_Checklists.csv">Download evidence checklists ↓</a></header><form id="kb-search-form" class="kb-search-form" role="search"><label for="kb-search">Search the knowledge base</label><div class="kb-search-row"><input id="kb-search" type="search" maxlength="200" placeholder="Try SKR, MT799, inherited bond, assay or token backing" autocomplete="off" aria-describedby="kb-search-help" value="${escapeHTML(browseState.query)}"><button class="outline mini" type="reset">Clear</button></div><p id="kb-search-help" class="fine">Searches article titles, reference text and topic terms.</p></form><nav class="kb-topics" aria-label="Knowledge topics"><a href="#knowledge"${route.topic === 'all' ? ' aria-current="page"' : ''}>All topics <span>${data.articles.length}</span></a>${TOPICS.map(t => `<a href="#knowledge/topic/${t}"${route.topic === t ? ' aria-current="page"' : ''}>${escapeHTML(SHORT_NAMES[t])} <span>${data.articles.filter(a => a.topic_ids.includes(t)).length}</span></a>`).join('')}</nav><div class="kb-results-heading"><h2>${route.topic === 'all' ? 'Explore the library' : escapeHTML(data.taxonomy.find(t => t.id === route.topic)?.name || SHORT_NAMES[route.topic])}</h2><p id="kb-results-status" role="status" aria-live="polite"></p></div><div id="kb-results" class="kb-grid"></div><p class="kb-library-scope fine">Sources have their own dates, purposes and jurisdictions. A document, laboratory report or ledger record supports only the facts within its scope. Reading an article does not authenticate, value or finance an asset.</p></div>`;
+    container.innerHTML = `<div class="knowledge-shell"><header class="kb-intro"><p class="eyebrow">ASSET MACHINE / THE KNOWLEDGE BASE</p><h1 id="kb-page-title" tabindex="-1">Understand the asset.<br><em>Examine the evidence.</em></h1><p class="kb-intro-copy">Explore bonds, SKRs, SBLCs, inherited documents, gold, gems, wallets and tokenization. Learn what each kind of evidence can establish and which questions still need an answer.</p><div class="kb-meta"><span>${data.articles.length} articles</span><span>${totalSources} primary source links</span><span>Research: ${escapeHTML(dateLabel(data.research_date))}</span></div><p class="fine">Educational reference. For a short introduction in plain language or professional terms, <a href="#learn">start with the introductory guides ↗</a>.</p><a class="button outline mini" href="${escapeHTML((data.base || '/adapters/asset-machine') + '/evidence-checklists.csv')}" download="Asset_Machine_Evidence_Checklists.csv">Download evidence checklists ↓</a></header><form id="kb-search-form" class="kb-search-form" role="search"><label for="kb-search">Search the knowledge base</label><div class="kb-search-row"><input id="kb-search" type="search" maxlength="200" placeholder="Try SKR, MT799, inherited bond, assay or token backing" autocomplete="off" aria-describedby="kb-search-help" value="${escapeHTML(browseState.query)}"><button class="outline mini" type="reset">Clear</button></div><p id="kb-search-help" class="fine">Searches article titles, reference text and topic terms.</p></form><nav class="kb-topics" aria-label="Knowledge topics"><a href="#knowledge"${route.topic === 'all' ? ' aria-current="page"' : ''}>All topics <span>${data.articles.length}</span></a>${TOPICS.map(t => `<a href="#knowledge/topic/${t}"${route.topic === t ? ' aria-current="page"' : ''}>${escapeHTML(SHORT_NAMES[t])} <span>${data.articles.filter(a => a.topic_ids.includes(t)).length}</span></a>`).join('')}</nav><div class="kb-results-heading"><h2 data-help-subject="${route.topic}">${route.topic === 'all' ? 'Explore the library' : escapeHTML(data.taxonomy.find(t => t.id === route.topic)?.name || SHORT_NAMES[route.topic])}</h2><p id="kb-results-status" role="status" aria-live="polite"></p></div><div id="kb-results" class="kb-grid"></div><p class="kb-library-scope fine">Sources have their own dates, purposes and jurisdictions. A document, laboratory report or ledger record supports only the facts within its scope. Reading an article does not authenticate, value or finance an asset.</p></div>`;
     const search = container.querySelector('#kb-search'), form = container.querySelector('#kb-search-form');
     const draw = () => {
       const matches = searchArticles(data, browseState.query, browseState.topic);
@@ -226,20 +226,24 @@
     container.innerHTML = '<div class="knowledge-shell kb-empty"><p class="eyebrow">ASSET MACHINE / KNOWLEDGE BASE</p><h1 id="kb-page-title" tabindex="-1">Article not found.</h1><p>This link does not identify a public article in the current library.</p><a class="button primary" href="#knowledge">Open the knowledge base ↗</a></div>';
     setTitle('Article not found'); focusTitle(container, token);
   }
+  // One public-data cache shared by the library page and contextual help drawer.
+  function load(options = {}) {
+    const url = (options.base || '/adapters/asset-machine') + '/knowledge-base.json?v=kb20261103';
+    if (!pending || dataURL !== url) {
+      dataURL = url;
+      pending = host.fetch(url, {credentials:'omit', cache:'no-cache'}).then(response => {
+        if (!response.ok) throw Error('Knowledge library request failed.');
+        return response.json();
+      }).then(publicData).catch(error => { pending = null; throw error; });
+    }
+    return pending;
+  }
   async function show(container, hash, options = {}) {
     const token = ++generation, route = parseRoute(hash);
     if (route.kind === 'invalid') { renderMissing(container, token); return; }
     container.innerHTML = '<div class="knowledge-shell kb-loading" role="status"><p class="eyebrow">ASSET MACHINE / KNOWLEDGE BASE</p><h2>Opening the reference library…</h2><p>Loading the published articles and source links.</p></div>';
     try {
-      const url = (options.base || '/adapters/asset-machine') + '/knowledge-base.json?v=kb20261103';
-      if (!pending || dataURL !== url) {
-        dataURL = url;
-        pending = host.fetch(url, {credentials:'omit', cache:'no-cache'}).then(response => {
-          if (!response.ok) throw Error('Knowledge library request failed.');
-          return response.json();
-        }).then(publicData).catch(error => { pending = null; throw error; });
-      }
-      const data = await pending;
+      const data = await load(options);
       if (token !== generation) return;
       if (route.kind === 'article') {
         const article = data.articles.find(a => a.id === route.id);
@@ -253,5 +257,5 @@
     }
   }
   function cancel() { generation++; if (originalTitle !== null && host.document) host.document.title = originalTitle; }
-  host.AssetKnowledge = Object.freeze({show, cancel, publicData, parseRoute, searchArticles, renderDocument, renderMarkdown:(text, sources) => renderDocument(text, sources).html, articleExport, safeURL});
+  host.AssetKnowledge = Object.freeze({show, cancel, load, publicData, parseRoute, searchArticles, renderDocument, renderMarkdown:(text, sources) => renderDocument(text, sources).html, articleExport, safeURL});
 })(typeof window !== 'undefined' ? window : globalThis);

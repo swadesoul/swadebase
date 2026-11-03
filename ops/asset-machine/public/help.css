@@ -1,0 +1,77 @@
+/* Contextual help extends the existing obsidian/copper interface. */
+.am-help-trigger{display:inline-flex;align-items:center;justify-content:center;flex:0 0 44px;vertical-align:middle;width:44px;height:44px;min-width:44px;min-height:44px;margin:0 0 0 5px;padding:0;border:0;border-radius:50%;background:transparent;color:#e8c297;font-family:var(--sans,system-ui,sans-serif);font-size:13px;font-weight:600;line-height:1;letter-spacing:0;cursor:pointer;isolation:isolate}
+.am-help-trigger>span{display:grid;place-items:center;width:23px;height:23px;border:1px solid #c99b6b80;border-radius:50%;background:linear-gradient(145deg,#c79a6b19,#101619);box-shadow:inset 0 1px 1px #ffffff10}
+.am-help-trigger:hover>span,.am-help-trigger:focus-visible>span{border-color:#e8c297;background:#c99b6b30;color:#fff2df}
+.am-help-trigger:focus-visible{outline:2px solid #e8c297;outline-offset:0}
+.am-help-label{display:inline-block!important;margin-bottom:5px!important}
+.am-help-label-trigger{margin:0 0 0 2px;vertical-align:middle}
+.am-help-experience,.am-help-account{display:inline-flex;align-items:center;flex-shrink:0;min-width:0}
+.am-help-experience .experience-control{display:flex}
+.am-help-launcher{position:fixed;left:max(18px,env(safe-area-inset-left));bottom:max(18px,env(safe-area-inset-bottom));z-index:20;display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:10px 17px 10px 11px;border:1px solid #b88b5c99;border-radius:28px;color:#f2e8d8;background:linear-gradient(130deg,#20282bf5,#0d1316fa);box-shadow:0 8px 30px #0008,inset 0 1px 0 #ffffff12;font-size:12px;letter-spacing:.015em}
+.am-help-launcher>span:first-child{display:grid;place-items:center;width:25px;height:25px;border:1px solid #c99b6b80;border-radius:50%;color:#e8c297;font-weight:600}
+.am-help-launcher-short{display:none}
+.am-help-launcher:hover{border-color:#e8c297;background:#263035}
+.am-help-tooltip{position:fixed;z-index:10000;max-width:min(345px,calc(100vw - 24px));max-height:min(310px,calc(100svh - 24px));overflow:auto;overscroll-behavior:contain;padding:16px 18px;border:1px solid #c99b6b80;border-radius:10px;background:#10181cfb;color:#e8e8df;box-shadow:0 14px 50px #000a;font:12px/1.65 var(--sans,system-ui,sans-serif);letter-spacing:0;text-align:left;text-transform:none;overflow-wrap:anywhere}
+.am-help-tooltip strong,.am-help-tooltip span,.am-help-tooltip small{display:block}
+.am-help-tooltip strong{font-size:13px;font-weight:600;color:#f1d5b2;margin-bottom:6px}
+.am-help-tooltip small{font-size:10px;color:#bac1bd;margin-top:10px;border-top:1px solid #ffffff1c;padding-top:8px}
+.am-help-modal-library{display:flex;align-items:center;min-height:44px;margin:0 0 14px;padding:8px 14px;border:1px solid #b88b5c65;border-radius:22px;background:#d6b57f0d;color:#e8c297;font-size:12px}
+.am-help-open{overflow:hidden}
+#am-help-dialog{position:fixed;inset:0 0 0 auto;display:none;width:min(650px,100%);max-width:100%;height:100svh;height:100dvh;max-height:100svh;max-height:100dvh;margin:0;padding:0;border:0;border-left:1px solid #a9815c85;border-radius:0;background:linear-gradient(155deg,#192125,#0d1215 50%);color:var(--ink,#f1eadb);box-shadow:-24px 0 90px #0009;overflow:hidden}
+#am-help-dialog[open]{display:flex;flex-direction:column}
+#am-help-dialog::backdrop{background:#05080b8a;backdrop-filter:blur(5px)}
+.am-help-header{display:flex;flex:0 0 auto;align-items:flex-start;justify-content:space-between;gap:20px;padding:28px 30px 19px;border-bottom:1px solid #c99b6b30}
+#am-help-dialog .am-help-kicker{margin:0 0 7px;color:#d9ad7e;font-size:9px;letter-spacing:2.4px;line-height:1.6}
+#am-help-dialog h2{font-family:var(--serif,Georgia,serif);font-size:31px;line-height:1.14;letter-spacing:-.7px;margin:0 0 7px}
+#am-help-dialog .am-help-header p:not(.am-help-kicker){margin:0;font-size:12px;color:#b3bcbf}
+.am-help-close{display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;min-height:44px;border:1px solid #ffffff20;border-radius:50%;padding:0;background:#ffffff05;color:#e9d9c6;font-size:28px;font-weight:300;line-height:1}
+.am-help-close:hover{background:#c99b6b18;border-color:#d9ad7e}
+.am-help-toolbar{display:flex;align-items:center;flex:0 0 auto;flex-wrap:wrap;gap:4px 20px;padding:9px 30px;border-bottom:1px solid #ffffff14;background:#090e1233}
+.am-help-toolbar button,.am-help-toolbar a{display:inline-flex;align-items:center;min-height:44px;padding:5px 0;border:0;background:transparent;color:#e8c297;font-size:11px;line-height:1.4;text-decoration:none}
+.am-help-toolbar button:hover,.am-help-toolbar a:hover{text-decoration:underline;text-underline-offset:4px}
+.am-help-toolbar a{margin-left:auto}
+.am-help-body{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding:29px 30px max(38px,env(safe-area-inset-bottom));scroll-behavior:auto;scrollbar-color:#8d6b4e #10171b}
+#am-help-dialog h3{font-family:var(--serif,Georgia,serif);font-size:31px;line-height:1.2;letter-spacing:-.55px;margin:0 0 20px;overflow-wrap:anywhere}
+#am-help-dialog h4{font-size:11px;line-height:1.6;font-weight:600;letter-spacing:1.3px;color:#d9ad7e;text-transform:uppercase;margin:24px 0 12px}
+#am-help-dialog p{font-size:14px;line-height:1.8;color:#bcc4c5;overflow-wrap:anywhere}
+#am-help-dialog .am-help-summary{font-size:17px;line-height:1.75;color:#f0e8db;margin-bottom:22px}
+#am-help-dialog .am-help-small{font-size:11px;line-height:1.75;color:#a9b5b8;margin:20px 0}
+.am-help-secondary{display:inline-flex;align-items:center;justify-content:center;min-height:44px;border:1px solid #b88b5c88;background:#c99b6b0b;border-radius:5px;padding:10px 14px;color:#e8c297;font-size:12px}
+.am-help-secondary:hover{background:#c99b6b1c;border-color:#e8c297}
+.am-help-text{min-height:44px;border:0;background:transparent;color:#e8c297;text-decoration:underline;text-underline-offset:3px;font-size:inherit}
+.am-help-related{margin:30px 0;padding-top:4px;border-top:1px solid #ffffff18}
+.am-help-result{position:relative;display:block;width:100%;min-height:64px;text-align:left;border:1px solid #ffffff16;border-radius:7px;background:#ffffff04;padding:17px 42px 16px 17px;margin:0 0 10px;color:#e9e2d5;font-size:14px;line-height:1.5;overflow-wrap:anywhere}
+.am-help-result>span:first-child{display:block}
+.am-help-result small{display:block;font-size:10px;line-height:1.6;color:#a9b5b8;margin-top:7px}
+.am-help-result-arrow{position:absolute;right:16px;top:18px;color:#d9ad7e}
+.am-help-result:hover{border-color:#c99b6b90;background:#c99b6b0c}
+.am-help-search{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;margin:22px 0;padding:20px;border:1px solid #c99b6b38;border-radius:8px;background:#090e1266}
+#am-help-dialog .am-help-search label{display:block;margin:0;color:#d6c0a4;font-size:11px;line-height:1.5}
+#am-help-dialog .am-help-search input,#am-help-dialog .am-help-search select{display:block;width:100%;min-width:0;min-height:46px;margin:0 0 10px;padding:11px 12px;border:1px solid #b6a0804a;border-radius:4px;background:#10181c;color:#f2eadc;font-size:16px}
+#am-help-dialog .am-help-search select{margin-bottom:0;font-size:14px}
+#am-help-dialog .am-help-search input::placeholder{font-size:12px;color:#9daaad;opacity:1}
+.am-help-quick-results{padding-bottom:12px;border-bottom:1px solid #ffffff18;margin-bottom:25px}
+.am-help-empty{padding:22px;border:1px solid #b88b5c44;border-radius:8px;background:#c99b6b05}
+.am-help-empty a,.am-help-sources a,.am-help-article-tools a{color:#e6bc90;text-decoration:underline;text-underline-offset:4px;overflow-wrap:anywhere}
+.am-help-article-tools{display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;padding:0 0 25px;margin-bottom:27px;border-bottom:1px solid #ffffff18}
+.am-help-article-tools a{display:inline-flex;align-items:center;min-height:44px;font-size:11px}
+#am-help-dialog .kb-prose{font-size:14px;line-height:1.85;min-width:0;overflow-wrap:anywhere}
+#am-help-dialog .kb-prose p,#am-help-dialog .kb-prose li{font-size:14px;line-height:1.85}
+#am-help-dialog .kb-prose h2{font-size:28px;margin:28px 0 17px}
+#am-help-dialog .kb-prose h3{font-size:25px;margin:26px 0 15px}
+#am-help-dialog .kb-prose h4{font-size:19px;letter-spacing:0;text-transform:none;margin:24px 0 13px}
+#am-help-dialog .kb-table-wrap{max-width:100%;overflow-x:auto;overscroll-behavior-x:contain}
+#am-help-dialog .kb-prose table{min-width:560px;font-size:12px}
+#am-help-dialog .kb-prose td,#am-help-dialog .kb-prose th{padding:12px;font-size:12px}
+.am-help-sources{border-top:1px solid #b88b5c50;padding-top:12px;margin-top:38px}
+.am-help-sources ol{padding-left:22px;margin:16px 0}
+.am-help-sources li{padding:9px 0;font-size:12px;line-height:1.75;overflow-wrap:anywhere}
+.am-help-sources small{display:block;font-size:10px;line-height:1.6;margin-top:5px;color:#a9b5b8}
+#am-help-dialog :focus-visible,.am-help-modal-library:focus-visible,.am-help-launcher:focus-visible{outline:2px solid #efc99e;outline-offset:4px}
+#am-help-view-title:focus{outline:none}
+@media(max-width:1150px){.am-help-experience{margin-left:auto}.am-help-experience .experience-control{margin-left:0}}
+@media(max-width:760px){.am-help-experience{order:3;width:100%;margin:0}.am-help-experience .experience-control{order:0;flex:1;min-width:0;width:auto;margin:0}.am-help-experience>.am-help-trigger{order:1;flex:0 0 44px}.am-help-account{margin-left:auto}.am-help-account #account{white-space:nowrap}}
+@media(max-width:600px){.am-help-launcher{left:max(12px,env(safe-area-inset-left));bottom:max(12px,env(safe-area-inset-bottom));min-height:46px;padding:9px 13px 9px 9px;font-size:11px;gap:8px}.am-help-launcher-full{display:none}.am-help-launcher-short{display:inline}.am-help-header{padding:22px 19px 16px;gap:12px}#am-help-dialog h2{font-size:27px}.am-help-toolbar{padding:7px 19px;gap:4px 16px}.am-help-toolbar a{font-size:10px}.am-help-body{padding:24px 19px max(28px,env(safe-area-inset-bottom))}#am-help-dialog h3{font-size:29px}#am-help-dialog .am-help-summary{font-size:16px}.am-help-search{padding:16px}.am-help-trigger{margin-left:2px}}
+@media(max-width:360px){.am-help-launcher{font-size:10px;padding-right:11px}.am-help-toolbar{gap:4px 14px}.am-help-toolbar a{margin-left:0}}
+@media(prefers-reduced-motion:reduce){#am-help-dialog,.am-help-trigger,.am-help-launcher,.am-help-result{animation:none;transition:none;scroll-behavior:auto}}
+@media print{.am-help-trigger,.am-help-launcher,.am-help-tooltip,.am-help-modal-library,#am-help-dialog{display:none!important}}
