@@ -1,0 +1,246 @@
+{
+  "version": "1.0.0",
+  "research_date": "2026-11-03",
+  "scope": "Internal operating references. Not served by public routes. No customer data.",
+  "articles": [
+    {
+      "id": "AM-OPERATIONS-001",
+      "module": "operations",
+      "section": "Asset Machine Operating Reference",
+      "title": "O01 Answering a user without overstating the evidence",
+      "body_markdown": "An answer should identify the asset category, explain the relevant concept, name the evidence required, identify an independent verification route, and state the most useful next step. When a user asks about a particular asset, distinguish their assertions from observed records and from conclusions supplied by an authorized reviewer.\n\nUse the following answer structure for a case question:\n\n1. **What the record says.** Quote only the necessary wording and identify the submitted evidence.\n2. **What has been checked.** Name the actual check and its scope, time and source.\n3. **What remains unknown.** List material gaps without implying that absence of evidence proves fraud.\n4. **Who can resolve it.** Identify the relevant institution, official registry or qualified specialist.\n5. **Next step.** Give one concrete evidence or review action.\n\nFor example: \"The submitted receipt lists ten gold bars. I have not obtained confirmation from the named vault or matched the bars to a current inventory. An authorized vault officer can confirm the holding and applicable release terms through an independently established channel. The next step is a consented custody-confirmation request with the bar list.\"\n\nDo not transform that answer into \"Your gold is verified.\" A photograph of a document is evidence that the file contains a claim. It is not the underlying institution's confirmation of that claim.",
+      "version": "1.0.0",
+      "research_date": "2026-11-03",
+      "editorial_status": "research_complete_professional_review_not_recorded",
+      "content_type": "operating_procedure",
+      "audience": "operator",
+      "source_ids": [],
+      "citation_scope": "Inline citations identify supported claims; operational recommendations are original editorial guidance.",
+      "jurisdiction_scope": "U.S. baseline with international technical and industry material; see inline jurisdiction and authority limits.",
+      "word_count": 215,
+      "content_sha256": "1f10fa0e3e81f555911dec62145ecf7ce1fd6ef6af0bfeed6e6614cfdf1e65dd",
+      "topic_ids": [
+        "operations"
+      ]
+    },
+    {
+      "id": "AM-OPERATIONS-002",
+      "module": "operations",
+      "section": "Asset Machine Operating Reference",
+      "title": "O02 Public education and private case review",
+      "body_markdown": "The public knowledge base should contain general explanations, synthetic examples, checklists, source links and safe starting questions. It should not expose a user's case, bank account, estate file, identity documents, wallet history linked to their identity, unpublished valuation, privileged work or reviewer notes.\n\nThe private assistant may use only the records and permissions of the authenticated case. It should reference the specific evidence version used. A general article must not be treated as evidence that a particular asset passed a check. An uploaded document must not be allowed to instruct the assistant to ignore review requirements or disclose another customer's data.\n\nAny case conclusion should retain its scope. A released report saying \"ownership could not be established\" is a completed report, not a verified ownership result. Public examples should not be populated from real private matters without an approved privacy review and permission appropriate to the intended disclosure.",
+      "version": "1.0.0",
+      "research_date": "2026-11-03",
+      "editorial_status": "research_complete_professional_review_not_recorded",
+      "content_type": "operating_procedure",
+      "audience": "operator",
+      "source_ids": [],
+      "citation_scope": "Inline citations identify supported claims; operational recommendations are original editorial guidance.",
+      "jurisdiction_scope": "U.S. baseline with international technical and industry material; see inline jurisdiction and authority limits.",
+      "word_count": 148,
+      "content_sha256": "168b2bb7d016d87c16b9889858ac244e8a3bcba00204a29838c9069971dc88f1",
+      "topic_ids": [
+        "operations"
+      ]
+    },
+    {
+      "id": "AM-OPERATIONS-003",
+      "module": "operations",
+      "section": "Asset Machine Operating Reference",
+      "title": "O03 Voice answers and deeper reading",
+      "body_markdown": "Keep the first spoken explanation concise, normally about 60 to 110 words. Offer the relevant detailed article, evidence checklist and source links in text. Expand when the visitor asks a specific follow-up. Do not read a long legal or technical chapter aloud by default.\n\nClarify ambiguity. \"Do you mean a gold bar held by a vault, or a token that claims to represent gold?\" avoids answering a token-rights question with only a metals-assay explanation. Similarly, \"Are you applying for an SBLC, reviewing one you received, or considering a financing offer?\" determines the correct pathway.\n\nFor the terms SKR and safe keeping receipt, define the intended meaning explicitly. If a different industry uses SKR differently, ask for the document wording. For a wallet question, request only the public chain and address needed for the permitted task. Never request recovery phrases or private keys in speech, text or uploads.\n\nIf a question falls outside the reviewed knowledge, say that the library does not establish the answer and identify the source or professional needed. Do not fill the gap with a fabricated bank practice, legal exemption, valuation or product category.",
+      "version": "1.0.0",
+      "research_date": "2026-11-03",
+      "editorial_status": "research_complete_professional_review_not_recorded",
+      "content_type": "operating_procedure",
+      "audience": "operator",
+      "source_ids": [],
+      "citation_scope": "Inline citations identify supported claims; operational recommendations are original editorial guidance.",
+      "jurisdiction_scope": "U.S. baseline with international technical and industry material; see inline jurisdiction and authority limits.",
+      "word_count": 187,
+      "content_sha256": "0cad52a3b1747ea59bafcc887ff1c3857ad91b7e9dd141447b57864c0aa63fce",
+      "topic_ids": [
+        "operations"
+      ]
+    },
+    {
+      "id": "AM-OPERATIONS-004",
+      "module": "operations",
+      "section": "Asset Machine Operating Reference",
+      "title": "O04 Claims the assistant may and may not make",
+      "body_markdown": "| Situation | Appropriate wording | Overstatement to prevent |\n|---|---|---|\n| Issuer response received | \"The issuer confirmed the listed obligation remains outstanding as of the response date, subject to the stated qualifications.\" | \"Guaranteed cash equivalent.\" |\n| Report number located | \"The laboratory's records contain this report number; physical-item matching is a separate check.\" | \"The stone is authentic because the number exists.\" |\n| Custody verified | \"The custodian confirmed the identified holding and disclosed the following limitations.\" | \"No liens exist anywhere.\" |\n| Wallet signature verified | \"The challenge was validated for this address under the checked signing rules at this time.\" | \"This proves legal ownership and clean funds.\" |\n| Token code inspected | \"The reviewed version contains these permissions and transfer restrictions.\" | \"The contract is completely secure.\" |\n| Valuation supplied | \"The appraiser estimated this type of value on this date, with these assumptions.\" | \"You can sell or borrow this amount today.\" |\n| No adequate response | \"We could not establish this claim through the documented checks.\" | \"This person is a criminal.\" |\n| Financing discussed | \"The institution supplied an indicative proposal with conditions.\" | \"Funding is approved.\" |\n\nThese examples prescribe careful language. They do not authorize the system to claim that any check actually occurred.",
+      "version": "1.0.0",
+      "research_date": "2026-11-03",
+      "editorial_status": "research_complete_professional_review_not_recorded",
+      "content_type": "operating_procedure",
+      "audience": "operator",
+      "source_ids": [],
+      "citation_scope": "Inline citations identify supported claims; operational recommendations are original editorial guidance.",
+      "jurisdiction_scope": "U.S. baseline with international technical and industry material; see inline jurisdiction and authority limits.",
+      "word_count": 222,
+      "content_sha256": "97e32c6c762a6618f0fc2a369d5a3bafc84443cf5e318e0865348715373060a6",
+      "topic_ids": [
+        "operations"
+      ]
+    },
+    {
+      "id": "AM-OPERATIONS-005",
+      "module": "operations",
+      "section": "Asset Machine Operating Reference",
+      "title": "O05 Source governance and corrections",
+      "body_markdown": "Every article needs a stable identifier, topic, version, research date, source references, jurisdiction scope and editorial state. For legal content, retain the type of authority: statute, regulation, binding order, interpretation, staff guidance, proposal, court decision or industry standard. Do not silently present a proposal as effective law.\n\nRecord the publication or update date when available, the retrieval date, and whether the complete authoritative page or only a search excerpt was accessible. If a source cannot be reached, preserve that limitation. A dead link is not evidence that the underlying rule has been repealed, and an old page still being online does not establish that it remains controlling.\n\nRecommended maintenance policy: review fast-changing legal and digital-asset content before consequential reliance and whenever a known rule changes; periodically review other educational pages; refresh transaction facts at their relevant point of reliance. This is a proposed policy, not a scheduled task created by this pack.\n\nCorrections should preserve the prior version, explain the change, update affected cross-references and remove outdated wording from active retrieval. If a released private report relied materially on a changed factual finding, route it to the responsible reviewer under the existing permission and notification policy. Do not automatically email affected people without authorization.",
+      "version": "1.0.0",
+      "research_date": "2026-11-03",
+      "editorial_status": "research_complete_professional_review_not_recorded",
+      "content_type": "operating_procedure",
+      "audience": "operator",
+      "source_ids": [],
+      "citation_scope": "Inline citations identify supported claims; operational recommendations are original editorial guidance.",
+      "jurisdiction_scope": "U.S. baseline with international technical and industry material; see inline jurisdiction and authority limits.",
+      "word_count": 204,
+      "content_sha256": "9b003260715748d504cb5827721a5be7620ba55f6dfe8663f4ca7c5087cb552f",
+      "topic_ids": [
+        "operations"
+      ]
+    },
+    {
+      "id": "AM-OPERATIONS-006",
+      "module": "operations",
+      "section": "Asset Machine Operating Reference",
+      "title": "O06 A practical cost policy for knowledge answers",
+      "body_markdown": "Use the existing guides and local search first. Store one canonical article and reuse it for web display, downloads and voice summaries. Do not paste the entire knowledge base into every model request. Retrieve only the few relevant sections and their source metadata.\n\nUse deterministic checks for dates, missing fields, duplicate identifiers, source links, hashes, unit conversions and clearly defined workflow states. These checks should produce factual observations, not unaudited authenticity scores. Use existing local inference only when interpretation is needed and within the actual deployment's permissions and cost controls.\n\nResearch can often begin with no-fee official sources. Professional examinations, bank services, shipping and legal review may still have legitimate costs. The platform should describe any proposed service and obtain the required consent before charging. The availability of prepaid infrastructure or model credits does not prove the entire workflow is free.",
+      "version": "1.0.0",
+      "research_date": "2026-11-03",
+      "editorial_status": "research_complete_professional_review_not_recorded",
+      "content_type": "operating_procedure",
+      "audience": "operator",
+      "source_ids": [],
+      "citation_scope": "Inline citations identify supported claims; operational recommendations are original editorial guidance.",
+      "jurisdiction_scope": "U.S. baseline with international technical and industry material; see inline jurisdiction and authority limits.",
+      "word_count": 141,
+      "content_sha256": "3849fd2283eb84d438e0cbeba50aa027b2c054511495acaa9d273725453928e1",
+      "topic_ids": [
+        "operations"
+      ]
+    },
+    {
+      "id": "AM-OPERATIONS-007",
+      "module": "operations",
+      "section": "Asset Machine Operating Reference",
+      "title": "O07 Review template",
+      "body_markdown": "### Matter summary\n\n- Case identifier and asset identifier\n- Claimant's stated role and authority\n- Asset type and exact description\n- Intended transaction or decision\n- Relevant countries, states and governing documents\n- Report version, author, reviewer and date\n\n### Claim and evidence table\n\n| Claim | Evidence IDs | Independent check | Finding and limits | As of date | Status | Next responsible party |\n|---|---|---|---|---|---|---|\n| Existence and identity | To complete | To complete | To complete | To complete | Pending | To complete |\n| Ownership and authority | To complete | To complete | To complete | To complete | Pending | To complete |\n| Custody and control | To complete | To complete | To complete | To complete | Pending | To complete |\n| Restrictions and adverse claims | To complete | To complete | To complete | To complete | Pending | To complete |\n| Value for stated purpose | To complete | To complete | To complete | To complete | Pending | To complete |\n| Transferability and enforceability | To complete | To complete | To complete | To complete | Pending | To complete |\n| Counterparty acceptance | To complete | To complete | To complete | To complete | Pending | To complete |\n\n### Release statement\n\n\"This record describes the checks listed above on the evidence versions identified. It supports only the stated findings, subject to the listed limitations and dates. Unresolved claims remain unresolved. It is not an unconditional guarantee of authenticity, title, value, marketability, financing or regulatory permission.\"\n\nTailor the release statement to the actual engagement and qualified reviewer. Do not attach a professional's name, signature, seal or license number without their authority.",
+      "version": "1.0.0",
+      "research_date": "2026-11-03",
+      "editorial_status": "research_complete_professional_review_not_recorded",
+      "content_type": "operating_procedure",
+      "audience": "operator",
+      "source_ids": [],
+      "citation_scope": "Inline citations identify supported claims; operational recommendations are original editorial guidance.",
+      "jurisdiction_scope": "U.S. baseline with international technical and industry material; see inline jurisdiction and authority limits.",
+      "word_count": 296,
+      "content_sha256": "9f71b2d96ef0a5f787d76f7e8a3e8d2861f5ea6cb22ea91708a61439638f0ee8",
+      "topic_ids": [
+        "operations"
+      ]
+    },
+    {
+      "id": "AM-OPERATIONS-008",
+      "module": "operations",
+      "section": "Asset Machine Operating Reference",
+      "title": "O08 Independent confirmation request template",
+      "body_markdown": "**Purpose:** Obtain a scoped institutional response through an independently established authorized channel. This is a draft template; this pack sends no messages.\n\n\"We are reviewing the record identified below with the relevant customer's authority. Please confirm whether your organization is the appropriate source for the requested information and advise what secure consent or identification process you require.\n\nRecord reference: [identifier]. Claimed account or holder: [minimum necessary details through the secure channel]. Relevant date: [date]. Questions: [precise facts to be confirmed].\n\nWhere within your authority, please state whether the identified record was issued or maintained by your organization, whether the specified holding or obligation remains current, and any limitations you are authorized to disclose concerning ownership registration, custody, release, transfer, outstanding conditions or expiry. Please distinguish facts you can confirm from matters outside your scope.\n\nWe are not asking you to approve an investment, assign a market value or issue a financing commitment unless a separate authorized engagement expressly covers that work. Please provide your response through your normal verified institutional process.\"\n\nUse asset-specific questions from the relevant module. A bank may require its own forms, direct customer initiation or an institution-to-institution process. Respect those boundaries; do not attempt to bypass confidentiality controls.",
+      "version": "1.0.0",
+      "research_date": "2026-11-03",
+      "editorial_status": "research_complete_professional_review_not_recorded",
+      "content_type": "operating_procedure",
+      "audience": "operator",
+      "source_ids": [],
+      "citation_scope": "Inline citations identify supported claims; operational recommendations are original editorial guidance.",
+      "jurisdiction_scope": "U.S. baseline with international technical and industry material; see inline jurisdiction and authority limits.",
+      "word_count": 202,
+      "content_sha256": "adb63f814f60aad57f1fab13f692663d4c114c64f0ba52d367acf782254b5aa7",
+      "topic_ids": [
+        "operations"
+      ]
+    },
+    {
+      "id": "AM-OPERATIONS-009",
+      "module": "operations",
+      "section": "Asset Machine Operating Reference",
+      "title": "O09 Acceptance checks for the future site integration",
+      "body_markdown": "Use the following as content and behavior checks when integrating the pack into the existing product:\n\n1. A query for SKR reaches a dedicated safekeeping explanation.\n2. A query for a gold-backed token presents both custody and legal token-rights questions.\n3. An inherited bond answer asks about estate or beneficiary authority and current issuer status.\n4. A $100 million historical certificate answer explains the scope of Treasury's published warning without declaring an unexamined item genuine or fake.\n5. An SBLC answer distinguishes a conditional bank undertaking from guaranteed financing.\n6. A wallet-control answer never requests a seed phrase, transfer, token approval or blind signature.\n7. A gem-report answer requires physical-item matching as well as report-record checking.\n8. A tokenization answer does not convert a proposed exemption into operative law.\n9. A general knowledge query cannot retrieve private case evidence or attorney notes.\n10. A source or evidence failure produces an explicit limitation, not a manufactured success.\n\nPassing these checks would verify only the tested knowledge behavior. It would not certify the entire site, any asset, or an external financial integration.",
+      "version": "1.0.0",
+      "research_date": "2026-11-03",
+      "editorial_status": "research_complete_professional_review_not_recorded",
+      "content_type": "operating_procedure",
+      "audience": "operator",
+      "source_ids": [],
+      "citation_scope": "Inline citations identify supported claims; operational recommendations are original editorial guidance.",
+      "jurisdiction_scope": "U.S. baseline with international technical and industry material; see inline jurisdiction and authority limits.",
+      "word_count": 180,
+      "content_sha256": "9b17ca30715904202b966b1040c9943dd94c77588488c81602fe8d19e7a831f5",
+      "topic_ids": [
+        "operations"
+      ]
+    }
+  ],
+  "rules": {
+    "policy_version": "1.0.0",
+    "status": "runtime_private_guidance_with_scoped_public_retrieval",
+    "role": "Explain asset categories, organize evidence, report scoped observations, route to qualified reviewers.",
+    "answer_sequence": [
+      "identify asset and goal",
+      "explain concept",
+      "state actual evidence checked",
+      "name unresolved facts",
+      "identify independent verifier",
+      "give concrete next step",
+      "cite supporting sources"
+    ],
+    "separate_claims": [
+      "existence_identity",
+      "ownership_authority",
+      "custody_control",
+      "value",
+      "transferability_enforceability",
+      "counterparty_acceptance"
+    ],
+    "cross_cutting_checks": [
+      "liens and competing claims",
+      "jurisdiction and restrictions",
+      "source scope and independence",
+      "dates and changes"
+    ],
+    "unknown_is_valid": true,
+    "no_unexplained_authenticity_percentage": true,
+    "never_request": [
+      "private key",
+      "recovery phrase",
+      "wallet backup",
+      "account password",
+      "one-time login code",
+      "token approval for verification",
+      "transfer or deposit to prove ownership"
+    ],
+    "never_infer": [
+      "document authenticity from appearance",
+      "asset ownership from possession or signing alone",
+      "price from face value alone",
+      "solvency from proof of reserves alone",
+      "physical backing from minting alone",
+      "bank acceptance from an introduction",
+      "operative law from a proposal"
+    ],
+    "public_corpus": [
+      "public_education"
+    ],
+    "private_case_rule": "Use authenticated case permissions; never merge private evidence or attorney notes into public education.",
+    "voice_target_words": [
+      60,
+      110
+    ],
+    "retrieval": "Use the existing local search and curated content; fetch only relevant articles and source metadata. Clarify multi-topic questions.",
+    "sources": "Preserve source ID, authority type, date, jurisdiction, limitations and inline attribution. Refresh before consequential reliance.",
+    "actions": "Education does not authorize sending, publishing case details, paying, signing, issuing tokens or changing account permissions."
+  }
+}
