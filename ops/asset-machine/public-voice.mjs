@@ -1,12 +1,14 @@
 import {randomBytes,createHash,timingSafeEqual} from 'node:crypto';
 import {readFile} from 'node:fs/promises';
+import {loadKnowledge,knowledgeAnswer,detectTopics} from './knowledge.mjs';
 const fail=(n,m)=>Object.assign(Error(m),{status:n});
 const hash=s=>createHash('sha256').update(s).digest('hex');
 const same=(a,b)=>typeof a==='string'&&typeof b==='string'&&Buffer.byteLength(a)===Buffer.byteLength(b)&&timingSafeEqual(Buffer.from(a),Buffer.from(b));
 const topics={sblc:/\bsblc|standby|letter of credit|mt760|bank guarantee/i,inherited:/inherit|deceased|family member|estate|beneficiary registration/i,bonds:/\bbond|certificate|cusip|coupon|maturity|treasury/i,physical:/\bgold\b|gem|diamond|mineral|bullion|assay|precious metal/i,unknown:/golden dragon|golden drum|golden gun|unidentified|not know what|don't know what/i,desks:/trade desk|trading desk|professional|broker|custodian|trade.finance|who.*contact/i,digital:/wallet|contract|token|blockchain|oracle|crypto|digital asset/i};
-export function guideAnswer(question,level,guides){
+export function guideAnswer(question,level,guides,knowledge){
  if(/private.*(note|record|case|project)|show.*(account|balance)|ignore.*(rule|instruction)/i.test(question))return{answer:'I can explain the public guides and site features. This conversation cannot open private projects, accounts or attorney notes. Sign into your secure workspace for your own project.',sources:[]};
- if(/danny|attorney|legal review|review fee|how.*site|how.*machine|how.*work|sign.in|upload|directory|price|cost|payment/i.test(question)&&!Object.values(topics).some(re=>re.test(question)))return{answer:'Asset Machine helps you understand an asset, organize supporting evidence and identify the next review step. Open a private project to upload documents and record screening findings. Danny Byers’s separate project review is $500, subject to engagement, scope, conflicts and jurisdiction checks; eligible account exemptions apply. The organization directory is still being developed. Online checkout, external attestation feeds and token issuance are not enabled. This public conversation does not authenticate or value an asset.',sources:[]};
+ if((/danny|legal review|review fee|review.*(?:price|cost|fee)|(?:price|cost|fee).*review|this site|asset machine|sign.in|upload documents|organization directory|client account/i.test(question)||/^(?:how much does it cost|what is the price|what does it cost|how do i pay)[?!. ]*$/i.test(question.trim()))&&!Object.values(topics).some(re=>re.test(question))&&!detectTopics(question).length)return{answer:'Asset Machine helps you understand an asset, organize supporting evidence and identify the next review step. Open a private project to upload documents and record screening findings. Danny Byers’s separate project review is $500, subject to engagement, scope, conflicts and jurisdiction checks; eligible account exemptions apply. The organization directory is still being developed. Online checkout, external attestation feeds and token issuance are not enabled. This public conversation does not authenticate or value an asset.',sources:[]};
+ if(knowledge&&!topics.unknown.test(question)&&!(topics.desks.test(question)&&!detectTopics(question).length))return knowledgeAnswer(question,level,knowledge);
  const priority=['unknown','sblc','inherited','physical','digital','bonds','desks'];const slug=priority.find(k=>topics[k].test(question));
  if(!slug)return{answer:'I can help with the public guides on bonds, SBLCs, inherited documents, gold and gems, wallets and tokenization, or choosing the right professional. Which of those fits your question? For project-specific conclusions, use your secure workspace and the appropriate qualified reviewer.',sources:[]};
  const g=guides.find(x=>x.slug===slug);if(!g)return{answer:'Please open the relevant guide for this topic.',sources:[]};
@@ -36,8 +38,9 @@ export default function publicVoiceRoutes({BASE,publicOrigin,json,body,rate,voic
    if(p.endsWith('/speak')){await voice(req,res,{id:s.id},'/speak');return true;}
    if(p.endsWith('/transcribe')){await voice(req,res,{id:s.id},'/transcribe');return true;}
    const b=await body(req,6000),question=String(b.question||'').trim().slice(0,1200);if(question.length<3)throw fail(400,'Ask a question about the site or its asset guides.');
-   const result=guideAnswer(question,b.level,await guideData());
-   json(res,200,{...result,engine:'curated-public-guides',speech_engine:'swadebase-kokoro',scope:'Public education only; no asset was authenticated or valued.'});return true;
+   const knowledge=await loadKnowledge(),result=guideAnswer(question,b.level,await guideData(),knowledge);
+   json(res,200,{...result,knowledge_version:knowledge.version,research_date:knowledge.research_date,engine:'curated-public-knowledge',speech_engine:'swadebase-kokoro',scope:'Public education only; no asset was authenticated or valued.'});return true;
   }finally{busy--;}
  };
 }
+

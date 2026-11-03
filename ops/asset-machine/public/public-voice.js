@@ -13,15 +13,15 @@
   if(!r.ok){if(r.status===401){session=null;expires=0;}const d=await r.json().catch(()=>({}));throw Error(d.error?.message||'Voice could not finish. Try again or read a guide.');}return blob?r.blob():r.json();
  }
  function message(label,text){const article=document.createElement('article'),small=document.createElement('span'),p=document.createElement('p');small.className='tiny';small.textContent=label;p.textContent=text;article.append(small,p);log.append(article);while(log.children.length>6)log.firstChild.remove();log.scrollTop=log.scrollHeight;}
- function sources(items){const row=document.createElement('div');row.className='voice-sources';for(const s of items||[]){try{const u=new URL(s.url);if(u.origin!=='https://assetmachine.live'||!/^#learn\/[a-z]+$/.test(u.hash))continue;const a=document.createElement('a');a.href=u.hash;a.textContent=s.label+' / '+s.name;row.append(a);}catch{}}log.append(row);}
+ function sources(items){const row=document.createElement('div');row.className='voice-sources';for(const s of items||[]){try{const u=new URL(s.url);if(u.protocol!=='https:'||u.username||u.password)continue;const internal=u.origin==='https://assetmachine.live'&&/^#(?:learn\/[a-z]+|knowledge\/article\/AM-[A-Z0-9-]+)$/.test(u.hash);const a=document.createElement('a');a.href=internal?u.hash:u.href;if(!internal){a.target='_blank';a.rel='noopener noreferrer';}a.textContent=s.label+' / '+s.name;row.append(a);}catch{}}log.append(row);}
  function animate(){if(!analyser||!player||player.paused)return;const data=new Uint8Array(analyser.frequencyBinCount);analyser.getByteFrequencyData(data);const value=data.reduce((a,b)=>a+b,0)/data.length/150;consoleNode.style.setProperty('--voice-level',Math.min(1,value).toFixed(3));frame=requestAnimationFrame(animate);}
  async function play(){audioContext();if(!player)return;try{await player.play();setPhase('speaking','Speaking · SWADEBASE Kokoro');replay.hidden=true;animate();}catch{setPhase('idle','Your reply is ready. Press Play reply to listen.');replay.hidden=false;}}
  async function ask(question,myGeneration){
   if(question.trim().length<3)throw Error('Ask a question with at least three characters.');
-  message('YOU',question);setPhase('thinking','Reading the public guides…');
+  message('YOU',question);setPhase('thinking','Reading the knowledge library…');
   const d=await call('ask',{question,level:$('#experience')?.value||'plain'});if(myGeneration!==generation)return;
   message('ASSET MACHINE',d.answer);sources(d.sources);setPhase('thinking','Preparing your Kokoro reply…');
-  const speechText=String(d.answer).replace(/\[G\d+\]/g,'').slice(0,2500);
+  const speechText=String(d.answer).replace(/\[[A-Z]+\d+\]/g,'').slice(0,2500);
   let blob;try{blob=await call('speak',{text:speechText},true);}catch(e){if(myGeneration===generation)setPhase('error','Text reply ready. '+e.message);return;}if(myGeneration!==generation)return;
   player?.pause();if(audioURL)URL.revokeObjectURL(audioURL);audioURL=URL.createObjectURL(blob);player=new Audio(audioURL);
   try{if(ctx){const source=ctx.createMediaElementSource(player);analyser=ctx.createAnalyser();analyser.fftSize=128;source.connect(analyser);analyser.connect(ctx.destination);}}catch{analyser=null;}
@@ -46,3 +46,4 @@
  window.addEventListener('pagehide',()=>{halt();if(audioURL)URL.revokeObjectURL(audioURL);ctx?.close();});
  window.addEventListener('hashchange',()=>{if(!['','#home','#ask-asset-machine'].includes(location.hash))halt();});
 })();
+
