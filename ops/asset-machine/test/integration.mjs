@@ -8,8 +8,8 @@ import {BASE} from '../core.mjs';
 const pool=new pg.Pool({host:process.env.PGHOST||'172.16.6.11',port:Number(process.env.PGPORT||5432),database:process.env.PGDATABASE||'postgres',user:process.env.PGUSER||'swadebase_adapters',password:process.env.PGPASSWORD});
 const origin='https://asset-test.invalid',tag=randomUUID().slice(0,8),ids={owner:randomUUID(),client:randomUUID(),other:randomUUID(),reviewer:randomUUID()};
 const users=Object.fromEntries(Object.entries(ids).map(([role,id])=>['synthetic-'+role+'-'+tag,{id,email:`asset-test-${role}-${tag}@example.invalid`,email_confirmed_at:new Date().toISOString()}]));
-const realFetch=globalThis.fetch;
-globalThis.fetch=async(url,options={})=>{const u=String(url);if(u===origin+'/auth-config.json')return Response.json({url:origin,publicKey:'synthetic-test-publishable'});if(u.endsWith('/auth/v1/user')){const token=String(options.headers?.Authorization||'').replace('Bearer ','');return users[token]?Response.json(users[token]):Response.json({error:'invalid'},{status:401});}return realFetch(url,options);};
+const realFetch=globalThis.fetch;let capturedStyle="";
+globalThis.fetch=async(url,options={})=>{const u=String(url);if(u==='http://127.0.0.1:11434/api/chat'){capturedStyle=JSON.parse(options.body).messages.at(-1).content;return Response.json({message:{content:'Synthetic style routing response. Evidence remains pending [F1].'}});}if(u===origin+'/auth-config.json')return Response.json({url:origin,publicKey:'synthetic-test-publishable'});if(u.endsWith('/auth/v1/user')){const token=String(options.headers?.Authorization||'').replace('Bearer ','');return users[token]?Response.json(users[token]):Response.json({error:'invalid'},{status:401});}return realFetch(url,options);};
 const handler=routes({pool,publicOrigin:origin,admin:{isSuperAdmin:async id=>id===ids.owner},auth:{clearCookie:()=>''},log:()=>{}});
 const server=http.createServer(async(req,res)=>{try{if(await handler(req,res,new URL(req.url,origin),null)===false){res.writeHead(404);res.end();}}catch{res.writeHead(500);res.end();}});
 await new Promise(r=>server.listen(0,'127.0.0.1',r));const base='http://127.0.0.1:'+server.address().port+BASE;
@@ -49,6 +49,8 @@ try{
  await request('reviewer','/api/cases/'+id+'/release',{method:'POST',data:{version:2,confirm:true}});
  const result=(await request('client','/api/cases/'+id)).out;assert.equal(result.reports.length,1);assert.equal(result.reports[0].body,draft+' Revised.');assert.ok(!JSON.stringify(result).includes('PRIVATE SYNTHETIC ATTORNEY NOTES'));
  const contact=(await request('client','/api/cases/'+id+'/contacts',{method:'POST',data:{name:'Synthetic contact',firm:'Example',source_url:'https://example.com',interest:'Synthetic test only.'},status:201})).out.contact;assert.match(contact.brief,/No message has been sent/);assert.ok(!contact.brief.includes('PRIVATE SYNTHETIC'));
+ for(const level of ['plain','professional']){await request('client','/api/cases/'+id+'/chat',{method:'POST',data:{message:'What is missing?',communication_level:level}});assert.match(capturedStyle,level==='professional'?/precise professional terminology/:/Use plain language/);assert.ok(!capturedStyle.includes('PRIVATE SYNTHETIC ATTORNEY NOTES'));}
+ console.log('PASS: plain/professional assistant style routed without private legal notes.');
  console.log('PASS: HTTP/database access isolation, CSRF, encrypted storage roundtrip, screening, engagement/payment gates, private draft protection, version invalidation, approved report delivery and retry deduplication.');
  if(['1','ai'].includes(process.env.ASSET_TEST_NATIVE)){
   const reply=(await request('client','/api/cases/'+id+'/chat',{method:'POST',data:{message:'In at most three short sentences, what evidence is still missing? Use evidence labels.'}})).out.reply;assert.ok(reply.length>20);assert.ok(!reply.includes('PRIVATE SYNTHETIC ATTORNEY NOTES'));console.log('PASS: native case-grounded model response; no paid fallback.');
@@ -95,3 +97,4 @@ try{
  if(evidenceKey)console.log('SYNTHETIC_STORAGE_KEY='+evidenceKey);
  server.close();await pool.end();
 }
+
