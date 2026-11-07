@@ -3,7 +3,12 @@
 .git
 .github
 about
-docker
+docker/*
+!docker/volumes
+docker/volumes/*
+!docker/volumes/functions
+docker/volumes/functions/*
+!docker/volumes/functions/catalog-video
 examples
 i18n
 **/node_modules

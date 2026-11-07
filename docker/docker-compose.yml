@@ -472,6 +472,8 @@ services:
       SUPABASE_DB_URL: postgresql://postgres:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
       # TODO: Allow configuring VERIFY_JWT per function.
       VERIFY_JWT: "${FUNCTIONS_VERIFY_JWT}"
+      # Exact public GET shells. Catalog data routes and every other function still require JWT when VERIFY_JWT=true.
+      PUBLIC_FUNCTION_GET_PATHS: ${PUBLIC_FUNCTION_GET_PATHS:-/motion-studio,/motion-studio/app,/motion-studio/health,/catalog-video/health}
     command:
       [
         "start",

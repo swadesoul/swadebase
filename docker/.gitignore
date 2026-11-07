@@ -2,9 +2,12 @@ volumes/db/data
 volumes/storage
 volumes/snippets
 volumes/functions/**
+!volumes/functions/catalog-video/
+!volumes/functions/catalog-video/**
 !volumes/functions/main/
 volumes/functions/main/**
 !volumes/functions/main/index.ts
+!volumes/functions/main/gateway-auth.mjs
 .env
 test.http
 docker-compose.override.yml

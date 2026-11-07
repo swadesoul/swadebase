@@ -1,4 +1,5 @@
 import * as jose from 'jsr:@panva/jose@6'
+import { catalogMediaRouteExempt } from './gateway-auth.mjs'
 
 console.log('main function started')
 
@@ -109,7 +110,19 @@ async function isValidHybridJWT(jwt: string): Promise<boolean> {
 }
 
 Deno.serve(async (req: Request) => {
-  if (req.method !== 'OPTIONS' && VERIFY_JWT) {
+  const url = new URL(req.url)
+  const { pathname } = url
+  // Live Motion Studio publishes only these GET shells. Data routes inside that function still
+  // require a session. Catalog video adds HMAC media routes, not a global JWT disable.
+  const publicGetPaths = new Set(
+    (Deno.env.get('PUBLIC_FUNCTION_GET_PATHS') ?? '/motion-studio,/motion-studio/app,/motion-studio/health,/catalog-video/health')
+      .split(',')
+      .map((entry) => entry.trim())
+      .filter(Boolean),
+  )
+  const isPublicGet = req.method === 'GET' && publicGetPaths.has(pathname.replace(/\/$/, '') || '/')
+  const catalogMediaExempt = catalogMediaRouteExempt(req.method, pathname, url.searchParams.get('token'))
+  if (req.method !== 'OPTIONS' && VERIFY_JWT && !isPublicGet && !catalogMediaExempt) {
     try {
       const token = getAuthToken(req)
       const isValidJWT = await isValidHybridJWT(token);
@@ -129,8 +142,6 @@ Deno.serve(async (req: Request) => {
     }
   }
 
-  const url = new URL(req.url)
-  const { pathname } = url
   const path_parts = pathname.split('/')
   const service_name = path_parts[1]
 
