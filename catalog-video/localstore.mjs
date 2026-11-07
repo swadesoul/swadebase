@@ -56,6 +56,7 @@ export function createLocalStore(root) {
       const tmp = `${dest}.partial`
       const hash = createHash('sha256')
       const out = createWriteStream(tmp)
+      out.setMaxListeners(200)
       let size = 0
       try {
         for (const part of ordered) {

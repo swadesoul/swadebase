@@ -4,6 +4,10 @@ import { processNext } from './encode.mjs'
 const pollMs = Number(process.env.CATALOG_VIDEO_POLL_MS || 4000)
 
 async function main() {
+  if (process.env.CATALOG_VIDEO_ENABLED !== 'true') {
+    console.error('Catalog video worker is off. Leave CATALOG_VIDEO_ENABLED unset until the launch gates pass.')
+    process.exit(0)
+  }
   if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
     console.error('Catalog worker needs SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY. It does not start against production from this checkout by itself.')
     process.exit(1)

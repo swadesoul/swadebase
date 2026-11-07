@@ -7,6 +7,10 @@ services:
       context: ..
       dockerfile: catalog-video/worker/Dockerfile
     restart: "no"
+    # These limits apply to `docker compose up`. deploy.resources alone is not enforced there.
+    mem_limit: 1536m
+    cpus: "1.0"
+    pids_limit: 128
     environment:
       SUPABASE_URL: http://kong:8000
       SUPABASE_SERVICE_ROLE_KEY: ${SERVICE_ROLE_KEY}

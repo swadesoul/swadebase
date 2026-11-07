@@ -266,11 +266,12 @@ export function contentTypeFor(name) {
   return 'application/octet-stream'
 }
 
-export function healthBody() {
+export function healthBody(enabled = false) {
   return {
     ok: true,
     service: 'catalog-video',
     stage: 'first',
+    enabled: enabled === true,
     duration_limit_sec: DURATION_LIMIT_SEC,
     queue: 'catalog_video_jobs',
     motion_studio_queue: 'not_used',

@@ -285,6 +285,7 @@ export async function createS3Store(env) {
 
 export async function createProductionDeps(env) {
   const deps = {
+    enabled: env.CATALOG_VIDEO_ENABLED === 'true',
     signingKey: env.CATALOG_VIDEO_SIGNING_KEY,
     publicBase: env.CATALOG_VIDEO_PUBLIC_BASE || `${(env.SUPABASE_PUBLIC_URL || '').replace(/\/$/, '')}/functions/v1/catalog-video`,
     maxMasterBytes: Number(env.CATALOG_VIDEO_MAX_MASTER_BYTES || DEFAULT_MAX_MASTER_BYTES),

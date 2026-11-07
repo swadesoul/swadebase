@@ -137,7 +137,10 @@ async function route(req, deps) {
   const url = new URL(req.url)
   const path = catalogPath(url.pathname)
   if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors() })
-  if (req.method === 'GET' && path === '/health') return json(healthBody())
+  if (req.method === 'GET' && path === '/health') return json(healthBody(deps.enabled === true))
+  if (deps.enabled !== true) {
+    throw new CatalogError(503, 'Catalog video is off. It stays off until storage, capacity, and the live baseline are verified.')
+  }
 
   if (path.startsWith('/uploads/parts')) return putPart(req, url, deps)
   if (path.startsWith('/hls/')) return serveHls(req, url, path, deps)

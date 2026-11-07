@@ -72,6 +72,7 @@ test('original upload, duration gate, HLS playback, and YouTube embed', { timeou
     auth: testAuth(),
     db,
     store,
+    enabled: true,
     signingKey: SIGNING,
     publicBase: '',
     maxMasterBytes: 8 * 1024 * 1024 * 1024,

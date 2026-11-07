@@ -4,7 +4,9 @@ First-stage backend. It is not deployed, not merged, and not wired to production
 
 ## What the apps call
 
-Base path: `https://swadebase.cloud/functions/v1/catalog-video`
+The service stays off unless `CATALOG_VIDEO_ENABLED=true`. Health reports `enabled: false` until that explicit switch. Do not set it during a deploy that has not passed the gates below.
+
+Base path, once enabled: `https://swadebase.cloud/functions/v1/catalog-video`
 
 Send `Authorization: Bearer <SWADEBASE user JWT>` except for `GET /health` and for playlist/segment URLs that already carry a playback token.
 
@@ -65,15 +67,32 @@ The $100 figure is a per-creator per-year quote for a future genuine-4K add-on. 
 2. Apply `supabase/migrations/20261107210000_catalog_video.sql` on a non-production database first. Reload PostgREST (`NOTIFY pgrst, 'reload schema'` or restart the REST service).
 3. Set `CATALOG_VIDEO_SIGNING_KEY` (32+ characters) in the functions env. Keep it out of git.
 4. Point `CATALOG_VIDEO_S3_*` at a private non-production bucket. Production Backblaze writes are not authorized.
-5. Leave `FUNCTIONS_VERIFY_JWT` false, or exempt signed `GET /hls/*`. The gateway otherwise rejects Roku and Safari segment requests that only have the playback token.
+5. Do not set `FUNCTIONS_VERIFY_JWT=false` for this service. The gateway keeps verifying JWTs for every existing function and for catalog data routes. Only `GET`/`HEAD /catalog-video/hls/*` and `PUT /catalog-video/uploads/parts` skip that gateway check, and only when they carry a long `token` query parameter. The function still verifies that HMAC. Flipping the global flag on the live host is a separate compatibility change because today's live gateway does not require a JWT.
 6. Confirm bucket privacy, CORS for the ABAGALE and BLACKTALES web origins, byte range, and the current egress price.
 7. Measure VPS CPU, RAM, and free disk. The compose file asks for 1 CPU and 1.5 GB as a placeholder. A multi-minute 1080p encode plus a 1 GB master can need more disk than that.
 8. The 8 GiB per-master ceiling is a safety cap (`CATALOG_VIDEO_MAX_MASTER_BYTES`), not the commercial quota.
 
 ## Tested here
 
-Local filesystem multipart, ffprobe, one real H.264 HLS package (320x240 fixture), ffmpeg reading the signed master, a 206 byte range, the 600.001-second rejection with the original kept, YouTube embed rejection for Roku/HLS, series order, idempotency, and the PostgreSQL checks that block active billing, quotas, YouTube-as-Roku, a second concurrent claim, and cross-user reads.
+Local filesystem multipart, ffprobe, one real H.264 HLS package (320x240 fixture), ffmpeg reading the signed master, byte ranges, the 600.001-second rejection with the original kept, YouTube embed rejection for Roku/HLS, series order, idempotency, tenant and signature isolation, and the PostgreSQL checks that block active billing, quotas, YouTube-as-Roku, a second concurrent claim, and cross-user reads.
 
-## Not tested and not done
+Also verified locally, still not production:
 
-No production B2 call, no 1 GB fixture upload, no Deno edge boot, no browser or Roku device, no visual quality review, no 4K encode, no billing, no quota numbers, and no worker image build (Docker is not available in this workspace).
+- A real 1 GiB multipart object was assembled in a temporary directory and then deleted. That directory was not Backblaze.
+- Deno booted `docker/volumes/functions/catalog-video/index.ts`. Health returned `enabled: false`. A data route returned 503.
+- Image `swadebase-catalog-video-worker:local` built on this machine. With a 1 CPU, 1536 MB, and 128 pid limit, the container exited 0 because `CATALOG_VIDEO_ENABLED` was unset. The image was not pushed.
+
+## Stop. This pull request is not a launch
+
+Do not merge, reset the live checkout, apply the migration on production, set `CATALOG_VIDEO_ENABLED`, or start the worker until every line below is true.
+
+1. Required CI checks and reviews are green. They are not.
+2. The change is applied onto the live revision. `origin/feat/motion-studio` holds the deployed Motion Studio function, worker, and migrations. Those files are not on `master`. Replacing the live tree with this branch would remove them.
+3. A restorable backup of the live database and the current deploy revision is recorded. None was taken.
+4. An authorized operator puts `CATALOG_VIDEO_SIGNING_KEY` in the existing secret store. It is not committed.
+5. Private object storage, free disk, CORS, range, and zero extra spend are confirmed. The Hostinger VPS list call timed out, so capacity is not verified.
+6. `CATALOG_VIDEO_ENABLED` stays unset until those checks pass.
+
+When a later deploy is authorized, rollback is: clear `CATALOG_VIDEO_ENABLED`, stop the catalog worker, and leave masters in place. Do not drop the catalog tables or delete objects unless a reviewed backup shows they contain only this feature's data.
+
+Live read on 2026-11-07: `GET /functions/v1/motion-studio/health` returned 200. `GET /functions/v1/catalog-video/health` returned 500 because that function is not on the server.
