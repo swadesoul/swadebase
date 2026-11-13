@@ -24,6 +24,8 @@ RUN npx --no-install hyperframes browser ensure
 
 COPY --chown=node:node motion/adapter /app/motion/adapter
 COPY --chown=node:node motion/styles/library.json /app/motion/styles/library.json
+COPY --chown=node:node motion/swade-learn/*.mjs /app/motion/swade-learn/
+COPY --chown=node:node motion/swade-learn/remotion/src /app/motion/swade-learn/remotion/src
 COPY --chown=node:node motion/worker/*.mjs ./
 
 CMD ["node", "worker.mjs"]

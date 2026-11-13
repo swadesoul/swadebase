@@ -23,6 +23,10 @@ services:
       MOTION_B2_PREFIX: ${MOTION_B2_PREFIX:-swadesoul/motion-studio}
       MOTION_RENDER_WORKERS: ${MOTION_RENDER_WORKERS:-2}
       MOTION_POLL_MS: ${MOTION_POLL_MS:-4000}
+      # SWADE Learn renders stay local and unpaid until these are set on purpose.
+      PREMIUM_VIDEO_ENABLED: ${PREMIUM_VIDEO_ENABLED:-false}
+      SWADE_LEARN_B2: ${SWADE_LEARN_B2:-local}
+      SWADE_LEARN_RENDERER: ${SWADE_LEARN_RENDERER:-hyperframes}
     deploy:
       resources:
         limits:

@@ -16,12 +16,15 @@
 //   POST /projects/:id/render          queue compose + render { quality }
 //   GET  /projects/:id/download?type=video|source|poster   { url } signed B2 link (?redirect=1 for 302)
 //   POST /mcp                          MCP (JSON-RPC over streamable HTTP) for any agent program
+//   POST /swade-learn/jobs             queue a Video Studio production pack (kind swade_learn)
+//   GET  /swade-learn/jobs/:id         job status, B2 keys, and checksums
 //
 // Secrets (server env only): SUPABASE_SERVICE_ROLE_KEY, B2_KEY_ID, B2_APP_KEY, ANTHROPIC_API_KEY / OPENAI_API_KEY.
 
 import { createClient } from 'npm:@supabase/supabase-js@2.45.4'
 import { AwsClient } from 'npm:aws4fetch@1.0.20'
 import { recommendStyles, normalizeRequest, styleCard, FORMATS, ADAPTER_VERSION } from './_shared/adapter.mjs'
+import { validatePack } from './_shared/swade-learn-pack.mjs'
 import { AGENT_MANIFEST, AGENT_TOOLS, ruleBasedTurn, llmMessages, validateLlmTurn } from './_shared/motion-agent.mjs'
 
 // Imported (not read from disk) so the edge runtime bundles them with the function.
@@ -400,7 +403,18 @@ Deno.serve(async (req) => {
     }
     if (a === 'health') {
       const { count, error } = await admin.from('motion_styles').select('id', { count: 'exact', head: true })
-      return json({ ok: true, adapter: ADAPTER_VERSION, agent: AGENT_NAME, styles_in_db: error ? null : count, styles_in_file: FILE_LIBRARY.length, b2: !!s3 && !!B2.bucket, db_error: error?.message || null })
+      return json({
+        ok: true,
+        adapter: ADAPTER_VERSION,
+        agent: AGENT_NAME,
+        styles_in_db: error ? null : count,
+        styles_in_file: FILE_LIBRARY.length,
+        b2: !!s3 && !!B2.bucket,
+        db_error: error?.message || null,
+        swade_learn: true,
+        premium_video_enabled: env('PREMIUM_VIDEO_ENABLED') === 'true',
+        swade_learn_prefix: 'teachvirt/swade-learn/renders',
+      })
     }
 
     const user = await getUser(req)
@@ -441,6 +455,35 @@ Deno.serve(async (req) => {
       if (size > MAX_UPLOAD_MB * 1024 * 1024) return fail(413, `Max ${MAX_UPLOAD_MB} MB`)
       const key = `${B2.prefix}/${user.id}/uploads/${crypto.randomUUID()}-${safeName(String(body.filename || kind))}`
       return json({ key, uploadUrl: await presign('PUT', key, 900, type), headers: { 'content-type': type }, expiresIn: 900 })
+    }
+
+    if (a === 'swade-learn' && b === 'jobs') {
+      if (!c && req.method === 'POST') {
+        const body = await req.json().catch(() => ({}))
+        const validated = validatePack(body.pack || body)
+        if (!validated.ok) return fail(400, validated.errors.join('; '))
+        const premium = validated.pack.voice.provider === 'elevenlabs' || validated.pack.visuals.provider === 'together'
+        if (premium && env('PREMIUM_VIDEO_ENABLED') !== 'true') return json({ error: 'premium_disabled', status: 'premium_disabled' }, 403)
+        const { data, error } = await admin
+          .from('motion_render_jobs')
+          .insert({ kind: 'swade_learn', owner_user_id: user.id, payload: { pack: validated.pack } })
+          .select('id,status,kind,queued_at')
+          .single()
+        if (error?.message?.includes('uq_motion_swade_learn_pack_active')) return json({ error: 'already queued' }, 409)
+        if (error) return fail(400, error.message)
+        return json(data, 201)
+      }
+      if (c && req.method === 'GET') {
+        const { data, error } = await admin
+          .from('motion_render_jobs')
+          .select('id,status,kind,error_message,result,queued_at,started_at,completed_at,owner_user_id')
+          .eq('id', c)
+          .maybeSingle()
+        if (error) return fail(400, error.message)
+        if (!data || data.kind !== 'swade_learn' || (data.owner_user_id !== user.id && !user.isAdmin)) return fail(404, 'Job not found')
+        const { owner_user_id: _owner, ...job } = data
+        return json(job)
+      }
     }
 
     if (a === 'projects') {

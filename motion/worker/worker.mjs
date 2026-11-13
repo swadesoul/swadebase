@@ -279,6 +279,32 @@ async function runSampleJob(job, dir) {
   if (usedTemplate) log(`sample ${style.id} used the template composer (no LLM configured or lint failed)`)
 }
 
+async function runSwadeLearnJob(job, dir) {
+  const { runSwadeLearnPack } = await import('../swade-learn/pipeline.mjs')
+  const { createLedger } = await import('../swade-learn/ledger.mjs')
+  const { localStore } = await import('../swade-learn/store.mjs')
+  const premium = env('PREMIUM_VIDEO_ENABLED') === 'true'
+  const useB2 = env('SWADE_LEARN_B2') === 'b2'
+  const store = useB2
+    ? { kind: 'b2', put: (key, file, type) => b2Put(key, file, type) }
+    : localStore(env('SWADE_LEARN_LOCAL_ROOT', '/tmp/swade-learn-renders'))
+  const ledger = createLedger()
+  const result = await runSwadeLearnPack({
+    pack: job.payload?.pack,
+    ledger,
+    store,
+    dir,
+    renderId: job.id.replace(/-/g, '').slice(0, 40),
+    premiumEnabled: premium,
+    renderer: env('SWADE_LEARN_RENDERER', 'hyperframes'),
+    apiKeys: premium
+      ? { elevenlabs: env('ELEVENLABS_API_KEY'), together: env('TOGETHER_API_KEY') }
+      : {},
+    onProgress: () => heartbeat(job.id),
+  })
+  await db.from('motion_render_jobs').update({ result }).eq('id', job.id)
+}
+
 async function tick() {
   const { data: job, error } = await db.rpc('claim_motion_render_job', { p_worker_id: WORKER_ID })
   if (error) { log('claim error', error.message); return false }
@@ -289,10 +315,21 @@ async function tick() {
   const beat = setInterval(() => heartbeat(job.id), 30000)
   try {
     if (job.kind === 'style_sample') await runSampleJob(job, dir)
+    else if (job.kind === 'swade_learn') await runSwadeLearnJob(job, dir)
     else await runProjectJob(job, dir)
     await db.from('motion_render_jobs').update({ status: 'done', completed_at: new Date().toISOString(), error_message: null }).eq('id', job.id)
     log(`job ${job.id} done`)
   } catch (e) {
+    if (job.kind === 'swade_learn' && ['spend_blocked', 'premium_disabled', 'invalid_pack'].includes(e.code)) {
+      await db.from('motion_render_jobs').update({
+        status: e.code === 'spend_blocked' ? 'spend_blocked' : 'failed',
+        error_message: e.code,
+        result: e.result || { status: e.code },
+        completed_at: new Date().toISOString(),
+      }).eq('id', job.id)
+      log(`job ${job.id} ${e.code}`)
+      return
+    }
     const msg = String(e.message || e).slice(0, 1500)
     log(`job ${job.id} failed: ${msg}`)
     const retry = job.attempts < job.max_attempts
