@@ -1,0 +1,95 @@
+{
+  "checks": [
+    {
+      "name": "Sabria Swade",
+      "description": true,
+      "bio": true
+    },
+    {
+      "name": "Smitty",
+      "description": true,
+      "bio": true
+    },
+    {
+      "name": "Noble Rayne Swade",
+      "description": true,
+      "bio": true
+    },
+    {
+      "name": "Royal Banks",
+      "description": true,
+      "bio": true
+    },
+    {
+      "name": "Karriann Swade",
+      "description": true,
+      "bio": true
+    },
+    {
+      "name": "Ty Swade",
+      "description": true,
+      "bio": true
+    },
+    {
+      "name": "Leyco Swade",
+      "description": true,
+      "bio": true
+    },
+    {
+      "name": "Steemo Swade",
+      "description": true,
+      "bio": true
+    },
+    {
+      "name": "Granada Swade",
+      "description": true,
+      "bio": true
+    },
+    {
+      "name": "Reggie Swade",
+      "description": true,
+      "bio": true
+    },
+    {
+      "name": "Mason Swade",
+      "description": true,
+      "bio": true
+    },
+    {
+      "name": "Shamone Swade",
+      "description": true,
+      "bio": true
+    },
+    {
+      "name": "Swade Soul",
+      "description": true,
+      "bio": true
+    },
+    {
+      "name": "Nevaborya Swade",
+      "description": true,
+      "bio": true
+    },
+    {
+      "name": "Ameyea Swade",
+      "description": true,
+      "bio": true
+    },
+    {
+      "name": "Suki Swade",
+      "description": true,
+      "bio": true
+    },
+    {
+      "name": "Rivan",
+      "description": true,
+      "bio": true
+    },
+    {
+      "legacyRedirect": true,
+      "queryAndHashPreserved": true,
+      "websiteConnection": true
+    }
+  ],
+  "errors": []
+}

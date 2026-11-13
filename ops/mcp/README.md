@@ -1,3 +1,7 @@
+# Current release: owner-approved actions 1.1
+
+The 1.1 source adds MCP Studio and typed owner-approved execution. See ACTIONS.md for exact supported operations, scope consent, founder isolation, mandatory payment rules, per-payment approval, business-reference deduplication, receipts, tests and rollback. Missing provider connections remain setup-required; there is no arbitrary shell or unattended spending. The operator 1.0 release notes below are historical.
+
 # SWADEBASE Ecosystem MCP — operator release 1.0
 
 Deployed 2026-10-25 inside the existing swadebase-adapters process. No new hosting, cloud database, paid AI calls, GPU generation or media copies.
@@ -26,3 +30,4 @@ For immediate stop, disable registry `swadebase-mcp`; all six tool services fail
 - `swade_cost_report` — spend by project, provider/model and feature for today/7d/30d/mtd/all, plus each provider's recorded credit balance. Scope `ecosystem:read`. Read-only.
 - `swade_rate_cards` — price per unit for each provider/model, with verified/unverified flags.
 Source: `costs.mjs` over `swadebase_ops.ai_*` (schema `../costs/schema.sql`). Live check: load the adapter env and run `node costs-live-smoke.mjs`.
+

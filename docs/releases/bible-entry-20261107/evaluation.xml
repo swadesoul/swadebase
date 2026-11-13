@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Deterministic release expectations for MCP 1.1.1, 2026-11-07.
+     Production evaluation results are pending. Inspect code/documents or use
+     isolated fixtures. Never mutate production files, credentials, or payments
+     to answer a question. No model/provider call is required. -->
+<evaluation>
+  <qa_pair>
+    <question>For this release, inspect the authoritative Shared Stripe merchant section of STANDING_RULES.md. What is the already verified default account ID? Return only the account ID.</question>
+    <answer>acct_1SizGm43OPTHaIwn</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>In an isolated entry-context fixture, both mandatory documents are readable and their index hashes match, the Guardian timer is active, the exact knowledge-index hook is loaded, and the receipt is successful and fresh. What is the top-level entry status? Return only the status string.</question>
+    <answer>ready</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>In an isolated fixture, current mandatory reference files are readable but their index hashes are stale. What top-level entry status preserves current filesystem references while reporting degraded automation? Return only the status string.</question>
+    <answer>ready_live_reference</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Inspect the missing-mandatory-reference branch without modifying production. If either required current reference is unavailable, what error code and HTTP status are raised? Return exactly code:status.</question>
+    <answer>bible_unavailable:503</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>For an actor with only merch:read, what are the permitted top-level entry-context keys? Return the keys in alphabetical order, comma-separated without spaces.</question>
+    <answer>automation,checked_at,reference_boundary,status,version</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>In an isolated standing-rules fixture, the authoritative default-merchant paragraph contains two different account IDs. Does merchant extraction pick one or mark the binding unresolved? Return only the resulting stripe_default.status.</question>
+    <answer>unresolved</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>What is the maximum age, in milliseconds, of a successful knowledge-index receipt before entry-context automation health reports receipt_stale? Return only the integer threshold.</question>
+    <answer>720000</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Which exact drop-in basename must appear under sssbrain-guardian.service.d for the intended Bible-index hook to count as loaded? Return only the basename.</question>
+    <answer>guardian-knowledge-index.conf</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Does this release install a universal hook that executes at the start of every ChatGPT conversation, including conversations that never call SWADEBASE MCP or its native bridges? Return only yes or no.</question>
+    <answer>no</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>How many paid provider, embedding, or model-training calls are required by the automatic Bible entry check and existing local document-index hook themselves? Return only the integer count.</question>
+    <answer>0</answer>
+  </qa_pair>
+</evaluation>

@@ -1,0 +1,106 @@
+{
+  "source_commit": "28893536105cab4b3871d03ddc200d253fc8f0d2",
+  "backup": "/opt/swadebase/backups/bible-entry-20261107T072131Z",
+  "files": [
+    {
+      "path": "/opt/swadebase/ops/mcp/service.mjs",
+      "before_sha256": "d61686df3bca577e4b4bfa779eaebfcd280d4b9122abb494ece2a7df74da5cc0",
+      "sha256": "4917de47841aef1d6aa30a5ae49e2a1993a7b4806008c98a39d2990cdb77dc80",
+      "backup_path": "/opt/swadebase/backups/bible-entry-20261107T072131Z/opt/swadebase/ops/mcp/service.mjs"
+    },
+    {
+      "path": "/opt/swadebase/ops/mcp/protocol.mjs",
+      "before_sha256": "0be6decf758bac46266538babf241a1b90fa0c1054e7844e321955773cad7767",
+      "sha256": "518fbfada8aba375463fcf5d08fc42b1a54dc1b442be9f8408fb9aedb6592260",
+      "backup_path": "/opt/swadebase/backups/bible-entry-20261107T072131Z/opt/swadebase/ops/mcp/protocol.mjs"
+    },
+    {
+      "path": "/opt/swadebase/ops/mcp/route.mjs",
+      "before_sha256": "a4663306274074d0b04be5bb04cbac6c29f34bc017ac38d09f88453805833802",
+      "sha256": "c8dd39a01122f0f97be0126112508f86010910f238cb0ab16c8730c92fff6962",
+      "backup_path": "/opt/swadebase/backups/bible-entry-20261107T072131Z/opt/swadebase/ops/mcp/route.mjs"
+    },
+    {
+      "path": "/opt/swadebase/ops/mcp/knowledge.mjs",
+      "before_sha256": "f68766a5cda085df990d41999eefae1f843d74cd108a9afd7b0dbf297140defd",
+      "sha256": "8b370cfcb023f77d4ef39487f0e64f0fb643a84b57f3ffa242bb2934fd608db3",
+      "backup_path": "/opt/swadebase/backups/bible-entry-20261107T072131Z/opt/swadebase/ops/mcp/knowledge.mjs"
+    },
+    {
+      "path": "/opt/swadebase/ops/mcp/entry-context.mjs",
+      "before_sha256": null,
+      "sha256": "9bb15ce5b7795d734629ae9c316b106e71afa977144628a31cbe192ab12a1553",
+      "backup_path": null
+    },
+    {
+      "path": "/opt/swadebase/ops/mcp/core.test.mjs",
+      "before_sha256": "525601df027928745064137a74bd8e994e50c29f4aef62fe25c5fe347051d7cb",
+      "sha256": "bb208aea85d7ad303c5cc78cc204848ac27b6f4ccf43df43e729c3d497c7bf7c",
+      "backup_path": "/opt/swadebase/backups/bible-entry-20261107T072131Z/opt/swadebase/ops/mcp/core.test.mjs"
+    },
+    {
+      "path": "/opt/swadebase/ops/mcp/protocol.test.mjs",
+      "before_sha256": "731af03afac6cccd03fdda773bf73629d4711b50acff1dee3507fdafd59647ca",
+      "sha256": "2625f5840cde5732261376de884ae1140e4df3b1fd6190e344c4276c2db1cd41",
+      "backup_path": "/opt/swadebase/backups/bible-entry-20261107T072131Z/opt/swadebase/ops/mcp/protocol.test.mjs"
+    },
+    {
+      "path": "/opt/swadebase/ops/mcp/knowledge.test.mjs",
+      "before_sha256": "cb6bd29bc4b468f6bb275b10ef252f3d8ff9e2a586adbf1c25f405790a929605",
+      "sha256": "c1d728111df4a25843853dfc62a9495dcce2d352594abc532b73d0ca45e088a1",
+      "backup_path": "/opt/swadebase/backups/bible-entry-20261107T072131Z/opt/swadebase/ops/mcp/knowledge.test.mjs"
+    },
+    {
+      "path": "/opt/swadebase/ops/mcp/native-knowledge.test.mjs",
+      "before_sha256": "b33807c3006d102b4cee76e8ec6e0f93c3c147464467c9a53db29d885e5682e1",
+      "sha256": "6d7b924b28d29679b517a3fda83e5065d99248a8b809c420e5e701bb6c5cb54c",
+      "backup_path": "/opt/swadebase/backups/bible-entry-20261107T072131Z/opt/swadebase/ops/mcp/native-knowledge.test.mjs"
+    },
+    {
+      "path": "/opt/swadebase/ops/mcp/studio-routes.test.mjs",
+      "before_sha256": "0facbb6b4a8788fe4de513daed8b69665602f05ff3b76a6b5900865855d35004",
+      "sha256": "36960fbd0e0e9648438a94c0dd739e47d801f8ac5a22c868c2d0c50572da703d",
+      "backup_path": "/opt/swadebase/backups/bible-entry-20261107T072131Z/opt/swadebase/ops/mcp/studio-routes.test.mjs"
+    },
+    {
+      "path": "/opt/swadebase/ops/mcp/entry-context.test.mjs",
+      "before_sha256": null,
+      "sha256": "d3097eef2ed697412ab3dc0889938e968dc7d5e4b7b64ffaff3ad3ec9f5ee6cc",
+      "backup_path": null
+    },
+    {
+      "path": "/opt/swadebase/ops/knowledge-learning/sync.py",
+      "before_sha256": "21b934136e938cc77cb7dbb4a97dfb3c154f5062618340e3401a422169d16036",
+      "sha256": "722d775efde90993fb63256a06f0bb620429642db84624cd5cf6b17045ef0f94",
+      "backup_path": "/opt/swadebase/backups/bible-entry-20261107T072131Z/opt/swadebase/ops/knowledge-learning/sync.py"
+    },
+    {
+      "path": "/opt/swadebase/ops/knowledge-learning/sync_state_test.py",
+      "before_sha256": null,
+      "sha256": "09cbae6687da1b8aaf65b2dd323f28133b88450f84f110bb83880a6649150049",
+      "backup_path": null
+    },
+    {
+      "path": "/etc/systemd/system/sssbrain-guardian.service.d/guardian-knowledge-index.conf",
+      "before_sha256": null,
+      "sha256": "791ab9972f6f4fdcb6f74f84754c437194a1c5fedf5d948c20a16b0fa0014493",
+      "backup_path": null
+    }
+  ],
+  "protected_hashes": {
+    "/etc/systemd/system/sssbrain-guardian.service": "62a95c43b7ea921841679160405b7cb3e8d053395b97f908c6dd620164421ecb",
+    "/etc/systemd/system/sssbrain-guardian.timer": "0b49452724843e24718a21e0a9988333566611ff38fde327446e8dd924c96849",
+    "/etc/systemd/system/sssbrain-guardian.service.d/abagale-merch-observer.conf": "95b2cffc272cc98add63ccfd1e40d1fccf9478ec0c8061083cf3043bffd51246"
+  },
+  "status": "installed",
+  "installed_at": "2026-11-07T07:21:32.406316+00:00",
+  "automatic_scheduled_run": "verified",
+  "scheduled_trigger": "Sat 2026-11-07 07:23:23 UTC",
+  "scheduled_index_receipt_at": "2026-11-07T07:23:51.834355+00:00",
+  "live_verification": {
+    "status": "scoped_checks_passed",
+    "assertions_passed": 207,
+    "executed_as": "swadeops"
+  },
+  "final_reference_check": "passed"
+}

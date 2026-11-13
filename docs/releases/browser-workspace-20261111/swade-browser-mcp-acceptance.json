@@ -1,0 +1,27 @@
+{
+  "time": "2026-11-11T12:08:23.630Z",
+  "mcp_tools": 23,
+  "new_tools": [
+    "swade_browser_sites",
+    "swade_site_checker",
+    "swade_site_check_report",
+    "swade_browser_task_propose",
+    "swade_browser_task_report"
+  ],
+  "business_proposal_and_report": "passed",
+  "agent_self_approval": "denied",
+  "oauth_pkce_consent_replay": "passed",
+  "idempotency": "passed",
+  "job_id": "df17b7d9-0df5-4733-bde6-659296b1c71b",
+  "job_status": "done",
+  "site": "swadebase.cloud",
+  "coverage": {
+    "pages": 7,
+    "blocked_writes": 0,
+    "controls_tested": 0,
+    "controls_skipped": 30,
+    "controls_discovered": 30
+  },
+  "issues": {},
+  "paid_calls": 0
+}

@@ -1,0 +1,21 @@
+{
+  "base": "https://themaestroradio.com",
+  "checks": [
+    {
+      "width": 1440,
+      "singleDeck": true,
+      "noOverflow": true
+    },
+    {
+      "width": 820,
+      "singleDeck": true,
+      "noOverflow": true
+    },
+    {
+      "width": 390,
+      "singleDeck": true,
+      "noOverflow": true
+    }
+  ],
+  "errors": []
+}

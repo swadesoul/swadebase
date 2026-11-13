@@ -1,0 +1,172 @@
+{
+  "time": "2026-11-11T12:49:01.516Z",
+  "checks": [
+    {
+      "name": "Actual HTTPS owner gate; legacy tokens denied; readiness retains acceptance gates",
+      "passed": true
+    },
+    {
+      "name": "Live CSRF, cross-origin and owner identity override denial",
+      "passed": true
+    },
+    {
+      "name": "Maestro pilot registered; duplicate package and build injection rejected",
+      "passed": true
+    },
+    {
+      "name": "Actual forced RLS hides another owner application",
+      "passed": true
+    },
+    {
+      "name": "Build queued through HTTPS with stable idempotency and conflict rejection",
+      "passed": true
+    },
+    {
+      "name": "Actual bounded systemd worker generated APK and release draft; real package checks passed",
+      "passed": true
+    },
+    {
+      "name": "Actual forced RLS protects build reports",
+      "passed": true
+    },
+    {
+      "name": "Seven private artifact downloads match SHA-256; anonymous and unknown-file access denied",
+      "passed": true
+    },
+    {
+      "name": "Device QA honestly blocks without an authorized Android phone",
+      "passed": true
+    },
+    {
+      "name": "Live registry kill switch denies factory operations",
+      "passed": true
+    },
+    {
+      "name": "Live owner dashboard at desktop/tablet/phone widths; report interaction; no JavaScript exceptions or overflow",
+      "passed": true
+    },
+    {
+      "name": "Existing shared adapter and five public surfaces remain reachable",
+      "passed": true
+    }
+  ],
+  "owner_google_login": "not_performed",
+  "physical_android": "not_connected",
+  "paid_model_calls": 0,
+  "app_id": "147ec482-7a58-4077-86c0-0cfecbf59bcb",
+  "build_id": "00ceb631-7a2d-446f-b811-5d11ce7397ad",
+  "qa_id": "a5ea88a4-7ff6-4d48-9c6b-b608a6281033",
+  "total": 12,
+  "build_result": {
+    "engine": "twa",
+    "status": "done",
+    "signing": {
+      "kind": "debug-only",
+      "sha256": "9F:D7:C0:E2:E2:64:ED:06:80:25:FF:C2:01:CC:98:DD:58:43:61:59:63:F3:A0:6A:68:2B:47:33:60:82:AA:07",
+      "production_key_connected": false
+    },
+    "version": 1,
+    "blockers": [
+      "Physical Android lifecycle, authentication and media acceptance are pending.",
+      "Debug APK is for testing only; release AAB is unsigned.",
+      "Domain association requires reviewed assetlinks.json; Play signing fingerprint will differ.",
+      "Final app artwork, store metadata, privacy/data declarations and applicable billing require review.",
+      "Google Play account is not connected."
+    ],
+    "artifacts": [
+      {
+        "name": "app-debug.apk",
+        "bytes": 4851011,
+        "sha256": "46a874521968378ca73b64482c2293b9ddefd5623d93230d3df57e1ea50bb7d5"
+      },
+      {
+        "name": "app-release-unsigned.aab",
+        "bytes": 3563611,
+        "sha256": "296665ea89cd0bc05ab50e38bc8c7033a137ebe83f56552555735f5d295f1b5e"
+      },
+      {
+        "name": "assetlinks.json",
+        "bytes": 346,
+        "sha256": "7d5c3d39ecb94423438e041bcfd435f1c36dfda0d8d880c80085cd9c2484d4e0"
+      },
+      {
+        "name": "listing.md",
+        "bytes": 341,
+        "sha256": "d3c973874dc958b5a085fc9d9f2246fad3af97de2f94e1b89c8faa831c977073"
+      },
+      {
+        "name": "report.json",
+        "bytes": 2139,
+        "sha256": "78d537dd7897ae403ecdfa067d119ef111cc6a7cfe730521a198d6da7e129a9b"
+      },
+      {
+        "name": "source.zip",
+        "bytes": 57609,
+        "sha256": "d60b30404a3a16cf2a89e18e9cc65509e2dac605f67bd3695ad3967ad2ca547b"
+      },
+      {
+        "name": "test-plan.md",
+        "bytes": 964,
+        "sha256": "b25ae3008455708f0e71ae4da2032cb3a9d219727b584427a22f61480d909e52"
+      }
+    ],
+    "published": false,
+    "test_plan": {
+      "media": [
+        "Play selected station",
+        "Lock screen and verify audible playback",
+        "Interrupt with another audio app",
+        "Reconnect network",
+        "Resume without duplicate audio"
+      ],
+      "security": [
+        "Other account data remains inaccessible",
+        "No credentials in reports"
+      ],
+      "regression": [
+        "Repeat each previously reported issue"
+      ],
+      "first_time_user": [
+        "Open app",
+        "Sign in via real user account",
+        "Navigate core screens",
+        "Sign out"
+      ],
+      "android_lifecycle": [
+        "Launch",
+        "Home and resume",
+        "Back navigation",
+        "Rotation",
+        "Permissions denied",
+        "Offline then reconnect"
+      ],
+      "human_closed_test": [
+        "Recruit real participants if required",
+        "Collect actual feedback",
+        "Record test engagement honestly"
+      ]
+    },
+    "finished_at": "2026-11-11T12:50:01.495919+00:00",
+    "package_name": "cloud.swade.maestro.preview",
+    "release_ready": false,
+    "android_device": {
+      "status": "not_run"
+    },
+    "package_checks": {
+      "checks": [
+        "APK signature verified",
+        "Package identifier matches",
+        "Version code matches",
+        "Target API 36",
+        "Sensitive permission deny list",
+        "Unsigned release bundle generated"
+      ],
+      "passed": true,
+      "permissions": [
+        "android.permission.INTERNET",
+        "cloud.swade.maestro.preview.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+      ]
+    },
+    "paid_model_calls": 0
+  }
+}

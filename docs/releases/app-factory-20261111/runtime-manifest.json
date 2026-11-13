@@ -1,0 +1,7 @@
+{
+  "/opt/swadebase-adapters/server.mjs": "745113e35a81e122c2869d3cad9e267d7187980cf3513830021887c7ad566e85",
+  "/opt/swadebase/ops/mcp/service.mjs": "d80a9e00c46b68d48d37e8690c5c06050122c80f2b7d92b156801b7cb98e023e",
+  "/opt/swadebase/ops/mcp/protocol.mjs": "5c30c35f68a193719af706cbce71d86623047e78dcf783fb6a9a33d3dd307b31",
+  "/opt/swadebase-adapters/public/index.html": "22ee5d6480937fb71a997b26fcd4303fb97cf7df0cebae061b312fecfaedb682",
+  "/etc/systemd/system/swade-app-factory.service": "1cb32b79076f5f5931062897ea1fbcee6768f2803524bc3493c255bb560722e7"
+}

@@ -1,0 +1,185 @@
+{
+  "state": "live",
+  "previous": "/var/www/maestroradio-web/releases/20261113T032457Z-artist-office",
+  "release": "/var/www/maestroradio-web/releases/20261113T045102Z-artist-profiles",
+  "backup": "/opt/swadebase/backups/artist-reconcile-20261113",
+  "content_committed": true,
+  "public_pages": [
+    {
+      "path": "swade-soul/sabria-swade",
+      "status": 200,
+      "description": true,
+      "bio": true
+    },
+    {
+      "path": "swade-soul/smitty",
+      "status": 200,
+      "description": true,
+      "bio": true
+    },
+    {
+      "path": "swade-soul/noble-rayne-swade",
+      "status": 200,
+      "description": true,
+      "bio": true
+    },
+    {
+      "path": "swade-soul/royal-banks",
+      "status": 200,
+      "description": true,
+      "bio": true
+    },
+    {
+      "path": "swade-soul/karriann-swade",
+      "status": 200,
+      "description": true,
+      "bio": true
+    },
+    {
+      "path": "swade-soul/ty-swade",
+      "status": 200,
+      "description": true,
+      "bio": true
+    },
+    {
+      "path": "swade-soul/leyco-swade",
+      "status": 200,
+      "description": true,
+      "bio": true
+    },
+    {
+      "path": "swade-soul/steemo-swade",
+      "status": 200,
+      "description": true,
+      "bio": true
+    },
+    {
+      "path": "swade-soul/granada-swade",
+      "status": 200,
+      "description": true,
+      "bio": true
+    },
+    {
+      "path": "swade-soul/reggie-swade",
+      "status": 200,
+      "description": true,
+      "bio": true
+    },
+    {
+      "path": "swade-soul/mason-swade",
+      "status": 200,
+      "description": true,
+      "bio": true
+    },
+    {
+      "path": "swade-soul/shamone-swade",
+      "status": 200,
+      "description": true,
+      "bio": true
+    },
+    {
+      "path": "swade-soul",
+      "status": 200,
+      "description": true,
+      "bio": true
+    },
+    {
+      "path": "swade-soul/nevaborya-swade",
+      "status": 200,
+      "description": true,
+      "bio": true
+    },
+    {
+      "path": "swade-soul/ameyea-swade",
+      "status": 200,
+      "description": true,
+      "bio": true
+    },
+    {
+      "path": "swade-soul/suki-swade",
+      "status": 200,
+      "description": true,
+      "bio": true
+    },
+    {
+      "path": "swade-soul/rivan",
+      "status": 200,
+      "description": true,
+      "bio": true
+    }
+  ],
+  "profiles": [
+    {
+      "slug": "sabria-swade",
+      "matched": true
+    },
+    {
+      "slug": "smitty-swade",
+      "matched": true
+    },
+    {
+      "slug": "noble-rayne-swade",
+      "matched": true
+    },
+    {
+      "slug": "royal-banks",
+      "matched": true
+    },
+    {
+      "slug": "karriann-swade",
+      "matched": true
+    },
+    {
+      "slug": "ty-swade",
+      "matched": true
+    },
+    {
+      "slug": "leyco-swade",
+      "matched": true
+    },
+    {
+      "slug": "steemo-swade",
+      "matched": true
+    },
+    {
+      "slug": "granada-swade",
+      "matched": true
+    },
+    {
+      "slug": "reggie-swade",
+      "matched": true
+    },
+    {
+      "slug": "mason-swade",
+      "matched": true
+    },
+    {
+      "slug": "shamone-swade",
+      "matched": true
+    },
+    {
+      "slug": "swade-soul",
+      "matched": true
+    },
+    {
+      "slug": "nevaborya-swade",
+      "matched": true
+    },
+    {
+      "slug": "ameyea-swade",
+      "matched": true
+    },
+    {
+      "slug": "suki-swade",
+      "matched": true
+    },
+    {
+      "slug": "rivan",
+      "matched": true
+    }
+  ],
+  "directory_count": 17,
+  "master_count": 20,
+  "developing_drafts": 3,
+  "radio_engine_restarted": false
+}

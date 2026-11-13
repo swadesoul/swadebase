@@ -1,0 +1,132 @@
+{
+  "state": "live",
+  "created_at": "2026-11-13T13:05:07.163008+00:00",
+  "backup": "/opt/swadebase/backups/maestro-drama-web-resume-20261113T130507Z",
+  "release": "/var/www/maestroradio-web/releases/20261113T130507Z-behind-rotation",
+  "previous": "/var/www/maestroradio-web/releases/20261113T045102Z-artist-profiles",
+  "checks": [
+    {
+      "test": "source committed",
+      "passed": true
+    },
+    {
+      "test": "frontend unchanged since prior failed attempt",
+      "passed": true
+    },
+    {
+      "test": "radio retirement receipt",
+      "passed": true
+    },
+    {
+      "test": "legacy game truly off DJ playlist",
+      "passed": true
+    },
+    {
+      "test": "radio engine live",
+      "passed": true
+    },
+    {
+      "test": "production backend same as original",
+      "passed": true
+    },
+    {
+      "test": "production DJ function same as original",
+      "passed": true
+    },
+    {
+      "test": "voting table installed",
+      "passed": true
+    },
+    {
+      "test": "no active deployment lock",
+      "passed": true
+    },
+    {
+      "test": "audio source ready",
+      "passed": true
+    },
+    {
+      "test": "no overlapping lock",
+      "passed": true
+    },
+    {
+      "test": "factory active",
+      "passed": true
+    },
+    {
+      "test": "episode present",
+      "passed": true
+    },
+    {
+      "test": "HTTP200 /",
+      "passed": true
+    },
+    {
+      "test": "HTTP200 /behind-the-rotation",
+      "passed": true
+    },
+    {
+      "test": "HTTP200 /radio",
+      "passed": true
+    },
+    {
+      "test": "HTTP200 /artist-office",
+      "passed": true
+    },
+    {
+      "test": "HTTP200 /label-office",
+      "passed": true
+    },
+    {
+      "test": "HTTP200 /maestro-mix/",
+      "passed": true
+    },
+    {
+      "test": "HTTP200 /education",
+      "passed": true
+    },
+    {
+      "test": "show trailing slash resolves",
+      "passed": true
+    },
+    {
+      "test": "old game redirect /play",
+      "passed": true
+    },
+    {
+      "test": "old game redirect /play/",
+      "passed": true
+    },
+    {
+      "test": "old game redirect /play/assets/old-game.js",
+      "passed": true
+    },
+    {
+      "test": "production audio matches source",
+      "passed": true
+    },
+    {
+      "test": "anonymous vote forbidden status",
+      "passed": true
+    },
+    {
+      "test": "anonymous vote forbidden vote",
+      "passed": true
+    },
+    {
+      "test": "existing active radio",
+      "passed": true
+    },
+    {
+      "test": "radio game stays retired",
+      "passed": true
+    },
+    {
+      "test": "no builder badge in HTML",
+      "passed": true
+    }
+  ],
+  "radio_retirement_receipt": "/opt/swadebase/backups/maestro-drama-20261113T125547Z/receipt.json",
+  "code_live": true,
+  "finished_at": "2026-11-13T13:05:11.316935+00:00"
+}

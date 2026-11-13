@@ -1,0 +1,24 @@
+import * as z from 'zod/v4';
+export function registerActionTools(server,service,actor,wrap,read){
+ if(!service.actions)return;
+ const a=service.actions,scopes=actor.scopes||[];if(!scopes.includes('ecosystem:read'))return;const id=z.string().uuid(),digest=z.string().regex(/^[a-f0-9]{64}$/),sha=z.string().regex(/^[a-f0-9]{40}$/),key=z.string().regex(/^[A-Za-z0-9_-]{1,80}$/);
+ server.registerTool('swade_action_capabilities',{description:'Inspect action configuration and current owner-approved payment rules. Configuration does not certify a completed workflow. No execution.',inputSchema:z.object({}).strict(),annotations:read},wrap(a.capabilities));
+ server.registerTool('swade_get_action',{description:'Read your own exact action proposal, approval state and receipt. Queued, accepted and verified outcomes are distinct.',inputSchema:z.object({action_id:id}).strict(),annotations:read},wrap(a.get));
+ server.registerTool('swade_list_actions',{description:'Read your 40 most recent connector action proposals and receipts.',inputSchema:z.object({}).strict(),annotations:read},wrap(a.list));
+ server.registerTool('swade_repository_status',{description:'Read the current branch and exact commit for a configured owned repository before preparing a repair.',inputSchema:z.object({repository:key}).strict(),annotations:read},wrap(a.repositoryStatus));
+ server.registerTool('swade_read_code',{description:'Read one ordinary file up to 32 KB at an exact commit in a configured owned repository. Credential paths and detected credentials are withheld.',inputSchema:z.object({repository:key,commit:sha,path:z.string().min(1).max(240)}).strict(),annotations:read},wrap(a.readCode));
+ server.registerTool('swade_preview_draft_deletion',{description:'Read the title and current digest of your own wiki draft before proposing reversible archival. Does not erase content.',inputSchema:z.object({draft_id:id}).strict(),annotations:read},wrap(a.readDraft));
+ if(scopes.includes('actions:prepare')){
+  const specs={
+   repair_code:{description:'Propose an exact single-file repair in a configured owned repository. After owner approval, creates a draft repair PR; tests, merge and live repair remain separate.',schema:{repository:key,base_commit:sha,path:z.string().min(1).max(240),expected_blob_sha:sha,content:z.string().max(32000),summary:z.string().min(3).max(240)}},
+   merge_pull_request:{description:'Propose merging an exact PR head after all recorded checks pass. Requires separate owner approval.',schema:{repository:key,pull_number:z.number().int().positive(),head_commit:sha}},
+   deploy_website:{description:'Propose pinning a registered Coolify website to an exact Git commit and deploying it. Owner approval required; pin remains in place. Dispatch is not live verification.',schema:{application:key,commit:sha}},
+   send_email:{description:'Prepare one email with an exact recipient, subject and body. Owner reviews and approves before sending through the existing configured sender.',schema:{to:z.string().max(254),subject:z.string().min(1).max(240),text:z.string().min(1).max(20000)}},
+   publish_release:{description:'Prepare an exact GitHub repository release with commit, tag and public content. Publication requires owner approval.',schema:{repository:key,commit:sha,tag:z.string().min(1).max(100),title:z.string().min(1).max(240),notes:z.string().min(1).max(15000)}},
+   delete_draft:{description:'Propose reversible archival of your own wiki draft at its exact preview digest. Shared Bibles, infrastructure and permanent deletion are outside this operation.',schema:{draft_id:id,expected_digest:digest}},
+   payment_transfer:{description:'Prepare an exact Stripe balance transfer to an allowed connected-account payee. Requires current owner-approved rules, exact per-payment approval and payments:execute scope to dispatch. No card purchase or bank payout.',schema:{destination:z.string().regex(/^acct_[A-Za-z0-9]{8,80}$/),amount_minor:z.number().int().positive().max(1000000000),currency:z.enum(['usd','eur','gbp']),purpose:z.string().min(5).max(500),reference:z.string().min(3).max(120),rules_digest:digest}},
+  };
+  for(const[operation,spec]of Object.entries(specs))server.registerTool('swade_prepare_'+operation,{description:spec.description,inputSchema:z.object({input:z.object(spec.schema).strict(),idempotency_key:id}).strict(),annotations:{...read,readOnlyHint:false}},wrap((caller,args)=>a.prepare(caller,{...args,operation})));
+ }
+ if(scopes.includes('actions:execute'))server.registerTool('swade_execute_approved_action',{description:'Execute only the exact unexpired action approved through the separate signed-in owner console. Cannot approve itself. Payment rules, scope, budgets and durable duplicate protection are enforced. Uncertain outcomes never auto-retry.',inputSchema:z.object({action_id:id,digest}).strict(),annotations:{readOnlyHint:false,destructiveHint:true,idempotentHint:true,openWorldHint:true}},wrap(a.execute));
+}

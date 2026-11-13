@@ -1,0 +1,128 @@
+# Daily work summary 2026-11-10
+
+- Assistant: Big Mamma (Grok Bot)
+- Started: 2026-11-09 23:00 CT · Last message: 2026-11-10 22:59 CT
+- Messages: 13 · Source: grokbot_daily_summary
+- Archive id: `9bfac49e-259d-4488-b41e-0ae8cfd91a96`
+
+---
+
+**Summary** · 2026-11-10 22:45 CT
+
+# Daily summary 2026-11-10 (America/Chicago)
+
+_Compiled from GitHub activity under swadesoul and the automation journal. No secret values included._
+
+**Summary** · 2026-11-10 22:45 CT
+
+## Done
+- swade-radio PRs merged (Nov 9 evening CT): [#15 Brand continuity, single Maestro button, Control Room, /radio lineup](https://github.com/swadesoul/swade-radio/pull/15), [#16 Maestro source sync, Suno MCP connection, authorized music imports](https://github.com/swadesoul/swade-radio/pull/16), [#17 Artist Discovery, station team duties, ReSingLab Maestro voice choices](https://github.com/swadesoul/swade-radio/pull/17).
+- Security: Vite GHSA-p4f5-76q4-ffq7 patch PRs opened (not merged): [hub #60](https://github.com/swadesoul/swade-ecosystem-hub/pull/60), [sssbrain #121](https://github.com/swadesoul/sssbrain/pull/121), [swideo #9](https://github.com/swadesoul/swideo/pull/9), [oathloom #44](https://github.com/swadesoul/oathloom/pull/44).
+- Daily summary for 2026-11-09 merged to hub ([PR #59](https://github.com/swadesoul/swade-ecosystem-hub/pull/59)).
+- AI security watch and business pitch triage ran on schedule; no stack-relevant new advisories, no business opportunities. React RSC RCE GHSA-xqc2-xf4c-x3h3 has 0 direct deps in swadesoul and is covered by the earlier Next.js bump.
+
+**Summary** · 2026-11-10 22:45 CT
+
+## Deployed
+- Nothing new confirmed deployed today from the records available.
+
+**Summary** · 2026-11-10 22:45 CT
+
+## Decisions Swade made
+- None recorded today (OATHLOOM pricing/plan decisions were Nov 6-7).
+
+**Summary** · 2026-11-10 22:45 CT
+
+## In progress
+- OATHLOOM: [#43 Builder Studio layout/uploads/one-click artist sites](https://github.com/swadesoul/oathloom/pull/43) and [#45 cinematic artist pages with varied themes](https://github.com/swadesoul/oathloom/pull/45) are open, awaiting review/merge.
+- Vite patch PRs listed above are open and need merge/deploy approval.
+
+**Summary** · 2026-11-10 22:45 CT
+
+## Waiting on Swade
+- Merge/deploy approval for the Vite PRs.
+- Supabase Storage bump on SWADEBASE Primary (GHSA-2p28-q2vx-mw6w) from the Nov 5 escalation, if not yet handled.
+
+**Summary** · 2026-11-10 22:45 CT
+
+## Do NOT redo
+- swade-radio PRs #15-#17 are merged. React RSC advisory review is finished.
+
+**Summary** · 2026-11-10 22:45 CT
+
+## Next steps
+- Server copy saved Nov 11 2026 ~8:15 AM CT after SSH access worked again (nightly run had been rejected).
+
+---
+
+**Summary** · 2026-11-10 22:45 CT
+
+## Maestro provider import and source reconciliation — 2026-11-10T03:30:20.076018+00:00 (ChatGPT)
+
+SHIPPED November 09, 2026 09:30 PM CST: native Station Library → Import Music for Suno/Udio/ReSingLab/Other; Suno official OAuth/PKCE and per-user server-only tokens; MCP capability discovery; rights-attested authorized audio intake through the existing native station upload/credits/quotas/B2/engine membership pipeline; provider reference audit; station-owned artwork original plus1024x1024 square derivative archived in existing B2; station service links navigation; discovery/catalog editing and community source preservation; persistent selected station fix. Existing native integrations handler now installed to match the already-visible Control Room. No new service, schema migration, station-engine restart, paid generation, payment or outbound message.
+
+All five previously local feature branches pushed. PR16 https://github.com/swadesoul/swade-radio/pull/16 includes PR15 ancestry. Initial merge rejection was resolved by explicit owner approval; merged as 6069e98bba8b90ef12e37543214a35eedadc9006. Deployed source 4a74f190bebcbed8cafb2506808212e095d26799. Release /var/www/maestroradio-web/releases/20261110T032512Z-providers; native/config backup /opt/swadebase/backups/maestro-provider-20261110T032512Z; prior release /var/www/maestroradio-web/releases/20261110T015214Z-community. This replaces the inherited stale RELEASE.json with an accurate receipt. Five live native hashes are retained in its RELEASE.json.
+
+Validation:25 Python security/transport/real-image tests;6 Bun radio/record tests;TypeScript noEmit and production build pass. Eight actual live Chromium layouts(1440/390) verified homepage, public station, community and signed-out library→auth; zero overflow,builder badge or JS exception. Actual muted radio playback continued across SPA navigation /→/artists using the SAME audio node and stream; time advanced2.330→3.852s. Ten live HTTP boundary/health checks passed. Suno authorize returned302 to official suno.com/link-account with this exact deployed client metadata URL; no account consent submitted. Asset bytes match the build; HTML shells retain the existing assistant script injection.
+
+Limits:actual owner Suno sign-in/consent and authenticated upstream tools/list remain pending. No direct provider audio transfer is enabled; a download scope is not proof of a working song download operation. Udio remains reference+authorized existing audio, no API/download bypass. ReSingLab existing music-bridge handoffs were found and preserved; direct handoff fulfillment is NOT newly connected by this release. Real customer uploads, actual station artwork publication and physical iPad Safari acceptance are not claimed from fixtures. Existing$20/year community fulfillment remains separate; community tables were already present and migrations were NOT reapplied.
+
+Recovery:restore the five native files and nginx.conf from /opt/swadebase/backups/maestro-provider-20261110T032512Z, point current to /var/www/maestroradio-web/releases/20261110T015214Z-community, nginx -t, restart only maestro-factory and reload Nginx. Retain protected OAuth connections, archived originals, station data and existing entitlements. Remove only newly installed module files whose backup marker is .missing.
+
+**Summary** · 2026-11-10 22:45 CT
+
+## Artist Discovery, station team and ReSingLab voice readiness — 2026-11-10T05:09:22.973266+00:00 (2026-11-09 23:09 CST)
+Owner-authorized release merged and deployed. PR17 https://github.com/swadesoul/swade-radio/pull/17; source 5699def22e38d3779433acbecf435255fbc1b915; main merge d0d6110138ec57437b67b9db8ed3ce43192a57e1. Live immutable release /var/www/maestroradio-web/releases/20261110T045348Z-discovery-staff; backup /opt/swadebase/backups/maestro-discovery-staff-20261110T045348Z; previous frontend release /var/www/maestroradio-web/releases/20261110T032512Z-providers. Native Factory restarted; Nginx reloaded after validation. Radio engine and shared edge runtime were not restarted.
+
+Artist Discovery: https://themaestroradio.com/artist-discovery (public intake), /admin/artist-discovery (review). One lifetime free promotion per canonical artist, one recording, rights-confirmed approved audio, 30 days starting at first confirmed engine airing. Three scheduled weekly slots on the assigned day: 11 AM, 6 PM, 11 PM America/Chicago (main and two replays). Monday fills first; use measured normalized recording duration plus ten seconds per song against a 45-minute music budget, expand Tuesday through Sunday, then waitlist. This reserves time for station material/interruptions. Only main slot can start new promotions. Paused/live-host/occupied-queue conditions defer instead of interrupting. Three airings are the scheduling target; only observed actual engine metadata increments confirmed counts. Queue reservation and uncertain outcomes freeze for review, never blindly resubmit. Expiration removes only verified Discovery queued requests, preserves history and original audio. Paid continuation requires explicit artist opt-in and approved, matching, unexpired paid rotation; no automatic charge. Campaign is open; no real enrollments created in this rollout.
+
+Intake uses native B2 original and normalized tagged audio, immutable source checksum, verified artist identity and recording duplicate gates, no wallet debit on the free promo route. Existing minute promo injector calls an authenticated loopback-only /discovery/tick hook; public route is 404, loopback without dedicated protected token is 401. No scheduler secret belongs in docs or clients. New maestroradio discovery_settings/enrollments/runs/plays tables use RLS and service-only access.
+
+Station team: https://themaestroradio.com/admin/station-team for owner assignment; /station-operations for assigned duties. Program Director, Station Manager, Music Director, Scheduler, Discovery Reviewer, Presenter, Viewer. Scope is explicit station IDs or network. Real users use existing profiles; Rakazo/Grok uses an existing owner-issued production SWADEBASE secret site key bound by an explicit Maestro permission checkbox. Preserve key domain/IP/expiry/revocation restrictions and check authorizing owner remains superadmin on every operation. Reuse protected connections; never show secrets. No assignment was granted automatically. Stop connection disables Maestro assignments without revoking unrelated ecosystem access. Audit actual human/key/assignment while native changes use authorizing owner checks. No delegated superadmin, billing, DNS, deletion, provider generation/spending or credential authority. Artists and song draft creation currently uses the shared main Maestro Artist Studio; song drafts require subsequent owner approval for generation. Network scope is required for station creation. The service supports library/playlists, station and artist creation, song drafts, playlist edits, schedules and scoped Discovery review. Presenter/viewer are read-only. Staff UUID request id and payload hash protect retries; uncertainty requires status/reconciliation. Tables radio_staff_assignments, append-only radio_staff_events and radio_staff_operations use RLS/service-only writes.
+
+ReSingLab repair: all four existing Maestro artists with linked voices (Ellis Vale, Jules Meridian, Nia Solace, Tessa Orbit) now satisfy the live selector ready/available/usage_allowed predicate. Their original locked Suno quick_persona profiles were incorrectly draft. Migration changed only eligible original personas with existing provider voice, ownership and usage permission; existing owner/private-vault RLS, provider identities, unavailable and failed states are preserved. Maestro trigger sync_resing_artist_voice keeps future locked artist voice names and readiness aligned. voice_casting writes ready after successful persona creation. No new personas or paid generation were invoked; no other account was granted the owner's private voices. ReSingLab live Studio asset predicate and SWADEBASE backend confirmed; reload/reopen Voices in the owning account. Existing ReSing frontend hosting exception remains; this is not a complete frontend migration claim.
+
+Validation:81 Python and6 Bun tests passed; TypeScript and production build passed; real FFmpeg fixture normalization, original preservation and no debit verified. Three migrations plus schema/security assertions passed in one rolled-back test transaction. Public Chromium12 layouts across1440/820/390px and authenticated UI fixture8 layouts across1440/390px passed without overflow or JS exception; authenticated fixture forwarded zero production writes and is not a real owner login test. Same real audio element/stream continued while navigating home to Discovery (2.298487 to3.82392 seconds). Public anonymous write and invalid bot key requests returned401; public scheduler404; actual protected local hook accepted; engine stayed online. All32 immutable build files match disk and public HTML matches after removing only the pre-existing assistant script injection. Live DB confirms all four linked voices ready/available/allowed, zero campaign enrollment and zero staff assignments. Actual campaign airings, real bot commands, customer uploads and physical iPad Safari remain unverified. Source branch matches merged main tree.
+
+Recovery: retain this release receipt and backup. Restore backed-up native Factory modules, minute promo injector/hook and Nginx config; point current to previous providers release; nginx -t, restart only maestro-factory and reload Nginx. Pause Discovery and stop new staff connections before rollback. Preserve durable media, histories, rights and database tables; do not drop tables or reset played/operation ledgers. Registry entries describe integrations only; runtime campaign pause and per-command authorization enforce controls independently of the registry enabled switch.
+
+**Summary** · 2026-11-10 22:45 CT
+
+## 2026-11-10 — Comfort crew sweatshirt review production
+
+Shipped at 2026-11-10T11:18:34.245784+00:00 / 05:18 Central. Sitesversion32, source159301d788b876ea9a9325a93adc288b787ab62a, deploymentappgdep_6af2fd8520b881919a34939f3c1fd68b. Live https://petmuzik.swadeswade-s-8788.chatgpt.site/merchandise#real-product-previews . Existing public audience preserved; owner-private was not the actual access state.
+
+Calendar selected sweatshirt: RESERVED FOR MY FURRY ROOMMATE.; COMFORT HAS A FAVORITE SPOT.; THIS IS OUR STAY-IN UNIFORM. Three new native generated masters with immutable hashes, source anatomy/edge/text review and no upscale;21 exact panel files /147 size-panel mappings. Blueprint1023/provider90; only Large91091 enabled. Other six sizes remain disabled. Rejected good-intentions v1 and corrected unapprovedv2 untouched.
+
+Dedicated shop29509155 reconciled before POST:34 existing records,0 daily matches. Created exactly3 drafts:6af2fc11dc6cec74a507f235;6af2fc19c1b59813e209aa22;6af2fc20c1b59813e209aa40. After:37 records,all hidden,each dailyID once. Creation defaulted visible=true when omitted; immediate scoped visible:false updates verified before review release. FUTURE PAYLOADS MUST INCLUDE visible:false and immediate readback; unpublished labels are insufficient.
+
+Draft guard passed before upload.21 enabled stable upload-ID/dimension/transform mappings verified on two reads. Six current Large front/back mockups returned200 JPEG1200x1200 with preserved hashes. Native flat views show exact words intact and coherent portraits. No worn/side images returned; factory white collar,stripe/seam finish,physical detail and owner acceptance remain open. Cost2135 cents;9999 bootstrapprice hidden and unapproved. Readback guard passes; catalog gate correctly fails owner,required productview,physical,pricing,fulfillment.13 guard tests and JS syntax pass.
+
+Added3 real review cards/6views, now33canonical cards/309views;3proposed print layouts remain separate. Finished listings0;heldtoday3;duplicates0. Prior six bandana fold holds,six AOP M/L holds,three classic tee size-proof holds,three old bowl price holds and4excludedlegacycopies preserved. No unrelated product edits, sales, checkout, publication API, orders, samples, external messages or charges. VoiceStudio/radio behavior unchanged. No standalone production bot.
+
+Receipts: sourceproduction/daily/2026-11-10/CURRENT.json and CHECKPOINT.md, immutable manifest, provider snapshot, source review, draft/catalog/readback gates, stable readback and mockup hashes. Server /var/www/html/storage/app/pet-muzik-production/2026-11-10/ . Rollback UI to Sitesv31 or v30; never delete drafts to retry. Next: owner source/flat review; provider worn/side/cut guidance and finish acceptance; qualify retail/fulfillment separately. Continue calendar throughNov26 and prepare next same-list rotation.
+
+**Summary** · 2026-11-10 22:45 CT
+
+## Asset Machine private organization research — 2026-11-10T16:03:47.896400+00:00 / ChatGPT
+Read current SWADEBASE and Asset Machine Bibles and standing rules. Added 20 official-source-backed private research_pending organizations; duplicates 0; held 3; canonical total 140; shortfall 0. Names/domains/aliases checked against canonical and all earlier append-ready batches. Canonical JSON replaced atomically under research lock after exact-byte backup; prior records and metadata preserved and read back.
+Private batch: /opt/swadebase/var/asset-machine-directory/batch-20261110.append-ready.json; receipt: /opt/swadebase/var/asset-machine-directory/batch-20261110.import-receipt.json; backup: /opt/swadebase/var/asset-machine-directory/organizations.before-20261110T160347Z.json. All records carry observed date, factual fit, official service/inquiry URL, verification scope and unresolved checks. Held: Direct Transfer LLC, Action Stock Transfer, Gemmological Certification Services — GCS (official live service pages not adequately retrievable).
+No directory publication, outreach, purchases, paid calls, private case access, auth/entitlement change or deployment. Public education remains separate; approved full contacts must remain behind server-side entitlement. Service descriptions do not authenticate assets or certify permissions, title, value, funding, or acceptance. No secret high-yield bank-instrument programs endorsed.
+
+**Summary** · 2026-11-10 22:45 CT
+
+## Cinematic artist-page rollout — 2026-11-10T23:47:57.477964+00:00 (2026-11-10 17:47 CST; ChatGPT)
+
+**Public pages LIVE; owner dashboard STAGED.** Founder requested an individual page for every existing artist using uploaded imagery with varied cinematic backgrounds. The existing OATHLOOM artist-site renderer, SWOSTing fallback routes, SWADEBASE records/auth and native storage were reused. No second service, database, paid model on page views or scheduler was added.
+
+49 canonical page records now exist: 17 published and 32 private drafts, with 75 links to existing platform identities. Public directory: https://swosting.com/artists. Eight cinematic palettes, integrated artist portrait, actual available tracks, one persistent audio element, editorial biography, approved video links and artist connections. Empty sections are omitted; no fabricated subscription form, songs, statistics or badges. Existing explicit legacy design looks remain supported; cinematic palettes are server-renderer defaults.
+
+Nevaborya uses the founder-uploaded purple-suit reference through a separate identity-preserving cinematic derivative. Her original remains unchanged. Royal Banks and Rivan portraits were recovered from their existing public source assets and copied into native storage. All three selected page portrait variants also have verified durable copies through the existing B2 media core; protected receipts are in the backup folder. Old source assets and original artist records were preserved.
+
+55 recordings returned HTTP 200 from native artist storage. Six published-title references with absent exact recordings retain external artist links rather than false direct play controls or substituted mixes. Thirty-two drafts remain unpublished: 18 private/incomplete SONIKYN records, ten Maestro artist records without a usable portrait, three inactive creator records and the ReSingLab Royal entry whose portrait/canonical Royal Banks linkage is not verified. No other user's private references were published.
+
+Source: swadesoul/oathloom branch feat/cinematic-artist-rollout-20261110. Public renderer/rollout c50aae9 (initial faaa832). Owner inventory, draft reopen endpoint and matching preview built at c2298e5; image oathloom-frontend:c2298e5-cinema. Automatic approval review REJECTED the attempted OATHLOOM frontend container replacement plus production artist-site handler update, citing service-disruption risk beyond explicit artist-page build approval. That call did not execute. Owner inventory/load action remains staged; live frontend remains oathloom-frontend:8f745eb-artists. Do not describe its new inventory or preview as shipped. Existing public pages and directory are already independently live.
+
+Validation: 8 Bun tests / 29 assertions; Deno handler typecheck; successful production frontend build; 34 real public Chromium layouts at 1440/390px with no overflow, broken displayed image or page exception; all 49 URL visibility checks (17 HTTP 200, 32 HTTP 404); directory lists exactly 17 pages. Actual audio decoded/advanced and paused on Nevaborya, Granada and Reggie. Staged owner UI fixture passed at 1440/820/390px with no production writes forwarded. Fixture auth is not real Google/owner login certification; native physical iPad Safari and authenticated owner inventory lifecycle remain unverified.
+
+Recovery: protected baseline, initial table/link snapshots, runtime function copies, rollback-initial.sql, next-phase rollback.sql, immutable source, image receipts and test reports at /opt/swadebase/backups/artist-cinema-20261110. Review for edits since rollout before any rollback. To undo public rollout, restore the backed-up artist-site/_artistsite sources and reconcile/restore initial page/link snapshot using rollback-initial.sql; preserve new customer edits and durable media. Do not execute the staged OATHLOOM frontend swap without approval of that exact live switch. No DNS, payment, radio-engine or shared edge-runtime restart occurred. Full receipt: releases/2026-11-10_Artist_Cinematic_Pages.json.

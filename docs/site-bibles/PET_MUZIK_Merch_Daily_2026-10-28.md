@@ -1,0 +1,17 @@
+# PET MUZIK merchandise collection — October 28, 2026
+
+Status: three original bandana designs created; three corrected artwork proposals deployed to the existing owner-private Site. Three Printify drafts exist and remain hidden/on hold. No finished products cleared for sale.
+
+Site: https://pet-muzik.swadeswade-s-8788.chatgpt.site
+Source commit: 4730abade7ba6176e8751bd35327984f29a7d56c
+Deployment: appgdep_6ae1cb956cac8191a84d80143585e29f / succeeded
+
+Designs: SMALL DOG. BIG DEPARTMENT.; CHIEF WALK OFFICER.; YOUR YARD HAS BEEN INSPECTED. Native generated source masters are unchanged, SHA-256 anchored, visually inspected for facial anatomy/prop continuity and light/dark/gray cutout edges. No rejected First Press art was reused. Sources, exact prompts, native dimensions, transforms and hashes are in production/daily/2026-10-28/ in the Site repository. Six current v2 print PNGs match fresh provider metadata: 3150×1691 and 4275×2325. No raster source enlargement. Source review does not constitute owner or physical product approval.
+
+Verified shop: 29509155 / Pet Muzik. Blueprint 562, Printed Mint provider 70, dye sublimation. Current catalog variants 101403 and 101404. Only 101403 enabled in each draft. IDs: pm-20261028-bandana-small-dog=6ae1c9026259d760e40eb88b; pm-20261028-bandana-walk-officer=6ae1c904c4074c383e0551ae; pm-20261028-bandana-yard-inspector=6ae1c90761dd1899de080b51. Readback base cost for enabled variant: 1453 cents each. API bootstrap price 2999 cents is provisional, hidden and not an approved retail policy. No orders, publishing endpoint, samples, checkout, external generation charges or messages used.
+
+Provider front mockups revealed v1 brand clipping at the triangular tip. These layouts were rejected and retained. Corrected v2 relocates the brand and reduces/raises the illustration without changing original art. Initial product PUT dropped active print areas; subsequent corrected PUT attempts returned error 8251 (variant mapping mismatch). Product records contain retired size 70849 absent from current live provider catalog. Active-size provider mockups are currently blank. All three drafts are BLOCKED_PROVIDER_VARIANT_MAPPING, not ready or mockup-approved. Disabled sizes and physical folding/safe-zone geometry are not approved. Do not blindly repeat creation, enable retired sizes, or publish these drafts. Next action: reconcile Printify product/variant update contract and restore active 101403 v2 placement on existing product IDs, then read back actual print areas and visually inspect fresh front/lifestyle/close-up mockups before clearing. Preserve owner approval gate.
+
+Site shows clearly labeled proposed flat layouts, not finished product photos; ordering remains unavailable. Existing First Press art and SWADEBASE Voice Studio behavior were preserved. Browser inspection verified the new collection layout; file checks verified exact dimensions, source/export checksums, no native upscale and referenced image assets. iPad Safari and physical samples were not tested. PET MUZIK Master Site Bible file was not found at its documented path; the current Agent Process, premium visual standard, prior receipt and SWADEBASE Bible were read. This additive receipt records current state without rewriting previous shared records.
+
+Counts: original designs=3; current print layouts=6; draft products=3; artwork proposals visible=3; finished listings=0; drafts held=3. Original media are preserved in source and native generation output; a new Backblaze write was not verified.

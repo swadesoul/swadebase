@@ -1,0 +1,60 @@
+{
+  "site": "https://themaestroradio.com",
+  "checked": "2026-11-13T13:06:36.170Z",
+  "checks": [
+    {
+      "width": 1440,
+      "status": 200,
+      "title": "BEHINDTHEROTATION.",
+      "episodes": 6,
+      "transcript": 1,
+      "choices": 3,
+      "buttons": 1,
+      "branding": 0,
+      "audioUrl": "/drama-media/episode-01-premiere.mp3",
+      "elapsed": 0.2,
+      "noOverflow": true,
+      "jsErrors": [],
+      "audioStatus": 206,
+      "audioType": "audio/mpeg",
+      "screenshot": "/opt/work/maestro-drama-20261113/live-drama-1440.png"
+    },
+    {
+      "width": 820,
+      "status": 200,
+      "title": "BEHINDTHEROTATION.",
+      "episodes": 6,
+      "transcript": 1,
+      "choices": 3,
+      "buttons": 1,
+      "branding": 0,
+      "audioUrl": "/drama-media/episode-01-premiere.mp3",
+      "elapsed": 0.2,
+      "noOverflow": true,
+      "jsErrors": [],
+      "audioStatus": 206,
+      "audioType": "audio/mpeg",
+      "screenshot": "/opt/work/maestro-drama-20261113/live-drama-820.png"
+    },
+    {
+      "width": 390,
+      "status": 200,
+      "title": "BEHINDTHEROTATION.",
+      "episodes": 6,
+      "transcript": 1,
+      "choices": 3,
+      "buttons": 1,
+      "branding": 0,
+      "audioUrl": "/drama-media/episode-01-premiere.mp3",
+      "elapsed": 0.2,
+      "noOverflow": true,
+      "jsErrors": [],
+      "audioStatus": 206,
+      "audioType": "audio/mpeg",
+      "screenshot": "/opt/work/maestro-drama-20261113/live-drama-390.png"
+    }
+  ],
+  "errors": [],
+  "legacyRedirect": "https://themaestroradio.com/behind-the-rotation",
+  "returnVisitAudio": "/drama-media/episode-01-premiere.mp3"
+}

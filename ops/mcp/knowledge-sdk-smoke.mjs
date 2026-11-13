@@ -15,3 +15,4 @@ try{
  const search=await client.callTool({name:'swade_search_knowledge',arguments:{query:'Knowledge Studio',limit:4}});assert(!search.isError);assert(search.structuredContent.items.some(s=>s.doc_path.includes('knowledge-studio')));
  console.log(JSON.stringify({official_sdk:'live HTTPS discovery and knowledge tool call passed',tools:tools.tools.length,source_search:'Knowledge Studio source discovered',paid_calls:0}));
 }finally{await client?.close().catch(()=>{});sql(`delete from swadebase_ops.admin_sessions where id_hash=${str(sha(session))};`);}
+

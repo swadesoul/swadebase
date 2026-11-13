@@ -1,0 +1,14 @@
+{
+  "status": "produced_private_archive",
+  "at_utc": "2026-11-13T14:02:19.172015+00:00",
+  "link": "https://d2ol7oe51mr4n9.cloudfront.net/user_323Yv9kPimOK6dbhorbwpLEoHcf/753a0b8a-2075-4fa5-9d4b-db3bd991b43d.mp4",
+  "what_new": "cc6e4da2-193c-4fb3-a89f-6809fea80668\nINSERT 0 1",
+  "folder": "/opt/swadebase/docs/releases/maestro-cinematic-explainer-20261113T140219Z",
+  "b2_video": "maestro-radio/explainers/20261113/Maestro_Radio_Cinematic_Overview_2026.mp4",
+  "b2_source": "maestro-radio/explainers/20261113/Maestro_Radio_Overview_Editable_Source.zip",
+  "bytes": 22121343,
+  "sha256": "9a13847d98f0bf891fc1b76fcbe876ce46d924eadb0df5ae24b3227396ed6d4d",
+  "duration_sec": 126,
+  "higgsfield_credits": 15,
+  "live_site_changed": false
+}

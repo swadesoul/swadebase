@@ -1,0 +1,14 @@
+{
+  "completed_at": "2026-11-07T07:32:46.158977+00:00",
+  "deployment_lock_released": true,
+  "services": {
+    "swadebase-adapters.service": "active",
+    "sssbrain-guardian.timer": "active"
+  },
+  "implementation_pr": 53,
+  "release_status_pr": 54,
+  "full_internal_records_location": "/opt/swadebase/docs/releases/bible-entry-20261107",
+  "full_internal_github_mirror": "blocked_by_automatic_approval_review",
+  "safe_release_status": "merged",
+  "temporary_verification_files_removed": true
+}

@@ -1,0 +1,26 @@
+{
+  "checks": [
+    {
+      "width": 1440,
+      "realSession": true,
+      "editorRoundtrip": true,
+      "metrics": true,
+      "returningSession": true,
+      "noOverflow": true,
+      "audioChecked": true
+    },
+    {
+      "width": 390,
+      "realSession": true,
+      "editorRoundtrip": true,
+      "metrics": true,
+      "returningSession": true,
+      "noOverflow": true,
+      "audioChecked": false
+    }
+  ],
+  "errors": [],
+  "fanResponse": true,
+  "signedOutGate": true,
+  "physicalSafari": false
+}

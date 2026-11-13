@@ -1,0 +1,16 @@
+{
+  "state": "live",
+  "logged_at": "2026-11-13T13:12:02.822874+00:00",
+  "source_sha": "ae82690",
+  "release_docs": "/opt/swadebase/docs/releases/maestro-behind-rotation-live-20261113T131202Z",
+  "whats_new_id": "168c7052-ddbc-4a78-8328-0030e04d6a29",
+  "hashes": {
+    "site-bibles/Maestro_Radio_Master_Site_Bible.md": "b6f08a2ff4b68f8c0492dbcf8e50b5e35d8da92cd90937cf40d817944796c0fe",
+    "site-bibles/SWADEBASE_Master_Site_Bible.md": "dace845946c76215db3f4a3264528a93935da1fa5cf9a6f204007e37a375d831",
+    "daily/2026-11-13.md": "89ac347625fb7d68304c9ace57633cdc10981d84a406382c040402469b7c0583",
+    "daily/INDEX.md": "b13cb3bacff79608fedb9960afea80ee3642f042aa99e10ddf318c01458d3d15"
+  },
+  "site_release": "/var/www/maestroradio-web/releases/20261113T130507Z-behind-rotation",
+  "broadcast_legacy_removed": 28,
+  "scheduled_episodes": 0
+}

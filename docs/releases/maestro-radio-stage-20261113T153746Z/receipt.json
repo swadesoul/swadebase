@@ -1,0 +1,12 @@
+{
+  "status": "live",
+  "source": "a5ab692",
+  "created": "2026-11-13T15:40:08.110470+00:00",
+  "event": "2c0313fc-d52f-4411-9dcc-88ba45b485ba",
+  "release": "/var/www/maestroradio-web/releases/20261113T153746Z-radio-stage",
+  "hashes": {
+    "site-bibles/Maestro_Radio_Master_Site_Bible.md": "472e2458d5c23320f48a95e3d14072f3d0b7d75556cfc7794cf4ba9361d8f898",
+    "site-bibles/SWADEBASE_Master_Site_Bible.md": "a14e4489cf3942c3d7c8eb16b90d698c722874bb02077ab7bbdd1bac8298d7fc",
+    "daily/2026-11-13.md": "302f15a6c7d4fd1096fcaaa97853106f6d0bc7ae4d2999797b74dfdc32b15751"
+  }
+}

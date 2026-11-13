@@ -1,0 +1,990 @@
+# SWADE MASTER ARTIST ROSTER
+
+> **CANONICAL ROSTER — single source of truth for the Swade ecosystem.**  
+> **Version 1.0 · 2026-10-28.** Changes go only through Harold Whaley's approval; publish a new version rather than editing this file. Machine-readable twin: `SWADE_MASTER_ARTIST_ROSTER.json`.
+
+**Precedence:** Harold-dictated identity/age > swadesoul DB (creator_artists, card profiles) > ChatGPT notes. Conflicts are flagged, not silently resolved.
+
+**Pending merge:** Fields marked "PENDING: ChatGPT search" are awaiting the ongoing ChatGPT voice-design/bio/song search and will be merged in v1.1.
+
+**Drive layout:** Drive per-artist layout (from ChatGPT): 01_Artist Bio, 02_Likeness References, 03_Songs & Masters, 04_Lyrics, 05_Cover Art, 06_Music Videos, 07_Swideo Projects
+
+**Counts:** Swade family 14 · Freq fam 5 · total 19
+
+## Index
+
+| # | Artist | Family | Age | Status | Genre |
+|---|---|---|---|---|---|
+| 1 | Swade Soul | Swade | GAP | active | R&B/ Soul/Gospel |
+| 2 | Ameyea Swade | Swade | 34 | active | Soul / R&B |
+| 3 | Reggie Swade | Swade | 30 | active | Soul / R&B |
+| 4 | Carrie Anne Swade | Swade | 29 | active | Country / Folk/Pop |
+| 5 | Shamone Swade | Swade | 26 | active | Hip-Hop / R&B |
+| 6 | Mason Swade | Swade | 31 | active | Hip-Hop / Holiday |
+| 7 | Neva Boyea Swade | Swade | 23 | active | R&B / Pop/Gospel |
+| 8 | Suki Swade | Swade | 24 | active | K-Pop/R&B |
+| 9 | LEYCEO Swade | Swade | GAP | active | Pop/R&B |
+| 10 | Granada Swade | Swade | 40 | active | Gospel / Soul |
+| 11 | Ty Swade | Swade | 53 | active | Soul/Neo Soul/Gospel |
+| 12 | STEEMO Swade | Swade | 27 | active | Hip-Hop / World / Rock |
+| 13 | Smitty | Swade | GAP | active | Soul/R&B/Gospel |
+| 14 | Rivan Swade | Swade | GAP | active | Rock |
+| 15 | Noble Rayne Swade | Freq | 26 | active | R&B / Esoteric Soul |
+| 16 | Royal Banks | Freq | 24 | active | R&B |
+| 17 | Sabria Swade | Freq | 28 | active | Eclectic Soul |
+| 18 | Soren Blu Swade | Freq | GAP | inactive | GAP (DB genre field holds a voice descri |
+| 19 | Zion Creed Swade | Freq | GAP | NOT IN creator_artists (swadesoul admin) | GAP |
+
+## Swade family
+
+### Swade Soul
+
+- **Aliases:**
+  - Swade Soul
+  - swade-swade (storage folder / legacy artist id)
+- **Db name:** Swade Soul
+- **Db stage name:** Swade Soul
+- **Age:** GAP
+- **Age source:** Not dictated — in DB but not dictated; age unconfirmed
+- **Face check apparent age:** Middle-aged adult, consistent with the reference; no substantial visible age shift.
+- **Family:** Swade
+- **Family source:** swadesoul.creator_artists.fam
+- **Status:** active
+- **Genre:** R&B/ Soul/Gospel
+- **Voice type:** Tenor
+- **Bio:** PENDING: ChatGPT search (DB creator_artists.bio is null)
+- **Style personality:** Portrait direction: Cinematic founder portrait in refined dark tailoring, warm studio light, and a grounded three-quarter stance. | Personality: GAP | Persona 'Swade Soul — Professional': Boardroom / press layer: locs pulled back, gold-frame glasses, polished business-casual. Attire: Royal blue button-down overshirt, navy trousers, gold-frame glasses | Persona 'Swade Soul — 30 Years Old': Younger throwback layer: close-cut hair, clean shave, athletic build, early-era energy. Attire: Black zip track jacket with white piping, black trousers | Persona 'Swade Soul — Today': Current-day Swade Soul: long locs, full beard, relaxed founder energy. Attire: Navy Swade Soul hoodie, black jeans, white sneakers
+- **Likeness description:** Face: Elongated oval face with a high forehead, gently tapered jaw, rounded chin, dark almond-shaped eyes, moderately broad rounded nose, and a wide smile showing upper teeth. Light mustache and sparse chin hair remain visible. Hair: Long black dreadlocks extending past the shoulders, swept back from the forehead with a similar hairline. Individual locks appear somewhat finer and more separated in the proposed portrait. Build: Lean frame with relatively narrow torso and long limbs; visible proportions remain compatible, although clothing limits precise comparison. Complexion: Warm medium-brown complexion consistent with the reference after allowing for lighting differences. Immutable features: Elongated oval facial proportions and high forehead; Dark almond-shaped eyes; Moderately broad nose with rounded tip; Wide upper-tooth-showing smile; Warm brown skin tone; Long black dreadlocks and swept-back hairline; Light mustache and sparse chin hair; Middle-aged appearance and lean build
+- **Voice design notes:** PENDING: ChatGPT search
+- **Catalog highlights:**
+  - swadesoul.artist_tracks (artist_id swade-swade): 8 Track Tape, Water on my Hands, Day and Nite, Why Y'All Scared Of Everything, Come and Get it, Still In My Phone, Same City Different Life (all with lyrics), Playthang
+  - maestroradio.maestro_catalog (station 'aibb'): 8 track Tape, Come And Get It (R&B Flip), Day and Nite, Playthang (swade 4), Same city different life, Still in my phone, Water on my hands, Why y'all scared of everything
+  - swadesoul.artist_videos (YouTube, published): 8 Track Tape, Day & Nite
+- **Lyrics:** Lyrics stored for the tracks marked (lyrics) in swadesoul.artist_tracks (lyrics_text / lyrics_path); maestroradio.maestro_catalog.lyrics may hold more. ChatGPT lyrics PENDING: ChatGPT search
+- **Character sheet status:** Locked canonical sheet: creator-media/artist-refs/66b38f3d-4537-4b69-9de3-69019eac62c6/consistency-1788189217218.jpeg
+- **Card status:** identity-verified=True; locked until 2099-12-31; card v5; auto-refresh off; latest likeness check 0.94 passed (2026-09-25 UTC); 2 new card draft(s) AWAITING HAROLD APPROVAL (pending_review, 2026-09-25)
+- **Images:**
+  - box_folder: /workspace/artist-sheets/swade-soul
+  - box_files: card.png, consistency-sheet.jpeg, guide-photo.png, persona-professional.png, persona-thirty.png, persona-today-path.png, persona-today.jpeg, scene-render-professional.png
+  - profile_photo: artist-music/swade-swade/profile.png
+  - card: monthly-cards/66b38f3d-4537-4b69-9de3-69019eac62c6/identity-repair-swade-soul-1790288024-1790288070029.png
+  - character_sheet: creator-media/artist-refs/66b38f3d-4537-4b69-9de3-69019eac62c6/consistency-1788189217218.jpeg
+  - storage_folder: swade-swade
+- **Db ids:**
+  - creator_artists_id: 66b38f3d-4537-4b69-9de3-69019eac62c6
+  - card_profile_id: ebe9476d-6c89-4632-aeef-d4dfd3ef2169
+  - card_slug: swade-soul-66b38f
+- **Notes:**
+  - Left out of the homepage rotation (per admin pull).
+- **Sources:**
+  - swadesoul.creator_artists
+  - swadesoul.artist_card_profiles
+  - swadesoul.artwork_jobs
+  - swadesoul.artist_card_quality_checks
+  - swadesoul.artist_tracks
+  - maestroradio.maestro_catalog
+  - /workspace/artist-sheets (admin pull 2026-10-28)
+
+### Ameyea Swade
+
+- **Aliases:**
+  - Ameyea
+- **Db name:** Ameyea Swade
+- **Db stage name:** Ameyea
+- **Age:** 34
+- **Age source:** Dictated by Harold, call 2026-10-28 (authoritative)
+- **Face check apparent age:** Consistent adult appearance, approximately mid-20s to early 30s.
+- **Family:** Swade
+- **Family source:** swadesoul.creator_artists.fam
+- **Status:** active
+- **Genre:** Soul / R&B
+- **Voice type:** soul
+- **Bio:** PENDING: ChatGPT search (DB creator_artists.bio is null)
+- **Style personality:** Portrait direction: Elegant soul portrait with rich fabric texture, graceful movement, and warm editorial lighting. | Personality: GAP
+- **Likeness description:** Face: Oval face with pronounced cheekbones, a tapered jaw and softly rounded chin; almond-shaped brown eyes beneath arched brows; a relatively narrow nose with a rounded tip; full lips with a defined Cupid's bow. The portrait's lower face appears marginally narrower, without a substantial structural change. Hair: Very voluminous, long, closely defined curls with dark-brown roots and honey-gold highlights. The near-central part, curl-framed hairline, overall silhouette, and length remain closely aligned. Build: Visible proportions remain slender with a defined waist and softly curving silhouette. Outer layers obscure the shoulders and much of the torso, limiting build comparison. Complexion: Medium-brown complexion with warm golden undertones, consistent with the reference after allowing for lighting differences. Immutable features: High, defined cheekbones and tapered lower face; Almond-shaped eyes with arched eyebrows; Relatively narrow nasal bridge and rounded nasal tip; Full lips with a defined Cupid's bow
+- **Voice design notes:** PENDING: ChatGPT search
+- **Catalog highlights:**
+  - swadesoul.artist_tracks: Talk that love (lyrics), Frontal Lobe (lyrics), AMEYEA (That's Who I am), Text Me When You Mean it (lyrics), Use to This, Think Think, Shooting Star, Colors of Love — 8 published
+  - maestroradio.maestro_catalog: Ameyea (Remix), Colors of Love (Remastered), Frontal Lobe, Shooting Star, Talk that love, Text me when you mean it, Think Think, Use to This
+- **Lyrics:** Lyrics stored for the tracks marked (lyrics) in swadesoul.artist_tracks (lyrics_text / lyrics_path); maestroradio.maestro_catalog.lyrics may hold more. ChatGPT lyrics PENDING: ChatGPT search
+- **Character sheet status:** Locked canonical sheet: creator-media/artist-refs/eb6220e9-9434-46d0-82dd-37e5d9a2807b/sheet-ameyea.webp
+- **Card status:** identity-verified=True; locked until 2099-12-31; card v5; auto-refresh off; latest likeness check 0.93 passed (2026-09-25 UTC); 1 new card draft(s) AWAITING HAROLD APPROVAL (pending_review, 2026-09-25)
+- **Images:**
+  - box_folder: /workspace/artist-sheets/ameyea
+  - box_files: card.png, consistency-sheet.webp, guide-photo.png
+  - profile_photo: artist-music/ameyea/profile.png
+  - card: monthly-cards/eb6220e9-9434-46d0-82dd-37e5d9a2807b/identity-repair-eb6220e9-9434-46d0-82dd-37e5d9a2807b-1790288214-1790288736342.png
+  - character_sheet: creator-media/artist-refs/eb6220e9-9434-46d0-82dd-37e5d9a2807b/sheet-ameyea.webp
+  - storage_folder: ameyea
+- **Db ids:**
+  - creator_artists_id: eb6220e9-9434-46d0-82dd-37e5d9a2807b
+  - card_profile_id: 833103bc-a743-4e2e-b4be-e637267d6256
+  - card_slug: ameyea-swade-eb6220
+- **Notes:**
+  - Also an editable stub in swideo.artists (brand_family "SWADE Fam").
+- **Sources:**
+  - Harold, call 2026-10-28
+  - swadesoul.creator_artists
+  - swadesoul.artist_card_profiles
+  - swadesoul.artwork_jobs
+  - swadesoul.artist_card_quality_checks
+  - swadesoul.artist_tracks
+  - maestroradio.maestro_catalog
+  - /workspace/artist-sheets (admin pull 2026-10-28)
+
+### Reggie Swade
+
+- **Aliases:**
+  - Reggie
+- **Db name:** Reggie Swade
+- **Db stage name:** Reggie
+- **Age:** 30
+- **Age source:** Dictated by Harold, call 2026-10-28 (authoritative)
+- **Face check apparent age:** Late twenties to mid-thirties, consistent with the reference.
+- **Family:** Swade
+- **Family source:** swadesoul.creator_artists.fam
+- **Status:** active
+- **Genre:** Soul / R&B
+- **Voice type:** soul
+- **Bio:** PENDING: ChatGPT search (DB creator_artists.bio is null)
+- **Style personality:** Portrait direction: Soulful inspirational portrait in a listening-room setting with natural window light and calm direct eye contact. | Personality: GAP
+- **Likeness description:** Face: Oval-to-rectangular face with defined cheekbones, a tapered angular jaw, dark almond-shaped eyes, thick eyebrows, a medium-width nose with a rounded tip, and full lips. Close-trimmed beard and connected mustache remain consistent. Hair: Dark, shoulder-length locs with subtly lighter brown lengths, swept back from a sectioned crown; closely trimmed temples and a similar hairline. Build: Broad-shouldered, lean-athletic proportions consistent with the reference; precise torso contours are partly obscured. Complexion: Medium-brown complexion consistent with the reference after allowing for lighting differences. Immutable features: Defined cheekbones and tapered jaw; Dark almond-shaped eyes beneath thick eyebrows; Medium-width nose with rounded tip; Full lips with a defined upper-lip bow; Medium-brown complexion; Consistent forehead and temple hairline proportions
+- **Voice design notes:** PENDING: ChatGPT search
+- **Catalog highlights:**
+  - swadesoul.artist_tracks: Run it Back, Sip Slow (lyrics; plus an unpublished duplicate), Why Reggie, Zone, In My Dream, Island Side of Me, Piece & Quiet, Plain Girl, She's Gone Away, Resilient to Uncertainty — 10 published
+  - maestroradio.maestro_catalog: In My Dream (Remix), Island side of me, Piece and Quiet, Plain Girl, Resilient to Uncertainty, Run it back, She's gone away, Why Reggie, Zone (Remastered); Sip Slow (station 'aibb')
+- **Lyrics:** Lyrics stored for the tracks marked (lyrics) in swadesoul.artist_tracks (lyrics_text / lyrics_path); maestroradio.maestro_catalog.lyrics may hold more. ChatGPT lyrics PENDING: ChatGPT search
+- **Character sheet status:** Locked canonical sheet: creator-media/artist-refs/431a368c-d127-410c-82dd-c615f35351bc/sheet-reggie.webp
+- **Card status:** identity-verified=True; locked until 2099-12-31; card v5; auto-refresh off; latest likeness check 0.93 passed (2026-09-25 UTC); 1 new card draft(s) AWAITING HAROLD APPROVAL (pending_review, 2026-09-25); 1 rejected draft (2026-09-25)
+- **Images:**
+  - box_folder: /workspace/artist-sheets/reggie
+  - box_files: card.png, consistency-sheet.webp, guide-photo.png, scene-render.png
+  - profile_photo: artist-music/reggie/profile.png
+  - card: monthly-cards/431a368c-d127-410c-82dd-c615f35351bc/identity-repair-431a368c-d127-410c-82dd-c615f35351bc-1790288214-1790288393090.png
+  - character_sheet: creator-media/artist-refs/431a368c-d127-410c-82dd-c615f35351bc/sheet-reggie.webp
+  - storage_folder: reggie
+- **Db ids:**
+  - creator_artists_id: 431a368c-d127-410c-82dd-c615f35351bc
+  - card_profile_id: 75c5b2ae-2eb8-4c12-b117-9fddc003aae0
+  - card_slug: reggie-swade-431a36
+- **Notes:**
+  - Also an editable stub in swideo.artists (brand_family "SWADE Fam").
+- **Sources:**
+  - Harold, call 2026-10-28
+  - swadesoul.creator_artists
+  - swadesoul.artist_card_profiles
+  - swadesoul.artwork_jobs
+  - swadesoul.artist_card_quality_checks
+  - swadesoul.artist_tracks
+  - maestroradio.maestro_catalog
+  - /workspace/artist-sheets (admin pull 2026-10-28)
+
+### Carrie Anne Swade
+
+- **Aliases:**
+  - Carrie Anne (Harold, dictated)
+  - KarriAnne Swade (DB name)
+  - Karriann (DB stage name)
+  - Karriann Swade (card display name)
+- **Db name:** KarriAnne Swade
+- **Db stage name:** Karriann
+- **Age:** 29
+- **Age source:** Dictated by Harold, call 2026-10-28 (authoritative)
+- **Face check apparent age:** Young adult, approximately twenties, consistent across both images.
+- **Family:** Swade
+- **Family source:** swadesoul.creator_artists.fam
+- **Status:** active
+- **Genre:** Country / Folk/Pop
+- **Voice type:** country
+- **Bio:** Hometown: Bug Tussle (dictated by Harold). Fuller bio PENDING: ChatGPT search
+- **Style personality:** Portrait direction: Modern country-folk portrait with understated western tailoring, open daylight, and an assured relaxed pose. | Personality: GAP
+- **Likeness description:** Face: Softly tapered oval face with defined cheekbones, a narrow rounded chin, light blue-green almond-shaped eyes, a slender nose with a softly rounded tip, and moderately full lips with a defined Cupid’s bow. Hair: Long, tousled, layered blonde waves with darker roots, substantial crown volume, and loose, near-center-parted face-framing strands. Visible hairline placement is consistent, though partly concealed. Build: Lean build with a defined waist and moderately curved hips, consistent with the reference; the outer garment partially obscures shoulders and arms. Complexion: Warm tan complexion with subtle facial freckling; finer skin details are less resolved in the proposed portrait. Immutable features: Tapered oval facial outline and defined cheekbones; Light blue-green eyes beneath darker brows; Slender nose with a rounded tip; Defined Cupid’s bow and fuller lower lip; Warm complexion with subtle freckling; Dark-rooted blonde, long layered waves
+- **Voice design notes:** PENDING: ChatGPT search
+- **Catalog highlights:**
+  - swadesoul.artist_tracks: You Didn't do it Alone (lyrics), Back to Regular (lyrics)
+  - maestroradio.maestro_catalog (station 'aibb'): You didn't do it alone, Back to Regular
+- **Lyrics:** Lyrics stored for the tracks marked (lyrics) in swadesoul.artist_tracks (lyrics_text / lyrics_path); maestroradio.maestro_catalog.lyrics may hold more. ChatGPT lyrics PENDING: ChatGPT search
+- **Character sheet status:** Locked canonical sheet: creator-media/artist-refs/3931e9d9-f241-47c6-9bf6-0d2552770ee1/sheet-karriann.webp
+- **Card status:** identity-verified=True; locked until 2099-12-31; card v5; auto-refresh off; latest likeness check 0.94 passed (2026-09-25 UTC); 1 queued job (2026-09-25)
+- **Images:**
+  - box_folder: /workspace/artist-sheets/karriann
+  - box_files: card.png, consistency-sheet.webp, guide-photo.png
+  - profile_photo: artist-music/karriann/profile.png
+  - card: monthly-cards/3931e9d9-f241-47c6-9bf6-0d2552770ee1/identity-repair-3931e9d9-f241-47c6-9bf6-0d2552770ee1-1790288214-1790288352037.png
+  - character_sheet: creator-media/artist-refs/3931e9d9-f241-47c6-9bf6-0d2552770ee1/sheet-karriann.webp
+  - storage_folder: karriann
+- **Db ids:**
+  - creator_artists_id: 3931e9d9-f241-47c6-9bf6-0d2552770ee1
+  - card_profile_id: 60a05849-6694-4a68-9d38-9f7883bebdeb
+  - card_slug: karriann-swade-3931e9
+- **Notes:**
+  - Also an editable stub in swideo.artists (brand_family "SWADE Fam").
+- **Sources:**
+  - Harold, call 2026-10-28
+  - swadesoul.creator_artists
+  - swadesoul.artist_card_profiles
+  - swadesoul.artwork_jobs
+  - swadesoul.artist_card_quality_checks
+  - swadesoul.artist_tracks
+  - maestroradio.maestro_catalog
+  - /workspace/artist-sheets (admin pull 2026-10-28)
+
+### Shamone Swade
+
+- **Aliases:**
+  - Shamone
+- **Db name:** Shamone Swade
+- **Db stage name:** Shamone
+- **Age:** 26
+- **Age source:** Dictated by Harold, call 2026-10-28 (authoritative)
+- **Face check apparent age:** Young adult, approximately twenties to early thirties, consistent across both images.
+- **Family:** Swade
+- **Family source:** swadesoul.creator_artists.fam
+- **Status:** active
+- **Genre:** Hip-Hop / R&B
+- **Voice type:** hip-hop
+- **Bio:** PENDING: ChatGPT search (DB creator_artists.bio is null)
+- **Style personality:** Portrait direction: Confident hip-hop and R&B portrait with elevated street tailoring, hard-soft contrast lighting, and commanding stance. | Personality: GAP
+- **Likeness description:** Face: Elongated oval face with defined cheekbones, a gently tapering jaw, and rounded chin. Dark, almond-shaped eyes beneath substantial brows; a medium-width nose with a rounded tip; full lips with a defined cupid’s bow. The jaw appears slightly narrower than in the sheet’s close-up, but remains compatible with its full-body front view. Hair: Black, short rope-like twists or slim locs hanging over the forehead and temples, with closely trimmed sides and a similar squared frontal hairline. Build: Lean athletic proportions with moderately broad shoulders and slim limbs; torso definition is partially obscured in the proposed portrait. Complexion: Medium-brown complexion consistent with the reference when lighting differences are disregarded. Immutable features: Defined cheekbones and a tapered lower face; Dark almond-shaped eyes and thick brows; Rounded nasal tip and moderate nostril width; Full lips with a defined upper-lip contour; Similar frontal hairline and short hanging twist silhouette
+- **Voice design notes:** PENDING: ChatGPT search
+- **Catalog highlights:**
+  - swadesoul.artist_tracks: Frequency Professor (frequency track 318612518714, lyrics), NO (lyrics), What I saw, GRIP (lyrics), Fried Chicken (lyrics), Cougars & Barracudas, Shamone Mode (lyrics)
+  - maestroradio.maestro_catalog: b4 u touchdown, Cougar & Barracuda's (Hip Hop), Fried Chicken (Master), Shamone Mode (Remastered), What I saw (radio), Yeah; '318612518714-Shamone' (station 'aibb')
+  - swadesoul.artist_videos (YouTube, published): Fried Chicken (featured), Side Piece (featured), Rabbit Ass Mind
+- **Lyrics:** Lyrics stored for the tracks marked (lyrics) in swadesoul.artist_tracks (lyrics_text / lyrics_path); maestroradio.maestro_catalog.lyrics may hold more. ChatGPT lyrics PENDING: ChatGPT search
+- **Character sheet status:** Locked canonical sheet: creator-media/artist-refs/b2df1cec-37dc-4a32-aab4-a4ee7cc783fc/sheet-shamone.png
+- **Card status:** identity-verified=True; locked until 2099-12-31; card v5; auto-refresh off; latest likeness check 0.94 passed (2026-09-25 UTC); 1 queued job (2026-09-25)
+- **Images:**
+  - box_folder: /workspace/artist-sheets/shamone
+  - box_files: card.png, consistency-sheet.png, guide-photo.png
+  - profile_photo: artist-music/shamone/profile.png
+  - card: monthly-cards/b2df1cec-37dc-4a32-aab4-a4ee7cc783fc/identity-repair-b2df1cec-37dc-4a32-aab4-a4ee7cc783fc-1790288214-1790288562614.png
+  - character_sheet: creator-media/artist-refs/b2df1cec-37dc-4a32-aab4-a4ee7cc783fc/sheet-shamone.png
+  - storage_folder: shamone
+- **Db ids:**
+  - creator_artists_id: b2df1cec-37dc-4a32-aab4-a4ee7cc783fc
+  - card_profile_id: cecf9c03-35da-4ea5-b634-5cb79262a8fb
+  - card_slug: shamone-swade-b2df1c
+- **Notes:**
+  - Also an editable stub in swideo.artists (brand_family "SWADE Fam").
+- **Sources:**
+  - Harold, call 2026-10-28
+  - swadesoul.creator_artists
+  - swadesoul.artist_card_profiles
+  - swadesoul.artwork_jobs
+  - swadesoul.artist_card_quality_checks
+  - swadesoul.artist_tracks
+  - maestroradio.maestro_catalog
+  - /workspace/artist-sheets (admin pull 2026-10-28)
+
+### Mason Swade
+
+- **Aliases:**
+  - Mason
+- **Db name:** Mason Swade
+- **Db stage name:** Mason
+- **Age:** 31
+- **Age source:** Dictated by Harold, call 2026-10-28 (authoritative)
+- **Face check apparent age:** Late 20s to early 30s, consistent with the canonical design.
+- **Family:** Swade
+- **Family source:** swadesoul.creator_artists.fam
+- **Status:** active
+- **Genre:** Hip-Hop / Holiday
+- **Voice type:** hip-hop
+- **Bio:** PENDING: ChatGPT search (DB creator_artists.bio is null)
+- **Style personality:** Portrait direction: Versatile hip-hop portrait with bold seasonal color accents, studio depth, and energetic three-quarter pose. | Personality: GAP
+- **Likeness description:** Face: Elongated oval face with defined cheekbones, an angular tapered jaw, and a moderately broad chin. Light-appearing, slightly hooded eyes beneath fairly straight brows; straight, proportionate nose; defined upper lip and fuller lower lip. Light mustache and jaw stubble remain consistent. Hair: Shoulder-length, voluminous wavy light-brown hair with golden highlights, darker roots, and a near-center part. Hairline, length, and overall wave pattern closely follow the reference. Build: Lean, moderately athletic proportions consistent with the reference; torso contours are partly obscured. Complexion: Light complexion consistent with the reference; no clear underlying complexion change after allowing for the warm illumination. Immutable features: Elongated oval facial proportions with an angular jaw; Defined cheekbones and moderately broad chin; Slightly hooded eyes beneath fairly straight brows; Straight nasal bridge; Defined upper lip with a fuller lower lip; Near-center hairline part without obvious recession
+- **Voice design notes:** PENDING: ChatGPT search
+- **Catalog highlights:**
+  - swadesoul.artist_tracks: none
+  - maestroradio.maestro_catalog: Grits (Remastered)
+- **Lyrics:** GAP — no stored lyrics found; PENDING: ChatGPT search
+- **Character sheet status:** Locked canonical sheet: creator-media/artist-refs/1082d33c-49fb-4e1d-a65a-9f1d33af78bb/sheet-mason.webp
+- **Card status:** identity-verified=True; locked until 2099-12-31; card v5; auto-refresh off; latest likeness check 0.94 passed (2026-09-25 UTC); 1 new card draft(s) AWAITING HAROLD APPROVAL (pending_review, 2026-09-25); 1 queued job (2026-09-25)
+- **Images:**
+  - box_folder: /workspace/artist-sheets/mason
+  - box_files: card.png, consistency-sheet.webp, guide-photo.png
+  - profile_photo: artist-music/mason/profile.png
+  - card: monthly-cards/1082d33c-49fb-4e1d-a65a-9f1d33af78bb/identity-repair-1082d33c-49fb-4e1d-a65a-9f1d33af78bb-1790288214-1790288605961.png
+  - character_sheet: creator-media/artist-refs/1082d33c-49fb-4e1d-a65a-9f1d33af78bb/sheet-mason.webp
+  - storage_folder: mason
+- **Db ids:**
+  - creator_artists_id: 1082d33c-49fb-4e1d-a65a-9f1d33af78bb
+  - card_profile_id: 7a09a4ba-48bf-49e6-83a5-d9df411f7f2e
+  - card_slug: mason-swade-1082d3
+- **Notes:** none
+- **Sources:**
+  - Harold, call 2026-10-28
+  - swadesoul.creator_artists
+  - swadesoul.artist_card_profiles
+  - swadesoul.artwork_jobs
+  - swadesoul.artist_card_quality_checks
+  - swadesoul.artist_tracks
+  - maestroradio.maestro_catalog
+  - /workspace/artist-sheets (admin pull 2026-10-28)
+
+### Neva Boyea Swade
+
+- **Aliases:**
+  - Neva Boyea (Harold, dictated)
+  - Nevaborya Swade (DB name)
+  - Nevaborya (DB stage name)
+- **Db name:** Nevaborya Swade
+- **Db stage name:** Nevaborya
+- **Age:** 23
+- **Age source:** Dictated by Harold, call 2026-10-28 (authoritative)
+- **Face check apparent age:** Consistent young-adult appearance, approximately twenties to early thirties.
+- **Family:** Swade
+- **Family source:** swadesoul.creator_artists.fam
+- **Status:** active
+- **Genre:** R&B / Pop/Gospel
+- **Voice type:** r&b
+- **Bio:** PENDING: ChatGPT search (DB creator_artists.bio is null)
+- **Style personality:** Portrait direction: Atmospheric R&B portrait with restrained low-key light, intimate framing, and relaxed cinematic presence. | Personality: GAP
+- **Likeness description:** Face: Soft oval face with full cheeks, a gently tapered jaw and rounded chin; dark almond-shaped eyes beneath arched brows; a moderately broad nose with a rounded tip; full lips and a broad, tooth-showing smile. Hair: Dense black, tightly curled hair extending to approximately the shoulders, with an asymmetric side-swept silhouette and consistent visible forehead framing. The curl mass looks slightly more compact, without a substantial change in length or texture. Build: Visible proportions remain compatible with the reference's slim-to-curvy build. Exact shoulder, waist, and limb contours are partly obscured, limiting confidence. Complexion: Warm medium-brown complexion consistent with the reference after allowing for lighting differences. Immutable features: Soft oval facial outline with a tapered lower face; Dark almond-shaped eyes and arched eyebrows; Rounded nose tip; Full lips and broad smile; Warm medium-brown complexion; Dense, tightly curled black hair with asymmetric forehead framing
+- **Voice design notes:** PENDING: ChatGPT search
+- **Catalog highlights:**
+  - swadesoul.artist_tracks: Drift Closer, Night Sing, Maybe Nobody Owes you (MNO)U
+  - maestroradio.maestro_catalog: DRIFT CLOSER, Maybe Nobody Owes U, NIGHT SING
+  - swadesoul.releases: Night Sing (release date 2026-04-01, status draft)
+- **Lyrics:** GAP — no stored lyrics found; PENDING: ChatGPT search
+- **Character sheet status:** Locked canonical sheet: creator-media/artist-refs/0bf6711c-4a6d-4026-a301-21e8bd88c9b4/sheet-nevaborya.webp
+- **Card status:** identity-verified=True; locked until 2099-12-31; card v5; auto-refresh off; latest likeness check 0.94 passed (2026-09-25 UTC); 1 queued job (2026-09-25)
+- **Images:**
+  - box_folder: /workspace/artist-sheets/nevaborya
+  - box_files: card.png, consistency-sheet.webp, guide-photo.png
+  - profile_photo: artist-music/nevaborya/profile.png
+  - card: monthly-cards/0bf6711c-4a6d-4026-a301-21e8bd88c9b4/identity-repair-0bf6711c-4a6d-4026-a301-21e8bd88c9b4-1790288214-1790288778615.png
+  - character_sheet: creator-media/artist-refs/0bf6711c-4a6d-4026-a301-21e8bd88c9b4/sheet-nevaborya.webp
+  - storage_folder: nevaborya
+- **Db ids:**
+  - creator_artists_id: 0bf6711c-4a6d-4026-a301-21e8bd88c9b4
+  - card_profile_id: 9872bb2b-5892-493b-88f6-522a61b895f1
+  - card_slug: nevaborya-swade-0bf671
+- **Notes:** none
+- **Sources:**
+  - Harold, call 2026-10-28
+  - swadesoul.creator_artists
+  - swadesoul.artist_card_profiles
+  - swadesoul.artwork_jobs
+  - swadesoul.artist_card_quality_checks
+  - swadesoul.artist_tracks
+  - maestroradio.maestro_catalog
+  - /workspace/artist-sheets (admin pull 2026-10-28)
+
+### Suki Swade
+
+- **Aliases:**
+  - Suki
+- **Db name:** Suki Swade
+- **Db stage name:** Suki
+- **Age:** 24
+- **Age source:** Dictated by Harold, call 2026-10-28 (authoritative)
+- **Face check apparent age:** Young adult, approximately early to mid-20s in both images.
+- **Family:** Swade
+- **Family source:** swadesoul.creator_artists.fam
+- **Status:** active
+- **Genre:** K-Pop/R&B
+- **Voice type:** pop
+- **Bio:** PENDING: ChatGPT search (DB creator_artists.bio is null)
+- **Style personality:** Portrait direction: Crisp K-pop and R&B editorial portrait with vibrant controlled color, fashion-forward styling, and dynamic pose. | Personality: GAP
+- **Likeness description:** Face: Oval face with defined cheekbones, a gently tapered jaw, and a rounded chin. Dark almond-shaped eyes, a relatively narrow straight nose with a softly rounded tip, and full lips with a defined Cupid's bow remain consistent with the sheet. Hair: Long black hair with loose waves, a near-central crown part, and eyebrow-length bangs. The fringe appears slightly denser, but the overall silhouette and texture are retained. Bangs obscure most of the frontal hairline in both images. Build: Slim build with a defined waist and similar visible limb proportions; outer clothing limits precise torso comparison. Complexion: Warm light-to-medium complexion consistent with the reference after allowing for the portrait's warmer lighting. Immutable features: Oval facial outline with tapered lower face; Dark almond-shaped eyes; Narrow nose with softly rounded tip; Full lips with defined Cupid's bow; Long dark wavy hair with eyebrow-length bangs
+- **Voice design notes:** PENDING: ChatGPT search
+- **Catalog highlights:**
+  - swadesoul.artist_tracks: none
+  - maestroradio.maestro_catalog: GLOW MODE
+- **Lyrics:** GAP — no stored lyrics found; PENDING: ChatGPT search
+- **Character sheet status:** Locked canonical sheet: creator-media/artist-refs/a2ed7544-e237-4184-a036-c98718ab0613/sheet-suki.webp
+- **Card status:** identity-verified=True; locked until 2099-12-31; card v4; auto-refresh off; latest likeness check 0.93 passed (2026-09-25 UTC); 1 queued job (2026-09-25); 1 failed/rejected job (2026-09-02)
+- **Images:**
+  - box_folder: /workspace/artist-sheets/suki
+  - box_files: card.png, consistency-sheet.webp, guide-photo.png
+  - profile_photo: artist-music/suki/profile.png
+  - card: monthly-cards/a2ed7544-e237-4184-a036-c98718ab0613/identity-repair-a2ed7544-e237-4184-a036-c98718ab0613-1790288214-1790288649064.png
+  - character_sheet: creator-media/artist-refs/a2ed7544-e237-4184-a036-c98718ab0613/sheet-suki.webp
+  - storage_folder: suki
+- **Db ids:**
+  - creator_artists_id: a2ed7544-e237-4184-a036-c98718ab0613
+  - card_profile_id: a1e3cd12-77aa-4f1f-b824-3db73cbad2f8
+  - card_slug: suki-swade-a2ed75
+- **Notes:** none
+- **Sources:**
+  - Harold, call 2026-10-28
+  - swadesoul.creator_artists
+  - swadesoul.artist_card_profiles
+  - swadesoul.artwork_jobs
+  - swadesoul.artist_card_quality_checks
+  - swadesoul.artist_tracks
+  - maestroradio.maestro_catalog
+  - /workspace/artist-sheets (admin pull 2026-10-28)
+
+### LEYCEO Swade
+
+- **Aliases:**
+  - LEYCEO (Harold, dictated)
+  - Leyco Swade (DB name)
+  - Leyco (DB stage name)
+- **Db name:** Leyco Swade
+- **Db stage name:** Leyco
+- **Age:** GAP
+- **Age source:** Not dictated
+- **Face check apparent age:** Young adult, approximately late twenties to early thirties, consistent across both images.
+- **Family:** Swade
+- **Family source:** swadesoul.creator_artists.fam
+- **Status:** active
+- **Genre:** Pop/R&B
+- **Voice type:** hip-hop
+- **Bio:** PENDING: ChatGPT search (DB creator_artists.bio is null)
+- **Style personality:** Portrait direction: Clean pop and R&B portrait with graphic studio geometry, modern wardrobe, and expressive but natural posture. | Personality: GAP
+- **Likeness description:** Face: Oval face with a gently tapered lower jaw, rounded chin, dark almond-shaped eyes, thick eyebrows, a straight medium-width nose with a rounded tip, and moderately full lips. Short mustache and jaw stubble match the reference design. Hair: Dense, dark, tightly curled afro with a rounded silhouette and softly irregular frontal hairline; comparable volume and proportions to the reference. Build: Lean, moderately broad-shouldered frame with long-limbed proportions; no clear change in underlying build. Complexion: Medium warm-brown complexion, consistent with the reference when lighting differences are disregarded. Immutable features: Oval facial outline with a gently tapered jaw; Dark almond-shaped eyes beneath thick eyebrows; Straight nose with a rounded tip; Moderately full lips with a defined cupid's bow; Dense rounded afro with a softly irregular hairline; Short mustache and closely trimmed facial stubble
+- **Voice design notes:** PENDING: ChatGPT search
+- **Catalog highlights:**
+  - swadesoul.artist_tracks: Level Up Season, No More Broke Days, Choose me, Stay Solid, Different Now, My Peace (all with lyrics)
+  - maestroradio.maestro_catalog: Candy cane heartbreak, Choose me again, DIFFERENT NOW 2, Level up season, My Peace, No more broke days, Stay Solid 2 (eMastered)
+- **Lyrics:** Lyrics stored for the tracks marked (lyrics) in swadesoul.artist_tracks (lyrics_text / lyrics_path); maestroradio.maestro_catalog.lyrics may hold more. ChatGPT lyrics PENDING: ChatGPT search
+- **Character sheet status:** Locked canonical sheet: creator-media/artist-refs/f4a0d8c7-2bb2-40da-87c2-c02aca80acfa/sheet-leyco.webp
+- **Card status:** identity-verified=True; locked until 2099-12-31; card v4; auto-refresh off; latest likeness check 0.95 passed (2026-09-25 UTC); 1 queued job (2026-09-25); 1 failed/rejected job (2026-09-02)
+- **Images:**
+  - box_folder: /workspace/artist-sheets/leyco
+  - box_files: card.png, consistency-sheet.webp, guide-photo.png
+  - profile_photo: artist-music/leyco/profile.png
+  - card: monthly-cards/f4a0d8c7-2bb2-40da-87c2-c02aca80acfa/identity-repair-f4a0d8c7-2bb2-40da-87c2-c02aca80acfa-1790288214-1790288433137.png
+  - character_sheet: creator-media/artist-refs/f4a0d8c7-2bb2-40da-87c2-c02aca80acfa/sheet-leyco.webp
+  - storage_folder: leyco
+- **Db ids:**
+  - creator_artists_id: f4a0d8c7-2bb2-40da-87c2-c02aca80acfa
+  - card_profile_id: fb923a2c-9da5-4b59-b86e-4e2420023658
+  - card_slug: leyco-swade-f4a0d8
+- **Notes:**
+  - Also an editable stub in swideo.artists (brand_family "SWADE Fam").
+- **Sources:**
+  - Harold, call 2026-10-28
+  - swadesoul.creator_artists
+  - swadesoul.artist_card_profiles
+  - swadesoul.artwork_jobs
+  - swadesoul.artist_card_quality_checks
+  - swadesoul.artist_tracks
+  - maestroradio.maestro_catalog
+  - /workspace/artist-sheets (admin pull 2026-10-28)
+
+### Granada Swade
+
+- **Aliases:**
+  - Granada
+- **Db name:** Granada Swade
+- **Db stage name:** Granada
+- **Age:** 40
+- **Age source:** Dictated by Harold, call 2026-10-28 (authoritative)
+- **Face check apparent age:** Approximately late 30s to late 40s, consistent with the reference.
+- **Family:** Swade
+- **Family source:** swadesoul.creator_artists.fam
+- **Status:** active
+- **Genre:** Gospel / Soul
+- **Voice type:** gospel
+- **Bio:** PENDING: ChatGPT search (DB creator_artists.bio is null)
+- **Style personality:** Portrait direction: Dignified gospel-soul matriarch portrait with luminous warm light, refined formalwear, and centered presence. | Personality: GAP
+- **Likeness description:** Face: Soft oval face with full cheeks, a gently tapered jaw, rounded chin, dark almond-shaped eyes, arched brows, a rounded broad-based nose, and a wide smile with a fuller lower lip. Hair: Dark, short swept-up hair with a high, rounded side-swept wave, close sides, and a consistent curved hairline. Build: Medium, softly full build. The portrait reads somewhat more elongated, but visible anatomy does not establish a substantial build change independent of pose and clothing. Complexion: Medium-deep brown complexion, consistent with the reference after accounting for illumination. Immutable features: Full cheeks and softly rounded chin; Dark almond-shaped eyes beneath arched brows; Rounded nose tip with a broad nostril base; Broad smile with visible upper teeth and a fuller lower lip; Consistent forehead-to-hairline proportions
+- **Voice design notes:** PENDING: ChatGPT search
+- **Catalog highlights:**
+  - swadesoul.artist_tracks: He Smelled like Backsliding (featured), Maybe nobody owes you, Sunday Eatdown, Midnight Service (Holiday Song)
+  - maestroradio.maestro_catalog: He smelled like backsliding, Maybe Nobody Owes U (eMastered), Midnight service, candlelight heart, Peace O mine, SUNDAY EATDOWN, Untitled
+- **Lyrics:** GAP — no stored lyrics found; PENDING: ChatGPT search
+- **Character sheet status:** Locked canonical sheet: creator-media/artist-refs/c4c06bd5-2db6-4cb7-8235-b270c586cfba/sheet-granada.webp
+- **Card status:** identity-verified=True; locked until 2099-12-31; card v4; auto-refresh off; latest likeness check 0.94 passed (2026-09-25 UTC); 1 new card draft(s) AWAITING HAROLD APPROVAL (pending_review, 2026-09-25); 1 queued job (2026-09-25); 1 failed/rejected job (2026-09-02)
+- **Images:**
+  - box_folder: /workspace/artist-sheets/granada
+  - box_files: card.png, consistency-sheet.webp, guide-photo.png
+  - profile_photo: artist-music/granada/profile.png
+  - card: monthly-cards/c4c06bd5-2db6-4cb7-8235-b270c586cfba/identity-repair-c4c06bd5-2db6-4cb7-8235-b270c586cfba-1790288214-1790288520516.png
+  - character_sheet: creator-media/artist-refs/c4c06bd5-2db6-4cb7-8235-b270c586cfba/sheet-granada.webp
+  - storage_folder: granada
+- **Db ids:**
+  - creator_artists_id: c4c06bd5-2db6-4cb7-8235-b270c586cfba
+  - card_profile_id: 1277243d-1213-4a34-bba6-0213167c9ca6
+  - card_slug: granada-swade-c4c06b
+- **Notes:**
+  - Also an editable stub in swideo.artists (brand_family "SWADE Fam").
+- **Sources:**
+  - Harold, call 2026-10-28
+  - swadesoul.creator_artists
+  - swadesoul.artist_card_profiles
+  - swadesoul.artwork_jobs
+  - swadesoul.artist_card_quality_checks
+  - swadesoul.artist_tracks
+  - maestroradio.maestro_catalog
+  - /workspace/artist-sheets (admin pull 2026-10-28)
+
+### Ty Swade
+
+- **Aliases:**
+  - Ty
+- **Db name:** Ty Swade
+- **Db stage name:** Ty
+- **Age:** 53
+- **Age source:** Dictated by Harold, call 2026-10-28 (authoritative)
+- **Face check apparent age:** Middle-aged, approximately mid-40s to mid-50s, consistent with the canonical design.
+- **Family:** Swade
+- **Family source:** swadesoul.creator_artists.fam
+- **Status:** active
+- **Genre:** Soul/Neo Soul/Gospel
+- **Voice type:** country
+- **Bio:** PENDING: ChatGPT search (DB creator_artists.bio is null)
+- **Style personality:** Portrait direction: Neo-soul portrait with tactile contemporary tailoring, amber side light, and a composed musician stance. | Personality: GAP
+- **Likeness description:** Face: Elongated oval-to-rectangular face with a broad forehead, defined cheekbones, and a strong, gently tapered jaw. Dark, slightly hooded eyes beneath substantial brows; a straight, moderately broad nose with a rounded tip; medium lips with a fuller lower lip. The beard appears slightly more compact than in the reference close-up. Hair: Short, closely cropped dark curls with gray at the temples and a subtly recessed temporal hairline. Connected salt-and-pepper beard and mustache, with gray concentrated around the chin and lower jaw. Build: Broad-shouldered, moderately lean-to-solid build with similar overall proportions; precise torso comparison is limited by clothing. Complexion: Medium-brown complexion consistent with the reference when lighting differences are excluded. Immutable features: Broad forehead and defined, gently tapered jaw; Dark, slightly hooded eyes and strong brows; Moderately broad, straight nose with rounded tip; Medium-brown complexion; Short textured dark hair with graying temples; Connected beard with prominent gray across the chin
+- **Voice design notes:** PENDING: ChatGPT search
+- **Catalog highlights:**
+  - swadesoul.artist_tracks: Too Old for this Mess, Heartstrings & Highways, Carry On Love, Frequent Flyer Feelings (all with lyrics)
+  - maestroradio.maestro_catalog (station 'aibb'): I'm too old for this mess, Heartstrings and highways, Carry on love, Frequent flyer feelings
+- **Lyrics:** Lyrics stored for the tracks marked (lyrics) in swadesoul.artist_tracks (lyrics_text / lyrics_path); maestroradio.maestro_catalog.lyrics may hold more. ChatGPT lyrics PENDING: ChatGPT search
+- **Character sheet status:** Locked canonical sheet: creator-media/artist-refs/74ad1d28-650f-4c26-955d-86fba5370530/sheet-ty.webp
+- **Card status:** identity-verified=True; locked until 2099-12-31; card v4; auto-refresh off; latest likeness check 0.94 passed (2026-09-25 UTC); 1 queued job (2026-09-25); 1 failed/rejected job (2026-09-02)
+- **Images:**
+  - box_folder: /workspace/artist-sheets/ty
+  - box_files: card.png, consistency-sheet.webp, guide-photo.png
+  - profile_photo: artist-music/ty/profile.png
+  - card: monthly-cards/74ad1d28-650f-4c26-955d-86fba5370530/identity-repair-74ad1d28-650f-4c26-955d-86fba5370530-1790288214-1790288306703.png
+  - character_sheet: creator-media/artist-refs/74ad1d28-650f-4c26-955d-86fba5370530/sheet-ty.webp
+  - storage_folder: ty
+- **Db ids:**
+  - creator_artists_id: 74ad1d28-650f-4c26-955d-86fba5370530
+  - card_profile_id: 0c175b1a-2e9c-4e65-bb0d-ad82f342d45a
+  - card_slug: ty-swade-74ad1d
+- **Notes:** none
+- **Sources:**
+  - Harold, call 2026-10-28
+  - swadesoul.creator_artists
+  - swadesoul.artist_card_profiles
+  - swadesoul.artwork_jobs
+  - swadesoul.artist_card_quality_checks
+  - swadesoul.artist_tracks
+  - maestroradio.maestro_catalog
+  - /workspace/artist-sheets (admin pull 2026-10-28)
+
+### STEEMO Swade
+
+- **Aliases:**
+  - STEEMO (Harold, dictated)
+  - Steemo Swade (DB name)
+  - Steemo (DB stage name)
+- **Db name:** Steemo Swade
+- **Db stage name:** Steemo
+- **Age:** 27
+- **Age source:** Dictated by Harold, call 2026-10-28 (authoritative)
+- **Face check apparent age:** Adult, approximately late 20s to mid-30s, consistent across both images.
+- **Family:** Swade
+- **Family source:** swadesoul.creator_artists.fam
+- **Status:** active
+- **Genre:** Hip-Hop / World / Rock
+- **Voice type:** hip-hop
+- **Bio:** PENDING: ChatGPT search (DB creator_artists.bio is null)
+- **Style personality:** Portrait direction: Genre-blending hip-hop/world/rock portrait with textured stage light, distinctive tailoring, and focused intensity. | Personality: GAP
+- **Likeness description:** Face: Long oval face with defined cheekbones and a tapered, angular jaw. Dark almond-shaped eyes beneath fairly straight brows; a straight nose with a rounded tip; medium-full lips with a fuller lower lip. The proposed jaw appears slightly less elongated and the mouth slightly more compact. Hair: Closely buzzed crown and sides, retaining long, fine dark braids descending from behind the ears and back toward the shoulders and upper chest. Hairline and overall braid arrangement remain consistent. Build: Lean, athletic frame with similar shoulder-to-torso proportions; precise contours are partly obscured. Complexion: Medium-brown complexion consistent with the reference when differences in illumination are discounted. Immutable features: Elongated oval facial structure with prominent cheekbones; Dark almond-shaped eyes and strong brows; Straight nasal bridge with rounded tip; Defined lips with a fuller lower lip; Thin mustache and short chin goatee; Buzzed crown paired with long fine rear braids
+- **Voice design notes:** PENDING: ChatGPT search
+- **Catalog highlights:**
+  - swadesoul.artist_tracks: 2 Gods (1 House), 1 Beat Many Homes, Son of expectations
+  - maestroradio.maestro_catalog: 2 gods in 1 house, One Beat, Many Homes, Son of expectations
+- **Lyrics:** GAP — no stored lyrics found; PENDING: ChatGPT search
+- **Character sheet status:** Locked canonical sheet: creator-media/artist-refs/764ad73d-9799-48d7-8529-5cebe7e92ed8/sheet-steemo.webp
+- **Card status:** identity-verified=True; locked until 2099-12-31; card v4; auto-refresh off; latest likeness check 0.92 passed (2026-09-25 UTC); 1 queued job (2026-09-25); 1 failed/rejected job (2026-09-02)
+- **Images:**
+  - box_folder: /workspace/artist-sheets/steemo
+  - box_files: card.png, consistency-sheet.webp, guide-photo.png
+  - profile_photo: artist-music/steemo/profile.png
+  - card: monthly-cards/764ad73d-9799-48d7-8529-5cebe7e92ed8/identity-repair-764ad73d-9799-48d7-8529-5cebe7e92ed8-1790288214-1790288476030.png
+  - character_sheet: creator-media/artist-refs/764ad73d-9799-48d7-8529-5cebe7e92ed8/sheet-steemo.webp
+  - storage_folder: steemo
+- **Db ids:**
+  - creator_artists_id: 764ad73d-9799-48d7-8529-5cebe7e92ed8
+  - card_profile_id: b931697b-713f-422a-ad57-7b63f9e54522
+  - card_slug: steemo-swade-764ad7
+- **Notes:** none
+- **Sources:**
+  - Harold, call 2026-10-28
+  - swadesoul.creator_artists
+  - swadesoul.artist_card_profiles
+  - swadesoul.artwork_jobs
+  - swadesoul.artist_card_quality_checks
+  - swadesoul.artist_tracks
+  - maestroradio.maestro_catalog
+  - /workspace/artist-sheets (admin pull 2026-10-28)
+
+### Smitty
+
+- **Aliases:**
+  - Smitty (DB stage name)
+  - SMITTY (DB name)
+  - floyd-smith (storage folder / legacy artist id)
+- **Db name:** SMITTY
+- **Db stage name:** Smitty
+- **Age:** GAP
+- **Age source:** Not dictated
+- **Face check apparent age:** Middle-aged to older adult, approximately 50–60, consistent with the sheet.
+- **Family:** Swade
+- **Family source:** swadesoul.creator_artists.fam
+- **Status:** active
+- **Genre:** Soul/R&B/Gospel
+- **Voice type:** Baritone/Bass
+- **Bio:** Real San Diego artist turned digital twin; voice cloned from the Fifth Dimension (dictated by Harold; likely a reference to the group The 5th Dimension — to be confirmed). Fuller bio PENDING: ChatGPT search
+- **Style personality:** Portrait direction: Warm soul and gospel portrait with classic tailoring, subtle church-stage light, and approachable confidence. | Personality: GAP
+- **Likeness description:** Face: Broad oval face with a high forehead, full cheeks, gently tapered jaw, and rounded chin. Dark, slightly hooded eyes sit behind rectangular glasses. The nose has a broad rounded tip; the smiling mouth has a fuller lower lip and visible upper teeth. Hair: Very short, close-cropped dark hair with a high, mildly receding hairline and subtle graying at the sides; a neatly maintained dark mustache is preserved. Build: Broad-shouldered, medium-to-solid build with similar visible torso and limb proportions; precise contours are partly obscured. Complexion: Medium-deep brown complexion with visible mature facial texture, consistent with the reference after allowing for lighting differences. Immutable features: High forehead and broad oval facial outline; Slightly hooded eyes; Broad, rounded nasal tip; Rounded chin and full cheeks; Fuller lower lip beneath a defined mustache
+- **Voice design notes:** Voice cloned from the Fifth Dimension (dictated; likely the group The 5th Dimension — to be confirmed). DB voice_type: Baritone/Bass. More PENDING: ChatGPT search
+- **Catalog highlights:**
+  - swadesoul.artist_tracks (artist_id floyd-smith): She Still Calls Me Baby, Stand With Me, You Won't Find Better Than Me, Woman, You Make A Man Feel Young (all with lyrics)
+  - maestroradio.maestro_catalog (station 'aibb'): same four titles
+- **Lyrics:** Lyrics stored for the tracks marked (lyrics) in swadesoul.artist_tracks (lyrics_text / lyrics_path); maestroradio.maestro_catalog.lyrics may hold more. ChatGPT lyrics PENDING: ChatGPT search
+- **Character sheet status:** Locked canonical sheet: creator-media/artist-refs/6a2c4bf3-182a-47e8-ace1-ab357c20d11e/sheet-smitty.png
+- **Card status:** identity-verified=True; locked until 2099-12-31; card v4; auto-refresh off; latest likeness check 0.95 passed (2026-09-25 UTC); 1 queued job (2026-09-25); 1 failed/rejected job (2026-09-02)
+- **Images:**
+  - box_folder: /workspace/artist-sheets/smitty
+  - box_files: card.png, consistency-sheet.png, guide-photo.png
+  - profile_photo: artist-music/floyd-smith/profile.png
+  - card: monthly-cards/6a2c4bf3-182a-47e8-ace1-ab357c20d11e/identity-repair-6a2c4bf3-182a-47e8-ace1-ab357c20d11e-1790288214-1790288263829.png
+  - character_sheet: creator-media/artist-refs/6a2c4bf3-182a-47e8-ace1-ab357c20d11e/sheet-smitty.png
+  - storage_folder: floyd-smith
+- **Db ids:**
+  - creator_artists_id: 6a2c4bf3-182a-47e8-ace1-ab357c20d11e
+  - card_profile_id: f022b085-1a5c-4f46-9934-cc6609cdab57
+  - card_slug: smitty-6a2c4b
+- **Notes:**
+  - Left out of the homepage rotation (per admin pull).
+- **Sources:**
+  - Harold, call 2026-10-28
+  - swadesoul.creator_artists
+  - swadesoul.artist_card_profiles
+  - swadesoul.artwork_jobs
+  - swadesoul.artist_card_quality_checks
+  - swadesoul.artist_tracks
+  - maestroradio.maestro_catalog
+  - /workspace/artist-sheets (admin pull 2026-10-28)
+
+### Rivan Swade
+
+- **Aliases:**
+  - Rivan Swade (DB name)
+  - Rivan (DB stage name / card display name)
+- **Db name:** Rivan Swade
+- **Db stage name:** Rivan
+- **Age:** GAP
+- **Age source:** Not dictated — in DB but not dictated; age unconfirmed
+- **Face check apparent age:** Young adult, approximately mid-20s to early 30s, consistent with the reference.
+- **Family:** Swade
+- **Family source:** swadesoul.creator_artists.fam
+- **Status:** active
+- **Genre:** Rock
+- **Voice type:** GAP
+- **Bio:** PENDING: ChatGPT search (DB creator_artists.bio is null)
+- **Style personality:** Portrait direction: Modern artist portrait with cool editorial light, minimalist styling, and a distinct relaxed stance. | Personality notes (generic DB default): Convey confident, authentic music-artist presence.
+- **Likeness description:** Face: Angular, moderately elongated face with prominent cheekbones, a tapered jaw, thick dark eyebrows, a straight medium-width nose, and defined lips. The short mustache and shaped beard remain consistent. Eyes appear slightly narrower than in the canonical close-up, without a clear substantial redesign. Hair: Black asymmetrical undercut with closely cropped sides, a long side-swept fringe, and prominent copper-blond streaks. Sweep direction, overall silhouette, and visible hairline closely match. Build: Lean, moderately athletic proportions remain consistent where visible; layered outerwear limits assessment of the torso. Complexion: Medium tan complexion consistent with the reference after accounting for the warmer illumination. Immutable features: Diagonal scar on the left cheek retains its placement and orientation.; Visible right-side neck tattoo retains its general placement and motif.; Distinctive copper-blond streaks within the black side-swept fringe are preserved.; Short shaped beard, mustache, and central chin detailing remain consistent.
+- **Voice design notes:** PENDING: ChatGPT search
+- **Catalog highlights:**
+  - GAP — no songs found in swadesoul.artist_tracks, maestroradio.maestro_catalog or swadesoul.releases
+- **Lyrics:** GAP — no stored lyrics found; PENDING: ChatGPT search
+- **Character sheet status:** Locked canonical sheet: creator-media/artist-refs/92be63a9-937e-4ac2-86ab-e4ff5497ef0d/sheet-rivan.png
+- **Card status:** identity-verified=True; locked until 2099-12-31; card v2; auto-refresh off; latest likeness check 0.94 passed (2026-09-25 UTC); 1 queued job (2026-09-25); 1 failed/rejected job (2026-09-02)
+- **Images:**
+  - box_folder: /workspace/artist-sheets/rivan
+  - box_files: card.png, consistency-sheet.png
+  - profile_photo: GAP — no profile photo
+  - card: monthly-cards/92be63a9-937e-4ac2-86ab-e4ff5497ef0d/identity-repair-92be63a9-937e-4ac2-86ab-e4ff5497ef0d-1790288214-1790288692079.png
+  - character_sheet: creator-media/artist-refs/92be63a9-937e-4ac2-86ab-e4ff5497ef0d/sheet-rivan.png
+  - storage_folder: GAP (no legacy storage folder)
+- **Db ids:**
+  - creator_artists_id: 92be63a9-937e-4ac2-86ab-e4ff5497ef0d
+  - card_profile_id: be1fd9ee-cd7f-43ff-96dc-200a04b05a0c
+  - card_slug: rivan
+- **Notes:**
+  - Left out of the homepage rotation (per admin pull).
+- **Sources:**
+  - swadesoul.creator_artists
+  - swadesoul.artist_card_profiles
+  - swadesoul.artwork_jobs
+  - swadesoul.artist_card_quality_checks
+  - swadesoul.artist_tracks
+  - maestroradio.maestro_catalog
+  - /workspace/artist-sheets (admin pull 2026-10-28)
+
+## Freq fam
+
+### Noble Rayne Swade
+
+- **Aliases:**
+  - Noble Rayne
+  - Noble Rayne Swade (DB stage name)
+- **Db name:** Noble Rayne 
+- **Db stage name:** Noble Rayne Swade
+- **Age:** 26
+- **Age source:** Dictated by Harold, call 2026-10-28 (authoritative)
+- **Face check apparent age:** Approximately mid-30s to early 40s, consistent with the canonical design.
+- **Family:** Freq
+- **Family source:** swadesoul.creator_artists.fam
+- **Status:** active
+- **Genre:** R&B / Esoteric Soul
+- **Voice type:** GAP (DB voice_type holds a full voice design — see voice_design_notes)
+- **Bio:** "Noble Rayne Swade is the flagship voice of the SWADE Fam: healing, cinematic, spiritual music built around premium visuals and emotional storytelling. Every release is a world, not just a song." (swideo.artists.bio). Fuller bio PENDING: ChatGPT search
+- **Style personality:** Portrait direction: Intimate esoteric R&B portrait with soft directional light and a composed, reflective stance. | Personality notes (generic DB default): Convey confident, authentic music-artist presence. | Style DNA: 'Healing frequency R&B, emerald forest, gold waveform, candlelight' (ChatGPT). Video type: 'Artist lip-sync + cinematic b-roll' (ChatGPT). Visual identity: emerald forest and candlelit river worlds, gold waveform motifs, soft volumetric light, premium cinematic grade (swideo.artists). Music style: healing, cinematic, spiritual R&B and soul; warm low end, airy vocals, organic textures, slow-to-mid tempo (swideo.artists). | Listed for the 'Spiritual / Frequency Visual Journey' video type — 'Best for Noble Rayne, Soren Blu, Zion Creed, Royal Banks when symbolic.' (ChatGPT)
+- **Likeness description:** Face: Long oval face with defined cheekbones, a tapered angular jaw, and a rounded chin. Dark almond-shaped eyes beneath thick, slightly arched brows; a straight, moderately broad nose with a rounded tip; defined lips with a fuller lower lip. Closely shaped beard and connected mustache remain consistent. Hair: Long dark locs extending over the shoulders and chest, with subtle brown strands and sparse gold accents. Swept-back roots, exposed forehead, and temple contours closely match the reference. Build: Lean, moderately athletic build with relatively broad shoulders, a narrow torso, and long limbs. Visible proportions remain consistent, although clothing obscures exact body contours. Complexion: Medium-brown complexion with warm undertones, consistent after accounting for the different lighting. Immutable features: Elongated oval facial proportions and defined cheekbones; Thick brows and dark almond-shaped eyes; Straight nose with a rounded tip and moderately broad nostrils; Defined lip contour with a fuller lower lip; Shaped beard connected to the mustache; Warm medium-brown complexion; Long dark locs and consistent exposed hairline; Mature adult appearance and lean, long-limbed build
+- **Voice design notes:** DB voice_type: "Vocals should be smooth, warm, and close-mic intimate, with controlled vibrato, soft runs, and emotional phrasing. Avoid aggressive belting. Use a calm, centered delivery with occasional gospel-inspired lift in the chorus. The voice should sound mature, peaceful, and restorative, like a soulful healer singing directly to the listener. Keep the tone organic, human, premium, and emotionally grounded". More PENDING: ChatGPT search
+- **Catalog highlights:**
+  - swadesoul.artist_tracks: Breathe Back Into Me (frequency track, code 519 514 319891, lyrics)
+  - maestroradio.maestro_catalog (station 'aibb'): Breathe back into me
+- **Lyrics:** Lyrics stored for the tracks marked (lyrics) in swadesoul.artist_tracks (lyrics_text / lyrics_path); maestroradio.maestro_catalog.lyrics may hold more. ChatGPT lyrics PENDING: ChatGPT search
+- **Character sheet status:** Locked canonical sheet: creator-media/artist-refs/682da350-7e61-4c7f-a65d-0cf391b2735d/sheet-noble-rayne.png
+- **Card status:** identity-verified=True; locked until 2099-12-31; card v5; auto-refresh off; latest likeness check 0.95 passed (2026-09-25 UTC); 1 new card draft(s) AWAITING HAROLD APPROVAL (pending_review, 2026-09-25); 1 failed/rejected job (2026-09-02)
+- **Images:**
+  - box_folder: /workspace/artist-sheets/noble-rayne-swade
+  - box_files: card.png, consistency-sheet.png, guide-photo.png
+  - profile_photo: artist-music/noble-rayne/profile.png
+  - card: monthly-cards/682da350-7e61-4c7f-a65d-0cf391b2735d/identity-repair-freq-682da350-7e61-4c7f-a65d-0cf391b2735d-1790291753-1790291857680.png
+  - character_sheet: creator-media/artist-refs/682da350-7e61-4c7f-a65d-0cf391b2735d/sheet-noble-rayne.png
+  - storage_folder: noble-rayne
+- **Db ids:**
+  - creator_artists_id: 682da350-7e61-4c7f-a65d-0cf391b2735d
+  - card_profile_id: 3842305f-9968-4c34-9119-b40522e7eaf9
+  - card_slug: noble-rayne-swade
+- **Notes:**
+  - DB name has a trailing space: 'Noble Rayne '.
+  - Left out of the homepage rotation (per admin pull).
+- **Sources:**
+  - Harold, call 2026-10-28
+  - swadesoul.creator_artists
+  - swadesoul.artist_card_profiles
+  - swadesoul.artwork_jobs
+  - swadesoul.artist_card_quality_checks
+  - swadesoul.artist_tracks
+  - maestroradio.maestro_catalog
+  - /workspace/artist-sheets (admin pull 2026-10-28)
+  - ChatGPT "Noble Rayne Video Concept" https://chatgpt.com/c/84546c8c-a9d0-8324-b94c-81254b73dce9
+  - swideo.artists
+
+### Royal Banks
+
+- **Aliases:**
+  - Royal Banks
+- **Db name:** Royal Banks
+- **Db stage name:** Royal Banks
+- **Age:** 24
+- **Age source:** Dictated by Harold, call 2026-10-28 (authoritative)
+- **Face check apparent age:** Approximately late 30s to mid-40s, consistent with the reference.
+- **Family:** Freq
+- **Family source:** swadesoul.creator_artists.fam
+- **Status:** active
+- **Genre:** R&B
+- **Voice type:** GAP
+- **Bio:** PENDING: ChatGPT search (DB creator_artists.bio is null)
+- **Style personality:** Portrait direction: Polished contemporary R&B portrait with tailored styling, clean architecture, and confident eye contact. | Personality notes (generic DB default): Convey confident, authentic music-artist presence. | Listed for the 'Spiritual / Frequency Visual Journey' video type — 'Best for Noble Rayne, Soren Blu, Zion Creed, Royal Banks when symbolic.' (ChatGPT)
+- **Likeness description:** Face: Broad, slightly elongated oval face with a substantial jaw, defined cheekbones, dark almond-shaped eyes beneath strong brows, a broad rounded nose, and full lips. A closely shaped full beard and connected mustache preserve the reference's lower-face outline. Hair: Short black tightly curled hair with tapered sides and a closely matching front hairline; dense, neatly outlined black facial hair. Build: Broad-shouldered, solid athletic-to-average build. Visible proportions are compatible with the reference, though the torso contour is partly obscured. Complexion: Medium-deep brown complexion, consistent with the reference after accounting for illumination. Immutable features: Broad oval facial structure and substantial jaw; Dark almond-shaped eyes and strong brows; Broad nose with rounded tip; Full lips with a defined upper-lip contour; Medium-deep brown complexion; Short tightly curled black hair with tapered sides; Shaped full beard connected to the mustache; Mature adult appearance and broad-shouldered build
+- **Voice design notes:** PENDING: ChatGPT search
+- **Catalog highlights:**
+  - GAP — no songs found in swadesoul.artist_tracks, maestroradio.maestro_catalog or swadesoul.releases
+- **Lyrics:** GAP — no stored lyrics found; PENDING: ChatGPT search
+- **Character sheet status:** Locked canonical sheet: creator-media/artist-refs/034afe04-d82b-4059-9177-d6bb3d0b857b/sheet-royal-banks.png
+- **Card status:** identity-verified=True; locked until 2099-12-31; card v2; auto-refresh off; latest likeness check 0.95 passed (2026-09-25 UTC); 1 queued job (2026-09-25); 1 failed/rejected job (2026-09-02)
+- **Images:**
+  - box_folder: /workspace/artist-sheets/royal-banks
+  - box_files: card.png, consistency-sheet.png
+  - profile_photo: GAP — no profile photo
+  - card: monthly-cards/034afe04-d82b-4059-9177-d6bb3d0b857b/identity-repair-freq-034afe04-d82b-4059-9177-d6bb3d0b857b-1790291753-1790291895005.png
+  - character_sheet: creator-media/artist-refs/034afe04-d82b-4059-9177-d6bb3d0b857b/sheet-royal-banks.png
+  - storage_folder: GAP (no legacy storage folder)
+- **Db ids:**
+  - creator_artists_id: 034afe04-d82b-4059-9177-d6bb3d0b857b
+  - card_profile_id: abaef6d2-bd5b-4cc2-98d7-a5c4856df9a7
+  - card_slug: royal-banks
+- **Notes:**
+  - Also an editable stub in swideo.artists (brand_family "SWADE Fam").
+  - Left out of the homepage rotation (per admin pull).
+- **Sources:**
+  - Harold, call 2026-10-28
+  - swadesoul.creator_artists
+  - swadesoul.artist_card_profiles
+  - swadesoul.artwork_jobs
+  - swadesoul.artist_card_quality_checks
+  - swadesoul.artist_tracks
+  - maestroradio.maestro_catalog
+  - /workspace/artist-sheets (admin pull 2026-10-28)
+  - ChatGPT "Noble Rayne Video Concept" https://chatgpt.com/c/84546c8c-a9d0-8324-b94c-81254b73dce9
+
+### Sabria Swade
+
+- **Aliases:**
+  - Sabrea (Harold, dictated — spelling to confirm)
+  - Sabria (DB name)
+  - Sabria Swade (DB stage name)
+- **Db name:** Sabria 
+- **Db stage name:** Sabria Swade
+- **Age:** 28
+- **Age source:** Dictated by Harold, call 2026-10-28 (authoritative)
+- **Face check apparent age:** Adult, approximately late 20s to 30s, consistent across both images.
+- **Family:** Freq
+- **Family source:** swadesoul.creator_artists.fam
+- **Status:** active
+- **Genre:** Eclectic Soul
+- **Voice type:** GAP
+- **Bio:** PENDING: ChatGPT search (DB creator_artists.bio is null)
+- **Style personality:** Portrait direction: Luminous eclectic-soul studio portrait with sculptural light and a poised three-quarter stance. | Personality notes (generic DB default): Convey confident, authentic music-artist presence.
+- **Likeness description:** Face: Soft oval face with defined cheekbones, a gently tapered jaw and rounded chin; dark almond-shaped eyes beneath arched brows; a moderately narrow nose with a rounded tip; full lips with a defined cupid's bow. Hair: Long, voluminous dark-brown curls with lighter brown accents, an off-center side part, and a softly curved hairline with fine edge hairs. Length and curl distribution closely match the reference. Build: Lean-to-medium, softly curving build with a defined waist and proportionate hips. Visible proportions are compatible with the reference, although the coat obscures some contours. Complexion: Warm medium-brown complexion consistent with the canonical design after allowing for lighting differences. Immutable features: Oval facial outline with prominent cheekbones and a softly tapered jaw; Dark almond-shaped eyes and arched brows; Moderately narrow nose with a rounded tip; Full lips with a defined cupid's bow; Warm medium-brown complexion; Long, side-parted dark-brown curls with lighter brown accents; Consistent adult apparent age; Defined waist and balanced, softly curving proportions
+- **Voice design notes:** PENDING: ChatGPT search
+- **Catalog highlights:**
+  - swadesoul.artist_tracks: Love Me In The Real World (frequency track, code 396815, lyrics)
+  - maestroradio.maestro_catalog (station 'aibb'): Love me in the real world
+- **Lyrics:** Lyrics stored for the tracks marked (lyrics) in swadesoul.artist_tracks (lyrics_text / lyrics_path); maestroradio.maestro_catalog.lyrics may hold more. ChatGPT lyrics PENDING: ChatGPT search
+- **Character sheet status:** Locked canonical sheet: creator-media/artist-refs/50cc1b46-03cf-4c6d-9e0c-530f3ba32019/sheet-sabria.png
+- **Card status:** identity-verified=True; locked until 2099-12-31; card v5; auto-refresh off; latest likeness check 0.95 passed (2026-09-25 UTC); 1 new card draft(s) AWAITING HAROLD APPROVAL (pending_review, 2026-09-25)
+- **Images:**
+  - box_folder: /workspace/artist-sheets/sabria-swade
+  - box_files: card.png, consistency-sheet.png, guide-photo.png
+  - profile_photo: artist-music/sabria/profile.png
+  - card: monthly-cards/50cc1b46-03cf-4c6d-9e0c-530f3ba32019/identity-repair-freq-50cc1b46-03cf-4c6d-9e0c-530f3ba32019-1790291753-1790291813482.png
+  - character_sheet: creator-media/artist-refs/50cc1b46-03cf-4c6d-9e0c-530f3ba32019/sheet-sabria.png
+  - storage_folder: sabria
+- **Db ids:**
+  - creator_artists_id: 50cc1b46-03cf-4c6d-9e0c-530f3ba32019
+  - card_profile_id: 3127b863-92bb-4fa0-ae5f-5c6ab3841718
+  - card_slug: sabria-swade
+- **Notes:**
+  - DB name has a trailing space: 'Sabria '.
+  - Left out of the homepage rotation (per admin pull).
+- **Sources:**
+  - Harold, call 2026-10-28
+  - swadesoul.creator_artists
+  - swadesoul.artist_card_profiles
+  - swadesoul.artwork_jobs
+  - swadesoul.artist_card_quality_checks
+  - swadesoul.artist_tracks
+  - maestroradio.maestro_catalog
+  - /workspace/artist-sheets (admin pull 2026-10-28)
+
+### Soren Blu Swade
+
+- **Aliases:**
+  - Soren Blu
+  - Soren Blu Swade (DB stage name)
+- **Db name:** Soren Blu
+- **Db stage name:** Soren Blu Swade
+- **Age:** GAP
+- **Age source:** Not dictated
+- **Face check apparent age:** GAP
+- **Family:** Freq
+- **Family source:** swadesoul.creator_artists.fam (moved from 'swade' to 'freq' 2026-10-28 on Harold's instruction)
+- **Status:** inactive — cannot be activated until she has a locked card and auto_theme_refresh is turned off
+- **Genre:** GAP (DB genre field holds a voice description instead: "Soft feminine alt-R&B voice, airy and intimate, dreamy yet soulful, emotionally controlled, elegant phrasing, layered harmonies, ambient pop-R&B energy, calm confident delivery, reflective and modern.")
+- **Voice type:** GAP (DB voice_type holds a full voice design — see voice_design_notes)
+- **Bio:** PENDING: ChatGPT search (DB creator_artists.bio is null)
+- **Style personality:** GAP
+- **Likeness description:** GAP — no locked sheet or card profile (only an unverified profile photo URL)
+- **Voice design notes:** DB voice_type: "A feminine Norwegian-Filipina alt-R&B vocalist with a soft, breathy, emotionally controlled tone. Her voice is airy, elegant, intimate, and soulful, with delicate phrasing, smooth layered harmonies, and a calm but magnetic presence. She sounds reflective, graceful, and emotionally intelligent, blending dream-pop softness, ambient R&B warmth, and modern feminine soul. Her delivery feels serene, stylish, and quietly powerful, with floating vocal textures, subtle vulnerability, and polished premium emotion." DB genre field: "Soft feminine alt-R&B voice, airy and intimate, dreamy yet soulful, emotionally controlled, elegant phrasing, layered harmonies, ambient pop-R&B energy, calm confident delivery, reflective and modern.". More PENDING: ChatGPT search
+- **Catalog highlights:**
+  - swadesoul.artist_tracks: Clear The Room (frequency track, code 4748132148, lyrics)
+- **Lyrics:** Lyrics stored for the tracks marked (lyrics) in swadesoul.artist_tracks (lyrics_text / lyrics_path); maestroradio.maestro_catalog.lyrics may hold more. ChatGPT lyrics PENDING: ChatGPT search
+- **Character sheet status:** GAP — no locked sheet (consistency_reference is null)
+- **Card status:** No locked card: card_identity_verified=False, card_locked_until=null, card_version=1, auto_theme_refresh=True, no card profile, no artwork jobs
+- **Images:**
+  - box_folder: GAP (no local images pulled)
+  - profile_photo: artist-music/soren-blu/profile.png (reported non-working in admin pull)
+  - card: GAP — no card
+  - character_sheet: GAP
+  - storage_folder: soren-blu
+- **Db ids:**
+  - creator_artists_id: a75f52bb-ba50-4e54-be03-6dbc09800867
+  - card_profile_id: GAP
+  - card_slug: GAP
+- **Notes:**
+  - Also an editable stub in swideo.artists (brand_family "SWADE Fam").
+- **Sources:**
+  - Harold, call 2026-10-28
+  - swadesoul.creator_artists
+  - swadesoul.artist_card_profiles
+  - swadesoul.artwork_jobs
+  - swadesoul.artist_card_quality_checks
+  - swadesoul.artist_tracks
+  - maestroradio.maestro_catalog
+  - /workspace/artist-sheets (admin pull 2026-10-28)
+  - ChatGPT "Noble Rayne Video Concept" https://chatgpt.com/c/84546c8c-a9d0-8324-b94c-81254b73dce9
+
+### Zion Creed Swade
+
+- **Aliases:**
+  - Zion Creed
+  - Zion Creed Swade
+- **Db name:** GAP
+- **Db stage name:** GAP
+- **Age:** GAP
+- **Age source:** Not dictated; no face-check (not in DB)
+- **Face check apparent age:** GAP
+- **Family:** Freq
+- **Family source:** Confirmed by Harold 2026-10-28 (the Freq member he could not remember)
+- **Status:** NOT IN creator_artists (swadesoul admin) — not yet created
+- **Genre:** GAP
+- **Voice type:** GAP
+- **Bio:** PENDING: ChatGPT search
+- **Style personality:** PENDING: ChatGPT search (ChatGPT lists him for the "Spiritual / Frequency Visual Journey" video type, best when symbolic)
+- **Likeness description:** PENDING: ChatGPT search (no photo, sheet or card exists)
+- **Voice design notes:** PENDING: ChatGPT search
+- **Catalog highlights:**
+  - GAP — no songs found in swadesoul.artist_tracks, maestroradio.maestro_catalog or swadesoul.releases; PENDING: ChatGPT search
+- **Lyrics:** PENDING: ChatGPT search
+- **Character sheet status:** GAP — none (not in admin)
+- **Card status:** GAP — no card, no profile, no jobs
+- **Images:**
+  - box_folder: GAP
+  - profile_photo: GAP
+  - character_sheet: GAP
+  - card: GAP
+- **Db ids:**
+  - creator_artists_id: GAP
+  - swideo_artists_slug: zion-creed (editable stub, brand_family "SWADE Fam", no bio)
+- **Notes:**
+  - Exists only as a stub in swideo.artists (slug zion-creed, brand_family "SWADE Fam") — conflicts with Freq family.
+  - Must be added to swadesoul creator_artists (with locked sheet + card) before he can appear on the site — needs Harold approval.
+- **Sources:**
+  - Harold, call 2026-10-28
+  - ChatGPT "Noble Rayne Video Concept" https://chatgpt.com/c/84546c8c-a9d0-8324-b94c-81254b73dce9
+  - ChatGPT "Self-Healing System Design" (Swade Soul project) — roster list ends with Zion Creed Swade
+  - swideo.artists (SELECT)
+
+## GAPS
+
+- **Swade Soul:** age (GAP); bio (PENDING: ChatGPT search); voice_design_notes (PENDING: ChatGPT search); lyrics (PENDING: ChatGPT search); personality notes (GAP or generic default only)
+- **Ameyea Swade:** bio (PENDING: ChatGPT search); voice_design_notes (PENDING: ChatGPT search); lyrics (PENDING: ChatGPT search); personality notes (GAP or generic default only)
+- **Reggie Swade:** bio (PENDING: ChatGPT search); voice_design_notes (PENDING: ChatGPT search); lyrics (PENDING: ChatGPT search); personality notes (GAP or generic default only)
+- **Carrie Anne Swade:** bio (PENDING: ChatGPT search); voice_design_notes (PENDING: ChatGPT search); lyrics (PENDING: ChatGPT search); personality notes (GAP or generic default only)
+- **Shamone Swade:** bio (PENDING: ChatGPT search); voice_design_notes (PENDING: ChatGPT search); lyrics (PENDING: ChatGPT search); personality notes (GAP or generic default only)
+- **Mason Swade:** bio (PENDING: ChatGPT search); voice_design_notes (PENDING: ChatGPT search); lyrics (GAP); personality notes (GAP or generic default only)
+- **Neva Boyea Swade:** bio (PENDING: ChatGPT search); voice_design_notes (PENDING: ChatGPT search); lyrics (GAP); personality notes (GAP or generic default only)
+- **Suki Swade:** bio (PENDING: ChatGPT search); voice_design_notes (PENDING: ChatGPT search); lyrics (GAP); personality notes (GAP or generic default only)
+- **LEYCEO Swade:** age (GAP); bio (PENDING: ChatGPT search); voice_design_notes (PENDING: ChatGPT search); lyrics (PENDING: ChatGPT search); personality notes (GAP or generic default only)
+- **Granada Swade:** bio (PENDING: ChatGPT search); voice_design_notes (PENDING: ChatGPT search); lyrics (GAP); personality notes (GAP or generic default only)
+- **Ty Swade:** bio (PENDING: ChatGPT search); voice_design_notes (PENDING: ChatGPT search); lyrics (PENDING: ChatGPT search); personality notes (GAP or generic default only)
+- **STEEMO Swade:** bio (PENDING: ChatGPT search); voice_design_notes (PENDING: ChatGPT search); lyrics (GAP); personality notes (GAP or generic default only)
+- **Smitty:** age (GAP); bio (PENDING: ChatGPT search); voice_design_notes (PENDING: ChatGPT search); lyrics (PENDING: ChatGPT search); personality notes (GAP or generic default only)
+- **Rivan Swade:** age (GAP); voice_type (GAP); bio (PENDING: ChatGPT search); voice_design_notes (PENDING: ChatGPT search); catalog_highlights (GAP); lyrics (GAP); personality notes (GAP or generic default only); profile photo (GAP)
+- **Noble Rayne Swade:** voice_type (GAP); bio (PENDING: ChatGPT search); voice_design_notes (PENDING: ChatGPT search); lyrics (PENDING: ChatGPT search); personality notes (GAP or generic default only)
+- **Royal Banks:** voice_type (GAP); bio (PENDING: ChatGPT search); voice_design_notes (PENDING: ChatGPT search); catalog_highlights (GAP); lyrics (GAP); personality notes (GAP or generic default only); profile photo (GAP)
+- **Sabria Swade:** voice_type (GAP); bio (PENDING: ChatGPT search); voice_design_notes (PENDING: ChatGPT search); lyrics (PENDING: ChatGPT search); personality notes (GAP or generic default only)
+- **Soren Blu Swade:** age (GAP); genre (GAP); voice_type (GAP); bio (PENDING: ChatGPT search); style_personality (GAP); likeness_description (GAP); voice_design_notes (PENDING: ChatGPT search); lyrics (PENDING: ChatGPT search); character_sheet_status (GAP); card_status (GAP)
+- **Zion Creed Swade:** age (GAP); genre (GAP); voice_type (GAP); bio (PENDING: ChatGPT search); style_personality (PENDING: ChatGPT search); likeness_description (PENDING: ChatGPT search); voice_design_notes (PENDING: ChatGPT search); catalog_highlights (GAP); lyrics (PENDING: ChatGPT search); character_sheet_status (GAP); card_status (GAP); profile photo (GAP)
+
+## CONFLICTS
+
+- Age — Noble Rayne: dictated 26 vs face-check 'approximately mid-30s to early 40s'. Dictated wins; review the locked likeness sheet/card.
+- Age — Royal Banks: dictated 24 vs face-check 'approximately late 30s to mid-40s' (beard, 'mature adult appearance' listed as immutable). Dictated wins; review the locked likeness sheet/card.
+- Age — Ameyea: dictated 34 vs face-check 'approximately mid-20s to early 30s'. Dictated wins; minor, review sheet.
+- Age — Swade Soul and Rivan Swade: in DB but not dictated; ages unconfirmed (face-check: Swade Soul 'middle-aged'; Rivan 'mid-20s to early 30s'). Swade Soul also has a '30 Years Old' throwback persona.
+- Age — LEYCEO/Leyco, Smitty, Soren Blu, Zion Creed: no dictated age (face-check: Leyco late 20s–early 30s; Smitty ~50–60; Soren/Zion none).
+- Spelling — Carrie Anne (dictated) vs KarriAnne Swade (DB name) vs Karriann (DB stage name/card) vs KarriAnne (swideo).
+- Spelling — Neva Boyea (dictated) vs Nevaborya (DB).
+- Spelling — LEYCEO (dictated) vs Leyco (DB).
+- Spelling — STEEMO (dictated) vs Steemo (DB). Case only.
+- Spelling — Sabrea (dictated) vs Sabria (DB, storage folder 'sabria'). Confirm with Harold.
+- Data — DB names 'Sabria ' and 'Noble Rayne ' have trailing spaces.
+- Voice type — Ty: DB voice_type 'country' but genre Soul/Neo Soul/Gospel and catalog reads soul/country-soul.
+- Voice type — Leyco: DB voice_type 'hip-hop' but genre Pop/R&B.
+- Field misuse — Soren Blu: DB genre field holds a voice description; voice_type holds a full voice design. Noble Rayne: voice_type holds a full voice design.
+- Family — swideo.artists lists Noble Rayne, Royal Banks, Soren Blu and Zion Creed with brand_family 'SWADE Fam', and calls Noble Rayne 'the flagship voice of the SWADE Fam'; swadesoul.creator_artists (and Harold) put them in Freq. Roster follows Freq.
+- Family — Sabria is Freq in the DB but does not appear in the ChatGPT artist-folder lists; Zion Creed is in the ChatGPT lists but not in the DB.
+- Roster count — Freq is now 5 (Sabria, Noble Rayne, Royal Banks, Soren Blu, Zion Creed); old Lovable plan docs and earlier summaries say '3 FREQ' / '17 artists'.
+- Catalog — 'Maybe Nobody Owes U' appears under both Granada and Nevaborya. Reggie has two 'Sip Slow' rows (one unpublished). Many maestroradio.maestro_catalog rows sit under the station label 'aibb' instead of the artist; 'Can I feed you tonight?' has no artist attribution.
+- Smitty — 'voice cloned from the Fifth Dimension' recorded verbatim; DB voice_type 'Baritone/Bass'. Confirm whether this is the group The 5th Dimension and that voice-clone consent/rights are on file (none found in resinglab.artist_voice_profiles).
+
+---
+Canonical roster v1.0 (2026-10-28). Do not edit in place; changes only with Harold's approval.

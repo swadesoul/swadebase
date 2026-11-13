@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "entry_status": "ready",
+  "automation_status": "healthy",
+  "merchant_matches": true,
+  "latest_decisions_present": true,
+  "documents": {
+    "STANDING_RULES.md": "f30f3dc8d86b8ba9a23b99a34c6d2c08807d7e32f541d68da085bc099fd22eef",
+    "site-bibles/SWADEBASE_Master_Site_Bible.md": "aac9bb5b705a339f249713c5ef3fc5b0ebb9ba6b118eea01d19abddc7e1a6271",
+    "site-bibles/MCP_Actions_Master_Site_Bible.md": "58ad67b7f688749502a87a3e8cf6908a7673f466704e9b576e8c3cde45c33485"
+  },
+  "fts_matching_documents": 3,
+  "paid_calls": 0,
+  "checked_at": "2026-11-07T07:32:39.238841+00:00",
+  "concurrent_bible_update_preserved": true,
+  "earlier_index_lag_detected_correctly": true
+}

@@ -1,0 +1,22 @@
+{
+  "time": "2026-11-11T12:53:57.822642+00:00",
+  "files": {
+    "install.py": "b6f93aa44d438e5cecee404c205fe3eb2c87c2a7a0d1e378884520908430dcea",
+    "worker.mjs": "5f53e0c843144a67855927e20243bde18974998035efd9840a7e03bfddd2899b",
+    "mcp.mjs": "31c5a93a9f92cd52638f1a466d6e1bbc6834194c3e8a5ef24c7a70bae5672d62",
+    "core.mjs": "f96a483259a8f61b35d78c2f4b4bcefeef9358f3f4846bba70a6ab5a260a1f2c",
+    "routes.mjs": "5ecc590b4f697c46af486974a11db57a84e6e781380257e3d639d613ddbb6ff9",
+    "build.py": "7065f73a7008845fc2d49ab5b9055dd744b82c809a7220e31dafc62a681ecbce",
+    "schema.sql": "ca2d6935f2c66495c0d09de746d2371b805a10e15bc08ede0748e5bee1f932ec",
+    "README.md": "42dcf86d9c50e77a0c47169c69be72dfc3a39dcd6cc2d283ace154a32f780791",
+    "public/app.css": "63767a07b9d7d748ed83418ee6de820fc874c4a6723cd8af886b06f6be70854c",
+    "public/app.js": "093ae28cb3e791e7075420e4a316f4fcfb6292b89ded237a48a8bebfd410cdb3",
+    "public/index.html": "0897a1c1110209b4c44a9744594dc4fda75cf1e748b33fdefbd3d43186922430",
+    "template/gradlew": "d8231d345ab33433ab7b2c0720d5beb416c8d5c6789dbc01ad122b63bc2cae0d",
+    "test/acceptance.mjs": "939d49c1f64dddeece529f2c0d0dcf14b4bc04964cd665ac427c8683c28402a1",
+    "test/generator_test.py": "6f0a6230284fb3873fbf69747f3ee2de8ec578402a8c495bfd6e455d0985d8ab",
+    "test/core.test.mjs": "38baa58712e0880336514f86f311425a0c55d11b4914c594c9fae555f2eb05cb",
+    "template/gradle/wrapper/gradle-wrapper.jar": "3dc39ad650d40f6c029bd8ff605c6d95865d657dbfdeacdb079db0ddfffedf9f",
+    "template/gradle/wrapper/gradle-wrapper.properties": "32f03ec0547597c12e334bf8fedd7fb13129db49cd8a1aa583170a774aaeb47b"
+  }
+}

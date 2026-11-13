@@ -1,0 +1,15 @@
+{
+  "checks": [
+    "two real synthetic-account sign-ins",
+    "draft persistence, private URL and cross-account denials",
+    "publish, stable address, draft HTML and directory privacy",
+    "published-source promotion kit and idempotent pending identity",
+    "real managed artist alias, verified routing, idempotence and tenant denial",
+    "revision history, restore and unpublish",
+    "real B2 reference upload/readback and foreign upload denial",
+    "live browser synthetic-session owner journey"
+  ],
+  "identity": "real synthetic test accounts, not owner Google login",
+  "nativeSafariTested": false,
+  "testRecordsRemoved": true
+}

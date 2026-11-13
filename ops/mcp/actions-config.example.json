@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "repositories": {
+    "sssbrain": {"repo": "swadesoul/sssbrain", "branch": "main", "visibility": "private"},
+    "swadebase": {"repo": "swadesoul/swadebase", "branch": "master", "visibility": "public"},
+    "ecosystem_hub": {"repo": "swadesoul/swade-ecosystem-hub", "branch": "main", "visibility": "private"}
+  },
+  "applications": {
+    "sssbrain": {"repo": "swadesoul/sssbrain", "uuid": "g1406wexcvceencavj1fuo0u"}
+  }
+}

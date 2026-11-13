@@ -1,0 +1,45 @@
+{
+  "runtime_node": "v20.20.2",
+  "node": {
+    "tests": 87,
+    "passed": 87,
+    "failed": 0,
+    "skipped": 0,
+    "files": [
+      "core.test.mjs",
+      "protocol.test.mjs",
+      "studio-routes.test.mjs",
+      "entry-context.test.mjs",
+      "action-protocol.test.mjs",
+      "merch-protocol.test.mjs",
+      "knowledge.test.mjs",
+      "native-knowledge.test.mjs",
+      "voice-reply.test.mjs",
+      "action-routes.test.mjs"
+    ]
+  },
+  "python": {
+    "tests": 3,
+    "passed": 3,
+    "failed": 0,
+    "file": "sync_state_test.py"
+  },
+  "live_scoped_assertions": 207,
+  "evaluation": {
+    "unique_question_answer_pairs": 10,
+    "xml_structurally_validated": true,
+    "paid_model_evaluation": false
+  },
+  "indexer_dry_run": {
+    "sources": 135,
+    "changed": 0,
+    "removed": 0,
+    "quarantined": 0,
+    "paid_calls": 0
+  },
+  "notes": [
+    "The Node suites also passed on Node v22.23.3 before being rerun with the actual production v20.20.2 executable.",
+    "The first live harness invocation could not traverse the root-only staging directory; only the nonsecret harness code was copied to a temporary /run directory, and verification then passed as swadeops. Staging permissions remained unchanged.",
+    "Live authentication coverage and native handler identity simulation remain explicitly distinguished in live-verification.json."
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "checks": [
+    {
+      "width": 1440,
+      "preferences": true,
+      "storyConsent": true,
+      "draft": true,
+      "review": true,
+      "share": true,
+      "graphic": true,
+      "metrics": true,
+      "contextLinks": true,
+      "overflow": false
+    },
+    {
+      "width": 820,
+      "preferences": true,
+      "storyConsent": true,
+      "draft": true,
+      "review": true,
+      "share": true,
+      "graphic": true,
+      "metrics": true,
+      "contextLinks": true,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "preferences": true,
+      "storyConsent": true,
+      "draft": true,
+      "review": true,
+      "share": true,
+      "graphic": true,
+      "metrics": true,
+      "contextLinks": true,
+      "overflow": false
+    }
+  ],
+  "errors": [],
+  "identity": "fixtures",
+  "productionWrites": 0
+}

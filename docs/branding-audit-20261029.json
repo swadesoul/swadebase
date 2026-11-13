@@ -1,0 +1,725 @@
+[
+  {
+    "slug": "teachvirt",
+    "name": "TeachVirt",
+    "url": "https://teachvirt.com",
+    "status": "unreachable",
+    "error": "URLError",
+    "browser_verified": false
+  },
+  {
+    "slug": "oathloom",
+    "name": "Oathloom",
+    "url": "https://oathloom.com",
+    "final_url": "https://oathloom.com",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [
+      "https://oathloom.com/favicon.ico"
+    ],
+    "social_images": [],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "swadez",
+    "name": "Swadez",
+    "url": "https://swadez.com",
+    "status": "unreachable",
+    "error": "URLError",
+    "browser_verified": false
+  },
+  {
+    "slug": "sssbrain",
+    "name": "SSSbrain",
+    "url": "https://sssbrain.lovable.app",
+    "final_url": "https://sssbrain.lovable.app/?focus=false",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [
+      "https://sssbrain.lovable.app/favicon.png",
+      "https://sssbrain.lovable.app/favicon.png"
+    ],
+    "social_images": [
+      "https://sssbrain.live/og-image.jpg"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "swadesoul",
+    "name": "SwadeSoul.com",
+    "url": "https://swadesoul.com",
+    "final_url": "https://swadesoul.com",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [
+      "https://swadesoul.com/favicon.png"
+    ],
+    "social_images": [
+      "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1773857377311-IMG_7348.webp"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "abagale",
+    "name": "ABAGALE TV",
+    "url": "https://abagale.live",
+    "final_url": "https://abagale.live",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [
+      "https://abagale.live/favicon.webp",
+      "https://abagale.live/favicon.webp"
+    ],
+    "social_images": [
+      "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1776182559617-IMG_8109.webp"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "swadesoul-world",
+    "name": "Swade Soul World",
+    "url": "https://swadesoul.world",
+    "final_url": "https://swadesoul.world",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [
+      "https://swadesoul.world/favicon.svg",
+      "https://swadesoul.world/favicon.ico",
+      "https://swadesoul.world/favicon.svg"
+    ],
+    "social_images": [
+      "/__l5e/assets-v1/5744d9ef-6cab-42e3-9bf2-0f1485ca531f/tower-hero.png"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "swade-holdings",
+    "name": "Swade Soul Holdings",
+    "url": "https://swadeholdings.com",
+    "final_url": "https://swadeholdings.com",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [
+      "https://swadeholdings.com/swade-logo.png",
+      "https://swadeholdings.com/swade-logo.png"
+    ],
+    "social_images": [
+      "/swade-logo.png"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "haroldwhaley",
+    "name": "Harold Whaley",
+    "url": "https://haroldwhaley.com",
+    "final_url": "https://haroldwhaley.com",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [
+      "https://haroldwhaley.com/favicon.png"
+    ],
+    "social_images": [
+      "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1774677068527-IMG_7567.webp"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "makemycoin",
+    "name": "MakeMyCoin",
+    "url": "https://makemycoin.cash",
+    "status": "unreachable",
+    "error": "URLError",
+    "browser_verified": false
+  },
+  {
+    "slug": "rwafactory",
+    "name": "RWA Factory",
+    "url": "https://rwafactory.cash",
+    "status": "unreachable",
+    "error": "URLError",
+    "browser_verified": false
+  },
+  {
+    "slug": "xrplfactory",
+    "name": "XRPL Factory",
+    "url": "https://xrplfactory.cash",
+    "status": "unreachable",
+    "error": "URLError",
+    "browser_verified": false
+  },
+  {
+    "slug": "keyvity",
+    "name": "Keyvity",
+    "url": "https://keyvity.live",
+    "final_url": "https://keyvity.live",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [
+      "https://keyvity.live/favicon.png",
+      "https://keyvity.live/favicon.png"
+    ],
+    "social_images": [
+      "https://lovable.dev/opengraph-image-p98pqg.png"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "tokencsi",
+    "name": "Token CSI",
+    "url": "https://tokencsi.com",
+    "final_url": "https://tokencsi.com",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [
+      "https://tokencsi.com/favicon.png",
+      "https://tokencsi.com/favicon.png"
+    ],
+    "social_images": [
+      "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1773706114549-IMG_7256.webp"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "recapcoin",
+    "name": "Recap Coin",
+    "url": "https://recapcoin.cash",
+    "status": "unreachable",
+    "error": "URLError",
+    "browser_verified": false
+  },
+  {
+    "slug": "pinhub",
+    "name": "PinHub",
+    "url": "https://pinhub.live",
+    "final_url": "https://pinhub.live",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [
+      "https://pinhub.live/pinhub-logo.png",
+      "https://pinhub.live/pinhub-logo.png"
+    ],
+    "social_images": [],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "grwnup",
+    "name": "Grwnup Digital",
+    "url": "https://grwnup.digital",
+    "status": "unreachable",
+    "error": "URLError",
+    "browser_verified": false
+  },
+  {
+    "slug": "idonfts",
+    "name": "I Do NFTs",
+    "url": "https://idonfts.com",
+    "final_url": "https://idonfts.com",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [
+      "https://idonfts.com/favicon.png",
+      "https://idonfts.com/favicon.png"
+    ],
+    "social_images": [
+      "/favicon.png"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "mydistribution",
+    "name": "My Distribution",
+    "url": "https://mydistribution.music",
+    "final_url": "https://mydistribution.music",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [],
+    "social_images": [
+      "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1784260751025-IMG_0372.webp"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "resinglab",
+    "name": "ReSingLab",
+    "url": "https://resinglab.com",
+    "final_url": "https://resinglab.com",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [],
+    "social_images": [
+      "https://resinglab.com/logo-light.png"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "sonikyn",
+    "name": "Sonikyn",
+    "url": "https://sonikyn.com",
+    "final_url": "https://sonikyn.com",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [
+      "https://sonikyn.com/favicon.png",
+      "https://sonikyn.com/icon-192.png"
+    ],
+    "social_images": [
+      "https://sonikyn.com/og-image.jpg"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "maestroradio-live",
+    "name": "Maestro Radio Live",
+    "url": "https://maestroradio.live",
+    "status": "unreachable",
+    "error": "URLError",
+    "browser_verified": false
+  },
+  {
+    "slug": "maestroradio-app",
+    "name": "Maestro Radio App",
+    "url": "https://maestroradio.app",
+    "final_url": "https://maestroradio.app",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [],
+    "social_images": [
+      "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1777572082732-IMG_8650.webp"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "midnightcircuit",
+    "name": "Midnight Circuit",
+    "url": "https://midnightcircuit.live",
+    "final_url": "https://midnightcircuit.live",
+    "status": "source_inspected",
+    "badge_markers": [
+      "lovable-badge",
+      "edit with lovable"
+    ],
+    "icons": [
+      "https://midnightcircuit.live/favicon.webp"
+    ],
+    "social_images": [
+      "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/aebf03e3-cf58-4f5e-8766-52ca1f6b0bf5/id-preview-d01cd367--09c6de04-acad-4817-a467-429c7bbeefa8.lovable.app-1771386115203.png"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "swideo-live",
+    "name": "Swideo Live",
+    "url": "https://swideo.live",
+    "status": "unreachable",
+    "error": "URLError",
+    "browser_verified": false
+  },
+  {
+    "slug": "swideo-com",
+    "name": "Swideo",
+    "url": "https://swideo.com",
+    "final_url": "https://swideo.com",
+    "status": "source_inspected",
+    "badge_markers": [
+      "lovable-badge",
+      "edit with lovable"
+    ],
+    "icons": [],
+    "social_images": [
+      "https://swideo.com/og-image.jpg"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "videosaywhat",
+    "name": "Video Say What",
+    "url": "https://videosaywhat.com",
+    "final_url": "https://videosaywhat.com",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [
+      "https://videosaywhat.com/favicon-source.png",
+      "https://videosaywhat.com/favicon-source.png",
+      "https://videosaywhat.com/favicon-source.png"
+    ],
+    "social_images": [
+      "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1758858514546-IMG_4209.jpeg"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "swoney",
+    "name": "Swoney",
+    "url": "https://swoney.live",
+    "final_url": "https://swoney.live",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [
+      "https://swoney.live/swoney-logo.png"
+    ],
+    "social_images": [
+      "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1778981819979-IMG_9033.webp"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "virtteach",
+    "name": "VirtTeach",
+    "url": "https://virtteach.study",
+    "final_url": "https://virtteach.study",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [],
+    "social_images": [
+      "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1774280173058-IMG_7455.webp"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "workscratcher",
+    "name": "Work Scratcher",
+    "url": "https://workscratcher.live",
+    "final_url": "https://workscratcher.live",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [
+      "https://workscratcher.live/favicon.ico"
+    ],
+    "social_images": [
+      "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/efdb225f-95f8-4583-95fc-e614963a7a3b/id-preview-3ab1d3f5--6523a61d-9a77-4dd9-ab36-a7a0cbb0469b.lovable.app-1772300658367.png"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "onyourterms",
+    "name": "On Your Terms",
+    "url": "https://onyourterms.app",
+    "final_url": "https://onyourterms.app",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [
+      "https://onyourterms.app/__l5e/assets-v1/26adee99-c14d-4727-ae87-f6aa43ac3467/favicon-32x32.png",
+      "https://onyourterms.app/__l5e/assets-v1/830dd261-cd2c-417f-8eb8-013977af1589/apple-touch-icon.png"
+    ],
+    "social_images": [
+      "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/834940dd-72b2-4342-8d7b-43314740b505/id-preview-971e5001--4f9a618c-184c-455e-a93c-56e6119e69c1.lovable.app-1782863769791.png"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "seedleaker",
+    "name": "Seedleaker",
+    "url": "https://seedleaker.com",
+    "final_url": "https://seedleaker.com",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [
+      "https://seedleaker.com/logo.png"
+    ],
+    "social_images": [
+      "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1774548999533-IMG_7491.webp"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "thefreq",
+    "name": "TheFREQ",
+    "url": "https://thefreq.cloud",
+    "final_url": "https://thefreq.cloud",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [],
+    "social_images": [
+      "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1779496306668-IMG_9251.webp"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "publiswade",
+    "name": "PubliSwade",
+    "url": "https://publiswade.site",
+    "final_url": "https://publiswade.site",
+    "status": "source_inspected",
+    "badge_markers": [
+      "lovable-badge",
+      "edit with lovable"
+    ],
+    "icons": [],
+    "social_images": [
+      "https://lovable.dev/opengraph-image-p98pqg.png"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "corpvault",
+    "name": "Corpvault",
+    "url": "https://corpvault.live",
+    "final_url": "https://corpvault.live",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [
+      "https://corpvault.live/favicon.png",
+      "https://corpvault.live/favicon.png"
+    ],
+    "social_images": [
+      "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/e0aefacd-356c-4281-8918-8c7d96a03d29"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "cmvault",
+    "name": "CMVault",
+    "url": "https://cmvault.email",
+    "status": "unreachable",
+    "error": "URLError",
+    "browser_verified": false
+  },
+  {
+    "slug": "grwnx",
+    "name": "GRWNx",
+    "url": "https://grwnx.io",
+    "status": "unreachable",
+    "error": "URLError",
+    "browser_verified": false
+  },
+  {
+    "slug": "sterline",
+    "name": "Sterline",
+    "url": "https://sterline.digital",
+    "status": "unreachable",
+    "error": "URLError",
+    "browser_verified": false
+  },
+  {
+    "slug": "fortavaz",
+    "name": "Fortavaz",
+    "url": "https://fortavaz.replit.app",
+    "status": "unreachable",
+    "error": "HTTPError",
+    "browser_verified": false
+  },
+  {
+    "slug": "shamoneswade",
+    "name": "Shamone Swade",
+    "url": "https://shamoneswade.com",
+    "status": "unreachable",
+    "error": "URLError",
+    "browser_verified": false
+  },
+  {
+    "slug": "digidollz",
+    "name": "DigiDollz",
+    "url": "https://digidollz.xyz",
+    "status": "unreachable",
+    "error": "URLError",
+    "browser_verified": false
+  },
+  {
+    "slug": "aimaestro",
+    "name": "AI Maestro",
+    "url": "https://aimaestro.consulting",
+    "status": "unreachable",
+    "error": "URLError",
+    "browser_verified": false
+  },
+  {
+    "slug": "abagold",
+    "name": "ABA Gold",
+    "url": "https://aba.gold",
+    "final_url": "https://expireddomains.com/domain/aba.gold?utm_source=redi",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [
+      "https://expireddomains.com/favicon.ico"
+    ],
+    "social_images": [
+      "https://new.expireddomains.com/api/public/og/aba.gold"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "attobahn",
+    "name": "Attobahn",
+    "url": "https://attobahn.live",
+    "final_url": "https://attobahn.live",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [
+      "https://attobahn.live/images/logo.png",
+      "https://attobahn.live/images/logo.png"
+    ],
+    "social_images": [
+      "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1776137792670-IMG_8099.webp"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "agentmarketplace",
+    "name": "Agent Marketplace",
+    "url": "https://agentmarketplace.diy",
+    "final_url": "https://agentmarketplace.diy",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [],
+    "social_images": [
+      "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1779760224450-IMG_9332.webp"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "swadesaidit",
+    "name": "Swade Said It",
+    "url": "https://swadesaidit-rose.vercel.app",
+    "status": "unreachable",
+    "error": "HTTPError",
+    "browser_verified": false
+  },
+  {
+    "slug": "holistic-hive",
+    "name": "Holistic HIVE",
+    "url": "https://holistichive.health",
+    "status": "unreachable",
+    "error": "URLError",
+    "browser_verified": false
+  },
+  {
+    "slug": "blacktales",
+    "name": "Black Tales",
+    "url": "https://blacktales.online",
+    "final_url": "https://blacktales.online",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [
+      "https://blacktales.online/favicon.png"
+    ],
+    "social_images": [],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "maestroradio",
+    "name": "Maestro Radio",
+    "url": "https://maestroradio.live",
+    "status": "unreachable",
+    "error": "URLError",
+    "browser_verified": false
+  },
+  {
+    "slug": "swadespace",
+    "name": "SwadeSpace",
+    "url": "https://swadespace.com",
+    "final_url": "https://swadespace.com",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [
+      "https://swadespace.com/swadespace-logo.png"
+    ],
+    "social_images": [
+      "https://swadespace.com/swadespace-hero.png"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "swadebase",
+    "name": "SWADEBASE",
+    "url": "https://swadebase.cloud",
+    "final_url": "https://swadebase.cloud/console/",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [],
+    "social_images": [],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "ownmode",
+    "name": "OwnMode",
+    "url": "https://ownmode.live",
+    "status": "unreachable",
+    "error": "HTTPError",
+    "browser_verified": false
+  },
+  {
+    "slug": "dnafront",
+    "name": "DNA Front",
+    "url": "https://dnafront.com",
+    "final_url": "https://dnafront.com",
+    "status": "source_inspected",
+    "badge_markers": [
+      "lovable-badge",
+      "edit with lovable"
+    ],
+    "icons": [],
+    "social_images": [
+      "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1779575413698-IMG_9287.webp"
+    ],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "frequencyrun",
+    "name": "Frequency Run Video",
+    "url": "https://video.frequencyrun.space",
+    "final_url": "https://video.frequencyrun.space",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [],
+    "social_images": [],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "swadepower",
+    "name": "Swade Power",
+    "url": "https://swadepower.cloud",
+    "final_url": "https://swadepower.cloud",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [],
+    "social_images": [],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  },
+  {
+    "slug": "kynavo",
+    "name": "KYNAVO",
+    "url": "https://kynavo.swadeswade-s-8788.chatgpt.site",
+    "final_url": "https://kynavo.swadeswade-s-8788.chatgpt.site",
+    "status": "source_inspected",
+    "badge_markers": [],
+    "icons": [],
+    "social_images": [],
+    "external_brand_scripts": [],
+    "browser_verified": false
+  }
+]

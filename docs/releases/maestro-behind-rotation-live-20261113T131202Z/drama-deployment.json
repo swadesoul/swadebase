@@ -1,0 +1,777 @@
+{
+  "state": "partial",
+  "started": "2026-11-13T12:55:47.879478+00:00",
+  "source": "f8d3045",
+  "backup": "/opt/swadebase/backups/maestro-drama-20261113T125547Z",
+  "release": "/var/www/maestroradio-web/releases/20261113T125547Z-behind-rotation",
+  "membership_changes": [
+    162,
+    163,
+    164,
+    165,
+    166,
+    167,
+    168,
+    169,
+    170,
+    171,
+    172,
+    173,
+    174,
+    175,
+    177,
+    178,
+    179,
+    181,
+    182,
+    183,
+    185,
+    186,
+    187,
+    189,
+    190,
+    191,
+    192,
+    193
+  ],
+  "queue_removed": [
+    {
+      "title": "Maestro DJ Spot - Velvet Vance - velvet",
+      "queue_path": "/api/station/1/queue/19335"
+    }
+  ],
+  "checks": [
+    {
+      "name": "staged drama-typecheck.log",
+      "ok": true
+    },
+    {
+      "name": "staged drama-build.log",
+      "ok": true
+    },
+    {
+      "name": "staged drama-deno.log",
+      "ok": true
+    },
+    {
+      "name": "staged drama-api-tests.log",
+      "ok": true
+    },
+    {
+      "name": "staged drama-browser-report.json",
+      "ok": true
+    },
+    {
+      "name": "no typecheck errors",
+      "ok": true
+    },
+    {
+      "name": "frontend built",
+      "ok": true
+    },
+    {
+      "name": "deno check",
+      "ok": true
+    },
+    {
+      "name": "6 vote unit tests",
+      "ok": true
+    },
+    {
+      "name": "three preview widths",
+      "ok": true
+    },
+    {
+      "name": "audio in dist",
+      "ok": true
+    },
+    {
+      "name": "source committed",
+      "ok": true
+    },
+    {
+      "name": "active runtime matches source parent factory.py",
+      "ok": true
+    },
+    {
+      "name": "active runtime matches source parent index.ts",
+      "ok": true
+    },
+    {
+      "name": "no live deploy lock",
+      "ok": true
+    },
+    {
+      "name": "factory is running",
+      "ok": true
+    },
+    {
+      "name": "radio starts online",
+      "ok": true
+    },
+    {
+      "name": "DJ playlist enabled",
+      "ok": true
+    },
+    {
+      "name": "36 exact DJ spots",
+      "ok": true
+    },
+    {
+      "name": "safe spot 160",
+      "ok": true
+    },
+    {
+      "name": "safe spot 161",
+      "ok": true
+    },
+    {
+      "name": "safe spot 176",
+      "ok": true
+    },
+    {
+      "name": "safe spot 180",
+      "ok": true
+    },
+    {
+      "name": "safe spot 184",
+      "ok": true
+    },
+    {
+      "name": "safe spot 188",
+      "ok": true
+    },
+    {
+      "name": "safe spot 158",
+      "ok": true
+    },
+    {
+      "name": "safe spot 159",
+      "ok": true
+    },
+    {
+      "name": "retired media path 192",
+      "ok": true
+    },
+    {
+      "name": "retired media path 193",
+      "ok": true
+    },
+    {
+      "name": "retired media path 162",
+      "ok": true
+    },
+    {
+      "name": "retired media path 163",
+      "ok": true
+    },
+    {
+      "name": "retired media path 164",
+      "ok": true
+    },
+    {
+      "name": "retired media path 165",
+      "ok": true
+    },
+    {
+      "name": "retired media path 166",
+      "ok": true
+    },
+    {
+      "name": "retired media path 167",
+      "ok": true
+    },
+    {
+      "name": "retired media path 168",
+      "ok": true
+    },
+    {
+      "name": "retired media path 169",
+      "ok": true
+    },
+    {
+      "name": "retired media path 170",
+      "ok": true
+    },
+    {
+      "name": "retired media path 171",
+      "ok": true
+    },
+    {
+      "name": "retired media path 172",
+      "ok": true
+    },
+    {
+      "name": "retired media path 173",
+      "ok": true
+    },
+    {
+      "name": "retired media path 174",
+      "ok": true
+    },
+    {
+      "name": "retired media path 175",
+      "ok": true
+    },
+    {
+      "name": "retired media path 177",
+      "ok": true
+    },
+    {
+      "name": "retired media path 178",
+      "ok": true
+    },
+    {
+      "name": "retired media path 179",
+      "ok": true
+    },
+    {
+      "name": "retired media path 181",
+      "ok": true
+    },
+    {
+      "name": "retired media path 182",
+      "ok": true
+    },
+    {
+      "name": "retired media path 183",
+      "ok": true
+    },
+    {
+      "name": "retired media path 185",
+      "ok": true
+    },
+    {
+      "name": "retired media path 186",
+      "ok": true
+    },
+    {
+      "name": "retired media path 187",
+      "ok": true
+    },
+    {
+      "name": "retired media path 189",
+      "ok": true
+    },
+    {
+      "name": "retired media path 190",
+      "ok": true
+    },
+    {
+      "name": "retired media path 191",
+      "ok": true
+    },
+    {
+      "name": "still no deploy lock",
+      "ok": true
+    },
+    {
+      "name": "votes table exists",
+      "ok": true
+    },
+    {
+      "name": "factory active after restart",
+      "ok": true
+    },
+    {
+      "name": "new episode exists in release",
+      "ok": true
+    },
+    {
+      "name": "legacy playlist temporarily off",
+      "ok": true
+    },
+    {
+      "name": "member 162",
+      "ok": true
+    },
+    {
+      "name": "detached 162",
+      "ok": true
+    },
+    {
+      "name": "member 163",
+      "ok": true
+    },
+    {
+      "name": "detached 163",
+      "ok": true
+    },
+    {
+      "name": "member 164",
+      "ok": true
+    },
+    {
+      "name": "detached 164",
+      "ok": true
+    },
+    {
+      "name": "member 165",
+      "ok": true
+    },
+    {
+      "name": "detached 165",
+      "ok": true
+    },
+    {
+      "name": "member 166",
+      "ok": true
+    },
+    {
+      "name": "detached 166",
+      "ok": true
+    },
+    {
+      "name": "member 167",
+      "ok": true
+    },
+    {
+      "name": "detached 167",
+      "ok": true
+    },
+    {
+      "name": "member 168",
+      "ok": true
+    },
+    {
+      "name": "detached 168",
+      "ok": true
+    },
+    {
+      "name": "member 169",
+      "ok": true
+    },
+    {
+      "name": "detached 169",
+      "ok": true
+    },
+    {
+      "name": "member 170",
+      "ok": true
+    },
+    {
+      "name": "detached 170",
+      "ok": true
+    },
+    {
+      "name": "member 171",
+      "ok": true
+    },
+    {
+      "name": "detached 171",
+      "ok": true
+    },
+    {
+      "name": "member 172",
+      "ok": true
+    },
+    {
+      "name": "detached 172",
+      "ok": true
+    },
+    {
+      "name": "member 173",
+      "ok": true
+    },
+    {
+      "name": "detached 173",
+      "ok": true
+    },
+    {
+      "name": "member 174",
+      "ok": true
+    },
+    {
+      "name": "detached 174",
+      "ok": true
+    },
+    {
+      "name": "member 175",
+      "ok": true
+    },
+    {
+      "name": "detached 175",
+      "ok": true
+    },
+    {
+      "name": "member 177",
+      "ok": true
+    },
+    {
+      "name": "detached 177",
+      "ok": true
+    },
+    {
+      "name": "member 178",
+      "ok": true
+    },
+    {
+      "name": "detached 178",
+      "ok": true
+    },
+    {
+      "name": "member 179",
+      "ok": true
+    },
+    {
+      "name": "detached 179",
+      "ok": true
+    },
+    {
+      "name": "member 181",
+      "ok": true
+    },
+    {
+      "name": "detached 181",
+      "ok": true
+    },
+    {
+      "name": "member 182",
+      "ok": true
+    },
+    {
+      "name": "detached 182",
+      "ok": true
+    },
+    {
+      "name": "member 183",
+      "ok": true
+    },
+    {
+      "name": "detached 183",
+      "ok": true
+    },
+    {
+      "name": "member 185",
+      "ok": true
+    },
+    {
+      "name": "detached 185",
+      "ok": true
+    },
+    {
+      "name": "member 186",
+      "ok": true
+    },
+    {
+      "name": "detached 186",
+      "ok": true
+    },
+    {
+      "name": "member 187",
+      "ok": true
+    },
+    {
+      "name": "detached 187",
+      "ok": true
+    },
+    {
+      "name": "member 189",
+      "ok": true
+    },
+    {
+      "name": "detached 189",
+      "ok": true
+    },
+    {
+      "name": "member 190",
+      "ok": true
+    },
+    {
+      "name": "detached 190",
+      "ok": true
+    },
+    {
+      "name": "member 191",
+      "ok": true
+    },
+    {
+      "name": "detached 191",
+      "ok": true
+    },
+    {
+      "name": "member 192",
+      "ok": true
+    },
+    {
+      "name": "detached 192",
+      "ok": true
+    },
+    {
+      "name": "member 193",
+      "ok": true
+    },
+    {
+      "name": "detached 193",
+      "ok": true
+    },
+    {
+      "name": "clean playlist enabled",
+      "ok": true
+    },
+    {
+      "name": "only eight clean IDs on air",
+      "ok": true
+    },
+    {
+      "name": "no retired clips still queued",
+      "ok": true
+    },
+    {
+      "name": "live HTTP200 /",
+      "ok": true
+    },
+    {
+      "name": "live HTTP200 /behind-the-rotation",
+      "ok": false
+    }
+  ],
+  "system_spend_usd": 0,
+  "previous": "/var/www/maestroradio-web/releases/20261113T045102Z-artist-profiles",
+  "inventory": {
+    "playlist_id": 23,
+    "safe_ids": [
+      158,
+      159,
+      160,
+      161,
+      176,
+      180,
+      184,
+      188
+    ],
+    "retired_ids": [
+      162,
+      163,
+      164,
+      165,
+      166,
+      167,
+      168,
+      169,
+      170,
+      171,
+      172,
+      173,
+      174,
+      175,
+      177,
+      178,
+      179,
+      181,
+      182,
+      183,
+      185,
+      186,
+      187,
+      189,
+      190,
+      191,
+      192,
+      193
+    ],
+    "file_paths": {
+      "174": "DJ Spots/Batch B - Voicebox Suno/maestro_spot_mogul_tease_angie.mp3",
+      "178": "DJ Spots/Batch B - Voicebox Suno/maestro_spot_mogul_tease_bright.mp3",
+      "182": "DJ Spots/Batch B - Voicebox Suno/maestro_spot_mogul_tease_princess.mp3",
+      "186": "DJ Spots/Batch B - Voicebox Suno/maestro_spot_mogul_tease_slide.mp3",
+      "190": "DJ Spots/Batch B - Voicebox Suno/maestro_spot_mogul_tease_vance.mp3",
+      "175": "DJ Spots/Batch B - Voicebox Suno/maestro_spot_play_cta_angie.mp3",
+      "179": "DJ Spots/Batch B - Voicebox Suno/maestro_spot_play_cta_bright.mp3",
+      "183": "DJ Spots/Batch B - Voicebox Suno/maestro_spot_play_cta_princess.mp3",
+      "187": "DJ Spots/Batch B - Voicebox Suno/maestro_spot_play_cta_slide.mp3",
+      "191": "DJ Spots/Batch B - Voicebox Suno/maestro_spot_play_cta_vance.mp3",
+      "176": "DJ Spots/Batch B - Voicebox Suno/maestro_spot_station_id_angie.mp3",
+      "180": "DJ Spots/Batch B - Voicebox Suno/maestro_spot_station_id_bright.mp3",
+      "184": "DJ Spots/Batch B - Voicebox Suno/maestro_spot_station_id_princess.mp3",
+      "188": "DJ Spots/Batch B - Voicebox Suno/maestro_spot_station_id_slide.mp3",
+      "192": "DJ Spots/Batch B - Voicebox Suno/maestro_spot_station_id_vance.mp3",
+      "177": "DJ Spots/Batch B - Voicebox Suno/maestro_spot_velvet_rival_angie.mp3",
+      "181": "DJ Spots/Batch B - Voicebox Suno/maestro_spot_velvet_rival_bright.mp3",
+      "185": "DJ Spots/Batch B - Voicebox Suno/maestro_spot_velvet_rival_princess.mp3",
+      "189": "DJ Spots/Batch B - Voicebox Suno/maestro_spot_velvet_rival_slide.mp3",
+      "193": "DJ Spots/Batch B - Voicebox Suno/maestro_spot_velvet_rival_vance.mp3",
+      "158": "DJ Spots/MaestroDJ_01_sid_angie.mp3",
+      "159": "DJ Spots/MaestroDJ_02_sid_slide.mp3",
+      "160": "DJ Spots/MaestroDJ_03_sid_bright.mp3",
+      "161": "DJ Spots/MaestroDJ_04_sid_princess.mp3",
+      "162": "DJ Spots/MaestroDJ_05_mogul_slide.mp3",
+      "163": "DJ Spots/MaestroDJ_06_mogul_bright.mp3",
+      "164": "DJ Spots/MaestroDJ_07_mogul_angie.mp3",
+      "165": "DJ Spots/MaestroDJ_08_mogul_princess.mp3",
+      "166": "DJ Spots/MaestroDJ_09_vance_brag.mp3",
+      "167": "DJ Spots/MaestroDJ_10_vance_vs_princess.mp3",
+      "168": "DJ Spots/MaestroDJ_11_vance_vs_slide.mp3",
+      "169": "DJ Spots/MaestroDJ_12_vance_threat.mp3",
+      "170": "DJ Spots/MaestroDJ_13_cta_angie.mp3",
+      "171": "DJ Spots/MaestroDJ_14_cta_bright.mp3",
+      "172": "DJ Spots/MaestroDJ_15_cta_princess.mp3",
+      "173": "DJ Spots/MaestroDJ_16_cta_vance.mp3"
+    },
+    "playlist_before": {
+      "station_id": 1,
+      "name": "Maestro DJ Spots",
+      "description": "15s AI DJ commercials/station IDs (Suno bed + Voiceboxsoul), 2026-10-30",
+      "type": "once_per_x_songs",
+      "source": "songs",
+      "order": "shuffle",
+      "remote_url": null,
+      "remote_type": "stream",
+      "remote_buffer": 0,
+      "is_enabled": true,
+      "is_jingle": true,
+      "play_per_songs": 4,
+      "play_per_minutes": 0,
+      "play_per_hour_minute": 0,
+      "weight": 3,
+      "include_in_requests": false,
+      "include_in_on_demand": false,
+      "backend_options": [
+        ""
+      ],
+      "avoid_duplicates": true,
+      "played_at": "2026-11-13T13:00:58.833422Z",
+      "queue_reset_at": "2026-11-13T12:47:08.760777Z",
+      "schedule_items": [],
+      "podcasts": [],
+      "id": 23,
+      "short_name": "maestro_dj_spots",
+      "num_songs": 36,
+      "total_length": 541,
+      "links": {
+        "self": "https://radio.themaestroradio.com/api/station/1/playlist/23",
+        "toggle": "https://radio.themaestroradio.com/api/station/1/playlist/23/toggle",
+        "clone": "https://radio.themaestroradio.com/api/station/1/playlist/23/clone",
+        "queue": "https://radio.themaestroradio.com/api/station/1/playlist/23/queue",
+        "import": "https://radio.themaestroradio.com/api/station/1/playlist/23/import",
+        "reshuffle": "https://radio.themaestroradio.com/api/station/1/playlist/23/reshuffle",
+        "applyto": "https://radio.themaestroradio.com/api/station/1/playlist/23/apply-to",
+        "empty": "https://radio.themaestroradio.com/api/station/1/playlist/23/empty",
+        "export": {
+          "pls": "https://radio.themaestroradio.com/api/station/1/playlist/23/export/pls",
+          "m3u": "https://radio.themaestroradio.com/api/station/1/playlist/23/export/m3u"
+        }
+      }
+    },
+    "mappings": {
+      "174": [
+        23
+      ],
+      "178": [
+        23
+      ],
+      "182": [
+        23
+      ],
+      "186": [
+        23
+      ],
+      "190": [
+        23
+      ],
+      "175": [
+        23
+      ],
+      "179": [
+        23
+      ],
+      "183": [
+        23
+      ],
+      "187": [
+        23
+      ],
+      "191": [
+        23
+      ],
+      "176": [
+        23
+      ],
+      "180": [
+        23
+      ],
+      "184": [
+        23
+      ],
+      "188": [
+        23
+      ],
+      "192": [
+        23
+      ],
+      "177": [
+        23
+      ],
+      "181": [
+        23
+      ],
+      "185": [
+        23
+      ],
+      "189": [
+        23
+      ],
+      "193": [
+        23
+      ],
+      "158": [
+        23
+      ],
+      "159": [
+        23
+      ],
+      "160": [
+        23
+      ],
+      "161": [
+        23
+      ],
+      "162": [
+        23
+      ],
+      "163": [
+        23
+      ],
+      "164": [
+        23
+      ],
+      "165": [
+        23
+      ],
+      "166": [
+        23
+      ],
+      "167": [
+        23
+      ],
+      "168": [
+        23
+      ],
+      "169": [
+        23
+      ],
+      "170": [
+        23
+      ],
+      "171": [
+        23
+      ],
+      "172": [
+        23
+      ],
+      "173": [
+        23
+      ]
+    }
+  },
+  "lockentry": "2026-11-13T12:55:48.245797+00:00 | chatgpt-behind-the-rotation | themaestroradio.com + main radio | verified legacy music mogul retirement, original drama player, vote RLS, native factory + DJ prompts | 30 minutes",
+  "schema_installed": true,
+  "native_and_edge_installed": true,
+  "front_installed": true,
+  "nginx_reloaded": true,
+  "playlist_disabled": true,
+  "radio_retired": true,
+  "legacy_queued_after": 0,
+  "error": "Cutover check failed: live HTTP200 /behind-the-rotation",
+  "finished": "2026-11-13T12:55:53.492887+00:00"
+}

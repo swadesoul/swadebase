@@ -1,0 +1,25 @@
+{
+  "recorded_at_utc": "2026-11-04T11:34:07.504Z",
+  "project_id": "appgprj_6ae11e774ba88191ba4898e90c08dea6",
+  "version_number": 17,
+  "version_id": "appgprj_6ae11e774ba88191ba4898e90c08dea6~appgver_82bfd958f5d88191bbaff54cb94b125e",
+  "commit_sha": "21abfdaca88e3149c1e3f16b708874a1a75ace0e",
+  "archive_sha256": "sha256:c5d53353cb63b41562a65873febee1523a438fc1b3977c721bb96cc58c18dfd7",
+  "deployment_id": null,
+  "publication": "HELD_PUBLIC_ACCESS_OWNER_PROVIDER_PRICING",
+  "day": "2026-11-04",
+  "counts": {
+    "originals_created": 3,
+    "hidden_drafts_created": 3,
+    "new_site_visible": 0,
+    "held": 3,
+    "approved_finished_listings": 0
+  },
+  "product_ids": [
+    "6aeb160880db23a02904a4a5",
+    "6aeb160f7038dea50b066317",
+    "6aeb16157038dea50b066323"
+  ],
+  "voice_unchanged": true,
+  "external_charges": 0
+}

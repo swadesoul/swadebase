@@ -1,0 +1,64 @@
+{
+  "deployment": {
+    "state": "live",
+    "previous": "/var/www/maestroradio-web/releases/20261112T224344Z-artist-studio",
+    "release": "/var/www/maestroradio-web/releases/20261112T224521Z-artist-studio",
+    "backup": "/opt/swadebase/backups/maestro-artist-studio-20261112T224521Z",
+    "source": "e1618d31e9c860167baf901fda9c8f0e2459428b",
+    "checks": [
+      [
+        "/",
+        200
+      ],
+      [
+        "/radio",
+        200
+      ],
+      [
+        "/education",
+        200
+      ],
+      [
+        "/artists",
+        200
+      ],
+      [
+        "/artist-studio",
+        200
+      ],
+      [
+        "/stations/planner",
+        200
+      ],
+      [
+        "/pricing",
+        200
+      ]
+    ],
+    "published_pages_unchanged": true,
+    "radio_engine_restarted": false,
+    "oathloom_frontend_replaced": false,
+    "finished": "2026-11-12T22:45:25.254510+00:00"
+  },
+  "live": {
+    "checks": [
+      "two real synthetic-account sign-ins",
+      "draft persistence, private URL and cross-account denials",
+      "publish, stable address, draft HTML and directory privacy",
+      "published-source promotion kit and idempotent pending identity",
+      "real managed artist alias, verified routing, idempotence and tenant denial",
+      "revision history, restore and unpublish",
+      "real B2 reference upload/readback and foreign upload denial",
+      "live browser synthetic-session owner journey"
+    ],
+    "identity": "real synthetic test accounts, not owner Google login",
+    "nativeSafariTested": false,
+    "testRecordsRemoved": true
+  },
+  "canonical_hashes": {
+    "site-bibles/SWADEBASE_Master_Site_Bible.md": "4b03aa7c43dd7d1b44fb7d5aa73c9476f933714b717db4dc7fda99aac7aaf30c",
+    "site-bibles/OATHLOOM_Master_Site_Bible.md": "25b5d1b7c9dc13d509e4d07b7063eda9679d97c2d90a19dfb4aa5f4b05c5b61a",
+    "site-bibles/Maestro_Radio_Master_Site_Bible.md": "05b5fadd0d2dd2c2141d97f653e0847731eabb30fb62e61aac8dfa83be1efe79",
+    "site-bibles/SWOSTing_Master_Site_Bible.md": "9f583be6cd1854df71a4cc81a2752cafdd35a0fee99f35867958b83169e59d09"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "checks": [
+    "two synthetic users signed in through actual auth",
+    "private artist settings persist; cross-account denied; separate voice consent",
+    "published-source local draft, review, public activation and private draft isolation",
+    "signed-in arrivals/responses persist once per fan/day; self-reward denied",
+    "direct authenticated REST reads of private office tables denied",
+    "live desktop/mobile signed-in browser and SPA/audio connections",
+    "pause revokes public link and participation; story interest withdrawable"
+  ],
+  "testRecordsRemoved": true,
+  "physicalSafari": false,
+  "paidCalls": 0,
+  "draftEngine": "local"
+}

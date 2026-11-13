@@ -1,0 +1,257 @@
+# Daily work summary 2026-11-05
+
+- Assistant: Big Mamma (Grok Bot)
+- Started: 2026-11-04 23:00 CT · Last message: 2026-11-05 22:59 CT
+- Messages: 22 · Source: grokbot_daily_summary
+- Archive id: `faa9c6b2-752f-4a9f-8f74-91de75d45385`
+
+---
+
+**Summary** · 2026-11-05 22:45 CT
+
+# 2026-11-05 daily summary — Big Mamma structured rollup (America/Chicago)
+
+No secrets. Detailed per-agent entries follow below this rollup.
+
+**Summary** · 2026-11-05 22:45 CT
+
+## Done
+- SSS Brain: invite-panel inventory + PRD `/opt/swadebase/docs/prds/SSSBRAIN_ADMIN_INVITE_FEATURE_ACL_2026-11-05.md`; merged [sssbrain#118 Isolate new invitees in their own database](https://github.com/swadesoul/sssbrain/pull/118).
+- Maestro lyrics on-play extract: PRD `/opt/swadebase/docs/prds/MAESTRO_LYRICS_ONPLAY_EXTRACT_2026-11-05.md`, then implemented server-only (backup `/opt/backups/maestro-lyrics-onplay-20261105T130604Z/`).
+- Maestro Mix free-play live at https://themaestroradio.com/maestro-mix/ (static `/var/www/maestro-mix/dist`; `/legends-mix` redirects to Mix; `/play` still Music Mogul). Origin repo private `swade-soul/maestro-mix`. nginx backup `/opt/backups/nginx-themaestroradio-pre-maestro-mix-20261106T002709Z.conf`.
+- Merged PRs: [abagale#22 revoke legacy committed API keys](https://github.com/swadesoul/abagale/pull/22), [swade-radio#9 creator rights onboarding](https://github.com/swadesoul/swade-radio/pull/9), [swade-radio#8 roster portraits](https://github.com/swadesoul/swade-radio/pull/8), [swadesoulworld#9 fflate ZIP guard](https://github.com/swadesoul/swadesoulworld/pull/9), [hub#37 Developer Studio](https://github.com/swadesoul/swade-ecosystem-hub/pull/37), [hub#38 Developer Studio deploy record](https://github.com/swadesoul/swade-ecosystem-hub/pull/38).
+- PET MUZIK bandana checkpoint: 3 hidden Printify drafts created (details below).
+- Routines: VIP alerts, pitch triage (spam filed: Billy Darr, ClaudeX AI), security watch all ran; no VIP mail.
+
+**Summary** · 2026-11-05 22:45 CT
+
+## Deployed
+- Maestro lyrics extract (edge function + maestro-assistant on SWADEBASE Primary); Maestro Mix static site on themaestroradio nginx; SWADEBASE Developer Studio (per hub#38).
+
+**Summary** · 2026-11-05 22:45 CT
+
+## Decisions Swade made
+- Suno packs: alternate kept clip 1/2 per generate; unused clip becomes the unreleased B-side for the artist's assets/gift box (gift box next).
+- Maestro Mix is canonical /play game; live /play stays Mogul until a separate cutover GO.
+- Station DNA for user stations with hard Top-40 song floor; era sonic snapshots in catalogue; trend-aware create pipeline (style not lyrics), daily create 3–10.
+- Lyrics plan first, then continue build without breaking VideoSayWhat.
+
+**Summary** · 2026-11-05 22:45 CT
+
+## In progress
+- SSS Brain admin invite email + feature ACL + COS talk-in onboarding — needs CloudAgent scope (Big Mamma).
+- Launch drip (first 100 / invites / waitlist) — Promo Paul holding until Swade says go.
+
+**Summary** · 2026-11-05 22:45 CT
+
+## Waiting on Swade
+- Supabase Storage bump on Primary (v1.80.2 → ≥1.84.14, GHSA-2p28-q2vx-mw6w) — prod compose change needs OK.
+- SSS Brain invite CloudAgent scope; PET MUZIK draft approvals.
+
+**Summary** · 2026-11-05 22:45 CT
+
+## Do NOT redo
+- Maestro lyrics extract, Maestro Mix deploy, sssbrain#118, fflate mitigation, Developer Studio — all done.
+- Don't restart VideoSayWhat/Whisper; don't add new STT.
+
+**Summary** · 2026-11-05 22:45 CT
+
+## Next steps
+- Gift box feature after pack/era pipeline lock; Maestro Site Bible/PRD alignment to Maestro Mix; fflate upstream fix still pending.
+
+---
+
+# 2026-11-05 daily summary
+
+America/Chicago. Continuity log for Big Mamma / Chief of Staff / Rakazo / any replacement AI. No secrets.
+
+**Summary** · 2026-11-05 22:45 CT
+
+## Done
+
+### SSS Brain admin invite section — INVENTORY (Grok Bot) ~7:20 AM CT
+- Goal: admin email invite → auto new SSS Brain + feature ACL from invite panel + COS detailed onboarding walkthrough.
+- Repo (GitHub-backed, **stop for CloudAgent**): https://github.com/swadesoul/sssbrain.git. Live Coolify SB2 app `g1406wexcvceencavj1fuo0u` @ `37890e4` → https://sssbrain.live.
+- **Already existed:** `/admin` invites tab (create/revoke codes); Swarvis `send_invite` + Resend; `/admin-products` add-on ACL; `sssbrain.invite_codes` + `whitelabel_*`; workspace starter provision (`provisioning_jobs`, PR #111); form `/onboarding`.
+- **Gaps:** no email+features on invite panel; invite-only **BEFORE INSERT trigger missing** on SWADEBASE (`enforce_invite_only_signup` not installed — gate not enforcing); no COS talk-in connect-everything path; tenancy is shared-schema RLS starter rows, not a separate DB per customer; one `provisioning_jobs` row stuck pending (oathloom-e2e test user since Nov 4).
+- **Built this pass:** inventory only + PRD `/opt/swadebase/docs/prds/SSSBRAIN_ADMIN_INVITE_FEATURE_ACL_2026-11-05.md` + Site Bible pointer. **No app code / no clone.**
+- Public drip remains HOLD (Promo Paul). Do not message Swade.
+
+### Maestro lyrics on-play extract — PLAN ONLY (docs) → later IMPLEMENTED server-only
+- Swade approved (widget t806s3358): write the Maestro lyrics on-play extract plan to SWADEBASE docs first; don't build yet.
+- Created: `/opt/swadebase/docs/prds/MAESTRO_LYRICS_ONPLAY_EXTRACT_2026-11-05.md`
+- Pointer appended (short section + link, bible not rewritten): `/opt/swadebase/docs/site-bibles/Maestro_Radio_Master_Site_Bible.md`
+- Rules captured: empty `song_profiles`/catalog is the miss (not missing player); lazy one-time extract on next play; persist to `song_profiles` (`lyrics`, `lyric_lines`, `lyrics_visible`); prefer catalog / `artist_tracks.lyrics_text` before VideoSayWhat Whisper (`VIDEOSAYWHAT_STT_URL` / `local-stt.ts` / `words[]`); reuse maestro-assistant player + `/maestro-lyrics-api` + `lyrics.css`; editable after extract; reject new STT / paid AssemblyAI-Gemini / player rebuild.
+- Gaps noted: vocal isolation, SB4 STT move, catalog→profiles sync.
+- Status: **PLAN ONLY — awaiting build OK.** No code/build/deploy.
+
+**Summary** · 2026-11-05 22:45 CT
+
+## Deployed
+
+### Maestro lyrics on-play extract — IMPLEMENTED (server-only)
+- Swade continue ([pt807u]): do not break VideoSayWhat transcription.
+- Edited live `dj-studio-libraries-v1` `publicLyrics` + byte-synced `/opt/maestro-assistant/assistant.ts`; tiny lyrics.js extracting note.
+- Copy-forward prefers catalog/`artist_tracks` before any STT; STT only via waitUntil + VIDEOSAYWHAT_STT_URL, never sync on poll.
+- Smoke: Breathe mock-NP lyrics_len=2418, zero STT, persisted song_profiles media_id=108 source=artist_tracks. Live Sip Slow lyrics_len=1411.
+- VSW units untouched (ActiveEnterTimestamp still 2026-10-24); sssbrain-stt Restarts=0.
+- Backup: `/opt/backups/maestro-lyrics-onplay-20261105T130604Z/`
+
+- Maestro lyrics on-play extract (edge volume + maestro-assistant web); no VSW/Whisper restart.
+
+**Summary** · 2026-11-05 22:45 CT
+
+## Decisions Swade made
+
+1. Widget t806s3358: write Maestro lyrics on-play extract plan to SWADEBASE docs first; do not build yet.
+
+**Summary** · 2026-11-05 22:45 CT
+
+## In progress
+
+- None for Maestro lyrics on-play extract (implemented server-only).
+
+**Summary** · 2026-11-05 22:45 CT
+
+## Waiting on Swade
+
+- Approve CloudAgent PR scope for SSS Brain admin invite email+feature ACL + COS talk-in onboarding; confirm whether "isolated DB" means shared-schema RLS (current) or true DB-per-tenant.
+
+- Optional: confirm live player UX while `Breathe back into me-Noble Rayne` is on air (DB + mock-NP smoke already green; radio queue did not reliably surface that title during smoke).
+
+**Summary** · 2026-11-05 22:45 CT
+
+## Do NOT redo
+
+- Do not restart/redeploy VideoSayWhat or shared Whisper for this feature.
+- Do not add a new STT service or paid AssemblyAI/Gemini path for this feature.
+
+**Summary** · 2026-11-05 22:45 CT
+
+## November 5 bandana production checkpoint
+Recorded 2026-11-05T11:39:15.475513+00:00 / 2026-11-05T05:39:15.475513-06:00. Current source abefdce247f17d435b6e6c4103dbb1e4820dcee6, Site version18 opened through source workflow. Read RUNBOOK, premium standard, calendar, current SWADEBASE standing rules and PET MUZIK Bible/Agent Process. Calendar: bandana / Little opinions. Three native originals: I HAVE NOTES ABOUT THE MENU.; TINY PAWS. FIRM OPINIONS.; KIND HEART. LOUD ANNOUNCEMENTS. Original dimensions1536×1024,1312×1199,1312×1199; prompts and SHA-256 saved. Full-size white/black/gray and2x face/mouth/collar/tag/prop review found no visible anatomy/edge defect. Head/neck-only portraits have no new paws/limbs. No approved pet likeness reference; long-eared dog breed acceptance pending. Approved art unchanged. Rejected First Press five-limb terrier never reused; corrected First Press v2 untouched and unapproved.
+
+Verified current Printed Mint70/blueprint562 dye-sublimation template for both20×10 variant101403 front3150×1691 and27×13 variant101404 front4275×2325. Archived full response. Six exact v1 files and six separate v2 files; native illustrations only reduced, never enlarged. Initial draft review enables ONLY20×10. Larger size files prepared, disabled/unqualified. API injects retired70849 too, absent from current template; it remains disabled. Official physical safe/bleed/fold geometry and effective DPI unknown.
+
+Dedicated server-side PET MUZIK token, strictly shop29509155. Reconciled all daily IDs:16 prior products preserved; no November5 IDs existed. Exactly3 hidden drafts created/read back: 6aec65b8fdc1bda5320e9677, 6aec65bb902ad8910b0415f2, 6aec65bd902ad8910b0415fa. Postflight catalog19 products, each today identifier once. All six transferred selected files (3v1+3v2) passed server SHA checks before upload. No product creation retried. Each selected variant costs1453 cents; bootstrap2499 cents is hidden/unapproved, not a pricing policy; shipping/tax/fees unknown.
+
+Inspected all15 native1200px v1 provider views. Flat fronts readable, but lifestyle1 neck folds hid first lines: BLOCKED_FOLD_TEXT. Preserved immutable v1 and15 snapshots. Prepared smaller/lower v2 typography and art using the SAME original hashes. First v2 update rejected400/8251 because provider demands all variant IDs; next split-area200 response silently retained v1 mapping. Readback caught it. Final one-group update with all returned variant IDs confirmed new v2 image IDs and exact3150×1691 active mappings on all3 drafts, while only101403 stays enabled. Disabled70849/101404 share provider placement group and are NOT qualified or offered; separate27×13 files remain staged. Preserve failure receipts. Initial staging script syntax error was caught before any API calls and corrected. No credential left the server process.
+
+Fetched/inspected all15 fresh canonical v2 views; every saved hash differs from corresponding v1, proving refreshed pixels. Complete wording now visible in flat front and primary lifestyle1. Alternate lifestyle2 side wrap still obscures words/art; not cleared for premium acceptance. White reverse with mirrored show-through and close-up factory label observed, require owner finish acceptance. Noncanonical query preview was blank during an intermediate attempt; preserved separately and never treated as qualified mockups. Actual provider snapshots are for review, not approved finished products. Proposed flat layouts and actual unapproved product renders clearly separated in review.html outside dist.
+
+Counts:3 original designs,12 exact files across2 revisions,3 hidden drafts,3 active variant mappings verified,30 actual provider views reviewed across2 revisions,0 newly Site-visible,3 held,0 approved finished listings. Fresh Site metadata still public. No audience change or deployment. Source/knowledge receipts retain all failures, not a blanket pass. Voice Studio, dist, ops and unrelated16 products unchanged. No checkout, samples, orders, external messages, paid generation or charges.
+
+Next: resolve owner-private review access; review alternate side-wrap placement and white reverse/finish against owner expectations before any acceptance. Obtain owner art/product approval, verify physical print detail and viable pricing. Reuse recorded3IDs; never duplicate or silently replace originals. Continue saved calendar through Nov26, next rotation after first month. Rollback: retain source version18 and all original/revision receipts; no unrelated runtime changes. Knowledge documentation does not prove every deployed agent enforces these gates.
+
+### VideoSayWhat admin users list fix + Darryl admin (DB-only)
+- Root cause: Admin > "User Roles" tab (only users list in the live Lovable admin) reads only `videosaywhat.user_roles`; regular users never get a row (no VSW signup trigger on shared GoTrue), so only admins showed (4 rows/3 users).
+- Fix: trigger `trg_profiles_default_role` on `videosaywhat.profiles` (fn `videosaywhat.ensure_default_user_role`) adds role `user` on profile create; backfilled profiles (dcbulldogdc, darryl) + `user` roles. API-visible rows 4→8 (3→7 users).
+- darryl@attobahn.com: `user_roles.role=admin`; `award_credits` kind `admin_grant` 500 (+10 signup_bonus) → `credit_accounts.balance=510`.
+- No VSW/STT restarts. Backup: /opt/backups/vsw-users-fix-20261105T131525Z/
+
+### SSS Brain invite enforcement + tenant DB (PR #118) — merge+deploy
+- Time: 2026-11-05 08:00 CST (America/Chicago)
+- PR: https://github.com/swadesoul/sssbrain/pull/118 MERGED squash sha dda430ff8f3adee84619faa0b28029dcbe31cad4 to main
+- Migration: YES — applied swade/swadebase-migrations/20261105143000_invite_enforcement_and_grants.sql on SWADEBASE primary supabase-db
+- Backup first: /opt/swadebase/backups/pre-invite-migration-20261105T135611Z/ (full sssbrain schema dump + auth.users triggers before)
+- Prerequisite fix: created private.is_admin_like(uuid) SECURITY DEFINER wrapper -> sssbrain.is_admin_like (migration referenced private.*; live policies use sssbrain.*)
+- Triggers verified on auth.users:
+  - enforce_invite_only_signup (BEFORE INSERT; sssbrain.invite_codes; founder swadesoul@gmail.com exempt)
+  - apply_invite_feature_grants (AFTER INSERT)
+  - enqueue_tenant_database (AFTER INSERT; founder exempt; no row for founder)
+  - enqueue_workspace_provision (AFTER INSERT; pre-existing, still present)
+- Also: sssbrain.tenant_databases table + owners read own whitelabel row policy + restrictive tenant_isolated_from_primary policies
+- Coolify: app uuid g1406wexcvceencavj1fuo0u (https://sssbrain.live) force-deploy queued gukhwkuo7zbgctk9koqrpyyj; container image g1406wexcvceencavj1fuo0u:dda430ff8f3adee84619faa0b28029dcbe31cad4 running:healthy
+- SWADEBASE_DATABASE_URL: present; direct postgresql (brainiak_app @ 172.16.0.1:15432/postgres); NOT pooler/6543. Was missing CREATEDB — granted ALTER ROLE brainiak_app CREATEDB; CREATE/DROP smoke DB succeeded via app URL
+- Smoke: https://sssbrain.live -> 200 title OK; /api/live ok; /admin route exists (auth pending shell "Waking Swarvis"); admin-CHb15mSp.js includes Invites tab (create/email invite, feature_keys/grant_core). No real invite emails sent. Founder swadesoul@gmail.com has no tenant_databases row.
+- Untouched: VideoSayWhat transcription, Maestro lyrics, Promo Paul drip. No message to Swade.
+
+**Summary** · 2026-11-05 22:45 CT
+
+## November 5 merchandise QA checkpoint
+Checked 2026-11-05T14:05:55.443369+00:00 / 2026-11-05T08:05:55.443369-06:00 against current pushed source bf498dbcc7ff9ca042b32c009839d92ff4efb990 / Site version19. Retrieved current repository with source helper; read RUNBOOK, premium standard, calendar, current central PET MUZIK Bible/Agent Process and standing rules. Reconciled daily production source receipts before any creation (production task reference Automation_8c22ad4b649081918f8916bd41c3578e; schedule not changed). Calendar: bandana / Little opinions. Expected originals: I HAVE NOTES ABOUT THE MENU.; TINY PAWS. FIRM OPINIONS.; KIND HEART. LOUD ANNOUNCEMENTS.
+
+All3 original hashes/native dimensions,12 exact v1/v2 RGBA file hashes/dimensions,15 current v2 provider snapshot hashes and3 live enabled mappings match. Retained full-size white/black/gray and2x face/prop/collar review remains tied to identical original hashes; gray composites revisited now. No new observed head/neck anatomy or cutout defect; no new limbs/paws. Likeness has no owner reference, long-eared dog breed acceptance pending. All source transforms below1; physical DPI/detail and official safe/bleed/fold geometry remain unknown. Approved art unchanged; rejected five-limb terrier never reused, corrected First Press v2 remains unapproved.
+
+Fresh dedicated server-only GETs in Printify shop29509155 verify three IDs:6aec65b8fdc1bda5320e9677,6aec65bb902ad8910b0415f2,6aec65bd902ad8910b0415fa. All hidden. Printed Mint70/blueprint562 dye-sublimation template still20×10/101403 front3150×1691 and27×13/101404 front4275×2325. Only101403 enabled. All3 active placements point to exact v2 upload IDs/dimensions/transforms. Disabled101404 and legacy70849 share provider group and remain unqualified; no retired geometry inferred. Cost1453 cents each, provisional2499 cents not approved retail. Catalog19 products; each today's daily ID once; unrelated16 preserved. No uploads, product mutations, new originals or duplicate creation in QA.
+
+Fetched/visually inspected three fresh native1200px alternate side renders; their bytes match saved v2 hashes. Side wrapping still obscures wording/art. Retained v2 flat fronts and primary lifestyle views show complete wording; white reverse/show-through and factory label need owner finish acceptance. All15 current snapshots remain hash-identical. V1 neck-fold failure and v2 provider mapping repair receipts preserved separately. No further artwork substitution or new composition undertaken without fresh review. Actual provider mockups remain unapproved; proposed print layouts clearly separated in review.html outside dist.
+
+Counts today:3 original designs/3 hidden drafts;0 new in QA;0 newly Site-visible;3 held;0 approved finished listings. Site metadata still public, contradicting required owner-private review. No sharing change or deployment. Next actionable blocker: resolve owner-private access, review side-wrap placement and reverse/finish against owner's premium expectations, obtain owner art/product approval, verify physical print requirements and approve retail/shipping/tax/fees before promotion. No quality shortcut. Preserve recorded IDs and immutable originals on retry.
+
+QA evidence:qa-live-readbacks.json,qa-mapping-validation.json,qa-reconciliation.json. Documentation-only source checkpoint; rollback to source version19 keeps all production evidence. Voice Studio, dist, ops and unrelated products unchanged. No sales, samples, orders, external messages, paid generation or charges. Central documentation/index is evidence, not proof every deployed agent enforces policy.
+
+**Summary** · 2026-11-05 22:45 CT
+
+## Maestro lyrics — Suno / ReSingLab first (no Whisper on play)
+- Time: 2026-11-05 ~08:05 America/Chicago (box)
+- Swade: after VSW+SSS Brain, pull lyrics from Suno + ReSingLab (+ catalog); do not re-listen via VideoSayWhat Whisper.
+- PRD updated: `docs/prds/MAESTRO_LYRICS_ONPLAY_EXTRACT_2026-11-05.md` (Suno/ReSingLab-first; Whisper removed from play path).
+- Code: `publicLyrics` cascade = song_profiles (upgrade Whisper-only) → maestro_catalog → artist_tracks → resinglab_generations / resinglab_catalog_songs → optional async Suno get-timestamped-lyrics. No `VIDEOSAYWHAT_STT_URL` on play.
+- Paths: volume `dj-studio-libraries-v1/assistant.ts` + `index.ts` (dropped unused getAudio); byte-synced `/opt/maestro-assistant/assistant.ts`.
+- Backup: `/opt/backups/maestro-lyrics-suno-first-20261105T140457Z/`.
+- HARD: did not restart/touch vsw-warp / sssbrain-stt / VideoSayWhat transcription.
+- Smoke (cron-gated smoke_title, America/Chicago ~08:10):
+  - Breathe Back Into Me Noble Rayne → lyrics_len=2418 lines=101 media_id=108 source=artist_tracks stt=false
+  - Come And Get It (R&B Flip)/aibb → lyrics_len=3189 via titleVariants → artist_tracks stt=false
+  - Live NP without stored lyrics → empty note (no Whisper fallback)
+- VSW untouched: vsw-warp StartedAt=2026-10-21 Restarts=0; sssbrain-stt StartedAt=2026-11-03 Restarts=0; edge Restarts=0 since 2026-10-31.
+
+- 08:17 CT AzuraCast/Maestro Radio cut over to https://radio.themaestroradio.com (new nginx vhost maestro-radio-public, LE cert exp 2027-02-03, AzuraCast base_url set). sslip.io vhost kept as fallback. Live refs updated (signal/, dj-studio edge fns, mogul app, maestro-play, maestroradio-web current). Backup: /opt/backups/azura-radio-hostname-20261105T141722Z
+
+- 08:25 CT dj-studio edge hostname cutover verified: 4 volumes ENGINE=https://radio.themaestroradio.com (no sslip left); volume hot-reload via bind-mount+touch (supabase-edge-functions Restarts=0 since 2026-10-31, no container restart); stations.stream_url updated; smoke NP listen_url + maestro-lyrics-api Deno→nowplaying OK; VSW/sssbrain-stt untouched.
+
+**Summary** · 2026-11-05 22:45 CT
+
+## Trend-aware music create PRDs (docs only) — ~08:52 America/Chicago
+- Auth: t816u (Station DNA + Trend Top-40 pipeline); t817u (era/timeslot multi-axis sonic fingerprints, append-only catalogue).
+- Wrote:
+  - `/opt/swadebase/docs/prds/STATION_DNA_ONESHOT_TOP40_2026-11-05.md` — voice/text DNA → match → Top-40 floor; fill lanes DB/upload/paid create; 3–10/day; tier levers; era snapshot tie-in.
+  - `/opt/swadebase/docs/prds/TREND_TOP40_CREATE_PIPELINE_2026-11-05.md` — tops→fingerprint→world/music trends→brief→generate→QA→publish; shared KG trains ReSingLab; era/timeslot append-only sonic archive.
+- Reuse scan: no prior Station DNA / trend-create PRDs; related hooks = lyrics-on-play catalog cascade, Music Mogul sticky, Maestro Site Bible / ReSingLab promo.
+- No product code in this pass. Optional box copies under `/workspace/docs/` for Big Mamma attach.
+
+### Clarifications folded into Trend PRD (same docs pass)
+- **t817u**: multi-axis sonic fingerprints; era/timeslot append-only catalogue (time-travel recreate).
+- **t818u**: Suno MCP pack default picker A/B alternate (gen1→clip1, gen2→clip2, …).
+- **t819u**: non-chosen clip per gen kept UNRELEASED (artist sellable / gift-box inventory next); released↔unreleased pair recorded.
+
+**Summary** · 2026-11-05 22:45 CT
+
+## Maestro Mix docs align (Bible + PRDs) — ~09:15 America/Chicago
+- Auth: Swade GO **t825u** — docs only; **do not** cut over live `/play`.
+- Backup Bible: `/opt/backups/maestro-mix-bible-20261105T151621Z/Maestro_Radio_Master_Site_Bible.md` (sha256 769cf93f3c8e9b432cbe7fcf88111e72e79ed56090b9d9fc49e6be8cc059ccc7).
+- Bible updated: `/opt/swadebase/docs/site-bibles/Maestro_Radio_Master_Site_Bible.md`
+  - New/expanded: **Maestro Mix (canonical) — product name & Mogul replacement** (purpose, ChatGPT share 6aec9b31 capture, cutover plan, live inventory).
+  - Retitled historical: Legends Mix Granada checkpoint → superseded name Maestro Mix; Music Mogul → Maestro Mix replacement decision; responsible-play kept binding.
+  - Pointers to Station DNA + Trend Top-40 PRDs; gift-box PRD; Mix replace PRD.
+- Wrote: `/opt/swadebase/docs/prds/MAESTRO_MIX_REPLACE_MOGUL_2026-11-05.md` (cutover checklist + open legal).
+- Wrote: `/opt/swadebase/docs/prds/ARTIST_GIFT_BOX_2026-11-05.md` (3D box; unreleased Suno twins; ≤5 past uploads; passes/tickets/Zoom).
+- Inventory check: **no** `/maestro-mix/` or `/legends-mix/` under `/var/www`; prototype zip not on server; `/play` still music-mogul.service → Mogul `34d85f6`.
+- Cutover recommendation URL: prefer **`/maestro-mix/`** free-play first; keep `/play` as Mogul until separate cutover GO.
+- Confirmed: **live `/play` NOT changed** this pass (nginx/docs only).
+
+**Summary** · 2026-11-05 22:45 CT
+
+## Asset Machine private directory research — 2026-11-05T16:02:46.580278+00:00
+20 added; 0 duplicates; 3 held this batch; canonical total 40. All source-backed research_pending/unpublished, with official service/inquiry URLs, verification scope and unresolved checks. Normalized names/aliases and official domain aliases checked against canonical and earlier batch files. Prior20 records preserved byte-equivalent in parsed content; atomic replacement, private0600 permissions and backup verified. Receipt /opt/swadebase/var/asset-machine-directory/batch-20261105.import-receipt.json. Public pages, contacts entitlement, private-case data and deployments unchanged. No organizational outreach, purchase or paid service used.
+
+- 11:34 AM CT (17:34Z): Deployed swadesoulworld main 9c561d4 (PR #9 fflate safe-unzip guards, CVE-2026-122146; no fflate bump, no migrations) to ssworld-web (/opt/ssworld-web/releases/20261105T1733Z-main-9c561d4; .rollback -> 20261103T0629Z-main-f0361a9) and swadesoulworld (/opt/swadebase/world/releases/9c561d4cda67de7ef183dbd55643215f95e929ad; prior f0361a9 kept); tests 48/48, localhost :18840/:3420 and public /world 200.
+
+**Summary** · 2026-11-05 22:45 CT
+
+## SWADE Learn — owner-private release
+
+2026-11-05T19:31:48.341123+00:00 — Deployed https://swade-learn.swadeswade-s-8788.chatgpt.site; source ad17488a8b0ebeaf38cd025b39c912ce03886877; deployment appgdep_6aecd8dae1848191bc26a796212a304f. Shared catalog of 10 canonical TeachVirt courses and 1 original written Swarvis guide; owner management for instructors, subjects, training, media, site destinations and saved production packs. Reuses TeachVirt enrollment and VirtTeach community. 17 integration checks passed; both approved Swarvis images passed scoped B2 upload and byte-identical download. Hosted catalog/class/image 200, unauthenticated admin 401, private unreferenced image 404. Owner-private release; embeds prepared but not rolled out. Paid AI voice/video generation, actual rendering, paid entitlement verification and owner browser workflow remain separate steps. Canonical details: site-bibles/SWADE_Learn_Master_Site_Bible.md.
+
+**Summary** · 2026-11-05 22:45 CT
+
+## ATTOBAHN migration and technical handoff — 2026-11-05T19:50:19.970118+00:00 (ChatGPT)
+
+Owned hosting is released; overall migration remains partial. Source `b24277be058e4f085c82e4985aa77654a24e4edf` is pushed. ATTOBAHN apex/www/zamaniwave DNS, TLS/static hosting and 37 namespaced backend handlers now use SWADEBASE, preserving maintenance behavior, 32 other app registrations and 991 unrelated runtime files. Scoped legacy DNS records were retired while registrar email forwarding was retained. Five empty storage buckets and reviewed restrictive policies were provisioned; queue functions no longer target the old cloud endpoint.
+
+Checks passed: 17 origin checks, eight frontend tests, eight backend groups, real Deno loading, temporary synthetic PostgreSQL storage-policy checks and 67 public HTTPS backend probes. Recovered assets: 81 files/100,171,276 bytes including 27 originals, 19 stock images and fonts. Current schema/public content: consistent read-only snapshot, 60 public rows/12 allowlisted tables, no private/auth/contact export. Final handoff `ATTOBAHN-SWADEBASE-Handoff-2026-11-05.zip`, 122,040,559 bytes, SHA-256 `b1197cf2b7b23860186fe965e7ae862f9116b2a587ae90468ebf20a854a11c6e`.
+
+Unresolved: Lovable still syncs the GitHub repository and requires authenticated project-level disconnection; external browser clean-origin/branding acceptance remains unverified because it returned old provider scripts; a cache/resolver cause is suspected, not proven, and its internal cache-clear page was denied; mail remains disabled with Resend 10/10 domain capacity and absent queue extensions; private uploads, signed-in workflows, AI/voice and iPad acceptance remain unverified. Extra B2 archive copying was rejected by automatic approval review, and no B2 copy was made. No provider upgrade or external message was sent.
+
+ATTOBAHN and SWADEBASE Bibles updated with preserved prior versions; private What's New `f57a1579-4941-460c-8043-178983bef0ed`. Exact documentation mirror is the private `swadesoul/swade-ecosystem-hub` repository. Knowledge refresh/retrieval receipt: `/opt/swadebase-staging/attobahn-docs-sync-20261105/checkpoint-receipt.json`.

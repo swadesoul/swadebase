@@ -1,0 +1,146 @@
+{
+  "release": "artist-cinema-20261110",
+  "time_utc": "2026-11-10T23:47:57.477964+00:00",
+  "local_time": "2026-11-10 17:47 CST",
+  "agent": "ChatGPT",
+  "public_pages": 17,
+  "draft_pages": 32,
+  "profile_links": 75,
+  "source_branch": "feat/cinematic-artist-rollout-20261110",
+  "public_renderer_commit": "c50aae9",
+  "staged_owner_ui_commit": "04a6087",
+  "public_directory": "https://swosting.com/artists",
+  "palettes": [
+    "violet",
+    "emerald",
+    "sapphire",
+    "ruby",
+    "amber",
+    "teal",
+    "rose",
+    "graphite"
+  ],
+  "tests": {
+    "unit_tests": 8,
+    "expectations": 29,
+    "public_chromium_layouts": 34,
+    "visibility_urls": 49,
+    "media_head_passes": 55,
+    "real_audio_streams": 3,
+    "staged_owner_fixture_layouts": 3,
+    "reconciled_unit_tests": 10,
+    "reconciled_expectations": 33,
+    "revision_backfill_rollback_test": 17,
+    "revision_rls": true
+  },
+  "runtime_hashes": {
+    "artist-site/index.ts": "f3347925d3491142c85a0715f938d188dfb4ecd970117a1daa4f7b25665e6a3f",
+    "_artistsite/render.ts": "536247e91b2d511b3e09e05b331fa9d05ded661303728c922547a6764172d9ed",
+    "_artistsite/cinematic.ts": "fead3dcbe4645206221a83c81379fa6099c787a5a6d2d8e0e7138585ff7301b2",
+    "_artistsite/directory.ts": "83100ab922d20f1816ff5d5cb2709c594363c41e7d732f0bf3381efe8fcdd9bd"
+  },
+  "live_frontend": "oathloom-frontend:8f745eb-artists",
+  "staged_frontend": "oathloom-frontend:04a6087-cinema",
+  "owner_dashboard_state": "STAGED; automatic review rejected live container replacement and production function change; no owner UI cutover occurred",
+  "public_artists": [
+    {
+      "name": "Swade Soul",
+      "url": "https://swosting.com/swade-soul",
+      "theme": "cinema-violet"
+    },
+    {
+      "name": "Sabria Swade",
+      "url": "https://swosting.com/swade-soul/sabria-swade",
+      "theme": "cinema-violet"
+    },
+    {
+      "name": "Noble Rayne Swade",
+      "url": "https://swosting.com/swade-soul/noble-rayne-swade",
+      "theme": "cinema-emerald"
+    },
+    {
+      "name": "Reggie Swade",
+      "url": "https://swosting.com/swade-soul/reggie-swade",
+      "theme": "cinema-amber"
+    },
+    {
+      "name": "Ameyea Swade",
+      "url": "https://swosting.com/swade-soul/ameyea-swade",
+      "theme": "cinema-sapphire"
+    },
+    {
+      "name": "Karriann Swade",
+      "url": "https://swosting.com/swade-soul/karriann-swade",
+      "theme": "cinema-sapphire"
+    },
+    {
+      "name": "Shamone Swade",
+      "url": "https://swosting.com/swade-soul/shamone-swade",
+      "theme": "cinema-ruby"
+    },
+    {
+      "name": "Mason Swade",
+      "url": "https://swosting.com/swade-soul/mason-swade",
+      "theme": "cinema-graphite"
+    },
+    {
+      "name": "Nevaborya Swade",
+      "url": "https://swosting.com/swade-soul/nevaborya-swade",
+      "theme": "cinema-violet"
+    },
+    {
+      "name": "Granada Swade",
+      "url": "https://swosting.com/swade-soul/granada-swade",
+      "theme": "cinema-emerald"
+    },
+    {
+      "name": "Suki Swade",
+      "url": "https://swosting.com/swade-soul/suki-swade",
+      "theme": "cinema-rose"
+    },
+    {
+      "name": "Ty Swade",
+      "url": "https://swosting.com/swade-soul/ty-swade",
+      "theme": "cinema-teal"
+    },
+    {
+      "name": "Leyco Swade",
+      "url": "https://swosting.com/swade-soul/leyco-swade",
+      "theme": "cinema-amber"
+    },
+    {
+      "name": "Steemo Swade",
+      "url": "https://swosting.com/swade-soul/steemo-swade",
+      "theme": "cinema-ruby"
+    },
+    {
+      "name": "Smitty",
+      "url": "https://swosting.com/swade-soul/smitty",
+      "theme": "cinema-graphite"
+    },
+    {
+      "name": "Royal Banks",
+      "url": "https://swosting.com/swade-soul/royal-banks",
+      "theme": "cinema-sapphire"
+    },
+    {
+      "name": "Rivan",
+      "url": "https://swosting.com/swade-soul/rivan",
+      "theme": "cinema-teal"
+    }
+  ],
+  "draft_reasons": {
+    "private_sonikyn": 18,
+    "maestro_missing_portraits": 10,
+    "inactive_creators": 3,
+    "unresolved_resing_royal": 1
+  },
+  "backup": "/opt/swadebase/backups/artist-cinema-20261110",
+  "b2_receipts": [
+    "portrait-b2-receipt.json",
+    "recovered-image-b2-receipts.json"
+  ],
+  "review_pr": "https://github.com/swadesoul/oathloom/pull/45",
+  "source_reconciliation": "Existing upstream v2 editor ef1371f preserved; published v1 rollout renderer isolated in rollout.ts; v2 upgrades retain color theme; no v2 schema activation or frontend cutover",
+  "approval_scope": "Apply tested additive artist page revision migration, install reconciled artist handlers/templates and switch OATHLOOM frontend to the staged image. Requires owner approval after automatic-review rejection."
+}

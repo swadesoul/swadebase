@@ -1,0 +1,12 @@
+{
+  "state": "source-only-deployment-blocked",
+  "time": "2026-11-13T02:52:33.959083+00:00",
+  "release": "/opt/swadebase/docs/releases/maestro-artist-office-20261113T025233Z",
+  "source": "878385a",
+  "hashes": {
+    "site-bibles/SWADEBASE_Master_Site_Bible.md": "15850869405f7a40323d356a07fe5400922f3c137e52feedc5587b830ff9083c",
+    "site-bibles/Maestro_Radio_Master_Site_Bible.md": "8f1d9c587a7ffd18c8343013cd0be78e07def2a0ed82f6cfb12804bdb3c8bfc6",
+    "site-bibles/Artist_Pages_Master_Site_Bible.md": "05ad3e7473ef950a479c8d6e7f2de19e63b70be72ed7a0abb6a8abc1190b011c"
+  },
+  "whats_new": "83cffaf9-a3ef-4829-a6f9-736332799254\nINSERT 0 1"
+}

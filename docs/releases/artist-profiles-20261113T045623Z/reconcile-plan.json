@@ -1,0 +1,182 @@
+[
+  {
+    "name": "Sabria Swade",
+    "creator_id": "50cc1b46-03cf-4c6d-9e0c-530f3ba32019",
+    "site_id": "8f8462fb-0ec2-5ac2-ab0a-7c8a159e434a",
+    "path": "swade-soul/sabria-swade",
+    "status": "live",
+    "slug": "sabria-swade",
+    "catalog_records": 1
+  },
+  {
+    "name": "Smitty",
+    "creator_id": "6a2c4bf3-182a-47e8-ace1-ab357c20d11e",
+    "site_id": "5f717fad-cc82-5786-9524-0f0626999214",
+    "path": "swade-soul/smitty",
+    "status": "live",
+    "slug": "smitty-swade",
+    "catalog_records": 1
+  },
+  {
+    "name": "Noble Rayne",
+    "creator_id": "682da350-7e61-4c7f-a65d-0cf391b2735d",
+    "site_id": "e73f6f11-f89a-55fb-bd73-f3b5335bef44",
+    "path": "swade-soul/noble-rayne-swade",
+    "status": "live",
+    "slug": "noble-rayne-swade",
+    "catalog_records": 1
+  },
+  {
+    "name": "Royal Banks",
+    "creator_id": "034afe04-d82b-4059-9177-d6bb3d0b857b",
+    "site_id": "ec0e28de-2400-50f5-9b2d-d91883e805c7",
+    "path": "swade-soul/royal-banks",
+    "status": "live",
+    "slug": "royal-banks",
+    "catalog_records": 1
+  },
+  {
+    "name": "Karriann Swade",
+    "creator_id": "3931e9d9-f241-47c6-9bf6-0d2552770ee1",
+    "site_id": "21b87617-dc85-53d3-bf2e-7a87385efd44",
+    "path": "swade-soul/karriann-swade",
+    "status": "live",
+    "slug": "karriann-swade",
+    "catalog_records": 1
+  },
+  {
+    "name": "Ty Swade",
+    "creator_id": "74ad1d28-650f-4c26-955d-86fba5370530",
+    "site_id": "e06eed5d-3ab9-510b-9345-b957177a2e9e",
+    "path": "swade-soul/ty-swade",
+    "status": "live",
+    "slug": "ty-swade",
+    "catalog_records": 1
+  },
+  {
+    "name": "Leyco Swade",
+    "creator_id": "f4a0d8c7-2bb2-40da-87c2-c02aca80acfa",
+    "site_id": "54a910a5-4b99-5127-bc4a-d4f146da983f",
+    "path": "swade-soul/leyco-swade",
+    "status": "live",
+    "slug": "leyco-swade",
+    "catalog_records": 1
+  },
+  {
+    "name": "Steemo Swade",
+    "creator_id": "764ad73d-9799-48d7-8529-5cebe7e92ed8",
+    "site_id": "baabbb8b-f3f8-58a1-847c-8a802c339a1b",
+    "path": "swade-soul/steemo-swade",
+    "status": "live",
+    "slug": "steemo-swade",
+    "catalog_records": 1
+  },
+  {
+    "name": "Granada Swade",
+    "creator_id": "c4c06bd5-2db6-4cb7-8235-b270c586cfba",
+    "site_id": "e3b76a6b-5e38-42bd-824a-ab0a2e9fb717",
+    "path": "swade-soul/granada-swade",
+    "status": "live",
+    "slug": "granada-swade",
+    "catalog_records": 1
+  },
+  {
+    "name": "Reggie Swade",
+    "creator_id": "431a368c-d127-410c-82dd-c615f35351bc",
+    "site_id": "f3efc2ef-3427-5148-9812-2a5614718b53",
+    "path": "swade-soul/reggie-swade",
+    "status": "live",
+    "slug": "reggie-swade",
+    "catalog_records": 1
+  },
+  {
+    "name": "Mason Swade",
+    "creator_id": "1082d33c-49fb-4e1d-a65a-9f1d33af78bb",
+    "site_id": "a46765ea-e1f0-5ae5-94ef-7772075ebd70",
+    "path": "swade-soul/mason-swade",
+    "status": "live",
+    "slug": "mason-swade",
+    "catalog_records": 1
+  },
+  {
+    "name": "Shamone Swade",
+    "creator_id": "b2df1cec-37dc-4a32-aab4-a4ee7cc783fc",
+    "site_id": "4ab6e73f-484d-533c-b807-7bb8939ea365",
+    "path": "swade-soul/shamone-swade",
+    "status": "live",
+    "slug": "shamone-swade",
+    "catalog_records": 1
+  },
+  {
+    "name": "Swade Soul",
+    "creator_id": "66b38f3d-4537-4b69-9de3-69019eac62c6",
+    "site_id": "691b757a-421f-535e-81e6-bf827f0a8f21",
+    "path": "swade-soul",
+    "status": "live",
+    "slug": "swade-soul",
+    "catalog_records": 0
+  },
+  {
+    "name": "Nevaborya Swade",
+    "creator_id": "0bf6711c-4a6d-4026-a301-21e8bd88c9b4",
+    "site_id": "4c89de65-8392-51f1-aa23-22dbbf7d7a41",
+    "path": "swade-soul/nevaborya-swade",
+    "status": "live",
+    "slug": "nevaborya-swade",
+    "catalog_records": 1
+  },
+  {
+    "name": "Ameyea Swade",
+    "creator_id": "eb6220e9-9434-46d0-82dd-37e5d9a2807b",
+    "site_id": "95f77ec9-a719-5e59-b4e7-e7937800b24a",
+    "path": "swade-soul/ameyea-swade",
+    "status": "live",
+    "slug": "ameyea-swade",
+    "catalog_records": 1
+  },
+  {
+    "name": "Suki Swade",
+    "creator_id": "a2ed7544-e237-4184-a036-c98718ab0613",
+    "site_id": "4ca11b0c-50a1-5645-97bd-2b43dcf7069e",
+    "path": "swade-soul/suki-swade",
+    "status": "live",
+    "slug": "suki-swade",
+    "catalog_records": 1
+  },
+  {
+    "name": "Soren Blu",
+    "creator_id": "a75f52bb-ba50-4e54-be03-6dbc09800867",
+    "site_id": "d0b05385-2233-5264-ad0d-d64b2f92c5bd",
+    "path": "swade-soul/soren-blu-swade",
+    "status": "draft",
+    "slug": "soren-blu-swade",
+    "catalog_records": 1
+  },
+  {
+    "name": "Zion Creed",
+    "creator_id": "b556e0f7-268d-49f3-8c55-09365fdee6ba",
+    "site_id": "7a70b09c-9a86-5da1-a74f-239a365d0391",
+    "path": "swade-soul/zion-creed-swade",
+    "status": "draft",
+    "slug": "zion-creed-swade",
+    "catalog_records": 1
+  },
+  {
+    "name": "Haven James",
+    "creator_id": "0f423701-7a39-4c7a-80e2-abf77900f30d",
+    "site_id": "c426b11f-5839-525d-835b-cf03c2a1f5e6",
+    "path": "swade-soul/haven-james-swade",
+    "status": "draft",
+    "slug": "haven-james-swade",
+    "catalog_records": 1
+  },
+  {
+    "name": "Rivan Swade",
+    "creator_id": "92be63a9-937e-4ac2-86ab-e4ff5497ef0d",
+    "site_id": "b52ef258-8ac5-5944-8cb6-775b5214660c",
+    "path": "swade-soul/rivan",
+    "status": "live",
+    "slug": "rivan",
+    "catalog_records": 0
+  }
+]

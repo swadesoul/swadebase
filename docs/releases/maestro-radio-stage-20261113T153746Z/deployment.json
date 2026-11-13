@@ -1,0 +1,8 @@
+{
+  "release": "/var/www/maestroradio-web/releases/20261113T153746Z-radio-stage",
+  "previous": "/var/www/maestroradio-web/releases/20261113T130507Z-behind-rotation",
+  "backup": "/opt/swadebase/backups/maestro-radio-stage-20261113T153746Z",
+  "created": "20261113T153746Z",
+  "public_djs": 3,
+  "status": "live"
+}

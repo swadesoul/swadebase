@@ -1,0 +1,34 @@
+{
+  "checks": [
+    {
+      "width": 1440,
+      "referenceUpload": true,
+      "prompt": true,
+      "undo": true,
+      "privateDraft": true,
+      "branding": true,
+      "overflow": false
+    },
+    {
+      "width": 820,
+      "referenceUpload": true,
+      "prompt": true,
+      "undo": true,
+      "privateDraft": true,
+      "branding": true,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "referenceUpload": true,
+      "prompt": true,
+      "undo": true,
+      "privateDraft": true,
+      "branding": true,
+      "overflow": false
+    }
+  ],
+  "errors": [],
+  "productionWrites": 0,
+  "identity": "mocked"
+}

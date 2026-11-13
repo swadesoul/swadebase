@@ -1,0 +1,73 @@
+{
+  "state": "live",
+  "release": "/opt/swadebase/docs/releases/maestro-artist-office-live-20261113T032847Z",
+  "hashes": {
+    "site-bibles/SWADEBASE_Master_Site_Bible.md": "3a7ddc8584b01fa276183da9c07b47a10b9146883e104126a7618a45f2390f27",
+    "site-bibles/Maestro_Radio_Master_Site_Bible.md": "dfd16c7e3881bcb60ce25345e37c852c320784c9a653f5ed6af6fd37ff542c4a",
+    "site-bibles/Artist_Pages_Master_Site_Bible.md": "f7a5e652008d35ade4a091feb73febdcbc6a04988bde3e71ada3cb0174ff3e43"
+  },
+  "whats_new": "c03eb90b-205e-4786-869c-545cf7a7d4c6\nINSERT 0 1",
+  "deployment": {
+    "state": "live",
+    "previous": "/var/www/maestroradio-web/releases/20261112T224521Z-artist-studio",
+    "release": "/var/www/maestroradio-web/releases/20261113T032457Z-artist-office",
+    "backup": "/opt/swadebase/backups/maestro-artist-office-20261113T032457Z",
+    "source": "406f42e25c12584ff82cc2d95078ad71d15a6224",
+    "checks": [
+      [
+        "/",
+        200
+      ],
+      [
+        "/radio",
+        200
+      ],
+      [
+        "/artist-office",
+        200
+      ],
+      [
+        "/label-office",
+        200
+      ],
+      [
+        "/artist-studio",
+        200
+      ],
+      [
+        "/artist-discovery",
+        200
+      ],
+      [
+        "/education",
+        200
+      ],
+      [
+        "/stations/planner",
+        200
+      ],
+      [
+        "/pricing",
+        200
+      ]
+    ],
+    "pages_unchanged": true,
+    "radio_engine_restarted": false,
+    "finished": "2026-11-13T03:24:58.868829+00:00"
+  },
+  "live_acceptance": {
+    "checks": [
+      "two synthetic users signed in through actual auth",
+      "private artist settings persist; cross-account denied; separate voice consent",
+      "published-source local draft, review, public activation and private draft isolation",
+      "signed-in arrivals/responses persist once per fan/day; self-reward denied",
+      "direct authenticated REST reads of private office tables denied",
+      "live desktop/mobile signed-in browser and SPA/audio connections",
+      "pause revokes public link and participation; story interest withdrawable"
+    ],
+    "testRecordsRemoved": true,
+    "physicalSafari": false,
+    "paidCalls": 0,
+    "draftEngine": "local"
+  }
+}

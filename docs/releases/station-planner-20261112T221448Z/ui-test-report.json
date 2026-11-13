@@ -1,0 +1,39 @@
+{
+  "widths": [
+    1440,
+    820,
+    390
+  ],
+  "errors": [],
+  "actions": [
+    "state",
+    "save",
+    "state",
+    "activate",
+    "state",
+    "save",
+    "state",
+    "placement_submit",
+    "state",
+    "state",
+    "save",
+    "state",
+    "activate",
+    "state",
+    "save",
+    "state",
+    "placement_submit",
+    "state",
+    "state",
+    "save",
+    "state",
+    "activate",
+    "state",
+    "save",
+    "state",
+    "placement_submit",
+    "state"
+  ],
+  "productionWrites": 0,
+  "identity": "mocked fixture"
+}

@@ -1,0 +1,74 @@
+{
+  "started": "2026-11-12T22:11:17.859125+00:00",
+  "source": "97551d57945ead15d744ff015e6c34b7ae433404",
+  "backup": "/opt/swadebase/backups/station-planner-20261112T221117Z",
+  "previous": "/var/www/maestroradio-web/releases/20261112T172055Z-main-62f6520",
+  "release": "/var/www/maestroradio-web/releases/20261112T221117Z-station-planner",
+  "tests": {},
+  "finished": "2026-11-12T22:11:21.608493+00:00",
+  "state": "live",
+  "checks": [
+    [
+      "/",
+      200
+    ],
+    [
+      "/radio",
+      200
+    ],
+    [
+      "/djs",
+      200
+    ],
+    [
+      "/education",
+      200
+    ],
+    [
+      "/stations/planner",
+      200
+    ],
+    [
+      "/pricing",
+      200
+    ],
+    [
+      "/artists",
+      200
+    ],
+    [
+      "/admin",
+      200
+    ],
+    [
+      "/admin/song-deliveries",
+      200
+    ],
+    [
+      "/stations/library",
+      200
+    ],
+    [
+      "/img/djs/barnabas.jpg",
+      "image hash verified"
+    ],
+    [
+      "/img/djs/donna-d.jpg",
+      "image hash verified"
+    ],
+    [
+      "/img/djs/loretta.jpg",
+      "image hash verified"
+    ],
+    [
+      "/stations/planner",
+      "anonymous denied"
+    ],
+    [
+      "/stations/providers/resinglab/list",
+      "anonymous denied"
+    ]
+  ],
+  "radio_engine_restarted": false,
+  "shared_edge_restarted": false
+}

@@ -1,0 +1,88 @@
+{
+  "observed_at": "2026-11-07T07:23:54.123169+00:00",
+  "units": {
+    "sssbrain-guardian.timer": {
+      "LastTriggerUSec": "Sat 2026-11-07 07:23:23 UTC",
+      "ActiveState": "active",
+      "DropInPaths": ""
+    },
+    "sssbrain-guardian.service": {
+      "ExecMainExitTimestamp": "Sat 2026-11-07 07:23:51 UTC",
+      "ExecMainStatus": "0",
+      "ActiveState": "inactive",
+      "DropInPaths": "/etc/systemd/system/sssbrain-guardian.service.d/abagale-merch-observer.conf /etc/systemd/system/sssbrain-guardian.service.d/guardian-knowledge-index.conf"
+    }
+  },
+  "receipt": {
+    "time_utc": "2026-11-07T07:23:51.834355+00:00",
+    "status": "ok",
+    "sources_considered": 135,
+    "added": 0,
+    "changed": 0,
+    "removed": 0,
+    "quarantined_paths": [],
+    "change_events": 0,
+    "core_brief_bytes": 24121,
+    "paid_calls": 0,
+    "embeddings_generated": 0,
+    "model_training": false
+  },
+  "indexer_journal": [
+    {
+      "timestamp_us": "1794036231837737",
+      "message": "{"
+    },
+    {
+      "timestamp_us": "1794036231837737",
+      "message": " \"time_utc\": \"2026-11-07T07:23:51.834355+00:00\","
+    },
+    {
+      "timestamp_us": "1794036231837737",
+      "message": " \"status\": \"ok\","
+    },
+    {
+      "timestamp_us": "1794036231837737",
+      "message": " \"sources_considered\": 135,"
+    },
+    {
+      "timestamp_us": "1794036231837737",
+      "message": " \"added\": 0,"
+    },
+    {
+      "timestamp_us": "1794036231837737",
+      "message": " \"changed\": 0,"
+    },
+    {
+      "timestamp_us": "1794036231837737",
+      "message": " \"removed\": 0,"
+    },
+    {
+      "timestamp_us": "1794036231837737",
+      "message": " \"quarantined_paths\": [],"
+    },
+    {
+      "timestamp_us": "1794036231837737",
+      "message": " \"change_events\": 0,"
+    },
+    {
+      "timestamp_us": "1794036231837737",
+      "message": " \"core_brief_bytes\": 24121,"
+    },
+    {
+      "timestamp_us": "1794036231837737",
+      "message": " \"paid_calls\": 0,"
+    },
+    {
+      "timestamp_us": "1794036231837737",
+      "message": " \"embeddings_generated\": 0,"
+    },
+    {
+      "timestamp_us": "1794036231837737",
+      "message": " \"model_training\": false"
+    },
+    {
+      "timestamp_us": "1794036231837737",
+      "message": "}"
+    }
+  ]
+}

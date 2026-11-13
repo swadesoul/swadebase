@@ -1,0 +1,21 @@
+{
+  "checks": [
+    {
+      "width": 1440,
+      "ownerSession": "synthetic real sign-in",
+      "reload": true,
+      "noBuilderBranding": true,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "ownerSession": "synthetic real sign-in",
+      "reload": true,
+      "noBuilderBranding": true,
+      "overflow": false
+    }
+  ],
+  "errors": [],
+  "anonymousDenied": true,
+  "nativeSafariTested": false
+}

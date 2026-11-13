@@ -1,0 +1,12 @@
+{
+  "state": "live",
+  "release": "/opt/swadebase/docs/releases/artist-profiles-20261113T045623Z",
+  "hashes": {
+    "SWADEBASE_Master_Site_Bible.md": "ddbfcdb75cbf8dcc4e68e613e1bd2d495715f3649c2ffd3efebe998ff7742b04",
+    "Artist_Pages_Master_Site_Bible.md": "280aa6ab8c8d76f4f47688c918ef64ff4db8c317de30629d875d31b9c0fbbedd",
+    "Maestro_Radio_Master_Site_Bible.md": "764be730fa5589ed4d1814ab6757c98ff3f6df2234e958fa7befa29f0ee45966",
+    "SWOSTing_Master_Site_Bible.md": "99d4a257ab4fd5b9b127a83e5d173665b8478f7b4c024360fba6c071329412ed"
+  },
+  "whats_new": "e93eaf9a-383a-4571-a8fa-d710444cada9\nINSERT 0 1",
+  "added_metadata_tracks": 42
+}

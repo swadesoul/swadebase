@@ -1,0 +1,57 @@
+{
+  "checks": [
+    {
+      "route": "/",
+      "width": 1440,
+      "status": 200
+    },
+    {
+      "route": "/djs",
+      "width": 1440,
+      "status": 200
+    },
+    {
+      "route": "/radio",
+      "width": 1440,
+      "status": 200
+    },
+    {
+      "route": "/education",
+      "width": 1440,
+      "status": 200
+    },
+    {
+      "route": "/stations/planner",
+      "width": 1440,
+      "auth": "signed-out redirect verified"
+    },
+    {
+      "route": "/",
+      "width": 390,
+      "status": 200
+    },
+    {
+      "route": "/djs",
+      "width": 390,
+      "status": 200
+    },
+    {
+      "route": "/radio",
+      "width": 390,
+      "status": 200
+    },
+    {
+      "route": "/education",
+      "width": 390,
+      "status": 200
+    },
+    {
+      "route": "/stations/planner",
+      "width": 390,
+      "auth": "signed-out redirect verified"
+    }
+  ],
+  "errors": [],
+  "ownerAuthTested": false,
+  "nativeSafariTested": false
+}

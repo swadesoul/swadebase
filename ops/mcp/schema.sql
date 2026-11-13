@@ -32,3 +32,4 @@ DROP POLICY IF EXISTS swadebase_mcp_reference_read ON sssbrain.swadebase_knowled
 CREATE POLICY swadebase_mcp_reference_read ON sssbrain.swadebase_knowledge_chunks FOR SELECT TO swadebase_adapters
  USING (doc_path LIKE 'site-bibles/%' OR doc_path='STANDING_RULES.md');
 COMMIT;
+

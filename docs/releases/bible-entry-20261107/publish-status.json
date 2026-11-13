@@ -1,0 +1,7 @@
+{
+  "implementation_source": "https://github.com/swadesoul/swade-ecosystem-hub/pull/53",
+  "safe_release_status": "https://github.com/swadesoul/swade-ecosystem-hub/pull/54",
+  "full_internal_mirror": "blocked_by_automatic_approval_review",
+  "canonical_records_location": "/opt/swadebase/docs/releases/bible-entry-20261107",
+  "reason": "Full payload includes internal Bibles, operational details and account metadata; automatic review did not establish authorization for this disclosure. Full records retained in existing SWADEBASE; a short non-sensitive status was approved for GitHub."
+}

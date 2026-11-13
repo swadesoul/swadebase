@@ -1,0 +1,10 @@
+{
+  "id": "price_1UUXDM43OPTHaIwnezgnK6ja",
+  "product": "prod_VVYKI6pltTQEZ9",
+  "unit_amount": 4999,
+  "currency": "usd",
+  "type": "one_time",
+  "livemode": true,
+  "lookup_key": "brainiak_paid_update_usd_4999",
+  "checkoutEnabled": false
+}

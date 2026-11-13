@@ -1,0 +1,25 @@
+{
+  "verifiedAt": "2026-11-07T07:55:02.874964+00:00",
+  "canonicalKnowledge": [
+    {
+      "path": "site-bibles/OATHLOOM_Master_Site_Bible.md",
+      "sha": "f5ebd1c7746ffc1dfebbf8a94d7dd0475ed759bec19c446f7fdc9e3902fffb23",
+      "chunks": 5,
+      "ftsMatches": 3
+    },
+    {
+      "path": "site-bibles/Developer_Studio_Master_Site_Bible.md",
+      "sha": "c420e6569f2352cdf146c4c2df3edd121f069716e44ca0fe223cb4917e15d35b",
+      "chunks": 6,
+      "ftsMatches": 2
+    },
+    {
+      "path": "site-bibles/SWADEBASE_Master_Site_Bible.md",
+      "sha": "9efefb66ed1a8b188124a3dcd6be9d9e25ee6c70b75418386c56c2a33c67a715",
+      "chunks": 57,
+      "ftsMatches": 3
+    }
+  ],
+  "privateEventId": "fbb28bbd-6c17-58cc-ad5c-43dd90d62001",
+  "providerCalls": 0
+}

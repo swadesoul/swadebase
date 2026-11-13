@@ -1,0 +1,33 @@
+{
+  "checks": [
+    {
+      "cinematic": true,
+      "width": 1440,
+      "description": true,
+      "bio": true,
+      "portrait": true
+    },
+    {
+      "cinematic": true,
+      "width": 390,
+      "description": true,
+      "bio": true,
+      "portrait": true
+    },
+    {
+      "publicAudioStarted": true
+    },
+    {
+      "radioPageSynced": true,
+      "legacyRedirect": true
+    },
+    {
+      "publishedOnlyProfile": true,
+      "noInventedRadioConsent": true
+    },
+    {
+      "directoryConnected": true
+    }
+  ],
+  "errors": []
+}

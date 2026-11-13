@@ -1,0 +1,12 @@
+{
+  "recorded_at": "2026-11-07T07:30:46.790710+00:00",
+  "complete_records_location": "/opt/swadebase/docs/releases/bible-entry-20261107",
+  "record_count": 13,
+  "documents": {
+    "STANDING_RULES.md": "f30f3dc8d86b8ba9a23b99a34c6d2c08807d7e32f541d68da085bc099fd22eef",
+    "site-bibles/SWADEBASE_Master_Site_Bible.md": "e011816ce71364254efb3fe8c002896cdd7af1217d2df78f83aff358557e7a11",
+    "site-bibles/MCP_Actions_Master_Site_Bible.md": "58ad67b7f688749502a87a3e8cf6908a7673f466704e9b576e8c3cde45c33485"
+  },
+  "safe_status_pr": 54,
+  "full_internal_github_mirror": "blocked_by_automatic_approval_review"
+}

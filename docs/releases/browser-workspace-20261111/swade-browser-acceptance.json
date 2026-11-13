@@ -1,0 +1,72 @@
+{
+  "time": "2026-11-11T12:18:54.521Z",
+  "checks": [
+    {
+      "name": "Live owner gate and legacy-token denial",
+      "passed": true
+    },
+    {
+      "name": "Desktop anonymous denial",
+      "passed": true
+    },
+    {
+      "name": "CSRF, cross-origin, private-target and identity-spoofing denial",
+      "passed": true
+    },
+    {
+      "name": "Scoped website registration",
+      "passed": true
+    },
+    {
+      "name": "Actual database RLS prevents another actor reading the website",
+      "passed": true
+    },
+    {
+      "name": "Visible Chromium launched through private bridge",
+      "passed": true
+    },
+    {
+      "name": "Chromium control reachable on loopback",
+      "passed": true
+    },
+    {
+      "name": "Actual owner UI at desktop, tablet and phone widths without overflow or JavaScript exceptions",
+      "passed": true
+    },
+    {
+      "name": "One-time launch grant, host-only secure cookie and replay rejection",
+      "passed": true
+    },
+    {
+      "name": "Real Webtop interface and WebSocket desktop transport load",
+      "passed": true
+    },
+    {
+      "name": "Stop revokes desktop access",
+      "passed": true
+    },
+    {
+      "name": "Manual profile persists across browser stop and reopen",
+      "passed": true
+    },
+    {
+      "name": "Checker detects five planted defect types and skips destructive controls without writes",
+      "passed": true
+    },
+    {
+      "name": "Real public-website asynchronous Site Checker job and persisted report",
+      "passed": true
+    },
+    {
+      "name": "Screenshots require owner authorization",
+      "passed": true
+    },
+    {
+      "name": "Owner-approved exact browser task executes and returns an extracted result; altered digest and CSRF denied",
+      "passed": true
+    }
+  ],
+  "total": 16,
+  "real_owner_google_login": "not performed",
+  "paid_provider_calls": 0
+}

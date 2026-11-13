@@ -1,0 +1,17 @@
+{
+  "status": "scoped_checks_passed",
+  "checks_passed": 207,
+  "coverage": {
+    "direct_service_and_database": "verified_with_existing_owner_and_read_only_transactions",
+    "native_handler": "real_route_and_database_with_mocked_identity_and_transport_not_live_auth",
+    "live_anonymous_https": "verified",
+    "live_authenticated_mcp": "not_run_no_existing_credential",
+    "live_restricted_mcp": "not_run_no_existing_restricted_credential",
+    "live_native_auth": "not_run_no_existing_gotrue_user_token"
+  },
+  "credential_creation": false,
+  "direct_sql_writes": false,
+  "model_calls": 0,
+  "payment_calls": 0,
+  "production_configuration_changes": false
+}

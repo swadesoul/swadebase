@@ -14,3 +14,4 @@ test('report idempotent with no production and fixed recipient',async()=>{const 
 test('conflicting idempotency rejects and rolls back',async()=>{const f=fixture();await f.service.report(a,review);await assert.rejects(f.service.report(a,{...review,summary:review.summary+' Changed.'}),/different/);assert(f.calls.includes('rollback'));assert.equal(f.writes(),1)});
 
 test('ordinary ecosystem credentials do not grant new merchandise access',async()=>{await assert.rejects(fixture().service.catalog({...a,scopes:['ecosystem:read','operator:plan','tasks:write']}));});
+

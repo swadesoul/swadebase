@@ -17,6 +17,7 @@ test('routing selects known existing programs for multi-program outcomes',()=>{
 });
 function fixture({enabled=true,missing=false,classifier}={}){
  let writes=0;const tasks=[];
+ const entryContext={check:async()=>{if(missing)throw Object.assign(Error('The current Site Bible is unavailable.'),{code:'bible_unavailable',status:503});return {status:'ready',version:1,automation:{status:'healthy'},stripe_default:{account_id:'acct_fixture'}};},readBible:async doc_path=>({doc_path,doc_sha:'fixture-sha',index_status:'current',content:'Read Bible, reuse existing services and protect access.'})};
  const pool={async query(sql,args){
   if(sql.includes("where id='swadebase-mcp'"))return {rows:[{enabled,status:'live'}]};
   if(sql.includes('from sssbrain.swadebase_docs'))return {rows:missing||args[1]!=='swadebase'?[]:[{doc_path:'site-bibles/SWADEBASE_Master_Site_Bible.md',doc_sha:'fixture-sha',title:'SWADEBASE'}]};
@@ -26,13 +27,13 @@ function fixture({enabled=true,missing=false,classifier}={}){
   if(sql.startsWith('insert into')){writes++;const row={id:'1',status:'open',body:args[1],actor:args[2].actor_id,key:args[2].idempotency_key,plan:args[2].plan};tasks.push(row);return {rows:[row]};}
   if(sql.includes('where id=$1'))return {rows:tasks.filter(x=>x.id===args[0]&&x.actor===args[1])};
   return {rows:[]};
- }};return {service:makeService({pool,classifier}),writes:()=>writes};
+ }};return {service:makeService({pool,classifier,entryContext}),writes:()=>writes};
 }
 test('Bible-first planning reports missing project knowledge and inactive production',async()=>{
  const {service}=fixture();const p=await service.plan(actor,{request:'Create a team song'});assert.equal(p.status,'prepared');assert.equal(p.execution_authorized,false);assert.equal(p.knowledge_version,'fixture-sha');assert(p.steps.some(x=>x.bible_state==='missing_bible'));assert(p.steps.flatMap(x=>x.adapters).some(x=>x.state==='inactive'));
 });
 test('missing main Bible blocks planning; disabled MCP blocks reads',async()=>{
- assert.equal((await fixture({missing:true}).service.plan(actor,{request:'Create a song'})).status,'blocked');
+ await assert.rejects(fixture({missing:true}).service.plan(actor,{request:'Create a song'}),e=>e.code==='bible_unavailable'&&e.status===503);
  await assert.rejects(fixture({enabled:false}).service.bible(actor,{}),/paused/);
 });
 test('invalid local model output cannot introduce unknown programs',async()=>{
@@ -46,4 +47,23 @@ test('tasks reuse existing queue, are idempotent, isolated and do not start prod
 
 test('native chat rules-only routing never invokes the local model',async()=>{let calls=0;const {service}=fixture({classifier:async()=>{calls++;throw Error('unexpected')}});const p=await service.plan(actor,{request:'Create a school anthem',rules_only:true});assert.equal(calls,0);assert.equal(p.method,'rules');});
 
+test('automatic entry context accompanies plans and reaches the existing classifier',async()=>{
+ let seen;const f=fixture({classifier:async input=>{seen=input;return {programs:['sssbrain']};}});
+ const result=await f.service.plan(actor,{request:'Plan a task'});
+ assert.equal(result.entry_context.stripe_default.account_id,'acct_fixture');
+ assert.equal(seen.entry_context.stripe_default.account_id,'acct_fixture');
+ assert.equal(result.target_bibles[0].status,'missing_bible');
+});
+
+test('missing mandatory Bible prevents task creation before any write',async()=>{
+ const f=fixture({missing:true});await assert.rejects(f.service.createTask(actor,{request:'Prepare a task',idempotency_key:'held'}),e=>e.code==='bible_unavailable');assert.equal(f.writes(),0);
+});
+
 test('merch-only scopes are narrow and require report/read dependency',()=>{assert.deepEqual(scopeList('merch:read merch:report'),['merch:read','merch:report']);assert.throws(()=>scopeList('merch:report'));assert.throws(()=>requireScope({scopes:['merch:read','merch:report']},'ecosystem:read'));assert.throws(()=>requireScope({scopes:['merch:read','merch:report']},'tasks:write'));});
+
+
+test('action execution scopes are explicit and preserve old defaults',()=>{
+ assert.deepEqual(scopeList('ecosystem:read operator:plan tasks:write'),actor.scopes);
+ for(const s of ['actions:prepare','ecosystem:read actions:execute','ecosystem:read payments:execute','ecosystem:read actions:prepare payments:execute'])assert.throws(()=>scopeList(s));
+ assert.deepEqual(scopeList('ecosystem:read actions:prepare actions:execute payments:execute'),['ecosystem:read','actions:prepare','actions:execute','payments:execute']);
+});

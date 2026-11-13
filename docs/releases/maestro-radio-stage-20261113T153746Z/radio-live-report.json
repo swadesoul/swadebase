@@ -1,0 +1,62 @@
+{
+  "checks": [
+    {
+      "path": "/maestro-factory-api/radio/public",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/maestro-factory-api/radio/public",
+      "method": "POST",
+      "status": 405
+    },
+    {
+      "path": "/maestro-factory-api/radio/engagement",
+      "method": "GET",
+      "status": 401
+    },
+    {
+      "path": "/maestro-factory-api/radio/engagement",
+      "method": "POST",
+      "status": 401
+    },
+    {
+      "path": "/radio",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/djs",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/education",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/behind-the-rotation",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/drama-media/episode-01-premiere.mp3",
+      "method": "HEAD",
+      "status": 200
+    },
+    {
+      "path": "/artists/nevaborya",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/play/",
+      "legacyRetired": true
+    }
+  ],
+  "privateTableRLS": true,
+  "publicDJCount": 3,
+  "callers": 0,
+  "shoutouts": 0
+}

@@ -1,0 +1,12 @@
+{
+  "recorded_at": "2026-11-07T07:25:40.230515+00:00",
+  "source_commit": "28893536105cab4b3871d03ddc200d253fc8f0d2",
+  "documents": {
+    "STANDING_RULES.md": "9c2d603430f3a8f64d4e42d0e35750c4e960c3d8f17ed8a46846953b2b9a792c",
+    "site-bibles/SWADEBASE_Master_Site_Bible.md": "ceb21a894152c8981b42496a4cf02c2f55af3714c21466cc7241f57c37358977",
+    "site-bibles/MCP_Actions_Master_Site_Bible.md": "3a41c2b18a99b8cb5812def5f1fcc0247c7e595c7735643d34bc1a640fe18e76"
+  },
+  "backup": "/opt/swadebase/backups/bible-entry-20261107T072131Z/docs-before-checkpoint",
+  "private_release_event": "b6a8dc5c-66bd-53f1-834d-54fce0b9bd70",
+  "release_state": "internal"
+}

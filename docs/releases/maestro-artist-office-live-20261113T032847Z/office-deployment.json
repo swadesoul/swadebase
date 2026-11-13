@@ -1,0 +1,48 @@
+{
+  "state": "live",
+  "previous": "/var/www/maestroradio-web/releases/20261112T224521Z-artist-studio",
+  "release": "/var/www/maestroradio-web/releases/20261113T032457Z-artist-office",
+  "backup": "/opt/swadebase/backups/maestro-artist-office-20261113T032457Z",
+  "source": "406f42e25c12584ff82cc2d95078ad71d15a6224",
+  "checks": [
+    [
+      "/",
+      200
+    ],
+    [
+      "/radio",
+      200
+    ],
+    [
+      "/artist-office",
+      200
+    ],
+    [
+      "/label-office",
+      200
+    ],
+    [
+      "/artist-studio",
+      200
+    ],
+    [
+      "/artist-discovery",
+      200
+    ],
+    [
+      "/education",
+      200
+    ],
+    [
+      "/stations/planner",
+      200
+    ],
+    [
+      "/pricing",
+      200
+    ]
+  ],
+  "pages_unchanged": true,
+  "radio_engine_restarted": false,
+  "finished": "2026-11-13T03:24:58.868829+00:00"
+}

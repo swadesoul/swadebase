@@ -1,0 +1,31 @@
+{
+  "day": "2026-11-06",
+  "project_id": "appgprj_6ae11e774ba88191ba4898e90c08dea6",
+  "version_number": 21,
+  "version_id": "appgprj_6ae11e774ba88191ba4898e90c08dea6~appgver_8e2ce0dfee148191bfe2d65d5d274ac7",
+  "commit_sha": "3353e4280af8580cbb4aeee0d6391db720e040b9",
+  "archive": {
+    "archive_format": "tar",
+    "sediment_file_id": "file_00000000a18481fdb71fa39df05afaf9",
+    "content_hash": "sha256:c5d53353cb63b41562a65873febee1523a438fc1b3977c721bb96cc58c18dfd7",
+    "size_bytes": 19404800,
+    "file_count": 81
+  },
+  "deployment_id": null,
+  "publication": "HELD_PUBLIC_ACCESS_CONFLICT_OWNER_APPROVAL",
+  "design_families": 3,
+  "source_revisions": 4,
+  "hidden_drafts": 3,
+  "provider_view_mappings_reviewed": 12,
+  "new_site_visible": 0,
+  "held": 3,
+  "approved_finished_listings": 0,
+  "product_ids": [
+    "6aedb516d77361bea608ffcb",
+    "6aedb518e040ea52100cde51",
+    "6aedb519ed98c2643707f691"
+  ],
+  "knowledge_doc_sha256": "d06521608cb09b9344dcf84178d67399537a78db3c8846edfe57cb7f1f38e738",
+  "knowledge_retrieval_verified": "dinner encore:1",
+  "voice_dist_ops_changed": false
+}

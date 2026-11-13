@@ -1,0 +1,41 @@
+{
+  "time": "2026-11-11T12:55:39.853619+00:00",
+  "whats_new_event": "ba7f5777-d407-4ee9-8347-bc413592a9f6",
+  "bibles": [
+    {
+      "path": "site-bibles/App_Factory_Master_Site_Bible.md",
+      "sha256": "3d52e5bf721a4122ca25849e31d717aeecbd117c910dbababc65eb276433940a",
+      "index_matches": true
+    },
+    {
+      "path": "site-bibles/SWADEBASE_Master_Site_Bible.md",
+      "sha256": "796e360c78c294bdfa0600b55e96c960524f6c4d0bc4172501e778c6f7d5e5f7",
+      "index_matches": true
+    },
+    {
+      "path": "site-bibles/Browser_Workspace_Master_Site_Bible.md",
+      "sha256": "a416046a527c044ee8b2d145f833ed8b571d78edc48b55032131f55d7c35da27",
+      "index_matches": true
+    },
+    {
+      "path": "site-bibles/Maestro_Radio_Master_Site_Bible.md",
+      "sha256": "9eb8d058857f95f468a0fe7e901fb45155a0b0af174377bab8666e0105e22171",
+      "index_matches": true
+    }
+  ],
+  "knowledge_search_verified": true,
+  "forced_rls_tables": 3,
+  "evidence": {
+    "version": "0.1.0",
+    "state": "installed_private_beta",
+    "node_tests": 10,
+    "python_tests": 3,
+    "live_acceptance_groups": 12,
+    "mcp_regression_passed": 129,
+    "mcp_regression_skipped": 1,
+    "sdk_tools_verified": 4,
+    "ready": false,
+    "android_device": "not_connected",
+    "play_console": "not_connected"
+  }
+}

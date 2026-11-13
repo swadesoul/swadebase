@@ -1,0 +1,16 @@
+{
+  "checks": [
+    "2 isolated synthetic users logged into existing SWADEBASE auth",
+    "anonymous votes reject",
+    "first signed-in vote persisted",
+    "duplicate user choice immutable",
+    "independent user vote isolated",
+    "unsigned submission rejected",
+    "direct private vote table access forbidden"
+  ],
+  "totalChecks": 7,
+  "tempUsersDeleted": 2,
+  "testVotesDeleted": 2,
+  "outgoingEmails": 0,
+  "paidModels": 0
+}

@@ -1,0 +1,22 @@
+{
+  "release": "oathloom-design-20261107",
+  "policyVersion": "2026-11-07.1",
+  "installedAt": "2026-11-07T07:53:21.440694+00:00",
+  "state": "installed_source_verified",
+  "backup": "/opt/swadebase/backups/oathloom-design-20261107T075318Z",
+  "tests": 39,
+  "checks": {
+    "builderAnonymousStatus": 401,
+    "builderError": "Sign in required",
+    "frontendStatus": 200,
+    "existingMapsEnabled": true,
+    "installedHashes": {
+      "design-catalog.ts": "83d2e5c94cf2bbf9d11061227bc2f114fd7993bf4c3e2a6d077b954da08432de",
+      "design-documents.ts": "658ee67f31e366915422ce5f3046c4935c57c4efabbeb4675053a2b3d72c6658",
+      "design-policy.ts": "acf3f6652b36693bd0f0e630d9c98e23adab821da4d5c43ef46e4c66ebdff575",
+      "index.ts": "e32fe816326d7871e91ab684158f326ad63b2864f243c7159c142ecbbcac6073"
+    },
+    "authenticatedGeneration": "not run",
+    "providerCalls": 0
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "time": "2026-11-11T12:50:35.072Z",
+  "tools": 27,
+  "factory_tools": [
+    "swade_app_factory",
+    "swade_android_build_test",
+    "swade_android_report",
+    "swade_android_cancel"
+  ],
+  "oauth_pkce_consent": "passed",
+  "overview": "passed",
+  "real_build_report": "passed",
+  "idempotency": "passed",
+  "unconnected_device": "blocked honestly",
+  "paid_calls": 0
+}

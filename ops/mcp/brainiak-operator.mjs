@@ -7,3 +7,4 @@ export async function routeExistingOutcome(input,identity,fetchImpl=fetch){
  const {data:d}=await r.json();
  return {text:d.status==='blocked'?'This request is blocked: '+d.reason:d.summary+'\n\n'+d.steps.map(s=>s.name+': '+s.purpose+' (Site Bible: '+s.bible_state+').').join('\n')+'\n\nThis is a prepared plan. Production has not started. Open the Ecosystem Operator in SWADEBASE to submit it to the existing coordinator.',mode:'ecosystem_plan'};
 }
+

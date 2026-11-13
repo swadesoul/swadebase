@@ -1,0 +1,21 @@
+# PET MUZIK November 7 Joy practice AOP T-shirt QA
+
+Checked 2026-11-07T14:06:35.596Z / 2026-11-07T08:06:35.596-06:00 against current pushed source 944f6dbc599b686b9771d74c3fe04bec3bfd0701 / Site version 23. Retrieved the current source repository and read the RUNBOOK, premium visual standard, saved calendar, SWADEBASE standing rules, PET MUZIK Bible, agent process and November 7 production receipt. Reconciled Automation_8c22ad4b649081918f8916bd41c3578e before any retry. All three daily IDs existed exactly once; no product creation or native image generation was rerun.
+
+Calendar remains aop-tee / Joy practice: MAKE ROOM FOR THE ZOOMIES.; JOY DOES NOT NEED A REASON.; LESS SCROLLING. MORE STROLLING. The three selected original SHA-256/native dimensions and all 12 exact panel SHA-256/pixel dimensions pass. Full-size white/black/mid-gray composites, 2x face/collar/tag crops and proposed layouts were revisited. Observed head/neck anatomy, eyes, ears, muzzles and collar/ribbon/tag attachments remain coherent; no paws or limbs are present. Copy and punctuation remain exact. No likeness reference exists, owner acceptance remains pending, and no art was upscaled. The rejected First Press good-intentions v1 was not reused. Corrected First Press v2 was not changed. Daily cat v1 remains unselected; daily cat v2 remains a separate unapproved revision.
+
+Fresh dedicated server-side Printify reads were strictly scoped to shop 29509155. Catalog count remains 25 and all 22 prior products are preserved. Hidden drafts remain 6aef09b3fdd097ce5a0557b1, 6aef09b707e5f5f771083f33 and 6aef09bbb7a964b43b0d22fc. Each has only M43104 enabled, cost 2460 cents and bootstrap price 3999 cents; price is not approved retail. All 12 stable upload IDs, source URLs, pixel dimensions and placement transforms match. M43104 template remains front 3833x4787, back 3825x4790 and sleeves 3066x1539.
+
+Critical correspondence hold: product metadata assigns provider images to M43104, but every current mockup URL uses L43108. The live L template differs: front 3953x4937, back 3943x4937 and sleeves 3215x1613. These images are representative L renders, not verified M-specific visual proof. L is disabled and has no qualified L print files.
+
+Three fresh native right-side provider renders are byte-identical to the saved originals. They retain the white collar and the small white mark below the right sleeve edge. Perspective occludes part of the slogan, while primary front/back views preserve complete copy. Provider images were not retouched. Existing review.html continues to label proposed flat layouts separately from actual unapproved provider renders. Official physical safe/bleed/seam geometry, effective print detail and owner finish acceptance remain pending.
+
+Counts today: 3 original design families / 3 hidden drafts; 0 new in QA; 0 newly Site-visible; 3 held; 0 approved finished listings. Site metadata remains public, not owner-private. No audience change or deployment was made. Voice Studio, dist, ops, locked art and unrelated products remain unchanged. No checkout, sales, orders, samples, external messages or charges.
+
+Next actionable blocker: obtain a true M43104 provider render or deliberately select and qualify L43108 using its exact template files, then obtain owner finish/art/product approval in an owner-private review surface. Physical print requirements and retail/shipping/tax/fees must also be approved before promotion. Continue the saved calendar; do not duplicate today’s IDs.
+
+
+Source save checkpoint: qualified QA receipts were pushed as source commit a0699da525bd2b766c3a06e6216d2686af8d214e and saved as Site version 24 (appgprj_6ae11e774ba88191ba4898e90c08dea6~appgver_01456305502881918e067670a0acebc9). Deployment remains null because the current Site audience is public and all three products remain held. Static archive hash stayed sha256:c5d53353cb63b41562a65873febee1523a438fc1b3977c721bb96cc58c18dfd7 because dist was intentionally unchanged.
+
+
+Automation continuity checkpoint: existing task Automation_8c22ad4b649081918f8916bd41c3578e was observed paused after reconciliation and was resumed without changing its prompt or 05:00 America/Chicago daily schedule. No new automation was created.

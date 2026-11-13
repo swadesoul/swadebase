@@ -23,3 +23,4 @@ export function makeMerch({pool,guard,readSnapshot=async()=>JSON.parse(await rea
  }
  return {catalog,report};
 }
+

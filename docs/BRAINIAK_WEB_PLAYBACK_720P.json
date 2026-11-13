@@ -1,0 +1,39 @@
+{
+  "id": "brainiak-web-playback-720p-20261025",
+  "product": "Brainiak",
+  "component": "hero-video-playback",
+  "status": "partially_verified",
+  "confirmed_findings": [
+    "Safari fetched the MP4 with successful HTTP 206 responses.",
+    "ChatGPT Site logged four missing JS/CSS asset requests at deployment time.",
+    "Original web video was 1080p H264 High Level 5.0, 27625474 bytes."
+  ],
+  "root_cause": "Exact device failure is not conclusively established without Safari reproduction. Missing page assets and unnecessarily high codec level were confirmed compatibility/reliability risks.",
+  "fix": [
+    "720p H264 Main Level 3.1 yuv420p, AAC LC stereo, faststart; 6333359 bytes, 120 seconds.",
+    "Versioned media URL, metadata preload, explicit Play button, always-visible direct link and visible errors.",
+    "Original MP4 URL redirects to new 720p file; CORS OPTIONS now supported.",
+    "Preserved 1080p master and archived verified 720p derivative in B2."
+  ],
+  "verification": [
+    "FFprobe confirms 1280x720, Main profile, level 3.1, AAC LC and 120 seconds.",
+    "B2 object size/readback verified.",
+    "Standalone build and TypeScript check passed.",
+    "HTTP GET bytes 0-1 returns 206 with correct two bytes.",
+    "Suffix range returns correct final 1024 bytes.",
+    "CORS OPTIONS returns 204.",
+    "Updated source pushed as 7897db42e22010d83658ae9265854cbfec093598.",
+    "Native ChatGPT review rebuild/publish succeeded: appgdep_6ade74bead308191b38ae2736965066a, commit 7897db42e22010d83658ae9265854cbfec093598."
+  ],
+  "unverified": [
+    "Actual Safari playback after fix; browser-control environment unavailable."
+  ],
+  "prevention": "Web deliveries default to 720p. Keep 1080p master. Verify Safari, range delivery, CORS, visible error path and current script/CSS assets after each deployment.",
+  "recurrence_key": "web-video-device-compatibility-and-stale-site-assets",
+  "evidence": [
+    "SWADEBASE media access log",
+    "ChatGPT Site worker 404 logs",
+    "/opt/brainiak/playback-build.log"
+  ],
+  "regression_test": "FFprobe + HTTP GET Range 0-1 and suffix ranges; Safari play; verify explicit direct link and caption load."
+}
