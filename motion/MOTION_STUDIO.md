@@ -110,7 +110,7 @@ Projects and samples are rows + B2 objects; the worker is stateless. Failed jobs
 
 ## 14. SWADE Learn production packs
 
-A Video Studio pack (5 clips at 15/5/5/5/15 seconds and 4 graphics) queues as `motion_render_jobs.kind = swade_learn`. The same worker renders it on CPU. Remotion 4.0.543 is the local renderer. HyperFrames writes the editable `index.html` and is the renderer when `SWADE_LEARN_RENDERER=hyperframes`. Narration defaults to local Kokoro (`swade_voice`, $0). If the Kokoro weights are not installed, the job uses a local PCM stand-in and still does not call a paid voice.
+A Video Studio pack (5 clips at 15/5/5/5/15 seconds and 4 graphics) queues as `motion_render_jobs.kind = swade_learn`. The same worker renders it on CPU. Remotion 4.0.543 is the local renderer. HyperFrames writes the editable `index.html` and is the renderer when `SWADE_LEARN_RENDERER=hyperframes`. Narration defaults to local Kokoro (`swade_voice`, $0). The worker image installs `kokoro-js`, Remotion, and espeak-ng, and downloads Remotion's Chrome Headless Shell at build time. If the Kokoro weights cannot load at runtime, the job uses a local PCM stand-in and still does not call a paid voice. The worker quotes and records every call through `public.swade_learn_quote` and `public.swade_learn_record_usage`, which call the shared `swadebase_ops` ledger. A missing ledger fails a paid call closed.
 
 `POST /swade-learn/jobs` accepts the pack. Results land at `teachvirt/swade-learn/renders/{id}/video.mp4` and `source.zip`, with sha256 checksums in the job `result` and in `ai_usage_ledger`. Uploads stay on the local disk unless `SWADE_LEARN_B2=b2`.
 

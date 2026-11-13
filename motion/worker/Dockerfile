@@ -5,7 +5,7 @@ FROM node:22-bookworm-slim
 # FFmpeg for encode/poster/audio conversion, zip for source bundles, and the shared
 # libraries headless Chrome needs (HyperFrames drives Chrome to capture frames).
 RUN apt-get update && apt-get install -y --no-install-recommends \
-      ffmpeg zip ca-certificates fonts-liberation fonts-noto-color-emoji \
+      ffmpeg zip ca-certificates espeak-ng fonts-liberation fonts-noto-color-emoji \
       libasound2 libatk-bridge2.0-0 libatk1.0-0 libcups2 libdbus-1-3 libdrm2 libgbm1 \
       libgtk-3-0 libnspr4 libnss3 libx11-xcb1 libxcomposite1 libxdamage1 libxfixes3 \
       libxkbcommon0 libxrandr2 libxshmfence1 xdg-utils \
@@ -21,6 +21,14 @@ COPY --chown=node:node motion/worker/package.json ./
 RUN npm install --omit=dev --no-audit --no-fund \
     && npx --no-install hyperframes telemetry disable || true
 RUN npx --no-install hyperframes browser ensure
+
+# SWADE Learn renders import Remotion and Kokoro from this package. HyperFrames
+# stays the default renderer; these dependencies are what SWADE_LEARN_RENDERER=remotion uses.
+COPY --chown=node:node motion/swade-learn/package.json motion/swade-learn/package-lock.json /app/motion/swade-learn/
+WORKDIR /app/motion/swade-learn
+RUN npm ci --omit=dev --no-audit --no-fund \
+    && node --input-type=module -e "import { ensureBrowser } from '@remotion/renderer'; await ensureBrowser({ chromeMode: 'headless-shell', logLevel: 'error' })"
+WORKDIR /app/motion/worker
 
 COPY --chown=node:node motion/adapter /app/motion/adapter
 COPY --chown=node:node motion/styles/library.json /app/motion/styles/library.json

@@ -9,6 +9,14 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { hyperframesHtml } from './hyperframes.mjs'
 import { createLedger, premiumDecision } from './ledger.mjs'
+
+export function renderProvenance(narrations, togetherResult) {
+  const providers = [...new Set(narrations.map((item) => item.provider).filter(Boolean))]
+  return {
+    paid_calls: narrations.filter((item) => item.provider && item.provider !== 'swade_voice').length + (togetherResult ? 1 : 0),
+    narration_provider: providers.length === 1 ? providers[0] : providers.join('+') || 'swade_voice',
+  }
+}
 import { elevenLabsSpeech, mixNarration, refusePaidFetch, synthesizeKokoro, togetherVideo } from './narration.mjs'
 import { validatePack } from './pack.mjs'
 import { renderKey } from './store.mjs'
@@ -38,11 +46,12 @@ function charactersOf(pack) {
 }
 
 async function guardPremium(ledger, asks) {
-  const decisions = asks.map((ask) => ({ ask, decision: premiumDecision(ledger, ask) }))
+  const decisions = []
+  for (const ask of asks) decisions.push({ ask, decision: await premiumDecision(ledger, ask) })
   const blocked = decisions.filter((item) => !item.decision.allowed)
   if (!blocked.length) return decisions
   for (const item of blocked) {
-    ledger.record({
+    await ledger.record({
       project: 'swade-learn',
       feature: item.ask.feature,
       provider: item.ask.provider,
@@ -55,6 +64,7 @@ async function guardPremium(ledger, asks) {
         ai_can_spend: item.decision.ai_can_spend,
         budget: item.decision.budget,
         priced: item.decision.priced,
+        ...(item.decision.ledger ? { ledger: item.decision.ledger } : {}),
       },
     })
   }
@@ -110,7 +120,7 @@ export async function runSwadeLearnPack({
 
   if (asks.length && !premiumEnabled) {
     for (const ask of asks) {
-      ledger.record({
+      await ledger.record({
         project: 'swade-learn',
         feature: ask.feature,
         provider: ask.provider,
@@ -141,7 +151,7 @@ export async function runSwadeLearnPack({
         text: clip.narration,
         dest: file,
       })
-      ledger.record({
+      await ledger.record({
         project: 'swade-learn',
         feature: 'narration',
         provider: 'elevenlabs',
@@ -157,7 +167,7 @@ export async function runSwadeLearnPack({
     for (const clip of pack.clips) {
       const file = join(dir, 'audio', `${clip.id}.wav`)
       const spoken = await synthesize(clip.narration, file, { voice: pack.voice.voice_id || 'af_heart' })
-      ledger.record({
+      await ledger.record({
         project: 'swade-learn',
         feature: 'narration',
         provider: 'swade_voice',
@@ -180,7 +190,7 @@ export async function runSwadeLearnPack({
       prompt: pack.clips.map((clip) => clip.on_screen).join(' '),
       seconds: pack.clips[0].duration_sec,
     })
-    ledger.record({
+    await ledger.record({
       project: 'swade-learn',
       feature: 'video',
       provider: 'together',
@@ -200,7 +210,7 @@ export async function runSwadeLearnPack({
       narration: narrations.map(({ provider, model, engine, clip }) => ({ clip_id: clip.id, provider, model, engine })),
       together: togetherResult,
       ai_usage_ledger: ledger.rows(),
-      paid_calls: narrations.filter((item) => item.provider !== 'swade_voice').length + (togetherResult ? 1 : 0),
+      ...renderProvenance(narrations, togetherResult),
     }
   }
 
@@ -259,6 +269,7 @@ export async function runSwadeLearnPack({
   const videoKey = renderKey(id, 'video.mp4')
   const zipKey = renderKey(id, 'source.zip')
   const manifestKey = renderKey(id, 'manifest.json')
+  const provenance = renderProvenance(narrations, togetherResult)
   const manifest = {
     pack_id: pack.pack_id,
     render_id: id,
@@ -267,8 +278,8 @@ export async function runSwadeLearnPack({
     mp4_sha256: mp4Sha,
     source_zip_sha256: zipSha,
     renderer: engine,
-    paid_calls: 0,
-    narration_provider: 'swade_voice',
+    paid_calls: provenance.paid_calls,
+    narration_provider: provenance.narration_provider,
   }
   const manifestFile = join(dir, 'manifest.json')
   await writeFile(manifestFile, JSON.stringify(manifest, null, 2))
@@ -276,7 +287,7 @@ export async function runSwadeLearnPack({
   await store.put(zipKey, zipFile, 'application/zip')
   await store.put(manifestKey, manifestFile, 'application/json')
 
-  ledger.record({
+  await ledger.record({
     project: 'swade-learn',
     feature: 'render',
     provider: engine === 'hyperframes' ? 'hyperframes' : 'remotion',
@@ -302,7 +313,8 @@ export async function runSwadeLearnPack({
       model,
       engine: voiceEngine,
     })),
-    paid_calls: 0,
+    paid_calls: provenance.paid_calls,
+    narration_provider: provenance.narration_provider,
     ai_usage_ledger: ledger.rows(),
   }
 }

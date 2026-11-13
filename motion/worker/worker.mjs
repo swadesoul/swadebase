@@ -281,14 +281,14 @@ async function runSampleJob(job, dir) {
 
 async function runSwadeLearnJob(job, dir) {
   const { runSwadeLearnPack } = await import('../swade-learn/pipeline.mjs')
-  const { createLedger } = await import('../swade-learn/ledger.mjs')
+  const { createSqlLedger } = await import('../swade-learn/ledger.mjs')
   const { localStore } = await import('../swade-learn/store.mjs')
   const premium = env('PREMIUM_VIDEO_ENABLED') === 'true'
   const useB2 = env('SWADE_LEARN_B2') === 'b2'
   const store = useB2
     ? { kind: 'b2', put: (key, file, type) => b2Put(key, file, type) }
     : localStore(env('SWADE_LEARN_LOCAL_ROOT', '/tmp/swade-learn-renders'))
-  const ledger = createLedger()
+  const ledger = createSqlLedger((fn, args) => db.rpc(fn, args))
   const result = await runSwadeLearnPack({
     pack: job.payload?.pack,
     ledger,

@@ -166,16 +166,131 @@ export function createLedger() {
   }
 }
 
-export function premiumDecision(ledger, { provider, model, units }) {
-  const quote = ledger.estimate(provider, model, units)
-  const estimateUsd = quote.priced ? quote.usd : 0
-  const aiCanSpend = ledger.aiCanSpend(provider, estimateUsd)
-  const budget = ledger.hasBudget(provider, estimateUsd)
+export async function premiumDecision(ledger, { provider, model, units }) {
+  try {
+    const quote = await ledger.estimate(provider, model, units)
+    const estimateUsd = quote.priced ? quote.usd : 0
+    const [aiCanSpend, budget] = await Promise.all([
+      ledger.aiCanSpend(provider, estimateUsd),
+      ledger.hasBudget(provider, estimateUsd),
+    ])
+    return {
+      allowed: Boolean(quote.priced && aiCanSpend && budget),
+      ai_can_spend: Boolean(aiCanSpend),
+      budget: Boolean(budget),
+      priced: quote.priced,
+      estimate_usd: quote.usd,
+    }
+  } catch (error) {
+    if (error.code !== 'ledger_unavailable') throw error
+    return { allowed: false, ai_can_spend: false, budget: false, priced: false, estimate_usd: null, ledger: 'unavailable' }
+  }
+}
+
+function budgetFromQuote(row, provider, estimateUsd) {
+  if (!row?.provider) return false
+  const estimate = Number(estimateUsd) || 0
+  if (!PAID_VIDEO_PROVIDERS.has(provider)) {
+    if (row.billing === 'self_hosted' || row.billing === 'postpaid') return true
+    if (!row.opening_balance_recorded) return false
+    return Number(row.balance_usd) - estimate >= Number(row.hard_stop_usd)
+  }
+  if (!row.opening_balance_recorded) return false
+  return Number(row.credit_usd) - Number(row.spent_usd) - estimate >= Number(row.hard_stop_usd)
+}
+
+// Worker ledger. Quotes and writes go through public.swade_learn_* which call
+// swadebase_ops.ai_can_spend and ai_record_usage. A missing migration fails closed
+// for paid calls and still keeps a local row for the job result.
+export function createSqlLedger(rpc) {
+  const usage = []
+  let last = null
+
+  async function quote(provider, model, units, estimateUsd) {
+    const { data, error } = await rpc('swade_learn_quote', {
+      p_provider: provider,
+      p_model: model,
+      p_units: units || {},
+      p_estimate_usd: estimateUsd ?? null,
+    })
+    if (error || data == null) {
+      const failure = new Error('ledger_unavailable')
+      failure.code = 'ledger_unavailable'
+      throw failure
+    }
+    return data
+  }
+
   return {
-    allowed: Boolean(quote.priced && aiCanSpend && budget),
-    ai_can_spend: aiCanSpend,
-    budget,
-    priced: quote.priced,
-    estimate_usd: quote.usd,
+    source: 'swadebase_ops',
+    async estimate(provider, model, units = {}) {
+      last = await quote(provider, model, units, null)
+      return { usd: last.priced ? Number(last.estimate_usd) : null, priced: Boolean(last.priced) }
+    },
+    async aiCanSpend(provider, estimateUsd = 0) {
+      const row = last?.provider === provider ? last : await quote(provider, '*', {}, estimateUsd)
+      last = row
+      return Boolean(row.ai_can_spend)
+    },
+    async hasBudget(provider, estimateUsd = 0) {
+      const row = last?.provider === provider ? last : await quote(provider, '*', {}, estimateUsd)
+      last = row
+      return budgetFromQuote(row, provider, estimateUsd)
+    },
+    async record(input) {
+      const args = {
+        p_project: input.project,
+        p_feature: input.feature,
+        p_provider: input.provider,
+        p_model: input.model,
+        p_user: input.user_id ?? null,
+        p_units: input.units || {},
+        p_status: input.status || 'ok',
+        p_request_id: input.request_id ?? null,
+        p_meta: input.meta || {},
+      }
+      try {
+        const { data, error } = await rpc('swade_learn_record_usage', args)
+        if (error) {
+          const failure = new Error('ledger_unavailable')
+          failure.code = 'ledger_unavailable'
+          throw failure
+        }
+        const saved = Array.isArray(data) ? data[0] : data
+        const row = {
+          ledger_id: saved?.ledger_id ?? null,
+          project: input.project,
+          feature: input.feature,
+          provider: input.provider,
+          model: input.model,
+          units: input.units || {},
+          cost_usd: Number(saved?.cost_usd ?? 0),
+          priced: Boolean(saved?.priced),
+          status: input.status || 'ok',
+          request_id: input.request_id ?? null,
+          meta: input.meta || {},
+        }
+        usage.push(row)
+        return { ledger_id: row.ledger_id, cost_usd: row.cost_usd, priced: row.priced }
+      } catch (error) {
+        if (PAID_VIDEO_PROVIDERS.has(input.provider) && (input.status || 'ok') === 'ok') throw error
+        const row = {
+          ledger_id: null,
+          project: input.project,
+          feature: input.feature,
+          provider: input.provider,
+          model: input.model,
+          units: input.units || {},
+          cost_usd: 0,
+          priced: false,
+          status: input.status || 'ok',
+          request_id: input.request_id ?? null,
+          meta: { ...(input.meta || {}), ledger_write: 'unavailable' },
+        }
+        usage.push(row)
+        return { ledger_id: null, cost_usd: 0, priced: false }
+      }
+    },
+    rows: () => usage.map((row) => ({ ...row, units: { ...row.units }, meta: { ...row.meta } })),
   }
 }
