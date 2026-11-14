@@ -49,6 +49,7 @@ class Caller:
     caller_kind: str
     plan: str
     token_hash: str
+    credential_id: str
     scopes: frozenset[str]
 
 
@@ -220,6 +221,7 @@ class Policy:
             caller_kind=credential.caller_kind,
             plan=credential.plan,
             token_hash=credential.token_hash,
+            credential_id=credential.credential_id,
             scopes=frozenset(credential.scopes),
         )
         if credential.status != "approved":

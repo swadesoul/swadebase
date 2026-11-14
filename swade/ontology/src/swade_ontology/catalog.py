@@ -9,6 +9,23 @@ from pathlib import Path
 
 ONTOLOGY_PATH = Path(__file__).resolve().parents[2] / "catalog" / "platform.json"
 
+_SOURCE_TABLES: dict[str, tuple[str, ...]] = {
+    "artist": ("artist",),
+    "track": ("track",),
+    "station": ("station",),
+    "spin": ("spin",),
+    "attribution": ("attribution",),
+    "order": ("commerce_order",),
+    "royalty": ("royalty",),
+    "consent": ("consent",),
+    "course": ("course",),
+    "lesson": ("lesson",),
+    "exam": ("exam_progress",),
+    "source": ("course_source",),
+    "tenant": ("tenant",),
+    "book": ("book",),
+}
+
 
 @dataclass(frozen=True)
 class SqlAttribute:
@@ -34,6 +51,7 @@ class Term:
     synonyms: tuple[str, ...]
     sql_attributes: tuple[SqlAttribute, ...]
     columns: tuple[ColumnMapping, ...]
+    source_tables: tuple[str, ...]
 
 
 @dataclass(frozen=True)
@@ -111,6 +129,7 @@ def load_catalog(path: Path = ONTOLOGY_PATH) -> Catalog:
                 )
                 for column in item.get("columns", [])
             ),
+            source_tables=tuple(item.get("source_tables") or _SOURCE_TABLES[item["id"]]),
         )
     relationships = tuple(
         Relationship(

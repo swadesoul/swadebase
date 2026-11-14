@@ -5,3 +5,5 @@ SWADE is that map here. A Track is a recording. An Artist performs it. A Station
 SWADEBOTS agents query SWADE before they act. They reach it through this facade, and only inside the least-privilege scopes an owner approved for that credential. A radio credential can read Track, Station, and Spin. It cannot read Course or Exam.
 
 Agents use the defined meanings. They never invent a new meaning for a term that already exists. If the map cannot support the question, they say so and flag the gap.
+
+Log what you use. Every query records the calling credential and bot, an optional X-Task-Id, the terms touched, and the source tables. The log is append-only. The owner can read it. Agents cannot change or erase it.

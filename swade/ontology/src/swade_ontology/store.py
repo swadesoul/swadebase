@@ -77,6 +77,12 @@ REVOKE_OWNER_SESSIONS = """
 UPDATE swade_ontology.admin_sessions SET revoked = true WHERE owner_subject = %s
 """.strip()
 
+INSERT_AUDIT = """
+INSERT INTO swade_ontology.audit_events (
+  decision_id, app_id, tenant_id, tenant_class, credential_id, caller_id, task_id, terms, source_tables, action, outcome
+) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+""".strip()
+
 
 class IsolatedStore:
     mode = "postgres"
@@ -180,6 +186,26 @@ class IsolatedStore:
 
     def revoke_owner_sessions(self, owner_subject: str) -> None:
         self.database.query(REVOKE_OWNER_SESSIONS, (owner_subject,))
+
+    def insert_audit(self, event: object) -> None:
+        if "UPDATE" in INSERT_AUDIT or "DELETE" in INSERT_AUDIT:
+            raise StoreError("audit_not_append_only")
+        self.database.query(
+            INSERT_AUDIT,
+            (
+                event.decision_id,
+                event.app_id,
+                event.tenant_id,
+                event.tenant_class,
+                event.credential_id,
+                event.caller_id,
+                event.task_id,
+                ",".join(event.terms),
+                ",".join(event.source_tables),
+                event.action,
+                event.outcome,
+            ),
+        )
 
     def search_documents(self, tenant_id: str, query: str, limit: int) -> list[DocumentHit]:
         statement, params = fts_statement(tenant_id, query, limit)

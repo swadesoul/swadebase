@@ -8,7 +8,7 @@ import secrets
 from typing import Any
 
 from . import __version__, primer_text
-from .audit import AuditLog
+from .audit import AuditEvent, AuditLog, clean_task_id, reset_task_id, set_task_id
 from .brain import BrainClient, DocumentHit
 from .catalog import Catalog, Term
 from .config import Config
@@ -145,6 +145,21 @@ class KnowledgeService:
         cookie_out: list[str] | None = None,
     ) -> tuple[int, dict[str, Any]]:
         normalized = {key.lower(): value for key, value in headers.items()}
+        task_token = set_task_id(clean_task_id(normalized.get("x-task-id")))
+        try:
+            return self._dispatch(method, path, normalized, query, body, cookie_out)
+        finally:
+            reset_task_id(task_token)
+
+    def _dispatch(
+        self,
+        method: str,
+        path: str,
+        normalized: dict[str, str],
+        query: dict[str, str],
+        body: Any,
+        cookie_out: list[str] | None,
+    ) -> tuple[int, dict[str, Any]]:
         if method == "GET" and path == "/health":
             return 200, self.health()
         if method not in {"GET", "POST"}:
@@ -209,6 +224,8 @@ class KnowledgeService:
             return 403, {"error": {"code": "reauth_required", "service": "SWADE"}}
         owner_email = session.owner_email
         owner_subject = session.owner_subject
+        if method == "GET" and path == "/v1/admin/audit":
+            return 200, {"events": [_event_payload(event) for event in self.audit.events()]}
         if method == "GET" and path == "/v1/admin/approvals":
             allowed = self.policy._deny(200, "allow", None)
             self.audit.record(allowed, "admin.approvals", None)
@@ -401,7 +418,7 @@ class KnowledgeService:
             if query and not _term_matches(term, query):
                 continue
             terms.append(self._term_payload(term, caller.scopes))
-        self.audit.record(decision, "terms.list", caller)
+        self._record_query(decision, "terms.list", caller, [term["id"] for term in terms])
         return 200, {"terms": terms, "provenance": self._provenance(decision, ["starter-catalog"])}
 
     def _get_term(self, decision: Decision, term_id: str) -> tuple[int, dict[str, Any]]:
@@ -411,9 +428,9 @@ class KnowledgeService:
         term = self.catalog.terms.get(term_id)
         if app is None or term is None or term_id not in caller.scopes:
             hidden = self.policy._deny(403, "outside_scope", caller)
-            self.audit.record(hidden, "terms.get", caller)
+            self._record_query(hidden, "terms.get", caller, [term_id])
             return 403, self._error(hidden)
-        self.audit.record(decision, "terms.get", caller)
+        self._record_query(decision, "terms.get", caller, [term_id])
         return 200, {
             "term": self._term_payload(term, caller.scopes),
             "provenance": self._provenance(decision, ["starter-catalog"]),
@@ -430,7 +447,7 @@ class KnowledgeService:
         assert caller is not None
         term_ids = extract_term_ids(self.catalog, question)
         if not term_ids:
-            self.audit.record(decision, "answerable", caller)
+            self._record_query(decision, "answerable", caller, [])
             return 200, {
                 "answerable": False,
                 "reason": "ontology_unmatched",
@@ -438,9 +455,9 @@ class KnowledgeService:
             }
         allowed = self.policy.authorize_terms(caller, term_ids)
         if not allowed.allowed:
-            self.audit.record(allowed, "answerable", caller)
+            self._record_query(allowed, "answerable", caller, term_ids)
             return allowed.status, self._error(allowed, outside=_outside_scopes(caller, term_ids))
-        self.audit.record(allowed, "answerable", caller)
+        self._record_query(allowed, "answerable", caller, term_ids)
         return 200, {
             "answerable": True,
             "terms": term_ids,
@@ -458,7 +475,7 @@ class KnowledgeService:
         assert caller is not None
         term_ids = extract_term_ids(self.catalog, question)
         if not term_ids:
-            self.audit.record(decision, "ask", caller)
+            self._record_query(decision, "ask", caller, [])
             return 200, {
                 "answerable": False,
                 "answer": None,
@@ -469,7 +486,7 @@ class KnowledgeService:
             }
         allowed = self.policy.authorize_terms(caller, term_ids)
         if not allowed.allowed:
-            self.audit.record(allowed, "ask", caller)
+            self._record_query(allowed, "ask", caller, term_ids)
             return allowed.status, self._error(allowed, outside=_outside_scopes(caller, term_ids))
         app = self.catalog.app(caller.app_id)
         assert app is not None
@@ -483,7 +500,7 @@ class KnowledgeService:
             narration = result.text
             model = result.model
             model_error = result.error
-        self.audit.record(allowed, "ask", caller)
+        self._record_query(allowed, "ask", caller, term_ids)
         return 200, {
             "answerable": True,
             "answer": "Starter definitions returned. SQL was not executed.",
@@ -510,24 +527,24 @@ class KnowledgeService:
         query = body["query"].strip()
         screened = self.policy.screen_question(caller, query)
         if not screened.allowed:
-            self.audit.record(screened, "documents.search", caller)
+            self._record_query(screened, "documents.search", caller, extract_term_ids(self.catalog, query))
             return screened.status, self._error(screened)
         mentioned = extract_term_ids(self.catalog, query)
         if mentioned:
             scoped = self.policy.authorize_terms(caller, mentioned)
             if not scoped.allowed:
-                self.audit.record(scoped, "documents.search", caller)
+                self._record_query(scoped, "documents.search", caller, mentioned)
                 return scoped.status, self._error(scoped, outside=_outside_scopes(caller, mentioned))
         if self.brain.configured:
             result = self.brain.search(caller.tenant_id, query, bounded)
             if result.dropped:
                 dropped = self.policy._deny(200, "brain_scope_filtered", caller)
-                self.audit.record(dropped, "documents.search", caller)
+                self._record_query(dropped, "documents.search", caller, mentioned)
             if result.error:
                 failed = self.policy._deny(502, "brain_unavailable", caller)
-                self.audit.record(failed, "documents.search", caller)
+                self._record_query(failed, "documents.search", caller, mentioned)
                 return 502, self._error(failed)
-            self.audit.record(decision, "documents.search", caller)
+            self._record_query(decision, "documents.search", caller, mentioned)
             return 200, {
                 "hits": [_hit(hit) for hit in result.hits],
                 "provenance": self._provenance(decision, ["sss-brain"], document_search="sss-brain"),
@@ -536,31 +553,49 @@ class KnowledgeService:
             hits = self.documents.search(caller.tenant_id, query, bounded)
         except StoreError:
             failed = self.policy._deny(503, "document_store_unavailable", caller)
-            self.audit.record(failed, "documents.search", caller)
+            self._record_query(failed, "documents.search", caller, mentioned)
             return 503, self._error(failed)
-        self.audit.record(decision, "documents.search", caller)
+        self._record_query(decision, "documents.search", caller, mentioned)
         return 200, {
             "hits": [_hit(hit) for hit in hits],
             "tenant_documents": "sss_brain_not_configured",
             "provenance": self._provenance(decision, ["postgres-fts"], document_search="postgres-fts"),
         }
 
+    def _record_query(
+        self,
+        decision: Decision,
+        action: str,
+        caller: Caller,
+        term_ids: list[str],
+    ) -> None:
+        tables: list[str] = []
+        for term_id in term_ids:
+            term = self.catalog.terms.get(term_id)
+            if term is None:
+                continue
+            for table in term.source_tables:
+                if table not in tables:
+                    tables.append(table)
+        event = self.audit.record(
+            decision,
+            action,
+            caller,
+            credential_id=caller.credential_id,
+            terms=tuple(term_ids),
+            source_tables=tuple(tables),
+        )
+        if self.store is not None and hasattr(self.store, "insert_audit"):
+            try:
+                self.store.insert_audit(event)
+            except StoreError:
+                return
+
     def _audit(self, decision: Decision) -> tuple[int, dict[str, Any]]:
         caller = decision.caller
         assert caller is not None
         self.audit.record(decision, "audit.read_own", caller)
-        events = [
-            {
-                "decision_id": event.decision_id,
-                "at": event.at,
-                "action": event.action,
-                "outcome": event.outcome,
-                "app_id": event.app_id,
-                "tenant_id": event.tenant_id,
-                "caller_id": event.caller_id,
-            }
-            for event in self.audit.for_caller(caller)
-        ]
+        events = [_event_payload(event) for event in self.audit.for_caller(caller)]
         return 200, {"events": events, "provenance": self._provenance(decision, ["audit"])}
 
     def _screen(self, decision: Decision, question: str, action: str) -> tuple[int, dict[str, Any]] | None:
@@ -760,6 +795,22 @@ def _term_matches(term: Term, query: str) -> bool:
         if any(_contains_phrase(phrase, word) for phrase in phrases):
             return True
     return False
+
+
+def _event_payload(event: AuditEvent) -> dict[str, Any]:
+    return {
+        "decision_id": event.decision_id,
+        "at": event.at,
+        "action": event.action,
+        "outcome": event.outcome,
+        "credential_id": event.credential_id,
+        "caller_id": event.caller_id,
+        "task_id": event.task_id,
+        "terms": list(event.terms),
+        "source_tables": list(event.source_tables),
+        "app_id": event.app_id,
+        "tenant_id": event.tenant_id,
+    }
 
 
 def _outside_scopes(caller: Caller, term_ids: list[str]) -> list[str]:

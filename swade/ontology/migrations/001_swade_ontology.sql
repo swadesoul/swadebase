@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS swade_ontology.admin_sessions (
   revoked boolean NOT NULL DEFAULT false
 );
 
+-- Append-only. Insert rows. Do not update or delete them.
 CREATE TABLE IF NOT EXISTS swade_ontology.audit_events (
   id bigserial PRIMARY KEY,
   decision_id text NOT NULL,
@@ -54,7 +55,11 @@ CREATE TABLE IF NOT EXISTS swade_ontology.audit_events (
   app_id text,
   tenant_id text,
   tenant_class text,
+  credential_id text,
   caller_id text,
+  task_id text,
+  terms text,
+  source_tables text,
   action text NOT NULL,
   outcome text NOT NULL
 );

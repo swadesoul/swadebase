@@ -588,7 +588,8 @@ class McpTests(unittest.TestCase):
         self.assertEqual(body["result"]["serverInfo"]["title"], "SWADE")
         self.assertIn("SWADEBOTS", body["result"]["instructions"])
         self.assertIn("shared map of meanings", body["result"]["instructions"])
-        self.assertLess(len(body["result"]["instructions"].split()), 200)
+        self.assertLess(len(body["result"]["instructions"].split()), 280)
+        self.assertIn("Log what you use", body["result"]["instructions"])
         health = self.service.dispatch("GET", "/health", {}, {}, None)[1]
         self.assertEqual(health["description"], body["result"]["instructions"])
         self.assertIn("docs/PRIMER.md", (ROOT / "README.md").read_text(encoding="utf-8"))
@@ -1042,6 +1043,59 @@ class LeastPrivilegeTests(unittest.TestCase):
         status, body = scoped.dispatch("DELETE", "/v1/terms/spin", auth("narrow-radio-tokenx"), {}, None)
         self.assertEqual(status, 405)
         self.assertEqual(body["error"]["code"], "read_only")
+
+
+class QueryAuditTests(unittest.TestCase):
+    def test_each_query_is_appended_with_credential_task_terms_and_tables(self) -> None:
+        def transport(url: str, headers: dict[str, str]) -> tuple[int, bytes]:
+            if headers["authorization"].removeprefix("Bearer ") == "owner-access-token":
+                return 200, google_user("owner@example.com", "google", True, "owner-sub")
+            return 401, b"{}"
+
+        scoped = service_for(owner=OwnerAuth("https://swadebase.cloud/auth/v1", "owner@example.com", transport))
+        grant(scoped.policy, "maestro-alpha-token", "maestro-radio", ALPHA, "customer")
+        grant(scoped.policy, "maestro-bravo-token", "maestro-radio", BRAVO, "customer")
+        status, _body = scoped.dispatch(
+            "POST",
+            "/v1/ask",
+            {**auth("maestro-alpha-token"), "x-task-id": "task-alpha"},
+            {},
+            {"question": "how many spins aired"},
+        )
+        self.assertEqual(status, 200)
+        status, own = scoped.dispatch("GET", "/v1/audit", auth("maestro-alpha-token"), {}, None)
+        asks = [event for event in own["events"] if event["action"] == "ask"]
+        self.assertEqual(asks[-1]["caller_id"], CALLER)
+        self.assertEqual(asks[-1]["task_id"], "task-alpha")
+        self.assertIn("spin", asks[-1]["terms"])
+        self.assertEqual(asks[-1]["source_tables"], ["spin"])
+        self.assertTrue(asks[-1]["credential_id"])
+        first_id = asks[-1]["decision_id"]
+        scoped.dispatch(
+            "POST",
+            "/v1/ask",
+            {**auth("maestro-bravo-token"), "x-task-id": "task-bravo"},
+            {},
+            {"question": "how many spins aired"},
+        )
+        status, own_again = scoped.dispatch("GET", "/v1/audit", auth("maestro-alpha-token"), {}, None)
+        self.assertTrue(
+            any(event["decision_id"] == first_id and event["task_id"] == "task-alpha" for event in own_again["events"])
+        )
+        self.assertFalse(any(event["task_id"] == "task-bravo" for event in own_again["events"]))
+        status, owner_log = scoped.dispatch(
+            "GET",
+            "/v1/admin/audit",
+            operator_headers(scoped, "owner-access-token"),
+            {},
+            None,
+        )
+        self.assertEqual(status, 200)
+        task_ids = {event["task_id"] for event in owner_log["events"]}
+        self.assertIn("task-alpha", task_ids)
+        self.assertIn("task-bravo", task_ids)
+        with self.assertRaises(AttributeError):
+            scoped.audit.events()[0].task_id = "rewritten"  # type: ignore[misc]
 
 
 class ScriptedDatabase:
