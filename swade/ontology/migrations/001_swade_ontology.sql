@@ -17,7 +17,10 @@ CREATE TABLE IF NOT EXISTS swade_ontology.credentials (
   caller_kind text NOT NULL CHECK (caller_kind IN ('swadebots', 'app')),
   plan text NOT NULL CHECK (plan IN ('free', 'paid')),
   status text NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'revoked')),
+  scopes text NOT NULL,
+  access text NOT NULL DEFAULT 'read' CHECK (access = 'read'),
   created_at timestamptz NOT NULL DEFAULT now(),
+  CHECK (scopes <> '' AND position('*' in scopes) = 0),
   CHECK (
     (tenant_class = 'personal' AND tenant_id = 'swade-personal')
     OR (tenant_class = 'customer' AND tenant_id <> 'swade-personal')

@@ -8,6 +8,7 @@ from typing import Protocol
 from .brain import DocumentHit
 from .fts import fts_statement
 from .policy import Approval, Credential, Policy
+from .scopes import encode_scopes, scopes_from_storage
 
 
 class StoreError(RuntimeError):
@@ -20,7 +21,7 @@ class Queryable(Protocol):
 
 
 LOAD_CREDENTIALS = """
-SELECT credential_id, token_hash, app_id, tenant_id, tenant_class, caller_id, caller_kind, plan, status
+SELECT credential_id, token_hash, app_id, tenant_id, tenant_class, caller_id, caller_kind, plan, status, scopes, access
 FROM swade_ontology.credentials
 """.strip()
 
@@ -32,8 +33,8 @@ ORDER BY created_at
 
 INSERT_CREDENTIAL = """
 INSERT INTO swade_ontology.credentials (
-  credential_id, token_hash, app_id, tenant_id, tenant_class, caller_id, caller_kind, plan, status
-) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+  credential_id, token_hash, app_id, tenant_id, tenant_class, caller_id, caller_kind, plan, status, scopes, access
+) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
 """.strip()
 
 RECORD_APPROVAL = """
@@ -87,7 +88,11 @@ class IsolatedStore:
         if not self.ready():
             raise StoreError("not_migrated")
         for row in self.database.query(LOAD_CREDENTIALS):
-            if len(row) != 9:
+            if len(row) != 11:
+                continue
+            app = policy.catalog.app(str(row[2]))
+            parsed = scopes_from_storage(str(row[9]), app.terms) if app is not None else None
+            if parsed is None or str(row[10]) != "read":
                 continue
             policy.restore_credential(
                 Credential(
@@ -100,6 +105,8 @@ class IsolatedStore:
                     caller_kind=str(row[6]),
                     plan=str(row[7]),
                     status=str(row[8]),
+                    scopes=parsed,
+                    access="read",
                 )
             )
         for row in self.database.query(LOAD_APPROVALS):
@@ -132,6 +139,8 @@ class IsolatedStore:
                 credential.caller_kind,
                 credential.plan,
                 credential.status,
+                encode_scopes(credential.scopes),
+                credential.access,
             ),
         )
 

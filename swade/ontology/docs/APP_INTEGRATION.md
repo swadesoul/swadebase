@@ -7,7 +7,7 @@ Clients:
 - TypeScript: `swade/ontology/sdk/typescript/src/client.ts`
 - Python: `swade/ontology/sdk/python/swade_ontology_sdk`
 
-Both clients send `x-swadebots-client: swadebots` and refuse a tenant override. The credential is the scope. The owner issues it through the admin routes, and it cannot read until that owner approves it. A revoked credential is denied. See `OAUTH.md`.
+Both clients send `x-swadebots-client: swadebots` and refuse a tenant override. The owner issues each credential with explicit `domain:entity` scopes, such as `radio:track`, `radio:station`, and `radio:spin`, or `courses:course`, `courses:lesson`, and `courses:exam`. A scope of `*` or `radio:*` is rejected. The credential is read-only. A question that names an entity outside those scopes is denied by the server and written to the audit log. The credential cannot read until the owner approves it. A revoked credential is denied. See `OAUTH.md`.
 
 ```typescript
 import { SwadeClient } from './client.ts'

@@ -16,7 +16,7 @@ from .engine import EngineClient
 from .fts import MemoryDocumentIndex
 from .gateway import Gateway
 from .owner_auth import OwnerAuth
-from .policy import Decision, Policy, bearer_token
+from .policy import Caller, Decision, Policy, bearer_token
 from .sessions import (
     SessionRegistry,
     clear_session_cookie,
@@ -146,6 +146,8 @@ class KnowledgeService:
         normalized = {key.lower(): value for key, value in headers.items()}
         if method == "GET" and path == "/health":
             return 200, self.health()
+        if method not in {"GET", "POST"}:
+            return 405, {"error": {"code": "read_only", "service": "SWADE"}}
         if method == "POST" and path == "/mcp":
             return self._mcp(normalized, body)
         if not self.config.enabled:
@@ -305,6 +307,9 @@ class KnowledgeService:
         required = ("app_id", "tenant_id", "tenant_class", "caller_id", "caller_kind", "plan")
         if any(not isinstance(body.get(key), str) or not body[key].strip() for key in required):
             return 400, {"error": {"code": "credential_invalid", "service": "SWADE"}}
+        access = body.get("access", "read")
+        if access != "read":
+            return 400, {"error": {"code": "read_only", "service": "SWADE"}}
         token = secrets.token_urlsafe(32)
         try:
             credential = self.policy.add_credential(
@@ -315,6 +320,8 @@ class KnowledgeService:
                 caller_id=body["caller_id"].strip(),
                 caller_kind=body["caller_kind"].strip(),
                 plan=body["plan"].strip(),
+                scopes=body.get("scopes"),
+                access="read",
             )
         except ValueError:
             return 400, {"error": {"code": "credential_invalid", "service": "SWADE"}}
@@ -332,6 +339,8 @@ class KnowledgeService:
             "credential_id": credential.credential_id,
             "token": token,
             "status": "pending",
+            "access": "read",
+            "scopes": list(credential.scopes),
             "owner_email": owner_email,
             "owner_subject": owner_subject,
         }
@@ -384,13 +393,13 @@ class KnowledgeService:
         app = self.catalog.app(caller.app_id)
         assert app is not None
         terms = []
-        for term_id in sorted(app.terms):
+        for term_id in sorted(caller.scopes):
             term = self.catalog.terms.get(term_id)
             if term is None:
                 continue
             if query and not _term_matches(term, query):
                 continue
-            terms.append(self._term_payload(term, app.terms))
+            terms.append(self._term_payload(term, caller.scopes))
         self.audit.record(decision, "terms.list", caller)
         return 200, {"terms": terms, "provenance": self._provenance(decision, ["starter-catalog"])}
 
@@ -399,13 +408,13 @@ class KnowledgeService:
         assert caller is not None
         app = self.catalog.app(caller.app_id)
         term = self.catalog.terms.get(term_id)
-        if app is None or term is None or term_id not in app.terms:
-            hidden = self.policy._deny(404, "not_available", caller)
+        if app is None or term is None or term_id not in caller.scopes:
+            hidden = self.policy._deny(403, "outside_scope", caller)
             self.audit.record(hidden, "terms.get", caller)
-            return 404, self._error(hidden)
+            return 403, self._error(hidden)
         self.audit.record(decision, "terms.get", caller)
         return 200, {
-            "term": self._term_payload(term, app.terms),
+            "term": self._term_payload(term, caller.scopes),
             "provenance": self._provenance(decision, ["starter-catalog"]),
         }
 
@@ -429,7 +438,7 @@ class KnowledgeService:
         allowed = self.policy.authorize_terms(caller, term_ids)
         if not allowed.allowed:
             self.audit.record(allowed, "answerable", caller)
-            return allowed.status, self._error(allowed, outside=_outside(self.catalog, caller.app_id, term_ids))
+            return allowed.status, self._error(allowed, outside=_outside_scopes(caller, term_ids))
         self.audit.record(allowed, "answerable", caller)
         return 200, {
             "answerable": True,
@@ -460,7 +469,7 @@ class KnowledgeService:
         allowed = self.policy.authorize_terms(caller, term_ids)
         if not allowed.allowed:
             self.audit.record(allowed, "ask", caller)
-            return allowed.status, self._error(allowed, outside=_outside(self.catalog, caller.app_id, term_ids))
+            return allowed.status, self._error(allowed, outside=_outside_scopes(caller, term_ids))
         app = self.catalog.app(caller.app_id)
         assert app is not None
         payloads = [self._term_payload(self.catalog.terms[term_id], app.terms) for term_id in term_ids]
@@ -502,6 +511,12 @@ class KnowledgeService:
         if not screened.allowed:
             self.audit.record(screened, "documents.search", caller)
             return screened.status, self._error(screened)
+        mentioned = extract_term_ids(self.catalog, query)
+        if mentioned:
+            scoped = self.policy.authorize_terms(caller, mentioned)
+            if not scoped.allowed:
+                self.audit.record(scoped, "documents.search", caller)
+                return scoped.status, self._error(scoped, outside=_outside_scopes(caller, mentioned))
         if self.brain.configured:
             result = self.brain.search(caller.tenant_id, query, bounded)
             if result.dropped:
@@ -749,10 +764,8 @@ def _term_matches(term: Term, query: str) -> bool:
     return False
 
 
-def _outside(catalog: Catalog, app_id: str, term_ids: list[str]) -> list[str]:
-    app = catalog.app(app_id)
-    granted = app.terms if app else frozenset()
-    return [term_id for term_id in term_ids if term_id not in granted]
+def _outside_scopes(caller: Caller, term_ids: list[str]) -> list[str]:
+    return [term_id for term_id in term_ids if term_id not in caller.scopes]
 
 
 def _question(body: Any) -> str | None:

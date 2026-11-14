@@ -10,6 +10,7 @@ from dataclasses import dataclass, replace
 
 from .catalog import Catalog
 from .config import PERSONAL_TENANT_ID
+from .scopes import encode_scopes, parse_scopes, scopes_from_storage
 
 
 _SERVICE_ROLE_MARKER = "service_role"
@@ -35,6 +36,8 @@ class Credential:
     caller_kind: str
     plan: str
     status: str
+    scopes: tuple[str, ...]
+    access: str
 
 
 @dataclass(frozen=True)
@@ -46,6 +49,7 @@ class Caller:
     caller_kind: str
     plan: str
     token_hash: str
+    scopes: frozenset[str]
 
 
 @dataclass(frozen=True)
@@ -83,6 +87,8 @@ class Policy:
         caller_id: str,
         caller_kind: str,
         plan: str,
+        scopes: object,
+        access: str = "read",
     ) -> Credential:
         if len(token) < 16:
             raise ValueError("credential tokens must be at least 16 characters")
@@ -100,6 +106,12 @@ class Policy:
             raise ValueError("customer credentials cannot use the personal tenant")
         if len(tenant_id) < 8:
             raise ValueError("tenant ids must be at least 8 characters")
+        if access != "read":
+            raise ValueError("credentials are read-only")
+        app = self.catalog.app(app_id)
+        if app is None:
+            raise ValueError("unknown app")
+        parsed_scopes = parse_scopes(scopes, app.terms)
         credential = Credential(
             credential_id=str(uuid.uuid4()),
             token_hash=hash_token(token),
@@ -110,6 +122,8 @@ class Policy:
             caller_kind=caller_kind,
             plan=plan,
             status="pending",
+            scopes=parsed_scopes,
+            access="read",
         )
         self._credentials[credential.token_hash] = credential
         self._by_id[credential.credential_id] = credential.token_hash
@@ -123,6 +137,11 @@ class Policy:
         if credential.tenant_class == "personal" and credential.tenant_id != PERSONAL_TENANT_ID:
             return
         if credential.tenant_class == "customer" and credential.tenant_id == PERSONAL_TENANT_ID:
+            return
+        if credential.access != "read" or not credential.scopes or "*" in encode_scopes(credential.scopes):
+            return
+        app = self.catalog.app(credential.app_id)
+        if app is None or scopes_from_storage(encode_scopes(credential.scopes), app.terms) != credential.scopes:
             return
         self._credentials[credential.token_hash] = credential
         self._by_id[credential.credential_id] = credential.token_hash
@@ -201,6 +220,7 @@ class Policy:
             caller_kind=credential.caller_kind,
             plan=credential.plan,
             token_hash=credential.token_hash,
+            scopes=frozenset(credential.scopes),
         )
         if credential.status != "approved":
             code = "pending_approval" if credential.status == "pending" else "revoked"
@@ -213,11 +233,9 @@ class Policy:
         return Decision(True, 200, "allow", caller, str(uuid.uuid4()))
 
     def authorize_terms(self, caller: Caller, term_ids: list[str]) -> Decision:
-        app = self.catalog.app(caller.app_id)
-        granted = app.terms if app else frozenset()
-        outside = [term_id for term_id in term_ids if term_id not in granted]
+        outside = [term_id for term_id in term_ids if term_id not in caller.scopes]
         if outside:
-            return self._deny(403, "outside_app_scope", caller)
+            return self._deny(403, "outside_scope", caller)
         return Decision(True, 200, "allow", caller, str(uuid.uuid4()))
 
     def screen_question(self, caller: Caller, question: str) -> Decision:

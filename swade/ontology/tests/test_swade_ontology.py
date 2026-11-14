@@ -23,6 +23,7 @@ from swade_ontology.gateway import Gateway  # noqa: E402
 from swade_ontology.http_server import bind  # noqa: E402
 from swade_ontology.owner_auth import OwnerAuth  # noqa: E402
 from swade_ontology.policy import Policy  # noqa: E402
+from swade_ontology.scopes import explicit_scopes_for  # noqa: E402
 from swade_ontology.rehearse import (  # noqa: E402
     MIGRATION_PATH,
     RecordingConnection,
@@ -86,6 +87,7 @@ def grant(policy: Policy, token: str, app_id: str, tenant_id: str, tenant_class:
         caller_id=CALLER if tenant_class == "customer" else "swadebots.personal",
         caller_kind="swadebots",
         plan=plan,
+        scopes=explicit_scopes_for(policy.catalog.app(app_id).terms),
     )
     policy.approve(credential.credential_id, owner_email="owner@example.com", owner_subject="owner-subject")
 
@@ -256,8 +258,8 @@ class IsolationTests(unittest.TestCase):
         self.assertNotIn("exam", ids)
         self.assertNotIn("royalty", ids)
         status, body = self.service.dispatch("GET", "/v1/terms/exam", auth("maestro-alpha-token"), {}, None)
-        self.assertEqual(status, 404)
-        self.assertEqual(body["error"]["code"], "not_available")
+        self.assertEqual(status, 403)
+        self.assertEqual(body["error"]["code"], "outside_scope")
         self.assertNotIn("expression", json.dumps(body))
         status, body = self.service.dispatch(
             "POST",
@@ -267,7 +269,7 @@ class IsolationTests(unittest.TestCase):
             {"question": "has this student unlocked this exam?"},
         )
         self.assertEqual(status, 403)
-        self.assertEqual(body["error"]["code"], "outside_app_scope")
+        self.assertEqual(body["error"]["code"], "outside_scope")
         self.assertNotIn("exam_progress", json.dumps(body))
 
     def test_teaching_cannot_read_radio_attribution(self) -> None:
@@ -279,7 +281,7 @@ class IsolationTests(unittest.TestCase):
             {"question": "which attribution followed this spin?"},
         )
         self.assertEqual(status, 403)
-        self.assertEqual(body["error"]["code"], "outside_app_scope")
+        self.assertEqual(body["error"]["code"], "outside_scope")
 
     def test_cross_tenant_and_personal_scope_stay_apart(self) -> None:
         status, body = self.service.dispatch(
@@ -417,6 +419,7 @@ class IsolationTests(unittest.TestCase):
             caller_id="swadebots.personal",
             caller_kind="swadebots",
             plan="free",
+            scopes=explicit_scopes_for(self.service.catalog.app("swade-personal").terms),
         )
         status, body = self.service.dispatch("GET", "/v1/terms", auth("posed-personal-token"), {}, None)
         self.assertEqual(status, 403)
@@ -432,6 +435,7 @@ class IsolationTests(unittest.TestCase):
                 caller_id="swadebots.personal",
                 caller_kind="swadebots",
                 plan="free",
+                scopes=["radio:spin"],
             )
 
     def test_radio_relationships_hide_ungranted_terms(self) -> None:
@@ -656,7 +660,7 @@ class HttpSdkTests(unittest.TestCase):
             self.assertFalse(answer["sql_executed"])
             with self.assertRaises(SwadeError) as raised:
                 client.term("exam")
-            self.assertEqual(raised.exception.status, 404)
+            self.assertEqual(raised.exception.status, 403)
         finally:
             server.shutdown()
             server.server_close()
@@ -724,6 +728,7 @@ class OwnerApprovalTests(unittest.TestCase):
                 "caller_id": "swadebots.maestro-radio",
                 "caller_kind": "swadebots",
                 "plan": "free",
+                "scopes": ["radio:track", "radio:station", "radio:spin", "radio:artist", "radio:attribution"],
                 "owner_email": "other@example.com",
             },
         )
@@ -782,6 +787,7 @@ class OwnerApprovalTests(unittest.TestCase):
                 "caller_id": "swadebots.maestro-radio",
                 "caller_kind": "swadebots",
                 "plan": "free",
+                "scopes": ["radio:track", "radio:station", "radio:spin", "radio:artist", "radio:attribution"],
             },
         )
         self.assertEqual(status, 201)
@@ -886,6 +892,7 @@ class SessionTests(unittest.TestCase):
                 "caller_id": "swadebots.maestro-radio",
                 "caller_kind": "swadebots",
                 "plan": "free",
+                "scopes": ["radio:track", "radio:station", "radio:spin", "radio:artist", "radio:attribution"],
             },
         )
         self.assertEqual(status, 403)
@@ -913,6 +920,7 @@ class SessionTests(unittest.TestCase):
                 "caller_id": "swadebots.maestro-radio",
                 "caller_kind": "swadebots",
                 "plan": "free",
+                "scopes": ["radio:track", "radio:station", "radio:spin", "radio:artist", "radio:attribution"],
             },
         )
         self.assertEqual(status, 201)
@@ -966,6 +974,71 @@ class SessionTests(unittest.TestCase):
         self.assertEqual(status, 401)
 
 
+class LeastPrivilegeTests(unittest.TestCase):
+    def test_credential_cannot_read_outside_its_explicit_scopes(self) -> None:
+        scoped = service_for()
+        credential = scoped.policy.add_credential(
+            "narrow-radio-tokenx",
+            app_id="maestro-radio",
+            tenant_id=ALPHA,
+            tenant_class="customer",
+            caller_id=CALLER,
+            caller_kind="swadebots",
+            plan="free",
+            scopes=["radio:track", "radio:station", "radio:spin"],
+        )
+        scoped.policy.approve(credential.credential_id, owner_email="owner@example.com", owner_subject="owner-sub")
+        status, body = scoped.dispatch("GET", "/v1/terms", auth("narrow-radio-tokenx"), {}, None)
+        self.assertEqual(status, 200)
+        self.assertEqual({term["id"] for term in body["terms"]}, {"spin", "station", "track"})
+        status, body = scoped.dispatch(
+            "POST",
+            "/v1/ask",
+            auth("narrow-radio-tokenx"),
+            {},
+            {"question": "how many spins aired"},
+        )
+        self.assertEqual(status, 200)
+        status, denied = scoped.dispatch(
+            "POST",
+            "/v1/ask",
+            auth("narrow-radio-tokenx"),
+            {},
+            {"question": "which artist performed"},
+        )
+        self.assertEqual(status, 403)
+        self.assertEqual(denied["error"]["code"], "outside_scope")
+        self.assertNotIn("artist.name", json.dumps(denied))
+        status, body = scoped.dispatch("GET", "/v1/audit", auth("narrow-radio-tokenx"), {}, None)
+        self.assertTrue(any(event["outcome"] == "outside_scope" for event in body["events"]))
+        with self.assertRaises(ValueError):
+            scoped.policy.add_credential(
+                "wildcard-radio-token",
+                app_id="maestro-radio",
+                tenant_id=ALPHA,
+                tenant_class="customer",
+                caller_id=CALLER,
+                caller_kind="swadebots",
+                plan="free",
+                scopes=["radio:*"],
+            )
+        with self.assertRaises(ValueError):
+            scoped.policy.add_credential(
+                "write-radio-tokenxx",
+                app_id="maestro-radio",
+                tenant_id=ALPHA,
+                tenant_class="customer",
+                caller_id=CALLER,
+                caller_kind="swadebots",
+                plan="free",
+                scopes=["radio:spin"],
+                access="write",
+            )
+        status, body = scoped.dispatch("DELETE", "/v1/terms/spin", auth("narrow-radio-tokenx"), {}, None)
+        self.assertEqual(status, 405)
+        self.assertEqual(body["error"]["code"], "read_only")
+
+
 class ScriptedDatabase:
     def __init__(self, credential: tuple[object, ...], approval: tuple[object, ...]) -> None:
         self.credential = credential
@@ -997,7 +1070,19 @@ class StoreTests(unittest.TestCase):
         token = "loaded-approved-token"
         digest = hashlib.sha256(token.encode("utf-8")).hexdigest()
         database = ScriptedDatabase(
-            ("cred-1", digest, "maestro-radio", ALPHA, "customer", CALLER, "swadebots", "free", "approved"),
+            (
+                "cred-1",
+                digest,
+                "maestro-radio",
+                ALPHA,
+                "customer",
+                CALLER,
+                "swadebots",
+                "free",
+                "approved",
+                "artist,attribution,spin,station,track",
+                "read",
+            ),
             ("approval-1", "cred-1", "approve", "owner@example.com", "owner-sub"),
         )
         store = IsolatedStore(database)
@@ -1027,7 +1112,19 @@ class StoreTests(unittest.TestCase):
         token = "loaded-pending-tokenx"
         digest = hashlib.sha256(token.encode("utf-8")).hexdigest()
         database = ScriptedDatabase(
-            ("cred-2", digest, "maestro-radio", ALPHA, "customer", CALLER, "swadebots", "free", "pending"),
+            (
+                "cred-2",
+                digest,
+                "maestro-radio",
+                ALPHA,
+                "customer",
+                CALLER,
+                "swadebots",
+                "free",
+                "pending",
+                "artist,attribution,spin,station,track",
+                "read",
+            ),
             ("approval-none", "cred-2", "revoke", "owner@example.com", "owner-sub"),
         )
         store = IsolatedStore(database)
@@ -1049,7 +1146,19 @@ class StoreTests(unittest.TestCase):
         from swade_ontology.store import IsolatedStore
 
         database = ScriptedDatabase(
-            ("cred-3", "hash", "maestro-radio", ALPHA, "customer", CALLER, "swadebots", "free", "pending"),
+            (
+                "cred-3",
+                "hash",
+                "maestro-radio",
+                ALPHA,
+                "customer",
+                CALLER,
+                "swadebots",
+                "free",
+                "pending",
+                "artist,attribution,spin,station,track",
+                "read",
+            ),
             ("approval-3", "cred-3", "approve", "owner@example.com", "owner-sub"),
         )
         store = IsolatedStore(database)
@@ -1073,6 +1182,7 @@ class StoreTests(unittest.TestCase):
                 "caller_id": "swadebots.maestro-radio",
                 "caller_kind": "swadebots",
                 "plan": "free",
+                "scopes": ["radio:track", "radio:station", "radio:spin", "radio:artist", "radio:attribution"],
             },
         )
         self.assertEqual(status, 201)
