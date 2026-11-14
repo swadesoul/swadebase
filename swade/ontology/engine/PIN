@@ -1,0 +1,5 @@
+repository=https://github.com/NVIDIA/auto-ontology
+commit=8ede47f7b67bf2612c5322c7a9adb8e0c6190e38
+license=Apache-2.0
+pinned_on=2026-11-14
+notes=Apache-2.0 engine pin. Source is not vendored in this repository. NVIDIA does not accept external pull requests, so platform meaning must stay exportable from this catalog.

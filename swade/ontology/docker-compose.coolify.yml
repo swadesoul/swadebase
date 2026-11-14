@@ -1,0 +1,54 @@
+# SWADE ontology facade for Coolify.
+# This stack is off until SWADE_ONTOLOGY_ENABLED=true.
+# It does not attach to the SWADEBASE platform database and it does not publish an engine.
+
+name: swade-ontology
+
+services:
+  swade-ontology:
+    build:
+      context: .
+    environment:
+      SWADE_ONTOLOGY_ENABLED: "false"
+      SWADE_ONTOLOGY_HOST: 0.0.0.0
+      SWADE_ONTOLOGY_PORT: "8090"
+      SWADE_ONTOLOGY_DATABASE_URL: postgresql://swade_ontology:${SWADE_ONTOLOGY_DB_PASSWORD:?set SWADE_ONTOLOGY_DB_PASSWORD}@swade-ontology-db:5432/swade_ontology
+      SWADE_AI_GATEWAY_URL: ${SWADE_AI_GATEWAY_URL:-}
+      SWADE_AI_GATEWAY_KEY: ${SWADE_AI_GATEWAY_KEY:-}
+      SWADE_ONTOLOGY_LOCAL_MODEL: auto/offline
+      SSS_BRAIN_SEARCH_URL: ${SSS_BRAIN_SEARCH_URL:-}
+      SSS_BRAIN_READ_TOKEN: ${SSS_BRAIN_READ_TOKEN:-}
+    depends_on:
+      - swade-ontology-db
+    ports:
+      - "8090:8090"
+    networks:
+      - swade_ontology
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import urllib.request; urllib.request.urlopen('http://127.0.0.1:8090/health')
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  swade-ontology-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: swade_ontology
+      POSTGRES_PASSWORD: ${SWADE_ONTOLOGY_DB_PASSWORD:?set SWADE_ONTOLOGY_DB_PASSWORD}
+      POSTGRES_DB: swade_ontology
+    volumes:
+      - swade_ontology_db:/var/lib/postgresql/data
+    networks:
+      - swade_ontology
+    restart: unless-stopped
+
+networks:
+  swade_ontology:
+
+volumes:
+  swade_ontology_db:

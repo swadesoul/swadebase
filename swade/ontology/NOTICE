@@ -1,0 +1,12 @@
+SWADE ontology facade
+Copyright 2026 Swade Soul
+
+The platform semantic engine is NVIDIA Auto Ontology, Apache License 2.0.
+It is pinned, not vendored, at the commit recorded in engine/PIN:
+https://github.com/NVIDIA/auto-ontology
+
+Copyright (c) 2026, NVIDIA CORPORATION & AFFILIATES.
+SPDX-License-Identifier: Apache-2.0
+
+NVIDIA does not accept external contributions. Do not send customer data or
+personal knowledge to a hosted NVIDIA API trial key.
