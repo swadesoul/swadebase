@@ -59,6 +59,8 @@ def service_for(enabled: bool = True, **overrides: object) -> KnowledgeService:
     gateway = overrides.pop("gateway", Gateway(None, None))
     brain = overrides.pop("brain", BrainClient(None, None))
     owner = overrides.pop("owner", None)
+    store = overrides.pop("store", None)
+    documents = overrides.pop("documents", documents)
     return KnowledgeService(
         config=config(enabled),
         catalog=catalog,
@@ -69,6 +71,7 @@ def service_for(enabled: bool = True, **overrides: object) -> KnowledgeService:
         documents=documents,
         engine=EngineClient(None, load_config({}).pin),
         owner=owner,
+        store=store,
     )
 
 
@@ -646,7 +649,8 @@ class ComposeTests(unittest.TestCase):
     def test_default_stack_is_off_and_isolated(self) -> None:
         text = (ROOT / "docker-compose.coolify.yml").read_text(encoding="utf-8")
         engine = (ROOT / "docker-compose.engine.yml").read_text(encoding="utf-8")
-        self.assertIn('SWADE_ONTOLOGY_ENABLED: "false"', text)
+        self.assertIn("SWADE_ONTOLOGY_ENABLED: ${SWADE_ONTOLOGY_ENABLED:-false}", text)
+        self.assertNotIn('SWADE_ONTOLOGY_ENABLED: "false"', text)
         self.assertIn("postgres:17-alpine", text)
         self.assertNotIn("pgvector", text)
         self.assertNotIn("nvapi-", text)
@@ -790,6 +794,134 @@ class OwnerApprovalTests(unittest.TestCase):
         self.assertEqual(status, 503)
         self.assertEqual(body["error"]["code"], "swade_ontology_disabled")
         self.assertEqual(self.calls, [])
+
+
+class ScriptedDatabase:
+    def __init__(self, credential: tuple[object, ...], approval: tuple[object, ...]) -> None:
+        self.credential = credential
+        self.approval = approval
+        self.calls: list[tuple[str, tuple[object, ...]]] = []
+
+    def query(self, sql: str, params: tuple[object, ...] = ()) -> list[tuple[object, ...]]:
+        self.calls.append((sql, tuple(params)))
+        if "to_regclass" in sql:
+            return [("swade_ontology.credentials",)]
+        if "SELECT credential_id" in sql:
+            return [self.credential]
+        if "SELECT approval_id" in sql:
+            return [self.approval]
+        if "document_refs" in sql:
+            return [
+                ("doc-1", params[0], "Alpha log", "scope-marker"),
+                ("doc-2", BRAVO, "Bravo secret", "do not return"),
+            ]
+        return []
+
+
+class StoreTests(unittest.TestCase):
+    def test_loaded_credential_and_full_text_rows_are_scoped(self) -> None:
+        import hashlib
+
+        from swade_ontology.store import IsolatedStore, PostgresDocumentIndex
+
+        token = "loaded-approved-token"
+        digest = hashlib.sha256(token.encode("utf-8")).hexdigest()
+        database = ScriptedDatabase(
+            ("cred-1", digest, "maestro-radio", ALPHA, "customer", CALLER, "swadebots", "free", "approved"),
+            ("approval-1", "cred-1", "approve", "owner@example.com", "owner-sub"),
+        )
+        store = IsolatedStore(database)
+        scoped = service_for(documents=PostgresDocumentIndex(store), store=store)
+        store.load_into(scoped.policy)
+        status, body = scoped.dispatch("GET", "/v1/terms", auth(token), {}, None)
+        self.assertEqual(status, 200)
+        self.assertTrue(body["terms"])
+        status, body = scoped.dispatch(
+            "POST",
+            "/v1/documents/search",
+            auth(token),
+            {},
+            {"query": "scope-marker"},
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual([hit["id"] for hit in body["hits"]], ["doc-1"])
+        self.assertEqual(body["provenance"]["document_search"], "postgres-fts")
+        statement = next(sql for sql, _params in database.calls if "document_refs" in sql)
+        self.assertNotIn("scope-marker", statement)
+
+    def test_pending_row_loaded_from_the_database_is_denied(self) -> None:
+        import hashlib
+
+        from swade_ontology.store import IsolatedStore
+
+        token = "loaded-pending-tokenx"
+        digest = hashlib.sha256(token.encode("utf-8")).hexdigest()
+        database = ScriptedDatabase(
+            ("cred-2", digest, "maestro-radio", ALPHA, "customer", CALLER, "swadebots", "free", "pending"),
+            ("approval-none", "cred-2", "revoke", "owner@example.com", "owner-sub"),
+        )
+        store = IsolatedStore(database)
+        scoped = service_for(store=store)
+        store.load_into(scoped.policy)
+        status, body = scoped.dispatch("GET", "/v1/terms", auth(token), {}, None)
+        self.assertEqual(status, 403)
+        self.assertEqual(body["error"]["code"], "pending_approval")
+
+    def test_null_brain_hits_do_not_crash(self) -> None:
+        def transport(url: str, headers: dict[str, str], payload: bytes) -> tuple[int, bytes]:
+            return 200, b'{"hits": null}'
+
+        result = BrainClient("http://sss-brain.internal/search", None, transport).search(ALPHA, "note", 5)
+        self.assertEqual(result.error, "brain_response_unreadable")
+        self.assertEqual(result.hits, [])
+
+    def test_issuance_is_written_to_the_store_without_the_raw_token(self) -> None:
+        from swade_ontology.store import IsolatedStore
+
+        database = ScriptedDatabase(
+            ("cred-3", "hash", "maestro-radio", ALPHA, "customer", CALLER, "swadebots", "free", "pending"),
+            ("approval-3", "cred-3", "approve", "owner@example.com", "owner-sub"),
+        )
+        store = IsolatedStore(database)
+
+        def transport(url: str, headers: dict[str, str]) -> tuple[int, bytes]:
+            return 200, google_user("owner@example.com", "google", True, "owner-sub")
+
+        scoped = service_for(
+            owner=OwnerAuth("https://swadebase.cloud/auth/v1", "owner@example.com", transport),
+            store=store,
+        )
+        status, issued = scoped.dispatch(
+            "POST",
+            "/v1/admin/credentials",
+            {"authorization": "Bearer owner-access-token"},
+            {},
+            {
+                "app_id": "maestro-radio",
+                "tenant_id": ALPHA,
+                "tenant_class": "customer",
+                "caller_id": "swadebots.maestro-radio",
+                "caller_kind": "swadebots",
+                "plan": "free",
+            },
+        )
+        self.assertEqual(status, 201)
+        insert = next(item for item in database.calls if item[0].startswith("INSERT INTO swade_ontology.credentials"))
+        self.assertIn("pending", insert[1])
+        self.assertNotIn(issued["token"], insert[0])
+        self.assertNotIn(issued["token"], insert[1])
+
+    def test_database_url_without_a_reachable_store_fails_closed(self) -> None:
+        from swade_ontology.factory import build_service
+
+        loaded = load_config(
+            {
+                "SWADE_ONTOLOGY_ENABLED": "true",
+                "SWADE_ONTOLOGY_DATABASE_URL": "postgresql://swade_ontology:pw@127.0.0.1:1/swade_ontology",
+            }
+        )
+        built = build_service(loaded)
+        self.assertEqual(built.health()["credential_store"], "unavailable")
 
 
 def google_user(email: str, provider: str, verified: bool, subject: str) -> bytes:

@@ -115,6 +115,23 @@ class Policy:
         self._by_id[credential.credential_id] = credential.token_hash
         return credential
 
+    def restore_credential(self, credential: Credential) -> None:
+        if credential.status not in {"pending", "approved", "revoked"}:
+            return
+        if credential.tenant_class not in {"customer", "personal"}:
+            return
+        if credential.tenant_class == "personal" and credential.tenant_id != PERSONAL_TENANT_ID:
+            return
+        if credential.tenant_class == "customer" and credential.tenant_id == PERSONAL_TENANT_ID:
+            return
+        self._credentials[credential.token_hash] = credential
+        self._by_id[credential.credential_id] = credential.token_hash
+
+    def forget(self, credential_id: str) -> None:
+        token_hash = self._by_id.pop(credential_id, None)
+        if token_hash is not None:
+            self._credentials.pop(token_hash, None)
+
     def get_credential(self, credential_id: str) -> Credential | None:
         token_hash = self._by_id.get(credential_id)
         if token_hash is None:

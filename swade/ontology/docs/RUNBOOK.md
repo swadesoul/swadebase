@@ -69,7 +69,7 @@ A credential binds:
 - `plan` `free` or `paid`
 - `status` `pending`, `approved`, or `revoked`
 
-Customer rows cannot use tenant id `swade-personal`. Personal rows cannot use any other tenant id. The process keeps credentials and approvals in memory. The migration file is the durable shape and is still not applied.
+Customer rows cannot use tenant id `swade-personal`. Personal rows cannot use any other tenant id. When `SWADE_ONTOLOGY_DATABASE_URL` points at the isolated database and the migration has been applied, the process loads `swade_ontology.credentials` and `swade_ontology.approvals` on startup and writes new issuance and approval rows there. It does not create those tables. Document search reads `swade_ontology.document_refs` with a parameterized full-text query. If the database is unset, the process keeps that state in memory for tests. If the URL is set and the tables are missing, reads and admin writes fail closed instead of reporting an empty full-text result.
 
 ## Rollback
 

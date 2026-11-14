@@ -17,6 +17,7 @@ from .fts import MemoryDocumentIndex
 from .gateway import Gateway
 from .owner_auth import OwnerAuth
 from .policy import Decision, Policy, bearer_token
+from .store import StoreError
 
 
 _TOOLS = (
@@ -88,6 +89,7 @@ class KnowledgeService:
         documents: MemoryDocumentIndex,
         engine: EngineClient,
         owner: OwnerAuth | None = None,
+        store: object | None = None,
     ) -> None:
         self.config = config
         self.catalog = catalog
@@ -98,6 +100,7 @@ class KnowledgeService:
         self.documents = documents
         self.engine = engine
         self.owner = owner or OwnerAuth(None, None)
+        self.store = store
 
     def health(self) -> dict[str, Any]:
         return {
@@ -116,6 +119,7 @@ class KnowledgeService:
             "agents": "SWADEBOTS",
             "owner_approval": "required",
             "owner_auth": "swadebase-google" if self.owner.configured else "not_configured",
+            "credential_store": getattr(self.store, "mode", "memory"),
         }
 
     def dispatch(
@@ -217,6 +221,14 @@ class KnowledgeService:
             )
         except ValueError:
             return 400, {"error": {"code": "credential_invalid", "service": "SWADE"}}
+        if self.store is not None:
+            try:
+                self.store.insert_credential(credential)
+            except StoreError:
+                self.policy.forget(credential.credential_id)
+                failed = self.policy._deny(503, "credential_store_unavailable", None)
+                self.audit.record(failed, "admin.credentials.issue")
+                return 503, self._error(failed)
         recorded = self.policy._deny(201, "pending_approval", None)
         self.audit.record(recorded, "admin.credentials.issue")
         return 201, {
@@ -234,6 +246,7 @@ class KnowledgeService:
         credential_id: str,
         action: str,
     ) -> tuple[int, dict[str, Any]]:
+        previous = self.policy.get_credential(credential_id)
         try:
             if action == "approve":
                 approval = self.policy.approve(
@@ -247,6 +260,16 @@ class KnowledgeService:
             missing = self.policy._deny(404, "not_available", None)
             self.audit.record(missing, f"admin.credentials.{action}")
             return 404, {"error": {"code": "not_available", "service": "SWADE"}}
+        if self.store is not None and previous is not None:
+            try:
+                self.store.insert_approval(approval, "approved" if action == "approve" else "revoked")
+            except StoreError:
+                self.policy._credentials[previous.token_hash] = previous
+                if self.policy.approvals and self.policy.approvals[-1].approval_id == approval.approval_id:
+                    self.policy.approvals.pop()
+                failed = self.policy._deny(503, "credential_store_unavailable", None)
+                self.audit.record(failed, f"admin.credentials.{action}")
+                return 503, self._error(failed)
         recorded = self.policy._deny(200, "allow", None)
         self.audit.record(recorded, f"admin.credentials.{action}")
         credential = self.policy.get_credential(credential_id)
@@ -396,7 +419,12 @@ class KnowledgeService:
                 "hits": [_hit(hit) for hit in result.hits],
                 "provenance": self._provenance(decision, ["sss-brain"], document_search="sss-brain"),
             }
-        hits = self.documents.search(caller.tenant_id, query, bounded)
+        try:
+            hits = self.documents.search(caller.tenant_id, query, bounded)
+        except StoreError:
+            failed = self.policy._deny(503, "document_store_unavailable", caller)
+            self.audit.record(failed, "documents.search", caller)
+            return 503, self._error(failed)
         self.audit.record(decision, "documents.search", caller)
         return 200, {
             "hits": [_hit(hit) for hit in hits],

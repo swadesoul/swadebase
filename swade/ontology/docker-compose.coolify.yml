@@ -9,7 +9,7 @@ services:
     build:
       context: .
     environment:
-      SWADE_ONTOLOGY_ENABLED: "false"
+      SWADE_ONTOLOGY_ENABLED: ${SWADE_ONTOLOGY_ENABLED:-false}
       SWADE_ONTOLOGY_HOST: 0.0.0.0
       SWADE_ONTOLOGY_PORT: "8090"
       SWADE_ONTOLOGY_DATABASE_URL: postgresql://swade_ontology:${SWADE_ONTOLOGY_DB_PASSWORD:?set SWADE_ONTOLOGY_DB_PASSWORD}@swade-ontology-db:5432/swade_ontology

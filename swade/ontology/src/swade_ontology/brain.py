@@ -57,6 +57,8 @@ class BrainClient:
             raw_hits = parsed.get("hits", [])
         except (json.JSONDecodeError, UnicodeDecodeError, AttributeError):
             return BrainResult(True, [], 0, "brain_response_unreadable")
+        if not isinstance(raw_hits, list):
+            return BrainResult(True, [], 0, "brain_response_unreadable")
         hits: list[DocumentHit] = []
         dropped = 0
         for item in raw_hits:
