@@ -41,6 +41,8 @@ class Config:
     brain_search_url: str | None
     brain_token: str | None
     engine_url: str | None
+    auth_url: str | None
+    owner_email: str | None
     pin: EnginePin
 
 
@@ -79,6 +81,12 @@ def load_config(env: os._Environ[str] | dict[str, str] | None = None) -> Config:
     engine_url = _clean(source.get("SWADE_ONTOLOGY_ENGINE_URL"))
     if engine_url:
         _reject_nvidia_url(engine_url, "SWADE_ONTOLOGY_ENGINE_URL")
+    auth_url = _clean(source.get("SWADEBASE_AUTH_URL"))
+    if auth_url:
+        _reject_direct_google(auth_url)
+    owner_email = _clean(source.get("SWADE_ONTOLOGY_OWNER_EMAIL"))
+    if owner_email:
+        owner_email = owner_email.lower()
     database_url = _clean(source.get("SWADE_ONTOLOGY_DATABASE_URL"))
     if database_url:
         _require_isolated_database(database_url)
@@ -103,6 +111,8 @@ def load_config(env: os._Environ[str] | dict[str, str] | None = None) -> Config:
         brain_search_url=brain_url,
         brain_token=brain_token,
         engine_url=engine_url,
+        auth_url=auth_url,
+        owner_email=owner_email,
         pin=load_pin(),
     )
 
@@ -128,6 +138,12 @@ def _reject_secret_material(value: str, label: str) -> None:
     lowered = value.lower()
     if _SERVICE_ROLE_MARKER in lowered or lowered.startswith("nvapi"):
         raise ConfigError(f"{label} must be a scoped credential, not a service-role or hosted key")
+
+
+def _reject_direct_google(url: str) -> None:
+    host = (urlparse(url).hostname or "").lower()
+    if host == "accounts.google.com" or host.endswith(".google.com") or host.endswith(".googleapis.com"):
+        raise ConfigError("SWADEBASE_AUTH_URL must be SWADEBASE auth, not a Google host")
 
 
 def _reject_nvidia_url(url: str, label: str) -> None:

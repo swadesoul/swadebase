@@ -6,7 +6,7 @@ import hashlib
 import hmac
 import re
 import uuid
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 from .catalog import Catalog
 from .config import PERSONAL_TENANT_ID
@@ -26,6 +26,7 @@ _PERSONAL_MARKERS = (
 
 @dataclass(frozen=True)
 class Credential:
+    credential_id: str
     token_hash: str
     app_id: str
     tenant_id: str
@@ -33,6 +34,7 @@ class Credential:
     caller_id: str
     caller_kind: str
     plan: str
+    status: str
 
 
 @dataclass(frozen=True)
@@ -55,10 +57,21 @@ class Decision:
     decision_id: str
 
 
+@dataclass(frozen=True)
+class Approval:
+    approval_id: str
+    credential_id: str
+    action: str
+    owner_email: str
+    owner_subject: str
+
+
 class Policy:
     def __init__(self, catalog: Catalog) -> None:
         self.catalog = catalog
         self._credentials: dict[str, Credential] = {}
+        self._by_id: dict[str, str] = {}
+        self.approvals: list[Approval] = []
 
     def add_credential(
         self,
@@ -88,6 +101,7 @@ class Policy:
         if len(tenant_id) < 8:
             raise ValueError("tenant ids must be at least 8 characters")
         credential = Credential(
+            credential_id=str(uuid.uuid4()),
             token_hash=hash_token(token),
             app_id=app_id,
             tenant_id=tenant_id,
@@ -95,9 +109,46 @@ class Policy:
             caller_id=caller_id,
             caller_kind=caller_kind,
             plan=plan,
+            status="pending",
         )
         self._credentials[credential.token_hash] = credential
+        self._by_id[credential.credential_id] = credential.token_hash
         return credential
+
+    def get_credential(self, credential_id: str) -> Credential | None:
+        token_hash = self._by_id.get(credential_id)
+        if token_hash is None:
+            return None
+        return self._credentials.get(token_hash)
+
+    def approve(self, credential_id: str, *, owner_email: str, owner_subject: str) -> Approval:
+        return self._decide(credential_id, "approve", "approved", owner_email, owner_subject)
+
+    def revoke(self, credential_id: str, *, owner_email: str, owner_subject: str) -> Approval:
+        return self._decide(credential_id, "revoke", "revoked", owner_email, owner_subject)
+
+    def _decide(
+        self,
+        credential_id: str,
+        action: str,
+        status: str,
+        owner_email: str,
+        owner_subject: str,
+    ) -> Approval:
+        credential = self.get_credential(credential_id)
+        if credential is None:
+            raise KeyError(credential_id)
+        updated = replace(credential, status=status)
+        self._credentials[credential.token_hash] = updated
+        approval = Approval(
+            approval_id=str(uuid.uuid4()),
+            credential_id=credential_id,
+            action=action,
+            owner_email=owner_email.lower(),
+            owner_subject=owner_subject,
+        )
+        self.approvals.append(approval)
+        return approval
 
     def known_tenant_ids(self) -> set[str]:
         ids = {PERSONAL_TENANT_ID}
@@ -134,6 +185,9 @@ class Policy:
             plan=credential.plan,
             token_hash=credential.token_hash,
         )
+        if credential.status != "approved":
+            code = "pending_approval" if credential.status == "pending" else "revoked"
+            return self._deny(403, code, caller)
         return Decision(True, 200, "allow", caller, str(uuid.uuid4()))
 
     def authorize_tenant(self, caller: Caller, requested: str | None) -> Decision:

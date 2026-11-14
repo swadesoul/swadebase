@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import re
+import secrets
 from typing import Any
 
 from . import __version__
@@ -14,7 +15,8 @@ from .config import Config
 from .engine import EngineClient
 from .fts import MemoryDocumentIndex
 from .gateway import Gateway
-from .policy import Decision, Policy
+from .owner_auth import OwnerAuth
+from .policy import Decision, Policy, bearer_token
 
 
 _TOOLS = (
@@ -85,6 +87,7 @@ class KnowledgeService:
         brain: BrainClient,
         documents: MemoryDocumentIndex,
         engine: EngineClient,
+        owner: OwnerAuth | None = None,
     ) -> None:
         self.config = config
         self.catalog = catalog
@@ -94,6 +97,7 @@ class KnowledgeService:
         self.brain = brain
         self.documents = documents
         self.engine = engine
+        self.owner = owner or OwnerAuth(None, None)
 
     def health(self) -> dict[str, Any]:
         return {
@@ -110,6 +114,8 @@ class KnowledgeService:
             "migrations": "not_applied",
             "personal_scope": "isolated",
             "agents": "SWADEBOTS",
+            "owner_approval": "required",
+            "owner_auth": "swadebase-google" if self.owner.configured else "not_configured",
         }
 
     def dispatch(
@@ -127,6 +133,8 @@ class KnowledgeService:
             return self._mcp(normalized, body)
         if not self.config.enabled:
             return 503, {"error": {"code": "swade_ontology_disabled", "service": "SWADE"}}
+        if path.startswith("/v1/admin"):
+            return self._admin(method, path, normalized, body)
         decision = self.policy.authenticate(normalized)
         if not decision.allowed:
             self.audit.record(decision, "authenticate")
@@ -153,6 +161,102 @@ class KnowledgeService:
         missing = self.policy._deny(404, "not_found", caller)
         self.audit.record(missing, path)
         return 404, self._error(missing)
+
+    def _admin(self, method: str, path: str, headers: dict[str, str], body: Any) -> tuple[int, dict[str, Any]]:
+        decision = self.owner.verify(bearer_token(headers) or "")
+        if not decision.ok or decision.owner is None:
+            denied = self.policy._deny(decision.status, decision.code, None)
+            self.audit.record(denied, "admin.authenticate")
+            return decision.status, {"error": {"code": decision.code, "service": "SWADE"}}
+        owner = decision.owner
+        if method == "GET" and path == "/v1/admin/approvals":
+            allowed = self.policy._deny(200, "allow", None)
+            self.audit.record(allowed, "admin.approvals", None)
+            return 200, {
+                "approvals": [
+                    {
+                        "approval_id": item.approval_id,
+                        "credential_id": item.credential_id,
+                        "action": item.action,
+                        "owner_email": item.owner_email,
+                        "owner_subject": item.owner_subject,
+                    }
+                    for item in self.policy.approvals
+                    if item.owner_email == owner.email
+                ]
+            }
+        if method == "POST" and path == "/v1/admin/credentials":
+            return self._issue(owner.email, owner.subject, body)
+        if method == "POST" and path.startswith("/v1/admin/credentials/"):
+            remainder = path.removeprefix("/v1/admin/credentials/")
+            credential_id, _, action = remainder.partition("/")
+            if action == "approve":
+                return self._owner_action(owner.email, owner.subject, credential_id, "approve")
+            if action == "revoke":
+                return self._owner_action(owner.email, owner.subject, credential_id, "revoke")
+        missing = self.policy._deny(404, "not_found", None)
+        self.audit.record(missing, "admin.unknown")
+        return 404, {"error": {"code": "not_found", "service": "SWADE"}}
+
+    def _issue(self, owner_email: str, owner_subject: str, body: Any) -> tuple[int, dict[str, Any]]:
+        if not isinstance(body, dict):
+            return 400, {"error": {"code": "credential_invalid", "service": "SWADE"}}
+        required = ("app_id", "tenant_id", "tenant_class", "caller_id", "caller_kind", "plan")
+        if any(not isinstance(body.get(key), str) or not body[key].strip() for key in required):
+            return 400, {"error": {"code": "credential_invalid", "service": "SWADE"}}
+        token = secrets.token_urlsafe(32)
+        try:
+            credential = self.policy.add_credential(
+                token,
+                app_id=body["app_id"].strip(),
+                tenant_id=body["tenant_id"].strip(),
+                tenant_class=body["tenant_class"].strip(),
+                caller_id=body["caller_id"].strip(),
+                caller_kind=body["caller_kind"].strip(),
+                plan=body["plan"].strip(),
+            )
+        except ValueError:
+            return 400, {"error": {"code": "credential_invalid", "service": "SWADE"}}
+        recorded = self.policy._deny(201, "pending_approval", None)
+        self.audit.record(recorded, "admin.credentials.issue")
+        return 201, {
+            "credential_id": credential.credential_id,
+            "token": token,
+            "status": "pending",
+            "owner_email": owner_email,
+            "owner_subject": owner_subject,
+        }
+
+    def _owner_action(
+        self,
+        owner_email: str,
+        owner_subject: str,
+        credential_id: str,
+        action: str,
+    ) -> tuple[int, dict[str, Any]]:
+        try:
+            if action == "approve":
+                approval = self.policy.approve(
+                    credential_id, owner_email=owner_email, owner_subject=owner_subject
+                )
+            else:
+                approval = self.policy.revoke(
+                    credential_id, owner_email=owner_email, owner_subject=owner_subject
+                )
+        except KeyError:
+            missing = self.policy._deny(404, "not_available", None)
+            self.audit.record(missing, f"admin.credentials.{action}")
+            return 404, {"error": {"code": "not_available", "service": "SWADE"}}
+        recorded = self.policy._deny(200, "allow", None)
+        self.audit.record(recorded, f"admin.credentials.{action}")
+        credential = self.policy.get_credential(credential_id)
+        return 200, {
+            "credential_id": approval.credential_id,
+            "status": credential.status if credential else action,
+            "approval_id": approval.approval_id,
+            "owner_email": approval.owner_email,
+            "owner_subject": approval.owner_subject,
+        }
 
     def _list_terms(self, decision: Decision, query: str) -> tuple[int, dict[str, Any]]:
         caller = decision.caller

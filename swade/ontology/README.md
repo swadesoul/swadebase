@@ -1,6 +1,6 @@
 # SWADE
 
-SWADE is the platform semantic layer for SWADEBASE. SWADEBOTS and product apps read it through this facade. The facade is off unless `SWADE_ONTOLOGY_ENABLED=true`.
+SWADE is the platform semantic layer for SWADEBASE. SWADEBOTS and product apps read it through this facade. The facade is off unless `SWADE_ONTOLOGY_ENABLED=true`. Issued credentials stay pending until the owner approves them. Owner sign-in is Google through SWADEBASE auth (`docs/OAUTH.md`).
 
 The engine is [NVIDIA Auto Ontology](https://github.com/NVIDIA/auto-ontology) (Apache-2.0), pinned in `engine/PIN` and not vendored. This process does not call a hosted NVIDIA API, does not install pgvector on the SWADEBASE platform database, and does not copy SSS Brain tenant documents into the catalog.
 

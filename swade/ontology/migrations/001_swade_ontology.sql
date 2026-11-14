@@ -8,6 +8,7 @@
 CREATE SCHEMA IF NOT EXISTS swade_ontology;
 
 CREATE TABLE IF NOT EXISTS swade_ontology.credentials (
+  credential_id text NOT NULL UNIQUE,
   token_hash text PRIMARY KEY,
   app_id text NOT NULL,
   tenant_id text NOT NULL,
@@ -15,11 +16,21 @@ CREATE TABLE IF NOT EXISTS swade_ontology.credentials (
   caller_id text NOT NULL,
   caller_kind text NOT NULL CHECK (caller_kind IN ('swadebots', 'app')),
   plan text NOT NULL CHECK (plan IN ('free', 'paid')),
+  status text NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'revoked')),
   created_at timestamptz NOT NULL DEFAULT now(),
   CHECK (
     (tenant_class = 'personal' AND tenant_id = 'swade-personal')
     OR (tenant_class = 'customer' AND tenant_id <> 'swade-personal')
   )
+);
+
+CREATE TABLE IF NOT EXISTS swade_ontology.approvals (
+  approval_id text PRIMARY KEY,
+  credential_id text NOT NULL REFERENCES swade_ontology.credentials (credential_id),
+  action text NOT NULL CHECK (action IN ('approve', 'revoke')),
+  owner_email text NOT NULL,
+  owner_subject text NOT NULL,
+  created_at timestamptz NOT NULL DEFAULT now()
 );
 
 CREATE TABLE IF NOT EXISTS swade_ontology.audit_events (

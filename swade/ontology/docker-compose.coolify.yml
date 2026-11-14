@@ -18,6 +18,8 @@ services:
       SWADE_ONTOLOGY_LOCAL_MODEL: auto/offline
       SSS_BRAIN_SEARCH_URL: ${SSS_BRAIN_SEARCH_URL:-}
       SSS_BRAIN_READ_TOKEN: ${SSS_BRAIN_READ_TOKEN:-}
+      SWADEBASE_AUTH_URL: ${SWADEBASE_AUTH_URL:-}
+      SWADE_ONTOLOGY_OWNER_EMAIL: ${SWADE_ONTOLOGY_OWNER_EMAIL:-}
     depends_on:
       - swade-ontology-db
     ports:

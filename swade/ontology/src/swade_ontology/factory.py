@@ -12,6 +12,7 @@ from .engine import EngineClient
 from .fts import MemoryDocumentIndex
 from .gateway import Gateway
 from .http_server import serve
+from .owner_auth import OwnerAuth
 from .policy import Policy
 from .service import KnowledgeService
 
@@ -33,6 +34,7 @@ def build_service(config: Config | None = None) -> KnowledgeService:
         brain=BrainClient(resolved.brain_search_url, resolved.brain_token),
         documents=MemoryDocumentIndex(),
         engine=EngineClient(resolved.engine_url, resolved.pin),
+        owner=OwnerAuth(resolved.auth_url, resolved.owner_email),
     )
 
 

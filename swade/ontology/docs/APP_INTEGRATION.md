@@ -7,7 +7,7 @@ Clients:
 - TypeScript: `swade/ontology/sdk/typescript/src/client.ts`
 - Python: `swade/ontology/sdk/python/swade_ontology_sdk`
 
-Both clients send `x-swadebots-client: swadebots` and refuse a tenant override. The credential is the scope.
+Both clients send `x-swadebots-client: swadebots` and refuse a tenant override. The credential is the scope. The owner issues it through the admin routes, and it cannot read until that owner approves it. A revoked credential is denied. See `OAUTH.md`.
 
 ```typescript
 import { SwadeClient } from './client.ts'

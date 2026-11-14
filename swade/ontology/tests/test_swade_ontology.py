@@ -21,6 +21,7 @@ from swade_ontology.engine import EngineClient  # noqa: E402
 from swade_ontology.fts import MemoryDocumentIndex, StoredDocument, fts_statement  # noqa: E402
 from swade_ontology.gateway import Gateway  # noqa: E402
 from swade_ontology.http_server import bind  # noqa: E402
+from swade_ontology.owner_auth import OwnerAuth  # noqa: E402
 from swade_ontology.policy import Policy  # noqa: E402
 from swade_ontology.rehearse import (  # noqa: E402
     MIGRATION_PATH,
@@ -57,6 +58,7 @@ def service_for(enabled: bool = True, **overrides: object) -> KnowledgeService:
     )
     gateway = overrides.pop("gateway", Gateway(None, None))
     brain = overrides.pop("brain", BrainClient(None, None))
+    owner = overrides.pop("owner", None)
     return KnowledgeService(
         config=config(enabled),
         catalog=catalog,
@@ -66,11 +68,12 @@ def service_for(enabled: bool = True, **overrides: object) -> KnowledgeService:
         brain=brain,
         documents=documents,
         engine=EngineClient(None, load_config({}).pin),
+        owner=owner,
     )
 
 
 def grant(policy: Policy, token: str, app_id: str, tenant_id: str, tenant_class: str, plan: str = "free") -> None:
-    policy.add_credential(
+    credential = policy.add_credential(
         token,
         app_id=app_id,
         tenant_id=tenant_id,
@@ -79,6 +82,7 @@ def grant(policy: Policy, token: str, app_id: str, tenant_id: str, tenant_class:
         caller_kind="swadebots",
         plan=plan,
     )
+    policy.approve(credential.credential_id, owner_email="owner@example.com", owner_subject="owner-subject")
 
 
 def auth(token: str) -> dict[str, str]:
@@ -113,6 +117,13 @@ class ConfigTests(unittest.TestCase):
             load_config({"SSS_BRAIN_READ_TOKEN": "service_role-secret"})
         with self.assertRaises(ConfigError):
             load_config({"SWADE_ONTOLOGY_LOCAL_MODEL": "gpt-4o"})
+        with self.assertRaises(ConfigError):
+            load_config({"SWADEBASE_AUTH_URL": "https://accounts.google.com"})
+
+    def test_google_client_secret_is_not_kept(self) -> None:
+        loaded = load_config({"GOOGLE_SECRET": "not-a-committed-secret", "GOOGLE_CLIENT_ID": "client-id"})
+        self.assertNotIn("not-a-committed-secret", repr(loaded))
+        self.assertIsNone(loaded.owner_email)
 
     def test_service_role_key_is_not_reused(self) -> None:
         with self.assertRaises(ConfigError):
@@ -648,6 +659,153 @@ class ComposeTests(unittest.TestCase):
         self.assertNotIn("nvapi-", engine)
         self.assertNotIn("KUMO_RFM_API_KEY", engine)
         self.assertIn(PIN, engine)
+        self.assertNotIn("GOOGLE_SECRET", text)
+        self.assertIn("SWADEBASE_AUTH_URL", text)
+
+
+class OwnerApprovalTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.calls: list[str] = []
+
+        def transport(url: str, headers: dict[str, str]) -> tuple[int, bytes]:
+            self.calls.append(url)
+            self.assertTrue(url.endswith("/user"))
+            self.assertNotIn("google.com", url)
+            token = headers["authorization"].removeprefix("Bearer ")
+            users = {
+                "owner-access-token": google_user("owner@example.com", "google", True, "owner-sub"),
+                "other-access-token": google_user("other@example.com", "google", True, "other-sub"),
+                "email-access-token": google_user("owner@example.com", "email", True, "email-sub"),
+            }
+            if token not in users:
+                return 401, b"{}"
+            return 200, users[token]
+
+        owner = OwnerAuth("https://swadebase.cloud/auth/v1", "owner@example.com", transport)
+        self.service = service_for(owner=owner)
+        self.headers = {"authorization": "Bearer owner-access-token"}
+
+    def test_pending_is_denied_until_owner_approval_and_revoke_denies_again(self) -> None:
+        status, issued = self.service.dispatch(
+            "POST",
+            "/v1/admin/credentials",
+            self.headers,
+            {},
+            {
+                "app_id": "maestro-radio",
+                "tenant_id": ALPHA,
+                "tenant_class": "customer",
+                "caller_id": "swadebots.maestro-radio",
+                "caller_kind": "swadebots",
+                "plan": "free",
+                "owner_email": "other@example.com",
+            },
+        )
+        self.assertEqual(status, 201)
+        self.assertEqual(issued["status"], "pending")
+        self.assertEqual(issued["owner_email"], "owner@example.com")
+        token = issued["token"]
+        credential_id = issued["credential_id"]
+
+        status, pending = self.service.dispatch("GET", "/v1/terms", auth(token), {}, None)
+        self.assertEqual(status, 403)
+        self.assertEqual(pending["error"]["code"], "pending_approval")
+
+        status, approved = self.service.dispatch(
+            "POST",
+            f"/v1/admin/credentials/{credential_id}/approve",
+            self.headers,
+            {},
+            {},
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(approved["status"], "approved")
+        self.assertEqual(approved["owner_subject"], "owner-sub")
+        status, allowed = self.service.dispatch("GET", "/v1/terms", auth(token), {}, None)
+        self.assertEqual(status, 200)
+        self.assertTrue(allowed["terms"])
+
+        status, revoked = self.service.dispatch(
+            "POST",
+            f"/v1/admin/credentials/{credential_id}/revoke",
+            self.headers,
+            {},
+            {},
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(revoked["status"], "revoked")
+        status, denied = self.service.dispatch("GET", "/v1/terms", auth(token), {}, None)
+        self.assertEqual(status, 403)
+        self.assertEqual(denied["error"]["code"], "revoked")
+
+        status, records = self.service.dispatch("GET", "/v1/admin/approvals", self.headers, {}, None)
+        self.assertEqual(status, 200)
+        self.assertEqual([item["action"] for item in records["approvals"]], ["approve", "revoke"])
+        self.assertTrue(all(item["owner_email"] == "owner@example.com" for item in records["approvals"]))
+
+    def test_another_google_account_cannot_approve(self) -> None:
+        status, issued = self.service.dispatch(
+            "POST",
+            "/v1/admin/credentials",
+            self.headers,
+            {},
+            {
+                "app_id": "maestro-radio",
+                "tenant_id": ALPHA,
+                "tenant_class": "customer",
+                "caller_id": "swadebots.maestro-radio",
+                "caller_kind": "swadebots",
+                "plan": "free",
+            },
+        )
+        self.assertEqual(status, 201)
+        status, body = self.service.dispatch(
+            "POST",
+            f"/v1/admin/credentials/{issued['credential_id']}/approve",
+            {"authorization": "Bearer other-access-token"},
+            {},
+            {},
+        )
+        self.assertEqual(status, 403)
+        self.assertEqual(body["error"]["code"], "owner_mismatch")
+        status, body = self.service.dispatch(
+            "POST",
+            f"/v1/admin/credentials/{issued['credential_id']}/approve",
+            {"authorization": "Bearer email-access-token"},
+            {},
+            {},
+        )
+        self.assertEqual(status, 403)
+        self.assertEqual(body["error"]["code"], "google_required")
+
+    def test_admin_routes_fail_closed_without_swadebase_auth(self) -> None:
+        bare = service_for()
+        status, body = bare.dispatch("POST", "/v1/admin/credentials", self.headers, {}, {})
+        self.assertEqual(status, 503)
+        self.assertEqual(body["error"]["code"], "owner_not_configured")
+
+    def test_disabled_facade_does_not_issue_credentials(self) -> None:
+        disabled = service_for(False, owner=self.service.owner)
+        status, body = disabled.dispatch("POST", "/v1/admin/credentials", self.headers, {}, {})
+        self.assertEqual(status, 503)
+        self.assertEqual(body["error"]["code"], "swade_ontology_disabled")
+        self.assertEqual(self.calls, [])
+
+
+def google_user(email: str, provider: str, verified: bool, subject: str) -> bytes:
+    return json.dumps(
+        {
+            "email": email,
+            "email_confirmed_at": "2026-11-14T00:00:00Z" if verified else None,
+            "identities": [
+                {
+                    "provider": provider,
+                    "id": subject,
+                    "identity_data": {"email": email, "email_verified": verified, "sub": subject},
+                }
+            ],
+        }
+    ).encode()
 
 
 if __name__ == "__main__":

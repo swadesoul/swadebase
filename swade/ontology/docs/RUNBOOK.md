@@ -43,7 +43,8 @@ Applying the script for real is a later operator step. This repository does not 
 5. Do not publish engine ports 3001 or 3002. The default compose does not contain those listeners.
 6. Set `SWADE_AI_GATEWAY_URL` to the existing OmniRoute gateway. Do not put a hosted NVIDIA key in the environment. The process exits if it sees one.
 7. Leave `SSS_BRAIN_SEARCH_URL` empty until SSS Brain exposes a tenant-scoped search. A service-role token is rejected.
-8. Turn the flag to `true` only after the rehearsal above has been repeated against the isolated database and an operator has applied the migration on purpose.
+8. Set `SWADEBASE_AUTH_URL` to the SWADEBASE auth base and `SWADE_ONTOLOGY_OWNER_EMAIL` to the owner's verified Google email. Do not copy `GOOGLE_SECRET` into this service.
+9. Turn the flag to `true` only after the rehearsal above has been repeated against the isolated database and an operator has applied the migration on purpose.
 
 The engine profile is separate:
 
@@ -55,17 +56,20 @@ That command renders the file. It does not start containers when used with `conf
 
 ## Credentials
 
-There is no public route that creates credentials. An operator inserts a hashed token into `swade_ontology.credentials` after the migration has been applied. The hash is SHA-256 of a token at least 16 characters long. Store the raw token in the app's secret store.
+The owner signs in with Google through SWADEBASE auth, then uses the admin routes. See `docs/OAUTH.md`. A new credential is `pending` and cannot read. `POST /v1/admin/credentials/{id}/approve` writes an owner approval and allows reads inside that app and tenant. `POST /v1/admin/credentials/{id}/revoke` writes a revocation and denies reads again.
 
-A credential row binds:
+Set `SWADEBASE_AUTH_URL` and `SWADE_ONTOLOGY_OWNER_EMAIL` before turning the flag on. Leave the Google client id and secret on the SWADEBASE auth service.
+
+A credential binds:
 
 - `app_id` to one grant in `catalog/platform.json`
 - `tenant_id` and `tenant_class` (`customer` or `personal`)
 - `caller_kind` `swadebots` or `app`
 - `caller_id` such as `swadebots.maestro-radio`
 - `plan` `free` or `paid`
+- `status` `pending`, `approved`, or `revoked`
 
-Customer rows cannot use tenant id `swade-personal`. Personal rows cannot use any other tenant id.
+Customer rows cannot use tenant id `swade-personal`. Personal rows cannot use any other tenant id. The process keeps credentials and approvals in memory. The migration file is the durable shape and is still not applied.
 
 ## Rollback
 
