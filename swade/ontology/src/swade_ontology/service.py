@@ -1,0 +1,871 @@
+"""SWADE read facade shared by the REST API and the MCP server."""
+
+from __future__ import annotations
+
+import json
+import re
+import secrets
+from typing import Any
+
+from . import __version__, primer_text
+from .audit import AuditEvent, AuditLog, clean_task_id, reset_task_id, set_task_id
+from .brain import BrainClient, DocumentHit
+from .catalog import Catalog, Term
+from .config import Config
+from .engine import EngineClient
+from .fts import MemoryDocumentIndex
+from .gateway import Gateway
+from .owner_auth import OwnerAuth
+from .policy import Caller, Decision, Policy, bearer_token
+from .sessions import (
+    SessionRegistry,
+    clear_session_cookie,
+    read_session_cookie,
+    session_cookie,
+)
+from .store import StoreError
+
+
+_TOOLS = (
+    {
+        "name": "swade_search_terms",
+        "description": "Search SWADE platform terms inside the caller scope.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {"query": {"type": "string"}},
+            "required": ["query"],
+            "additionalProperties": False,
+        },
+    },
+    {
+        "name": "swade_get_term",
+        "description": "Read one SWADE term the caller is allowed to see.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {"term_id": {"type": "string"}},
+            "required": ["term_id"],
+            "additionalProperties": False,
+        },
+    },
+    {
+        "name": "swade_check_answerable",
+        "description": "Check whether a question stays inside the caller scope and the starter ontology.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {"question": {"type": "string"}},
+            "required": ["question"],
+            "additionalProperties": False,
+        },
+    },
+    {
+        "name": "swade_ask",
+        "description": "Ask SWADE for scoped term definitions. SQL is not executed.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {"question": {"type": "string"}},
+            "required": ["question"],
+            "additionalProperties": False,
+        },
+    },
+    {
+        "name": "swade_search_documents",
+        "description": "Search the caller tenant. Customer corpora stay in SSS Brain. Platform refs use Postgres full-text search.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "query": {"type": "string"},
+                "limit": {"type": "integer"},
+            },
+            "required": ["query"],
+            "additionalProperties": False,
+        },
+    },
+)
+
+
+class KnowledgeService:
+    def __init__(
+        self,
+        config: Config,
+        catalog: Catalog,
+        policy: Policy,
+        audit: AuditLog,
+        gateway: Gateway,
+        brain: BrainClient,
+        documents: MemoryDocumentIndex,
+        engine: EngineClient,
+        owner: OwnerAuth | None = None,
+        store: object | None = None,
+        sessions: SessionRegistry | None = None,
+    ) -> None:
+        self.config = config
+        self.catalog = catalog
+        self.policy = policy
+        self.audit = audit
+        self.gateway = gateway
+        self.brain = brain
+        self.documents = documents
+        self.engine = engine
+        self.owner = owner or OwnerAuth(None, None)
+        self.store = store
+        self.sessions = sessions or SessionRegistry(
+            idle_seconds=config.session_idle_seconds,
+            absolute_seconds=config.session_absolute_seconds,
+            reauth_seconds=config.session_reauth_seconds,
+        )
+
+    def health(self) -> dict[str, Any]:
+        return {
+            "service": "SWADE",
+            "component": "swade-ontology",
+            "enabled": self.config.enabled,
+            "engine_commit": self.engine.commit,
+            "engine_configured": bool(self.engine.url),
+            "kumo_rfm": "disabled",
+            "document_search": "postgres-fts",
+            "tenant_documents": "sss-brain" if self.brain.configured else "sss_brain_not_configured",
+            "model_transport": "swade-ai-gateway",
+            "gateway_configured": self.gateway.configured,
+            "migrations": "not_applied",
+            "personal_scope": "isolated",
+            "agents": "SWADEBOTS",
+            "owner_approval": "required",
+            "owner_auth": "swadebase-google" if self.owner.configured else "not_configured",
+            "credential_store": getattr(self.store, "mode", "memory"),
+            "description": primer_text(),
+        }
+
+    def dispatch(
+        self,
+        method: str,
+        path: str,
+        headers: dict[str, str],
+        query: dict[str, str],
+        body: Any,
+        cookie_out: list[str] | None = None,
+    ) -> tuple[int, dict[str, Any]]:
+        normalized = {key.lower(): value for key, value in headers.items()}
+        task_token = set_task_id(clean_task_id(normalized.get("x-task-id")))
+        try:
+            return self._dispatch(method, path, normalized, query, body, cookie_out)
+        finally:
+            reset_task_id(task_token)
+
+    def _dispatch(
+        self,
+        method: str,
+        path: str,
+        normalized: dict[str, str],
+        query: dict[str, str],
+        body: Any,
+        cookie_out: list[str] | None,
+    ) -> tuple[int, dict[str, Any]]:
+        if method == "GET" and path == "/health":
+            return 200, self.health()
+        if method not in {"GET", "POST"}:
+            return 405, {"error": {"code": "read_only", "service": "SWADE"}}
+        if method == "POST" and path == "/mcp":
+            return self._mcp(normalized, body)
+        if not self.config.enabled:
+            return 503, {"error": {"code": "swade_ontology_disabled", "service": "SWADE"}}
+        if path.startswith("/v1/admin"):
+            return self._admin(method, path, normalized, body, cookie_out if cookie_out is not None else [])
+        decision = self.policy.authenticate(normalized)
+        if not decision.allowed:
+            self.audit.record(decision, "authenticate")
+            return decision.status, self._error(decision)
+        caller = decision.caller
+        assert caller is not None
+        requested = _requested_tenant(query, body)
+        tenant_decision = self.policy.authorize_tenant(caller, requested)
+        if not tenant_decision.allowed:
+            self.audit.record(tenant_decision, path)
+            return tenant_decision.status, self._error(tenant_decision)
+        if method == "GET" and path == "/v1/terms":
+            return self._list_terms(decision, query.get("q", ""))
+        if method == "GET" and path.startswith("/v1/terms/"):
+            return self._get_term(decision, path.removeprefix("/v1/terms/"))
+        if method == "POST" and path == "/v1/answerable":
+            return self._answerable(decision, body)
+        if method == "POST" and path == "/v1/ask":
+            return self._ask(decision, body)
+        if method == "POST" and path == "/v1/documents/search":
+            return self._documents(decision, body)
+        if method == "GET" and path == "/v1/audit":
+            return self._audit(decision)
+        missing = self.policy._deny(404, "not_found", caller)
+        self.audit.record(missing, path)
+        return 404, self._error(missing)
+
+    def _admin(
+        self,
+        method: str,
+        path: str,
+        headers: dict[str, str],
+        body: Any,
+        cookie_out: list[str],
+    ) -> tuple[int, dict[str, Any]]:
+        if method == "POST" and path == "/v1/admin/session":
+            return self._open_session(headers, body, cookie_out)
+        if method == "POST" and path == "/v1/admin/session/sign-out":
+            return self._sign_out(headers, cookie_out, everywhere=False)
+        if method == "POST" and path == "/v1/admin/session/sign-out-everywhere":
+            return self._sign_out(headers, cookie_out, everywhere=True)
+        code, session = self._current_session(headers, cookie_out)
+        if session is None:
+            denied = self.policy._deny(401, code, None)
+            self.audit.record(denied, "admin.session")
+            return 401, {"error": {"code": code, "service": "SWADE"}}
+        if method == "GET" and path == "/v1/admin/session":
+            return 200, _session_body(session, self.sessions)
+        if _sensitive_admin(method, path) and self.sessions.needs_reauth(session):
+            denied = self.policy._deny(403, "reauth_required", None)
+            self.audit.record(denied, "admin.reauth")
+            return 403, {"error": {"code": "reauth_required", "service": "SWADE"}}
+        owner_email = session.owner_email
+        owner_subject = session.owner_subject
+        if method == "GET" and path == "/v1/admin/audit":
+            return 200, {"events": [_event_payload(event) for event in self.audit.events()]}
+        if method == "GET" and path == "/v1/admin/approvals":
+            allowed = self.policy._deny(200, "allow", None)
+            self.audit.record(allowed, "admin.approvals", None)
+            return 200, {
+                "approvals": [
+                    {
+                        "approval_id": item.approval_id,
+                        "credential_id": item.credential_id,
+                        "action": item.action,
+                        "owner_email": item.owner_email,
+                        "owner_subject": item.owner_subject,
+                    }
+                    for item in self.policy.approvals
+                    if item.owner_email == owner_email
+                ]
+            }
+        if method == "POST" and path == "/v1/admin/credentials":
+            return self._issue(owner_email, owner_subject, body)
+        if method == "POST" and path.startswith("/v1/admin/credentials/"):
+            remainder = path.removeprefix("/v1/admin/credentials/")
+            credential_id, _, action = remainder.partition("/")
+            if action == "approve":
+                return self._owner_action(owner_email, owner_subject, credential_id, "approve")
+            if action == "revoke":
+                return self._owner_action(owner_email, owner_subject, credential_id, "revoke")
+        missing = self.policy._deny(404, "not_found", None)
+        self.audit.record(missing, "admin.unknown")
+        return 404, {"error": {"code": "not_found", "service": "SWADE"}}
+
+    def _open_session(
+        self,
+        headers: dict[str, str],
+        body: Any,
+        cookie_out: list[str],
+    ) -> tuple[int, dict[str, Any]]:
+        access_token = ""
+        if isinstance(body, dict) and isinstance(body.get("access_token"), str):
+            access_token = body["access_token"].strip()
+        if not access_token:
+            access_token = bearer_token(headers) or ""
+        verified = self.owner.verify(access_token)
+        if not verified.ok or verified.owner is None:
+            denied = self.policy._deny(verified.status, verified.code, None)
+            self.audit.record(denied, "admin.session")
+            return verified.status, {"error": {"code": verified.code, "service": "SWADE"}}
+        existing_code, existing = self._current_session(headers, cookie_out, touch=False)
+        try:
+            if existing is not None and existing.owner_subject == verified.owner.subject:
+                self.sessions.reauthenticate(existing, verified.owner)
+                session = existing
+                secret = _cookie_secret(headers)
+                cookie_value = f"{session.session_id}.{secret}" if secret else ""
+                if not cookie_value:
+                    _session, cookie_value = self.sessions.start(verified.owner)
+                    session = _session
+            else:
+                session, cookie_value = self.sessions.start(verified.owner)
+        except StoreError:
+            failed = self.policy._deny(503, "credential_store_unavailable", None)
+            self.audit.record(failed, "admin.session")
+            return 503, self._error(failed)
+        cookie_out.append(session_cookie(cookie_value, self.sessions.cookie_max_age(session)))
+        self.audit.record(self.policy._deny(200, "allow", None), "admin.session")
+        body_out = _session_body(session, self.sessions)
+        if cookie_value.split(".", 1)[-1] in str(body_out):
+            raise RuntimeError("session secret leaked into the response body")
+        return 200, body_out
+
+    def _sign_out(self, headers: dict[str, str], cookie_out: list[str], *, everywhere: bool) -> tuple[int, dict[str, Any]]:
+        code, session = self._current_session(headers, cookie_out, touch=False)
+        if session is None:
+            cookie_out.append(clear_session_cookie())
+            return 401, {"error": {"code": code, "service": "SWADE"}}
+        if everywhere:
+            self.sessions.revoke_all(session.owner_subject)
+            action = "admin.session.sign_out_everywhere"
+        else:
+            self.sessions.revoke(session.session_id)
+            action = "admin.session.sign_out"
+        cookie_out.append(clear_session_cookie())
+        self.audit.record(self.policy._deny(200, "allow", None), action)
+        return 200, {"signed_out": "everywhere" if everywhere else "device"}
+
+    def _current_session(self, headers: dict[str, str], cookie_out: list[str], touch: bool = True):
+        code, session = self.sessions.resolve(read_session_cookie(headers.get("cookie")))
+        if session is not None and touch:
+            secret = _cookie_secret(headers)
+            if secret:
+                cookie_out.append(
+                    session_cookie(f"{session.session_id}.{secret}", self.sessions.cookie_max_age(session))
+                )
+        return code, session
+
+    def _issue(self, owner_email: str, owner_subject: str, body: Any) -> tuple[int, dict[str, Any]]:
+        if not isinstance(body, dict):
+            return 400, {"error": {"code": "credential_invalid", "service": "SWADE"}}
+        required = ("app_id", "tenant_id", "tenant_class", "caller_id", "caller_kind", "plan")
+        if any(not isinstance(body.get(key), str) or not body[key].strip() for key in required):
+            return 400, {"error": {"code": "credential_invalid", "service": "SWADE"}}
+        access = body.get("access", "read")
+        if access != "read":
+            return 400, {"error": {"code": "read_only", "service": "SWADE"}}
+        token = secrets.token_urlsafe(32)
+        try:
+            credential = self.policy.add_credential(
+                token,
+                app_id=body["app_id"].strip(),
+                tenant_id=body["tenant_id"].strip(),
+                tenant_class=body["tenant_class"].strip(),
+                caller_id=body["caller_id"].strip(),
+                caller_kind=body["caller_kind"].strip(),
+                plan=body["plan"].strip(),
+                scopes=body.get("scopes"),
+                access="read",
+            )
+        except ValueError:
+            return 400, {"error": {"code": "credential_invalid", "service": "SWADE"}}
+        if self.store is not None:
+            try:
+                self.store.insert_credential(credential)
+            except StoreError:
+                self.policy.forget(credential.credential_id)
+                failed = self.policy._deny(503, "credential_store_unavailable", None)
+                self.audit.record(failed, "admin.credentials.issue")
+                return 503, self._error(failed)
+        recorded = self.policy._deny(201, "pending_approval", None)
+        self.audit.record(recorded, "admin.credentials.issue")
+        return 201, {
+            "credential_id": credential.credential_id,
+            "token": token,
+            "status": "pending",
+            "access": "read",
+            "scopes": list(credential.scopes),
+            "owner_email": owner_email,
+            "owner_subject": owner_subject,
+        }
+
+    def _owner_action(
+        self,
+        owner_email: str,
+        owner_subject: str,
+        credential_id: str,
+        action: str,
+    ) -> tuple[int, dict[str, Any]]:
+        previous = self.policy.get_credential(credential_id)
+        try:
+            if action == "approve":
+                approval = self.policy.approve(
+                    credential_id, owner_email=owner_email, owner_subject=owner_subject
+                )
+            else:
+                approval = self.policy.revoke(
+                    credential_id, owner_email=owner_email, owner_subject=owner_subject
+                )
+        except KeyError:
+            missing = self.policy._deny(404, "not_available", None)
+            self.audit.record(missing, f"admin.credentials.{action}")
+            return 404, {"error": {"code": "not_available", "service": "SWADE"}}
+        if self.store is not None and previous is not None:
+            try:
+                self.store.insert_approval(approval, "approved" if action == "approve" else "revoked")
+            except StoreError:
+                self.policy._credentials[previous.token_hash] = previous
+                if self.policy.approvals and self.policy.approvals[-1].approval_id == approval.approval_id:
+                    self.policy.approvals.pop()
+                failed = self.policy._deny(503, "credential_store_unavailable", None)
+                self.audit.record(failed, f"admin.credentials.{action}")
+                return 503, self._error(failed)
+        recorded = self.policy._deny(200, "allow", None)
+        self.audit.record(recorded, f"admin.credentials.{action}")
+        credential = self.policy.get_credential(credential_id)
+        return 200, {
+            "credential_id": approval.credential_id,
+            "status": credential.status if credential else action,
+            "approval_id": approval.approval_id,
+            "owner_email": approval.owner_email,
+            "owner_subject": approval.owner_subject,
+        }
+
+    def _list_terms(self, decision: Decision, query: str) -> tuple[int, dict[str, Any]]:
+        caller = decision.caller
+        assert caller is not None
+        app = self.catalog.app(caller.app_id)
+        assert app is not None
+        terms = []
+        for term_id in sorted(caller.scopes):
+            term = self.catalog.terms.get(term_id)
+            if term is None:
+                continue
+            if query and not _term_matches(term, query):
+                continue
+            terms.append(self._term_payload(term, caller.scopes))
+        self._record_query(decision, "terms.list", caller, [term["id"] for term in terms])
+        return 200, {"terms": terms, "provenance": self._provenance(decision, ["starter-catalog"])}
+
+    def _get_term(self, decision: Decision, term_id: str) -> tuple[int, dict[str, Any]]:
+        caller = decision.caller
+        assert caller is not None
+        app = self.catalog.app(caller.app_id)
+        term = self.catalog.terms.get(term_id)
+        if app is None or term is None or term_id not in caller.scopes:
+            hidden = self.policy._deny(403, "outside_scope", caller)
+            self._record_query(hidden, "terms.get", caller, [term_id])
+            return 403, self._error(hidden)
+        self._record_query(decision, "terms.get", caller, [term_id])
+        return 200, {
+            "term": self._term_payload(term, caller.scopes),
+            "provenance": self._provenance(decision, ["starter-catalog"]),
+        }
+
+    def _answerable(self, decision: Decision, body: Any) -> tuple[int, dict[str, Any]]:
+        question = _question(body)
+        if question is None:
+            return 400, {"error": {"code": "question_required", "service": "SWADE"}}
+        screened = self._screen(decision, question, "answerable")
+        if screened is not None:
+            return screened
+        caller = decision.caller
+        assert caller is not None
+        term_ids = extract_term_ids(self.catalog, question)
+        if not term_ids:
+            self._record_query(decision, "answerable", caller, [])
+            return 200, {
+                "answerable": False,
+                "reason": "ontology_unmatched",
+                "provenance": self._provenance(decision, ["starter-catalog"]),
+            }
+        allowed = self.policy.authorize_terms(caller, term_ids)
+        if not allowed.allowed:
+            self._record_query(allowed, "answerable", caller, term_ids)
+            return allowed.status, self._error(allowed, outside=_outside_scopes(caller, term_ids))
+        self._record_query(allowed, "answerable", caller, term_ids)
+        return 200, {
+            "answerable": True,
+            "terms": term_ids,
+            "provenance": self._provenance(allowed, ["starter-catalog"]),
+        }
+
+    def _ask(self, decision: Decision, body: Any) -> tuple[int, dict[str, Any]]:
+        question = _question(body)
+        if question is None:
+            return 400, {"error": {"code": "question_required", "service": "SWADE"}}
+        screened = self._screen(decision, question, "ask")
+        if screened is not None:
+            return screened
+        caller = decision.caller
+        assert caller is not None
+        term_ids = extract_term_ids(self.catalog, question)
+        if not term_ids:
+            self._record_query(decision, "ask", caller, [])
+            return 200, {
+                "answerable": False,
+                "answer": None,
+                "terms": [],
+                "sql_executed": False,
+                "narration": None,
+                "provenance": self._provenance(decision, ["starter-catalog"]),
+            }
+        allowed = self.policy.authorize_terms(caller, term_ids)
+        if not allowed.allowed:
+            self._record_query(allowed, "ask", caller, term_ids)
+            return allowed.status, self._error(allowed, outside=_outside_scopes(caller, term_ids))
+        app = self.catalog.app(caller.app_id)
+        assert app is not None
+        payloads = [self._term_payload(self.catalog.terms[term_id], app.terms) for term_id in term_ids]
+        narration = None
+        model = None
+        model_error = None
+        if self.gateway.configured:
+            prompt = _narration_prompt(question, payloads)
+            result = self.gateway.narrate(caller.plan, prompt)
+            narration = result.text
+            model = result.model
+            model_error = result.error
+        self._record_query(allowed, "ask", caller, term_ids)
+        return 200, {
+            "answerable": True,
+            "answer": "Starter definitions returned. SQL was not executed.",
+            "terms": payloads,
+            "sql_executed": False,
+            "narration": narration,
+            "model": model,
+            "model_error": model_error,
+            "provenance": self._provenance(allowed, ["starter-catalog"]),
+        }
+
+    def _documents(self, decision: Decision, body: Any) -> tuple[int, dict[str, Any]]:
+        if not isinstance(body, dict) or not isinstance(body.get("query"), str) or not body["query"].strip():
+            return 400, {"error": {"code": "query_required", "service": "SWADE"}}
+        caller = decision.caller
+        assert caller is not None
+        limit = body.get("limit", 10)
+        if not isinstance(limit, int) or isinstance(limit, bool):
+            return 400, {"error": {"code": "limit_invalid", "service": "SWADE"}}
+        try:
+            bounded = max(1, min(20, limit))
+        except TypeError:
+            return 400, {"error": {"code": "limit_invalid", "service": "SWADE"}}
+        query = body["query"].strip()
+        screened = self.policy.screen_question(caller, query)
+        if not screened.allowed:
+            self._record_query(screened, "documents.search", caller, extract_term_ids(self.catalog, query))
+            return screened.status, self._error(screened)
+        mentioned = extract_term_ids(self.catalog, query)
+        if mentioned:
+            scoped = self.policy.authorize_terms(caller, mentioned)
+            if not scoped.allowed:
+                self._record_query(scoped, "documents.search", caller, mentioned)
+                return scoped.status, self._error(scoped, outside=_outside_scopes(caller, mentioned))
+        if self.brain.configured:
+            result = self.brain.search(caller.tenant_id, query, bounded)
+            if result.dropped:
+                dropped = self.policy._deny(200, "brain_scope_filtered", caller)
+                self._record_query(dropped, "documents.search", caller, mentioned)
+            if result.error:
+                failed = self.policy._deny(502, "brain_unavailable", caller)
+                self._record_query(failed, "documents.search", caller, mentioned)
+                return 502, self._error(failed)
+            self._record_query(decision, "documents.search", caller, mentioned)
+            return 200, {
+                "hits": [_hit(hit) for hit in result.hits],
+                "provenance": self._provenance(decision, ["sss-brain"], document_search="sss-brain"),
+            }
+        try:
+            hits = self.documents.search(caller.tenant_id, query, bounded)
+        except StoreError:
+            failed = self.policy._deny(503, "document_store_unavailable", caller)
+            self._record_query(failed, "documents.search", caller, mentioned)
+            return 503, self._error(failed)
+        self._record_query(decision, "documents.search", caller, mentioned)
+        return 200, {
+            "hits": [_hit(hit) for hit in hits],
+            "tenant_documents": "sss_brain_not_configured",
+            "provenance": self._provenance(decision, ["postgres-fts"], document_search="postgres-fts"),
+        }
+
+    def _record_query(
+        self,
+        decision: Decision,
+        action: str,
+        caller: Caller,
+        term_ids: list[str],
+    ) -> None:
+        tables: list[str] = []
+        for term_id in term_ids:
+            term = self.catalog.terms.get(term_id)
+            if term is None:
+                continue
+            for table in term.source_tables:
+                if table not in tables:
+                    tables.append(table)
+        event = self.audit.record(
+            decision,
+            action,
+            caller,
+            credential_id=caller.credential_id,
+            terms=tuple(term_ids),
+            source_tables=tuple(tables),
+        )
+        if self.store is not None and hasattr(self.store, "insert_audit"):
+            try:
+                self.store.insert_audit(event)
+            except StoreError:
+                return
+
+    def _audit(self, decision: Decision) -> tuple[int, dict[str, Any]]:
+        caller = decision.caller
+        assert caller is not None
+        self.audit.record(decision, "audit.read_own", caller)
+        events = [_event_payload(event) for event in self.audit.for_caller(caller)]
+        return 200, {"events": events, "provenance": self._provenance(decision, ["audit"])}
+
+    def _screen(self, decision: Decision, question: str, action: str) -> tuple[int, dict[str, Any]] | None:
+        caller = decision.caller
+        assert caller is not None
+        screened = self.policy.screen_question(caller, question)
+        if screened.allowed:
+            return None
+        self.audit.record(screened, action, caller)
+        return screened.status, self._error(screened)
+
+    def _mcp(self, headers: dict[str, str], body: Any) -> tuple[int, dict[str, Any]]:
+        if not isinstance(body, dict) or body.get("jsonrpc") != "2.0":
+            return 400, {"jsonrpc": "2.0", "id": None, "error": {"code": -32600, "message": "invalid request"}}
+        rpc_id = body.get("id")
+        method = body.get("method")
+        if method == "initialize":
+            return 200, {
+                "jsonrpc": "2.0",
+                "id": rpc_id,
+                "result": {
+                    "protocolVersion": "2025-03-26",
+                    "serverInfo": {"name": "swade-ontology", "title": "SWADE", "version": __version__},
+                    "capabilities": {"tools": {}},
+                    "instructions": primer_text(),
+                },
+            }
+        if method == "notifications/initialized":
+            return 202, {"jsonrpc": "2.0", "id": rpc_id, "result": {}}
+        if not self.config.enabled:
+            return 200, _rpc_error(rpc_id, "swade_ontology_disabled")
+        decision = self.policy.authenticate(headers)
+        if not decision.allowed:
+            self.audit.record(decision, "mcp.authenticate")
+            return 200, _rpc_error(rpc_id, decision.code)
+        if method == "tools/list":
+            self.audit.record(decision, "mcp.tools.list", decision.caller)
+            return 200, {"jsonrpc": "2.0", "id": rpc_id, "result": {"tools": list(_TOOLS)}}
+        if method != "tools/call":
+            return 200, {"jsonrpc": "2.0", "id": rpc_id, "error": {"code": -32601, "message": "method not found"}}
+        params = body.get("params") if isinstance(body.get("params"), dict) else {}
+        name = params.get("name")
+        arguments = params.get("arguments") if isinstance(params.get("arguments"), dict) else {}
+        if "tenant_id" in arguments or "tenantId" in arguments:
+            denied = self.policy._deny(403, "tenant_override", decision.caller)
+            self.audit.record(denied, "mcp.tools.call", decision.caller)
+            return 200, _tool_result(rpc_id, self._error(denied), is_error=True)
+        status, payload = self._mcp_tool(decision, name, arguments)
+        return 200, _tool_result(rpc_id, payload, is_error=status >= 400)
+
+    def _mcp_tool(self, decision: Decision, name: object, arguments: dict[str, Any]) -> tuple[int, dict[str, Any]]:
+        if name == "swade_search_terms":
+            return self._list_terms(decision, str(arguments.get("query", "")))
+        if name == "swade_get_term":
+            return self._get_term(decision, str(arguments.get("term_id", "")))
+        if name == "swade_check_answerable":
+            return self._answerable(decision, {"question": arguments.get("question")})
+        if name == "swade_ask":
+            return self._ask(decision, {"question": arguments.get("question")})
+        if name == "swade_search_documents":
+            return self._documents(
+                decision,
+                {"query": arguments.get("query"), "limit": arguments.get("limit", 10)},
+            )
+        missing = self.policy._deny(404, "tool_not_found", decision.caller)
+        self.audit.record(missing, "mcp.tools.call", decision.caller)
+        return 404, self._error(missing)
+
+    def _term_payload(self, term: Term, granted: frozenset[str]) -> dict[str, Any]:
+        return {
+            "id": term.id,
+            "name": term.name,
+            "description": term.description,
+            "synonyms": list(term.synonyms),
+            "columns": [
+                {"name": column.name, "description": column.description, "physical": column.physical}
+                for column in term.columns
+            ],
+            "sql_attributes": [
+                {
+                    "id": attribute.id,
+                    "description": attribute.description,
+                    "expression": attribute.expression,
+                    "executable": attribute.executable,
+                    "certification": attribute.certification,
+                }
+                for attribute in term.sql_attributes
+            ],
+            "relationships": [
+                {
+                    "id": relationship.id,
+                    "source": relationship.source,
+                    "target": relationship.target,
+                    "description": relationship.description,
+                    "multiplicity": relationship.multiplicity,
+                }
+                for relationship in self.catalog.visible_relationships(term.id, granted)
+            ],
+        }
+
+    def _provenance(
+        self,
+        decision: Decision,
+        sources: list[str],
+        *,
+        document_search: str | None = None,
+        engine_consulted: bool = False,
+    ) -> dict[str, Any]:
+        caller = decision.caller
+        assert caller is not None
+        return {
+            "service": "SWADE",
+            "component": "swade-ontology",
+            "agents": "SWADEBOTS",
+            "catalog_version": self.catalog.version,
+            "certification": self.catalog.certification,
+            "sources": sources,
+            "sql_executed": False,
+            "engine": {
+                "commit": self.engine.commit,
+                "consulted": engine_consulted,
+            },
+            "document_search": document_search,
+            "policy_decision_id": decision.decision_id,
+            "app_id": caller.app_id,
+            "tenant_id": caller.tenant_id,
+            "tenant_class": caller.tenant_class,
+            "caller_id": caller.caller_id,
+            "caller_kind": caller.caller_kind,
+        }
+
+    def _error(self, decision: Decision, outside: list[str] | None = None) -> dict[str, Any]:
+        body: dict[str, Any] = {
+            "error": {"code": decision.code, "service": "SWADE"},
+        }
+        if outside:
+            body["error"]["terms"] = outside
+        if decision.caller is not None:
+            body["provenance"] = {
+                "service": "SWADE",
+                "policy_decision_id": decision.decision_id,
+                "app_id": decision.caller.app_id,
+                "tenant_id": decision.caller.tenant_id,
+                "tenant_class": decision.caller.tenant_class,
+                "caller_id": decision.caller.caller_id,
+            }
+        return body
+
+
+def _sensitive_admin(method: str, path: str) -> bool:
+    if method != "POST":
+        return False
+    if path == "/v1/admin/credentials":
+        return True
+    return path.startswith("/v1/admin/credentials/") and (
+        path.endswith("/approve") or path.endswith("/revoke")
+    )
+
+
+def _cookie_secret(headers: dict[str, str]) -> str:
+    raw = read_session_cookie(headers.get("cookie"))
+    if not raw or "." not in raw:
+        return ""
+    return raw.split(".", 1)[1]
+
+
+def _session_body(session: object, registry: SessionRegistry) -> dict[str, Any]:
+    return {
+        "session_id": session.session_id,
+        "owner_email": session.owner_email,
+        "owner_subject": session.owner_subject,
+        "authenticated_at": session.authenticated_at,
+        "idle_seconds": registry.idle_seconds,
+        "absolute_seconds": registry.absolute_seconds,
+        "reauth_seconds": registry.reauth_seconds,
+    }
+
+
+def extract_term_ids(catalog: Catalog, question: str) -> list[str]:
+    found: list[str] = []
+    for term in catalog.terms.values():
+        phrases = (term.id, term.name, *term.synonyms)
+        if any(_contains_phrase(question, phrase) for phrase in phrases):
+            found.append(term.id)
+    return found
+
+
+def _contains_phrase(text: str, phrase: str) -> bool:
+    return re.search(rf"(?<![a-z0-9]){re.escape(phrase.lower())}s?(?![a-z0-9])", text.lower()) is not None
+
+
+def _term_matches(term: Term, query: str) -> bool:
+    phrases = (term.id, term.name, *term.synonyms)
+    if any(_contains_phrase(phrase, query) or _contains_phrase(query, phrase) for phrase in phrases):
+        return True
+    for word in re.findall(r"[a-z0-9]{3,}", query.lower()):
+        if any(_contains_phrase(phrase, word) for phrase in phrases):
+            return True
+    return False
+
+
+def _event_payload(event: AuditEvent) -> dict[str, Any]:
+    return {
+        "decision_id": event.decision_id,
+        "at": event.at,
+        "action": event.action,
+        "outcome": event.outcome,
+        "credential_id": event.credential_id,
+        "caller_id": event.caller_id,
+        "task_id": event.task_id,
+        "terms": list(event.terms),
+        "source_tables": list(event.source_tables),
+        "app_id": event.app_id,
+        "tenant_id": event.tenant_id,
+    }
+
+
+def _outside_scopes(caller: Caller, term_ids: list[str]) -> list[str]:
+    return [term_id for term_id in term_ids if term_id not in caller.scopes]
+
+
+def _question(body: Any) -> str | None:
+    if not isinstance(body, dict) or not isinstance(body.get("question"), str):
+        return None
+    question = body["question"].strip()
+    return question or None
+
+
+def _requested_tenant(query: dict[str, str], body: Any) -> str | None:
+    if query.get("tenant_id"):
+        return query["tenant_id"]
+    if isinstance(body, dict) and isinstance(body.get("tenant_id"), str):
+        return body["tenant_id"]
+    return None
+
+
+def _hit(hit: DocumentHit) -> dict[str, str]:
+    return {
+        "id": hit.id,
+        "tenant_id": hit.tenant_id,
+        "title": hit.title,
+        "excerpt": hit.excerpt,
+        "source": hit.source,
+    }
+
+
+def _narration_prompt(question: str, terms: list[dict[str, Any]]) -> str:
+    definitions = []
+    for term in terms:
+        attributes = ", ".join(
+            f"{item['id']} ({item['expression']})" for item in term["sql_attributes"]
+        )
+        definitions.append(f"{term['name']}: {term['description']} Measures: {attributes}.")
+    return (
+        "Explain the following certified starter definitions. "
+        "Do not invent numbers, joins, or tenant data. SQL was not executed.\n"
+        f"Question: {question}\n" + "\n".join(definitions)
+    )
+
+
+def _rpc_error(rpc_id: Any, code: str) -> dict[str, Any]:
+    return _tool_result(rpc_id, {"error": {"code": code, "service": "SWADE"}}, is_error=True)
+
+
+def _tool_result(rpc_id: Any, payload: dict[str, Any], *, is_error: bool) -> dict[str, Any]:
+    return {
+        "jsonrpc": "2.0",
+        "id": rpc_id,
+        "result": {
+            "content": [{"type": "text", "text": json.dumps(payload)}],
+            "isError": is_error,
+        },
+    }
