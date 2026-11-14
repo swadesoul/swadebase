@@ -80,11 +80,10 @@ export function createTaskRunner({ store, knowledge, spend, broker, config, fetc
     const risk = classifyRisk(task.input)
     if (risk && task.approval?.action !== `risk:${risk}`) {
       task.approval = { required: true, action: `risk:${risk}`, status: 'pending' }
-      const grant = store.requestGrant({
+      const grant = store.addRiskApproval({
         tenantId: task.tenant_id,
         botId: bot.id,
-        kind: 'risk',
-        resource: risk,
+        action: risk,
         requestedBy: actor.id,
       })
       task.approval.grant_id = grant.id
@@ -94,7 +93,7 @@ export function createTaskRunner({ store, knowledge, spend, broker, config, fetc
         return task
       }
     }
-    if (risk && store.findGrant(task.tenant_id, bot.id, 'risk', risk)?.status !== 'approved') {
+    if (risk && !store.riskApproved(task.tenant_id, bot.id, risk)) {
       return task
     }
     task.status = 'running'
@@ -153,22 +152,35 @@ export function createTaskRunner({ store, knowledge, spend, broker, config, fetc
 
   function ensureGrants(task, bot, actor) {
     const needed = []
-    if (extractUrls(task.input).length) needed.push(['tool', 'fetch_url'])
-    if (/\bknowledge\b|\bremember\b/i.test(task.input)) needed.push(['knowledge', bot.knowledge_scope || 'default'])
-    if (/\bvault\b|\bcredential\b/i.test(task.input)) needed.push(['vault', 'default'])
+    const systems = mentionedSystems(task.input, bot)
+    if (extractUrls(task.input).length) {
+      if (!systems.length) return block(task, 'A URL fetch needs one of this bot\'s controlled systems.')
+      for (const system of systems) needed.push({ kind: 'tool', system, action: 'read', tool: 'fetch_url' })
+    }
+    if (/\bknowledge\b|\bremember\b/i.test(task.input)) {
+      if (!systems.length) return block(task, 'Knowledge needs one of this bot\'s controlled systems.')
+      for (const system of systems) needed.push({ kind: 'knowledge', system, action: 'read' })
+    }
+    if (/\bvault\b|\bcredential\b/i.test(task.input)) {
+      if (!systems.length) return block(task, 'A vault grant needs one of this bot\'s controlled systems.')
+      for (const system of systems) needed.push({ kind: 'vault', system, action: 'read' })
+    }
     const site = mentionedSite(task.input)
-    if (site) needed.push(['site', site.slug])
+    if (site) {
+      if (!(bot.controlled_systems || []).includes(site.slug)) return block(task, 'That site is outside this bot.')
+      needed.push({ kind: 'site', system: site.slug, action: 'read' })
+    }
     let waiting = false
-    for (const [kind, resource] of needed) {
-      if (store.isApproved(task.tenant_id, bot.id, kind, resource)) continue
+    for (const need of needed) {
+      if (store.isApproved(task.tenant_id, bot.id, need)) continue
       const grant = store.requestGrant({
         tenantId: task.tenant_id,
         botId: bot.id,
-        kind,
-        resource,
         requestedBy: actor.id,
+        bot,
+        input: need,
       })
-      task.approval = { required: true, action: `grant:${kind}:${resource}`, status: 'pending', grant_id: grant.id }
+      task.approval = { required: true, action: `grant:${need.kind}:${need.system}`, status: 'pending', grant_id: grant.id }
       waiting = true
     }
     if (waiting) {
@@ -182,7 +194,8 @@ export function createTaskRunner({ store, knowledge, spend, broker, config, fetc
   async function runFetch(task, bot) {
     const urls = extractUrls(task.input)
     if (!urls.length) return
-    if (!store.isApproved(task.tenant_id, bot.id, 'tool', 'fetch_url')) {
+    const system = mentionedSystems(task.input, bot)[0]
+    if (!store.isApproved(task.tenant_id, bot.id, { kind: 'tool', system, action: 'read', tool: 'fetch_url' })) {
       throw Object.assign(new Error('URL fetch is not approved'), { code: 'forbidden' })
     }
     for (const url of urls) {
@@ -201,10 +214,10 @@ export function createTaskRunner({ store, knowledge, spend, broker, config, fetc
   }
 
   async function runKnowledge(task, bot) {
-    const scope = bot.knowledge_scope || 'default'
-    const asked = /\bknowledge\b|\bremember\b/i.test(task.input) || bot.knowledge_scope
+    const asked = /\bknowledge\b|\bremember\b/i.test(task.input)
     if (!asked) return
-    if (!store.isApproved(task.tenant_id, bot.id, 'knowledge', scope)) {
+    const scope = mentionedSystems(task.input, bot)[0]
+    if (!store.isApproved(task.tenant_id, bot.id, { kind: 'knowledge', system: scope, action: 'read' })) {
       throw Object.assign(new Error('knowledge scope is not approved'), { code: 'forbidden' })
     }
     progress(task, 'Knowledge', 'Asking SWADE for this tenant.')
@@ -221,10 +234,11 @@ export function createTaskRunner({ store, knowledge, spend, broker, config, fetc
 
   async function runVault(task, bot, actor) {
     if (!/\bvault\b|\bcredential\b/i.test(task.input)) return
-    if (!store.isApproved(task.tenant_id, bot.id, 'vault', 'default')) {
+    const system = mentionedSystems(task.input, bot)[0]
+    if (!store.isApproved(task.tenant_id, bot.id, { kind: 'vault', system, action: 'read' })) {
       throw Object.assign(new Error('vault access is not approved'), { code: 'forbidden' })
     }
-    const grant = store.findGrant(task.tenant_id, bot.id, 'vault', 'default')
+    const grant = store.findGrant(task.tenant_id, bot.id, { kind: 'vault', system, action: 'read' })
     if (!grant.secret_id) {
       progress(task, 'Vault', 'The grant is approved and no credential is bound yet.')
       task.artifacts.push({ kind: 'vault', grant_id: grant.id, used: false })
@@ -245,7 +259,7 @@ export function createTaskRunner({ store, knowledge, spend, broker, config, fetc
   async function runSites(task, bot) {
     const site = mentionedSite(task.input)
     if (!site) return
-    if (!store.isApproved(task.tenant_id, bot.id, 'site', site.slug)) {
+    if (!store.isApproved(task.tenant_id, bot.id, { kind: 'site', system: site.slug, action: 'read' })) {
       throw Object.assign(new Error('site access is not approved'), { code: 'forbidden' })
     }
     task.artifacts.push({
@@ -268,6 +282,19 @@ export function createTaskRunner({ store, knowledge, spend, broker, config, fetc
   }
 
   return { enqueue, drain, cancel, step }
+}
+
+function block(task, message) {
+  task.status = 'failed'
+  task.error = { code: 'outside_charter', message }
+  task.finished_at = new Date().toISOString()
+  progress(task, 'Blocked', message)
+  return true
+}
+
+function mentionedSystems(text, bot) {
+  const source = String(text || '').toLowerCase()
+  return (bot.controlled_systems || []).filter((system) => source.includes(String(system).toLowerCase()))
 }
 
 function mentionedSite(text) {

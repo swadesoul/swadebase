@@ -67,6 +67,19 @@ export function publicBot(bot, grants = []) {
     requested_knowledge_scope: bot.knowledge_scope || '',
     tools: approvedTools,
     requested_tools: bot.tools || [],
+    role: bot.role || bot.title,
+    controlled_systems: bot.controlled_systems || [],
+    access_map: (grants || [])
+      .filter((grant) => grant.bot_id === bot.id)
+      .map((grant) => ({
+        id: grant.id,
+        kind: grant.kind,
+        system: grant.system,
+        action: grant.action,
+        tool: grant.tool,
+        status: grant.status,
+        expires_at: grant.expires_at,
+      })),
     model: bot.model,
     hidden: Boolean(bot.policy.console?.hidden),
     archived: bot.status === 'retired' || Boolean(bot.policy.console?.archived),
@@ -92,6 +105,8 @@ export const ROLE_SEEDS = [
     description: 'Coordinates the SWADEBOTS team, reads the daily summary, and drafts what needs a decision.',
     instructions: 'Coordinate work across SWADEBOTS. Draft replies. Never send, spend, delete, or deploy without approval.',
     tools: [],
+    role: 'Chief of Staff',
+    controlled_systems: [],
     routines: [
       { name: 'Morning brief', cron: '30 7 * * *', tz: 'America/Chicago' },
       { name: 'Approvals check', cron: '30 12 * * *', tz: 'America/Chicago' },
@@ -105,6 +120,8 @@ export const ROLE_SEEDS = [
     description: 'Reads balances and drafts the cost picture. Does not move money.',
     instructions: 'Report spend and balances. Every refund, payout, and price change waits for approval.',
     tools: [],
+    role: 'Finance',
+    controlled_systems: ['finance'],
     routines: [{ name: 'Daily money loop', cron: '0 8 * * *', tz: 'America/Chicago' }],
   },
   {
@@ -115,6 +132,8 @@ export const ROLE_SEEDS = [
     description: 'Drafts posts and scouts venues. Publishing waits for approval.',
     instructions: 'Draft promotion. Do not post, buy ads, or message anyone without approval.',
     tools: [],
+    role: 'Marketing',
+    controlled_systems: [],
     routines: [{ name: 'Daily social plan', cron: '0 9 * * *', tz: 'America/Chicago' }],
   },
   {
@@ -125,6 +144,8 @@ export const ROLE_SEEDS = [
     description: 'Tracks render jobs and drafts storyboards. Publishing waits for approval.',
     instructions: 'Track video jobs and costs. Do not publish or exceed a spend gate.',
     tools: [],
+    role: 'Video',
+    controlled_systems: [],
     routines: [{ name: 'Queue sweep', cron: '0 8-20/2 * * *', tz: 'America/Chicago' }],
   },
 ]

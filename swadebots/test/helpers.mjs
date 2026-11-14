@@ -51,6 +51,15 @@ export async function api(app, method, path, { token, body, headers } = {}) {
   return { status: response.status, json, text }
 }
 
+export async function arm(app, token) {
+  const response = await api(app, 'POST', '/v1/auth/reauth', {
+    token,
+    body: { confirmation: 'reveal' },
+  })
+  if (response.status !== 200) throw new Error(`reauth ${response.status}`)
+  return response.json.data.reauth_token
+}
+
 export function multipart(filename, content, contentType) {
   const boundary = '----swadebots'
   const typeLine = contentType ? `Content-Type: ${contentType}\r\n` : ''

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import { isBlockedAddress, assertPublicUrl, safeFetch, SsrfError } from '../src/ssrf.mjs'
-import { api, boot, ownerToken } from './helpers.mjs'
+import { api, arm, boot, ownerToken } from './helpers.mjs'
 
 test('private, loopback, and metadata addresses are blocked', () => {
   for (const ip of ['127.0.0.1', '10.1.1.1', '192.168.1.4', '172.16.0.4', '169.254.169.254', '::1']) {
@@ -44,16 +44,25 @@ test('a task cannot fetch a URL until the owner approves the grant', async () =>
       return new Response('public page', { status: 200, headers: { 'content-type': 'text/plain' } })
     },
   })
-  const task = await api(app, 'POST', '/v1/bots/cos/tasks', {
+  await api(app, 'POST', '/v1/bots', {
     token: ownerToken(),
-    body: { prompt: 'Read https://example.test/report' },
+    body: { name: 'Fetcher', controlled_systems: ['notes'] },
+  })
+  const listed = await api(app, 'GET', '/v1/bots', { token: ownerToken() })
+  const bot = listed.json.data.find((item) => item.name === 'Fetcher')
+  const task = await api(app, 'POST', `/v1/bots/${bot.id}/tasks`, {
+    token: ownerToken(),
+    body: { prompt: 'Read https://example.test/report for notes' },
   })
   await app.tasks.drain()
   const waiting = await api(app, 'GET', `/v1/tasks/${task.json.data.id}`, { token: ownerToken() })
   assert.equal(waiting.json.data.status, 'queued')
   assert.equal(calls.length, 0)
-  const grant = waiting.json.data.approval.grant_id
-  await api(app, 'POST', `/v1/approvals/${grant}/decision`, { token: ownerToken(), body: { decision: 'approve' } })
+  await arm(app, ownerToken())
+  await api(app, 'POST', `/v1/approvals/${waiting.json.data.approval.grant_id}/decision`, {
+    token: ownerToken(),
+    body: { decision: 'approve' },
+  })
   await app.tasks.drain()
   const done = await api(app, 'GET', `/v1/tasks/${task.json.data.id}`, { token: ownerToken() })
   assert.equal(done.json.data.status, 'done')

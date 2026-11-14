@@ -4,6 +4,8 @@ import { findModel, modelsForPlan } from './models.mjs'
 import { OWNER_SITES, ownerSite } from './catalog.mjs'
 import { generatePassword, hashToken, tokensEqual } from './vault.mjs'
 import { issueAppKey, hashKey } from './auth.mjs'
+import { ROLE_TEMPLATES } from './access.mjs'
+import { requireRecentAuth } from '../vendor/swade-session/index.mjs'
 
 export function createOps(ctx) {
   const { store, tasks, broker, spend, config } = ctx
@@ -32,6 +34,26 @@ export function createOps(ctx) {
     }
   }
 
+  function requireRecent(actor) {
+    if (actor.access_token) {
+      const recent = requireRecentAuth({ accessToken: actor.access_token, now: Math.floor(ctx.now() / 1000) })
+      if (!recent.ok) {
+        const error = new Error('This action needs a fresh Google sign-in')
+        error.status = 401
+        error.code = 'recent_auth_required'
+        throw error
+      }
+      return
+    }
+    const at = store.recentReauth.get(actor.id) || 0
+    if (ctx.now() - at > config.reauthWindowMs) {
+      const error = new Error('This action needs a fresh Google sign-in')
+      error.status = 401
+      error.code = 'recent_auth_required'
+      throw error
+    }
+  }
+
   return {
     listBots(actor, query) {
       return store.listBots(actor.tenant_id, {
@@ -52,24 +74,14 @@ export function createOps(ctx) {
       const model = input.model || 'ollama/qwen3:4b'
       assertModel(actor, model)
       const bot = store.createBot(actor.tenant_id, actor.tier, { ...input, tools: [], model })
-      const requested = [...(input.tools || []), ...(input.tool_scopes || [])]
-      for (const tool of requested) {
+      const template = ROLE_TEMPLATES.find((item) => item.id === input.template_id)
+      for (const suggestion of template?.suggested || []) {
         store.requestGrant({
           tenantId: actor.tenant_id,
           botId: bot.id,
-          kind: 'tool',
-          resource: tool,
           requestedBy: actor.id,
-        })
-      }
-      if (input.knowledge_scope || input.project_scope) {
-        bot.knowledge_scope = input.knowledge_scope || input.project_scope
-        store.requestGrant({
-          tenantId: actor.tenant_id,
-          botId: bot.id,
-          kind: 'knowledge',
-          resource: bot.knowledge_scope,
-          requestedBy: actor.id,
+          bot,
+          input: suggestion,
         })
       }
       store.audit({
@@ -89,18 +101,10 @@ export function createOps(ctx) {
       }
       const bot = requireBot(actor, id)
       if (patch.model) assertModel(actor, patch.model)
-      if (patch.tools || patch.tool_scopes) {
-        for (const tool of patch.tool_scopes || patch.tools) {
-          store.requestGrant({
-            tenantId: actor.tenant_id,
-            botId: bot.id,
-            kind: 'tool',
-            resource: tool,
-            requestedBy: actor.id,
-          })
-        }
-        delete patch.tools
-        delete patch.tool_scopes
+      if (patch.controlled_systems) {
+        requireOwner(actor)
+        requireRecent(actor)
+        bot.controlled_systems = patch.controlled_systems
       }
       store.updateBot(bot, patch)
       return view(actor, bot)
@@ -112,15 +116,18 @@ export function createOps(ctx) {
       return view(actor, bot)
     },
     requestGrant(actor, botId, input) {
+      requireRecent(actor)
       const bot = requireBot(actor, botId)
-      const grant = store.requestGrant({
+      return store.requestGrant({
         tenantId: actor.tenant_id,
         botId: bot.id,
-        kind: input.kind,
-        resource: input.resource,
         requestedBy: actor.id,
+        bot,
+        input,
       })
-      return grant
+    },
+    templates() {
+      return ROLE_TEMPLATES
     },
     listApprovals(actor) {
       const rows = actor.role === 'super_admin' ? [...store.grants.values()] : store.grantsFor(actor.tenant_id)
@@ -131,6 +138,7 @@ export function createOps(ctx) {
     },
     decide(actor, grantId, decision) {
       requireOwner(actor)
+      requireRecent(actor)
       const grant = store.decideGrant({ actor, grantId, decision })
       if (!grant) {
         const error = new Error('Approval not found')
@@ -177,7 +185,11 @@ export function createOps(ctx) {
     },
     async useVaultGrant(actor, botId, input = {}) {
       const bot = requireBot(actor, botId)
-      const grant = store.findGrant(actor.tenant_id, bot.id, 'vault', 'default')
+      const grant = store.findGrant(actor.tenant_id, bot.id, {
+        kind: 'vault',
+        system: input.system,
+        action: input.action || 'read',
+      })
       const outcome = await broker.withGrant({
         grant,
         actor,
@@ -237,6 +249,7 @@ export function createOps(ctx) {
     },
     async storeCredential(actor, input) {
       requireOwner(actor)
+      requireRecent(actor)
       const saved = await broker.storeSecret({
         tenantId: actor.tenant_id,
         systemSlug: input.system_slug,
@@ -249,6 +262,7 @@ export function createOps(ctx) {
     },
     async reveal(actor, secretId, reauthToken) {
       requireOwner(actor)
+      requireRecent(actor)
       const record = store.reauth.get(hashToken(reauthToken || ''))
       if (!record || record.actor !== actor.id || record.expires < Date.now()) {
         const error = new Error('Reveal needs a fresh owner sign-in')
@@ -268,6 +282,7 @@ export function createOps(ctx) {
         error.code = 'reauth_required'
         throw error
       }
+      store.recentReauth.set(actor.id, ctx.now())
       const token = randomBytes(24).toString('base64url')
       store.reauth.set(hashToken(token), { actor: actor.id, expires: Date.now() + 60_000 })
       store.audit({
@@ -310,6 +325,7 @@ export function createOps(ctx) {
     },
     async decideSignup(actor, id, decision) {
       requireOwner(actor)
+      requireRecent(actor)
       const signup = store.signups.get(id)
       if (!signup || (actor.role !== 'super_admin' && signup.tenant_id !== actor.tenant_id)) {
         const error = new Error('Sign-up not found')
@@ -382,6 +398,7 @@ export function createOps(ctx) {
     },
     issueKey(actor, input) {
       requireOwner(actor)
+      requireRecent(actor)
       const tenantId = input.tenant_id || actor.tenant_id
       if (tenantId === config.ownerTenantId && input.tier === 'public') {
         const error = new Error('A public app cannot be bound to the owner tenant')
@@ -411,6 +428,7 @@ export function createOps(ctx) {
     },
     adminOverview(actor) {
       requireOwner(actor)
+      requireRecent(actor)
       return {
         bots: store.listBots(actor.tenant_id, { includeHidden: true, includeArchived: true }),
         approvals: [...store.grants.values()],
@@ -435,6 +453,7 @@ export function createOps(ctx) {
     },
     bindVault(actor, grantId, secretId) {
       requireOwner(actor)
+      requireRecent(actor)
       const grant = store.grants.get(grantId)
       if (!grant || grant.tenant_id !== actor.tenant_id || grant.status !== 'approved') {
         const error = new Error('Approved grant not found')

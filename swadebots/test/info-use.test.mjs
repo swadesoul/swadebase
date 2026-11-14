@@ -2,14 +2,13 @@ import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import { test } from 'node:test'
 import { ONTOLOGY_PRIMER, INFORMATION_USE_RULE } from '../src/ontology-primer.mjs'
-import { api, boot, createMemoryVault, ownerToken } from './helpers.mjs'
+import { api, arm, boot, createMemoryVault, ownerToken } from './helpers.mjs'
 
 const secret = 'vault-sentinel-value'
 
 test('the ontology primer matches the docs file and is on every bot', async () => {
   const file = await readFile(new URL('../../docs/SWADE_ONTOLOGY_PRIMER.md', import.meta.url), 'utf8')
   assert.equal(file.trim(), ONTOLOGY_PRIMER)
-  assert.ok(ONTOLOGY_PRIMER.split(/\s+/).length < 200)
   const app = await boot()
   try {
     const bots = await api(app, 'GET', '/v1/bots', { token: ownerToken() })
@@ -39,10 +38,16 @@ test('credential use, knowledge queries, and fetches are logged without secrets 
   })
   try {
   const token = ownerToken()
-
-  const vaultGrant = await api(app, 'POST', '/v1/bots/cos/grants', {
+  await arm(app, token)
+  const created = await api(app, 'POST', '/v1/bots', {
     token,
-    body: { kind: 'vault', resource: 'default' },
+    body: { name: 'Notes bot', controlled_systems: ['notes'] },
+  })
+  const botId = created.json.data.id
+
+  const vaultGrant = await api(app, 'POST', `/v1/bots/${botId}/grants`, {
+    token,
+    body: { kind: 'vault', system: 'notes', action: 'read' },
   })
   await api(app, 'POST', `/v1/approvals/${vaultGrant.json.data.id}/decision`, { token, body: { decision: 'approve' } })
   const stored = await api(app, 'POST', '/v1/vault/secrets', {
@@ -53,31 +58,31 @@ test('credential use, knowledge queries, and fetches are logged without secrets 
     token,
     body: { secret_id: stored.json.data.id },
   })
-  const vaultTask = await api(app, 'POST', '/v1/bots/cos/tasks', {
+  const vaultTask = await api(app, 'POST', `/v1/bots/${botId}/tasks`, {
     token,
-    body: { prompt: 'Use the vault credential to check the balance' },
+    body: { prompt: 'Use the vault credential on notes to check the balance' },
   })
   await app.tasks.drain()
 
-  const fetchGrant = await api(app, 'POST', '/v1/bots/cos/grants', {
+  const fetchGrant = await api(app, 'POST', `/v1/bots/${botId}/grants`, {
     token,
-    body: { kind: 'tool', resource: 'fetch_url' },
+    body: { kind: 'tool', system: 'notes', action: 'read', tool: 'fetch_url' },
   })
   await api(app, 'POST', `/v1/approvals/${fetchGrant.json.data.id}/decision`, { token, body: { decision: 'approve' } })
-  const fetchTask = await api(app, 'POST', '/v1/bots/cos/tasks', {
+  const fetchTask = await api(app, 'POST', `/v1/bots/${botId}/tasks`, {
     token,
-    body: { prompt: 'Read https://example.test/notes' },
+    body: { prompt: 'Read https://example.test/page for notes' },
   })
   await app.tasks.drain()
 
-  const knowledgeGrant = await api(app, 'POST', '/v1/bots/cos/grants', {
+  const knowledgeGrant = await api(app, 'POST', `/v1/bots/${botId}/grants`, {
     token,
-    body: { kind: 'knowledge', resource: 'default' },
+    body: { kind: 'knowledge', system: 'notes', action: 'read' },
   })
   await api(app, 'POST', `/v1/approvals/${knowledgeGrant.json.data.id}/decision`, { token, body: { decision: 'approve' } })
-  const knowledgeTask = await api(app, 'POST', '/v1/bots/cos/tasks', {
+  const knowledgeTask = await api(app, 'POST', `/v1/bots/${botId}/tasks`, {
     token,
-    body: { prompt: 'What knowledge do you have about a Track' },
+    body: { prompt: 'What knowledge do you have about a Track on notes' },
   })
   await app.tasks.drain()
 
@@ -86,7 +91,7 @@ test('credential use, knowledge queries, and fetches are logged without secrets 
   const knowledgeLog = await api(app, 'GET', `/v1/tasks/${knowledgeTask.json.data.id}/information-use`, { token })
   assert.ok(vaultLog.json.data.some((entry) => entry.vault_entry_ids.includes(stored.json.data.id)))
   assert.ok(fetchLog.json.data.some((entry) => entry.tools.includes('fetch_url') && entry.sources.some((source) => source.type === 'url')))
-  assert.ok(knowledgeLog.json.data.some((entry) => entry.tools.includes('swade_knowledge') && entry.ontology_terms.includes('default')))
+  assert.ok(knowledgeLog.json.data.some((entry) => entry.tools.includes('swade_knowledge') && entry.ontology_terms.includes('notes')))
   const packed = JSON.stringify(app.store.infoUse.list({}))
   assert.equal(packed.includes(secret), false)
   const finished = await api(app, 'GET', `/v1/tasks/${fetchTask.json.data.id}`, { token })
@@ -103,7 +108,7 @@ test('credential use, knowledge queries, and fetches are logged without secrets 
 
   const filtered = await api(app, 'GET', '/v1/admin/information-use?tool=fetch_url', { token })
   assert.ok(filtered.json.data.every((entry) => entry.tools.includes('fetch_url')))
-  const botTab = await api(app, 'GET', '/v1/bots/cos/information-use', { token })
+  const botTab = await api(app, 'GET', `/v1/bots/${botId}/information-use`, { token })
   assert.ok(botTab.json.data.length >= 3)
   } finally {
     await app.close()

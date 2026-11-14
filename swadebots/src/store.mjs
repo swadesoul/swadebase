@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto'
 import { publicBot, ROLE_SEEDS } from './registry.mjs'
 import { createInfoLog } from './info-use.mjs'
+import { grantAllows, normalizeGrant, normalizeSystems, ROLE_TEMPLATES } from './access.mjs'
 import { findModel } from './models.mjs'
 
 export class MemoryStore {
@@ -83,8 +84,10 @@ export class MemoryStore {
   createBot(tenantId, tier, input) {
     const id = uniqueId(this, tenantId, input.id || slugify(input.name))
     const now = new Date().toISOString()
+    const template = ROLE_TEMPLATES.find((item) => item.id === input.template_id)
     const tools = input.tool_scopes || input.tools || []
     const model = input.model || 'ollama/qwen3:4b'
+    const controlled = normalizeSystems(template ? template.controlled_systems : input.controlled_systems || [])
     const bot = {
       id,
       tenant_id: tenantId,
@@ -104,7 +107,9 @@ export class MemoryStore {
       version: 1,
       name: input.name,
       avatar: input.avatar || initials(input.name),
-      title: input.title || input.role || 'SWADEBOT',
+      title: input.title || template?.role || input.role || 'SWADEBOT',
+      role: template?.role || input.role || input.title || 'SWADEBOT',
+      controlled_systems: controlled,
       description: input.description || '',
       instructions: input.instructions || input.objective || '',
       knowledge_scope: input.knowledge_scope || input.project_scope || '',
@@ -217,26 +222,61 @@ export class MemoryStore {
     )
   }
 
-  findGrant(tenantId, botId, kind, resource) {
-    const rows = this.grantsFor(tenantId, botId).filter(
-      (grant) => grant.kind === kind && grant.resource === resource,
-    )
+  findGrant(tenantId, botId, need) {
+    const rows = this.grantsFor(tenantId, botId).filter((grant) => grantAllows(grant, need))
     return rows.length ? rows[rows.length - 1] : null
   }
 
-  isApproved(tenantId, botId, kind, resource) {
-    return this.findGrant(tenantId, botId, kind, resource)?.status === 'approved'
+  isApproved(tenantId, botId, need) {
+    return Boolean(this.findGrant(tenantId, botId, need))
   }
 
-  requestGrant({ tenantId, botId, kind, resource, requestedBy }) {
-    const existing = this.findGrant(tenantId, botId, kind, resource)
-    if (existing && (existing.status === 'approved' || existing.status === 'pending')) return existing
+  addRiskApproval({ tenantId, botId, action, requestedBy }) {
+    const existing = this.grantsFor(tenantId, botId).find(
+      (grant) => grant.kind === 'risk' && grant.action === action && (grant.status === 'pending' || grant.status === 'approved'),
+    )
+    if (existing) return existing
     const grant = {
       id: randomUUID(),
       tenant_id: tenantId,
       bot_id: botId,
-      kind,
-      resource,
+      kind: 'risk',
+      system: null,
+      action,
+      tool: null,
+      expires_at: null,
+      status: 'pending',
+      requested_by: requestedBy,
+      decided_by: null,
+      decided_at: null,
+      created_at: new Date().toISOString(),
+    }
+    this.grants.set(grant.id, grant)
+    return grant
+  }
+
+  riskApproved(tenantId, botId, action) {
+    return this.grantsFor(tenantId, botId).some(
+      (grant) => grant.kind === 'risk' && grant.action === action && grant.status === 'approved',
+    )
+  }
+
+  requestGrant({ tenantId, botId, requestedBy, bot, input }) {
+    const normalized = normalizeGrant(bot, input)
+    const existing = this.grantsFor(tenantId, botId).find(
+      (grant) =>
+        grant.kind === normalized.kind &&
+        grant.system === normalized.system &&
+        grant.action === normalized.action &&
+        grant.tool === normalized.tool &&
+        (grant.status === 'approved' || grant.status === 'pending'),
+    )
+    if (existing) return existing
+    const grant = {
+      id: randomUUID(),
+      tenant_id: tenantId,
+      bot_id: botId,
+      ...normalized,
       status: 'pending',
       requested_by: requestedBy,
       decided_by: null,
@@ -248,7 +288,7 @@ export class MemoryStore {
       tenant_id: tenantId,
       actor: requestedBy,
       kind: 'grant.request',
-      data: { grant_id: grant.id, bot_id: botId, grant_kind: kind, resource },
+      data: { grant_id: grant.id, bot_id: botId, grant_kind: grant.kind, system: grant.system, action: grant.action },
     })
     this.notifications.push({
       id: randomUUID(),
@@ -276,6 +316,10 @@ export class MemoryStore {
       const error = new Error('decision must be approve, deny, or revoke')
       error.code = 'invalid_request'
       throw error
+    }
+    if (decision === 'approve' && grant.kind !== 'risk') {
+      const bot = this.getBot(grant.tenant_id, grant.bot_id)
+      normalizeGrant(bot || { controlled_systems: [] }, grant)
     }
     if (decision === 'revoke' && grant.status !== 'approved') {
       const error = new Error('only an approved grant can be revoked')
@@ -320,8 +364,10 @@ function botFromSeed(tenantId, seed) {
     description: seed.description,
     instructions: seed.instructions,
       knowledge_scope: '',
-    tools: seed.tools,
-    model: 'ollama/qwen3:4b',
+      tools: seed.tools,
+      role: seed.role || seed.title,
+      controlled_systems: seed.controlled_systems || [],
+      model: 'ollama/qwen3:4b',
     policy: {
       console: { hidden: false, archived: false },
       site_grants: {},

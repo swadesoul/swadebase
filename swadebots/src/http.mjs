@@ -30,6 +30,9 @@ export function createHandler(ctx) {
         }
         return text(res, 404, 'Not found')
       }
+      if (url.pathname === '/api/auth' || url.pathname.startsWith('/api/auth/')) {
+        return proxyAuth(ctx, req, url, res)
+      }
       if (req.method === 'GET' && files[url.pathname]) return serve(res, files[url.pathname])
       if (req.method === 'POST' && url.pathname === '/mcp') return mcp(ctx, req, res, requestId)
       const actor = await maybeActor(ctx, req, url)
@@ -178,7 +181,9 @@ async function route(ctx, req, url, actor, requestId) {
     return { status: 201, data: ops.issueKey(actor, await jsonBody(req)) }
   }
   if (req.method === 'GET' && path === '/v1/admin/overview') return { data: ops.adminOverview(actor) }
+  if (req.method === 'GET' && path === '/v1/role-templates') return { data: ops.templates() }
   if (req.method === 'GET' && path === '/v1/admin/information-use') {
+    ops.adminOverview(actor)
     if (actor.role !== 'super_admin') {
       const error = new Error('Only the owner can do that')
       error.status = 403
@@ -218,8 +223,32 @@ function requireActor(actor) {
 
 async function maybeActor(ctx, req, url) {
   if (url.pathname === '/v1/auth/google' || url.pathname === '/v1/demo-session') return null
-  if (url.pathname === '/v1/status' && !(req.headers.authorization || '')) return null
+  if (req.headers.authorization) return ctx.auth.actorFromRequest(req)
+  if (url.pathname === '/v1/status') return null
+  if (ctx.actorFromCookie) {
+    const actor = await ctx.actorFromCookie(req)
+    if (actor) return actor
+  }
   return ctx.auth.actorFromRequest(req)
+}
+
+async function proxyAuth(ctx, req, url, res) {
+  const host = req.headers.host || '127.0.0.1'
+  const body = req.method === 'GET' || req.method === 'HEAD' ? undefined : await readBody(req, 10000)
+  const request = new Request(new URL(url.pathname + url.search, `http://${host}`), {
+    method: req.method,
+    headers: req.headers,
+    body,
+  })
+  const response = await ctx.authHandler(request)
+  const headers = { 'cache-control': 'no-store' }
+  response.headers.forEach((value, key) => {
+    if (key.toLowerCase() !== 'set-cookie') headers[key] = value
+  })
+  const cookies = typeof response.headers.getSetCookie === 'function' ? response.headers.getSetCookie() : []
+  if (cookies.length) headers['set-cookie'] = cookies
+  res.writeHead(response.status, headers)
+  res.end(Buffer.from(await response.arrayBuffer()))
 }
 
 async function jsonBody(req) {

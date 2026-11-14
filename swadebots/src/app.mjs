@@ -8,6 +8,8 @@ import { createUnavailableVault, createVaultBroker } from './vault.mjs'
 import { createTaskRunner } from './tasks.mjs'
 import { createOps } from './ops.mjs'
 import { createHandler } from './http.mjs'
+import { createFetchAuthHandler, readCookieHeader } from '../vendor/swade-session/index.mjs'
+import { actorFromVerifiedUser } from './auth.mjs'
 
 export async function createApp(options = {}) {
   const config = loadConfig(options.env || process.env)
@@ -34,7 +36,25 @@ export async function createApp(options = {}) {
     fetchImpl: options.fetchImpl || fetch,
     lookup: options.lookup,
   })
-  const ctx = { config, store, ledger, spend, knowledge, vault, broker, auth, tasks }
+  const now = options.now || (() => Date.now())
+  const ctx = { config, store, ledger, spend, knowledge, vault, broker, auth, tasks, now }
+  ctx.authHandler = createFetchAuthHandler({
+    url: config.authUrl || 'http://auth.example.test',
+    publishableKey: config.anonKey || 'publishable',
+    secure: config.cookieSecure,
+    now,
+    createClient: options.createAuthClient,
+    deviceStore: options.deviceStore,
+  })
+  ctx.actorFromCookie = async (req) => {
+    if (!options.createAuthClient) return null
+    const adapter = { getAll: () => readCookieHeader(req.headers.cookie || ''), setAll() {} }
+    const client = options.createAuthClient(adapter)
+    const userResult = await client.auth.getUser()
+    if (!userResult.data?.user?.id) return null
+    const session = await client.auth.getSession()
+    return actorFromVerifiedUser(config, userResult.data.user, session.data?.session?.access_token || '')
+  }
   ctx.ops = createOps(ctx)
   const server = createServer(createHandler(ctx))
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve))

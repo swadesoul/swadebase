@@ -68,22 +68,10 @@ function renderGate() {
       <section class="card">
         <div class="mark"><span class="gem">S</span><b>SWADEBOTS</b></div>
         <p>Sign in with the Google account already connected to SWADEBASE.</p>
-        <button class="primary" id="google" type="button">Continue with Google</button>
+        <a class="primary" id="google" href="/api/auth/google?next=/">Continue with Google</a>
         <p class="muted">Owner access is the verified Google account configured for this deployment. It is not stored in the app.</p>
       </section>
     </main>`
-  document.querySelector('#google').onclick = async () => {
-    const redirect = location.origin + location.pathname
-    const result = await get('/v1/auth/google?redirect_to=' + encodeURIComponent(redirect))
-    if (result.data?.url) location.href = result.data.url
-    else
-      document
-        .querySelector('.card')
-        .insertAdjacentHTML(
-          'beforeend',
-          '<p class="warn">Google sign-in is not configured on this server yet.</p>'
-        )
-  }
 }
 
 function render() {
@@ -183,6 +171,9 @@ function info(bot) {
     <p class="muted">${bot.knowledge_scope ? escapeHtml(bot.knowledge_scope) : 'No approved SWADE scope.'}</p>
     <h3>Routines</h3>
     ${(bot.routines || []).map((routine) => `<p>${escapeHtml(routine.name)} <small>${escapeHtml(routine.cron)}</small></p>`).join('') || '<p class="muted">None</p>'}
+    <h3>Access map</h3>
+    <p class="muted">Role ${escapeHtml(bot.role || '')}. Systems: ${escapeHtml((bot.controlled_systems || []).join(', ') || 'none')}</p>
+    ${(bot.access_map || []).map((grant) => `<p><span class="pill">${escapeHtml(grant.status)}</span> ${escapeHtml(grant.kind)} ${escapeHtml(grant.action)} ${escapeHtml(grant.system)}${grant.tool ? ' ' + escapeHtml(grant.tool) : ''}</p>`).join('') || '<p class="muted">No grants yet. Templates stay pending until you approve them.</p>'}
     <h3>Information used</h3>
     <div id="bot-info-use"><p class="muted">Loading.</p></div>
     <h3>Tools</h3>

@@ -97,6 +97,25 @@ async function gotrueActor(config, token, fetchImpl) {
   )
 }
 
+export function actorFromVerifiedUser(config, user, accessToken) {
+  const identity = (user.identities || []).find((item) => item.provider === 'google')
+  const meta = user.app_metadata || {}
+  const actor = finishUser(
+    config,
+    {
+      id: user.id,
+      email: user.email || '',
+      tenant_id: meta.tenant_id,
+      tier: meta.tier,
+      plan: meta.plan || 'paid',
+      provider: identity ? 'google' : meta.provider || '',
+    },
+    meta.swadebots_role,
+  )
+  actor.access_token = accessToken || ''
+  return actor
+}
+
 function finishUser(config, user, claimedRole) {
   const email = String(user.email || '').toLowerCase()
   const google = user.provider === 'google'

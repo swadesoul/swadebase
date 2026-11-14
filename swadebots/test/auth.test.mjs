@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { after, test } from 'node:test'
-import { api, boot, ownerToken, publicToken } from './helpers.mjs'
+import { api, arm, boot, ownerToken, publicToken } from './helpers.mjs'
 
 const app = await boot()
 after(() => app.close())
@@ -36,6 +36,7 @@ test('the owner can open admin and a claimed role is ignored', async () => {
     role: 'member',
     plan: 'free',
   })
+  await arm(app, token)
   const response = await api(app, 'GET', '/v1/admin/overview', { token })
   assert.equal(response.status, 200)
   assert.equal(response.json.data.paid_calls, 'blocked')

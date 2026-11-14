@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { after, test } from 'node:test'
-import { api, boot, createMemoryVault, ownerToken, publicToken } from './helpers.mjs'
+import { api, arm, boot, createMemoryVault, ownerToken, publicToken } from './helpers.mjs'
 
 const secret = 'owner-vault-sentinel'
 const app = await boot({}, { vault: createMemoryVault() })
@@ -15,6 +15,7 @@ test('a public tenant cannot see owner bots, sites, knowledge, or vault grants',
   assert.equal(hidden.status, 404)
   const sites = await api(app, 'GET', '/v1/sites', { token: publicToken() })
   assert.deepEqual(sites.json.data, [])
+  await arm(app, ownerToken())
   const stored = await api(app, 'POST', '/v1/vault/secrets', {
     token: ownerToken(),
     body: { system_slug: 'notes', secret, leaf: 'password' },

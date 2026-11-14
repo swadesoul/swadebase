@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { after, test } from 'node:test'
-import { api, boot, ownerToken } from './helpers.mjs'
+import { api, arm, boot, ownerToken } from './helpers.mjs'
 
 const app = await boot()
 after(() => app.close())
@@ -14,6 +14,7 @@ test('delete, send, and the task lifecycle wait for approval and can be cancelle
   const waiting = await api(app, 'GET', `/v1/tasks/${task.json.data.id}`, { token: ownerToken() })
   assert.equal(waiting.json.data.status, 'queued')
   assert.match(waiting.json.data.approval.action, /delete/)
+  await arm(app, ownerToken())
   await api(app, 'POST', `/v1/approvals/${waiting.json.data.approval.grant_id}/decision`, {
     token: ownerToken(),
     body: { decision: 'approve' },

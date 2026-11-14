@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { after, test } from 'node:test'
-import { api, boot, createMemoryVault, ownerToken, publicToken } from './helpers.mjs'
+import { api, arm, boot, createMemoryVault, ownerToken, publicToken } from './helpers.mjs'
 
 const secret = 'vault-sentinel-value'
 const app = await boot({}, { vault: createMemoryVault() })
@@ -9,11 +9,12 @@ after(() => app.close())
 async function vaultGrant() {
   const created = await api(app, 'POST', '/v1/bots', {
     token: ownerToken(),
-    body: { name: 'Vault bot' },
+    body: { name: 'Vault bot', controlled_systems: ['notes'] },
   })
+  await arm(app, ownerToken())
   const grant = await api(app, 'POST', `/v1/bots/${created.json.data.id}/grants`, {
     token: ownerToken(),
-    body: { kind: 'vault', resource: 'default' },
+    body: { kind: 'vault', system: 'notes', action: 'read' },
   })
   return { botId: created.json.data.id, grantId: grant.json.data.id }
 }
@@ -35,14 +36,20 @@ test('an unapproved vault grant is denied, an approved one is allowed, and a rev
     token: ownerToken(),
     body: { secret_id: stored.json.data.id },
   })
-  const used = await api(app, 'POST', `/v1/bots/${botId}/vault/use`, { token: ownerToken() })
+  const used = await api(app, 'POST', `/v1/bots/${botId}/vault/use`, {
+    token: ownerToken(),
+    body: { system: 'notes', action: 'read' },
+  })
   assert.equal(used.status, 200)
   assert.equal(used.text.includes(secret), false)
   await api(app, 'POST', `/v1/approvals/${grantId}/decision`, {
     token: ownerToken(),
     body: { decision: 'revoke' },
   })
-  const again = await api(app, 'POST', `/v1/bots/${botId}/vault/use`, { token: ownerToken() })
+  const again = await api(app, 'POST', `/v1/bots/${botId}/vault/use`, {
+    token: ownerToken(),
+    body: { system: 'notes', action: 'read' },
+  })
   assert.equal(again.status, 403)
   const decisions = app.store.auditLog.map((row) => row.kind)
   assert.ok(decisions.includes('grant.approved'))
@@ -62,6 +69,7 @@ test('a public tenant cannot decide or read the owner approval', async () => {
 })
 
 test('vault values stay masked until owner re-auth, and the reveal is audited without the value', async () => {
+  await arm(app, ownerToken())
   const stored = await api(app, 'POST', '/v1/vault/secrets', {
     token: ownerToken(),
     body: { system_slug: 'mail', leaf: 'password', secret },
@@ -88,6 +96,7 @@ test('vault values stay masked until owner re-auth, and the reveal is audited wi
 })
 
 test('an approved email sign-up stores a password in the vault and does not return it', async () => {
+  await arm(app, ownerToken())
   await api(app, 'PATCH', '/v1/settings', {
     token: ownerToken(),
     body: { signup_policy: { prefer_google: false }, owner_default_email: 'owner@example.test' },
