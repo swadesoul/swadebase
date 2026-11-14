@@ -7,7 +7,7 @@ import re
 import secrets
 from typing import Any
 
-from . import __version__
+from . import __version__, primer_text
 from .audit import AuditLog
 from .brain import BrainClient, DocumentHit
 from .catalog import Catalog, Term
@@ -132,6 +132,7 @@ class KnowledgeService:
             "owner_approval": "required",
             "owner_auth": "swadebase-google" if self.owner.configured else "not_configured",
             "credential_store": getattr(self.store, "mode", "memory"),
+            "description": primer_text(),
         }
 
     def dispatch(
@@ -584,10 +585,7 @@ class KnowledgeService:
                     "protocolVersion": "2025-03-26",
                     "serverInfo": {"name": "swade-ontology", "title": "SWADE", "version": __version__},
                     "capabilities": {"tools": {}},
-                    "instructions": (
-                        "SWADEBOTS agents read SWADE through this server. "
-                        "The credential carries app and tenant scope. Access is denied by default."
-                    ),
+                    "instructions": primer_text(),
                 },
             }
         if method == "notifications/initialized":

@@ -587,6 +587,11 @@ class McpTests(unittest.TestCase):
         self.assertEqual(body["result"]["serverInfo"]["name"], "swade-ontology")
         self.assertEqual(body["result"]["serverInfo"]["title"], "SWADE")
         self.assertIn("SWADEBOTS", body["result"]["instructions"])
+        self.assertIn("shared map of meanings", body["result"]["instructions"])
+        self.assertLess(len(body["result"]["instructions"].split()), 200)
+        health = self.service.dispatch("GET", "/health", {}, {}, None)[1]
+        self.assertEqual(health["description"], body["result"]["instructions"])
+        self.assertIn("docs/PRIMER.md", (ROOT / "README.md").read_text(encoding="utf-8"))
 
     def test_disabled_tool_call_returns_no_terms(self) -> None:
         disabled = service_for(False)

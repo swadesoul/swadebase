@@ -7,6 +7,7 @@ COPY src /app/src
 COPY catalog /app/catalog
 COPY engine/PIN /app/engine/PIN
 COPY migrations /app/migrations
+COPY docs/PRIMER.md /app/docs/PRIMER.md
 
 ENV PYTHONPATH=/app/src
 ENV SWADE_ONTOLOGY_ENABLED=false
