@@ -52,6 +52,30 @@ FROM updated
 
 SCHEMA_PRESENT = "SELECT to_regclass('swade_ontology.credentials')"
 
+LOAD_SESSIONS = """
+SELECT session_id, secret_hash, owner_email, owner_subject, created_at, last_seen_at, authenticated_at, revoked
+FROM swade_ontology.admin_sessions
+WHERE revoked = false
+""".strip()
+
+SAVE_SESSION = """
+INSERT INTO swade_ontology.admin_sessions (
+  session_id, secret_hash, owner_email, owner_subject, created_at, last_seen_at, authenticated_at, revoked
+) VALUES (%s, %s, %s, %s, to_timestamp(%s), to_timestamp(%s), to_timestamp(%s), %s)
+ON CONFLICT (session_id) DO UPDATE SET
+  last_seen_at = EXCLUDED.last_seen_at,
+  authenticated_at = EXCLUDED.authenticated_at,
+  revoked = EXCLUDED.revoked
+""".strip()
+
+REVOKE_SESSION = """
+UPDATE swade_ontology.admin_sessions SET revoked = true WHERE session_id = %s
+""".strip()
+
+REVOKE_OWNER_SESSIONS = """
+UPDATE swade_ontology.admin_sessions SET revoked = true WHERE owner_subject = %s
+""".strip()
+
 
 class IsolatedStore:
     mode = "postgres"
@@ -123,6 +147,30 @@ class IsolatedStore:
                 approval.owner_subject,
             ),
         )
+
+    def load_sessions(self) -> list[tuple[object, ...]]:
+        return self.database.query(LOAD_SESSIONS)
+
+    def save_session(self, session: object) -> None:
+        self.database.query(
+            SAVE_SESSION,
+            (
+                session.session_id,
+                session.secret_hash,
+                session.owner_email,
+                session.owner_subject,
+                session.created_at,
+                session.last_seen_at,
+                session.authenticated_at,
+                session.revoked,
+            ),
+        )
+
+    def revoke_session(self, session_id: str) -> None:
+        self.database.query(REVOKE_SESSION, (session_id,))
+
+    def revoke_owner_sessions(self, owner_subject: str) -> None:
+        self.database.query(REVOKE_OWNER_SESSIONS, (owner_subject,))
 
     def search_documents(self, tenant_id: str, query: str, limit: int) -> list[DocumentHit]:
         statement, params = fts_statement(tenant_id, query, limit)

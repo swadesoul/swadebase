@@ -24,13 +24,28 @@ The Hostinger example documents the authorized redirect as `https://swadebase.cl
 
 Both can be empty while `SWADE_ONTOLOGY_ENABLED=false`. Admin routes then fail closed with `owner_not_configured`. `SWADEBASE_AUTH_URL` is rejected when it points at a Google host.
 
-## Operator flow
+## Operator session
+
+Google sign-in is exchanged once for a first-party session. The browser does not keep the SWADEBASE access token, and it does not put a session secret in `localStorage`.
 
 1. The owner signs in through SWADEBASE auth with Google: `{SWADEBASE_AUTH_URL}/authorize?provider=google`.
 2. SWADEBASE auth redirects to Google and back to its own callback.
-3. The owner calls the admin routes with that access token: `Authorization: Bearer <swadebase access token>`.
+3. The operator surface posts that access token to `POST /v1/admin/session` and then discards it.
 4. SWADE asks SWADEBASE auth `GET {SWADEBASE_AUTH_URL}/user`.
 5. The user must have a Google identity, a verified email, and that email must match `SWADE_ONTOLOGY_OWNER_EMAIL`.
+6. The response sets `swade_ontology_session` as `HttpOnly; Secure; SameSite=Lax` on `Path=/v1/admin`, with no `Domain` attribute. The JSON body does not contain the cookie secret.
+
+Later admin requests send only that cookie. App and SWADEBOTS credentials stay on `Authorization: Bearer` for `/v1` reads and cannot open or approve admin actions. A session cookie cannot read the knowledge routes.
+
+| Lifetime                                    | Default    | Environment variable                      |
+| ------------------------------------------- | ---------- | ----------------------------------------- |
+| Idle, rolling                               | 30 days    | `SWADE_ONTOLOGY_SESSION_IDLE_SECONDS`     |
+| Absolute                                    | 90 days    | `SWADE_ONTOLOGY_SESSION_ABSOLUTE_SECONDS` |
+| Recent sign-in required to issue or approve | 15 minutes | `SWADE_ONTOLOGY_SESSION_REAUTH_SECONDS`   |
+
+Each accepted admin request moves the idle deadline forward and refreshes the cookie. The absolute deadline does not move. Issuing a credential, approving it, or revoking it returns `reauth_required` when the latest Google sign-in is older than the reauth window. Posting a fresh SWADEBASE access token to `POST /v1/admin/session` with the existing cookie refreshes that device.
+
+`POST /v1/admin/session/sign-out` revokes the current device and clears the cookie. `POST /v1/admin/session/sign-out-everywhere` revokes every session for that Google subject. When the isolated database is configured, sessions are stored in `swade_ontology.admin_sessions` as a hash of the cookie secret.
 
 There is no service-role fallback. A body field cannot name a different owner.
 

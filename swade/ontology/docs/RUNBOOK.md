@@ -58,7 +58,7 @@ That command renders the file. It does not start containers when used with `conf
 
 The owner signs in with Google through SWADEBASE auth, then uses the admin routes. See `docs/OAUTH.md`. A new credential is `pending` and cannot read. `POST /v1/admin/credentials/{id}/approve` writes an owner approval and allows reads inside that app and tenant. `POST /v1/admin/credentials/{id}/revoke` writes a revocation and denies reads again.
 
-Set `SWADEBASE_AUTH_URL` and `SWADE_ONTOLOGY_OWNER_EMAIL` before turning the flag on. Leave the Google client id and secret on the SWADEBASE auth service.
+Set `SWADEBASE_AUTH_URL` and `SWADE_ONTOLOGY_OWNER_EMAIL` before turning the flag on. Leave the Google client id and secret on the SWADEBASE auth service. The owner exchanges that Google sign-in for an HttpOnly session cookie. See `docs/OAUTH.md` for the 30-day idle lifetime, the 90-day absolute lifetime, device and everywhere sign-out, and the fresh sign-in required before issuance or approval.
 
 A credential binds:
 

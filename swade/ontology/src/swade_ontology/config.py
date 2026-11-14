@@ -43,6 +43,9 @@ class Config:
     engine_url: str | None
     auth_url: str | None
     owner_email: str | None
+    session_idle_seconds: int
+    session_absolute_seconds: int
+    session_reauth_seconds: int
     pin: EnginePin
 
 
@@ -96,8 +99,15 @@ def load_config(env: os._Environ[str] | dict[str, str] | None = None) -> Config:
         raise ConfigError("SWADE_ONTOLOGY_LOCAL_MODEL must stay on a local gateway route")
     try:
         port = int(source.get("SWADE_ONTOLOGY_PORT", "8090"))
+        session_idle = int(source.get("SWADE_ONTOLOGY_SESSION_IDLE_SECONDS", str(30 * 24 * 60 * 60)))
+        session_absolute = int(source.get("SWADE_ONTOLOGY_SESSION_ABSOLUTE_SECONDS", str(90 * 24 * 60 * 60)))
+        session_reauth = int(source.get("SWADE_ONTOLOGY_SESSION_REAUTH_SECONDS", str(15 * 60)))
     except ValueError as exc:
-        raise ConfigError("SWADE_ONTOLOGY_PORT must be an integer") from exc
+        raise ConfigError("session and port settings must be integers") from exc
+    if session_idle <= 0 or session_absolute <= 0 or session_reauth <= 0:
+        raise ConfigError("session lifetimes must be positive")
+    if session_idle > session_absolute or session_reauth > session_idle:
+        raise ConfigError("session reauth and idle windows must fit inside the absolute lifetime")
     return Config(
         enabled=_clean(source.get("SWADE_ONTOLOGY_ENABLED")) == "true",
         host=source.get("SWADE_ONTOLOGY_HOST", "0.0.0.0"),
@@ -113,6 +123,9 @@ def load_config(env: os._Environ[str] | dict[str, str] | None = None) -> Config:
         engine_url=engine_url,
         auth_url=auth_url,
         owner_email=owner_email,
+        session_idle_seconds=session_idle,
+        session_absolute_seconds=session_absolute,
+        session_reauth_seconds=session_reauth,
         pin=load_pin(),
     )
 

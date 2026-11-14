@@ -44,18 +44,21 @@ def _handler(service: KnowledgeService) -> type[BaseHTTPRequestHandler]:
                 try:
                     body = json.loads(raw.decode("utf-8"))
                 except json.JSONDecodeError:
-                    self._write(400, {"error": {"code": "invalid_json", "service": "SWADE"}})
+                    self._write(400, {"error": {"code": "invalid_json", "service": "SWADE"}}, [])
                     return
             headers = {key: value for key, value in self.headers.items()}
-            status, payload = service.dispatch(method, parsed.path, headers, query, body)
-            self._write(status, payload)
+            cookies: list[str] = []
+            status, payload = service.dispatch(method, parsed.path, headers, query, body, cookies)
+            self._write(status, payload, cookies)
 
-        def _write(self, status: int, payload: dict[str, Any]) -> None:
+        def _write(self, status: int, payload: dict[str, Any], cookies: list[str]) -> None:
             encoded = json.dumps(payload).encode("utf-8")
             self.send_response(status)
             self.send_header("content-type", "application/json; charset=utf-8")
             self.send_header("content-length", str(len(encoded)))
             self.send_header("cache-control", "no-store")
+            for cookie in cookies:
+                self.send_header("set-cookie", cookie)
             self.end_headers()
             self.wfile.write(encoded)
 

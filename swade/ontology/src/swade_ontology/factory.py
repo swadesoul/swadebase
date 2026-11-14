@@ -15,6 +15,7 @@ from .http_server import serve
 from .owner_auth import OwnerAuth
 from .policy import Policy
 from .service import KnowledgeService
+from .sessions import HumanSession, SessionRegistry
 from .store import PostgresDocumentIndex, StoreError, connect_store
 
 
@@ -32,6 +33,21 @@ def build_service(config: Config | None = None) -> KnowledgeService:
         except StoreError:
             store = _UnavailableStore()
             documents = PostgresDocumentIndex(store)
+    sessions = SessionRegistry(
+        idle_seconds=resolved.session_idle_seconds,
+        absolute_seconds=resolved.session_absolute_seconds,
+        reauth_seconds=resolved.session_reauth_seconds,
+        require_backend=bool(resolved.database_url),
+    )
+    if store is not None and hasattr(store, "load_sessions"):
+        try:
+            for row in store.load_sessions():
+                sessions.restore(_human_session(row))
+            sessions.backend = store
+            sessions.require_backend = False
+        except StoreError:
+            sessions.backend = None
+            sessions.require_backend = True
     return KnowledgeService(
         config=resolved,
         catalog=catalog,
@@ -48,6 +64,7 @@ def build_service(config: Config | None = None) -> KnowledgeService:
         engine=EngineClient(resolved.engine_url, resolved.pin),
         owner=OwnerAuth(resolved.auth_url, resolved.owner_email),
         store=store,
+        sessions=sessions,
     )
 
 
@@ -62,6 +79,29 @@ class _UnavailableStore:
 
     def search_documents(self, tenant_id: str, query: str, limit: int) -> list[object]:
         raise StoreError("unavailable")
+
+
+def _human_session(row: tuple[object, ...]) -> HumanSession:
+    created_at, last_seen_at, authenticated_at = (_epoch(row[4]), _epoch(row[5]), _epoch(row[6]))
+    return HumanSession(
+        session_id=str(row[0]),
+        secret_hash=str(row[1]),
+        owner_email=str(row[2]),
+        owner_subject=str(row[3]),
+        created_at=created_at,
+        last_seen_at=last_seen_at,
+        authenticated_at=authenticated_at,
+        revoked=bool(row[7]),
+    )
+
+
+def _epoch(value: object) -> float:
+    if isinstance(value, (int, float)):
+        return float(value)
+    timestamp = getattr(value, "timestamp", None)
+    if callable(timestamp):
+        return float(timestamp())
+    raise StoreError("session_clock")
 
 
 def main() -> None:

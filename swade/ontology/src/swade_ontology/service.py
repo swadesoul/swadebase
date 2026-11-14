@@ -17,6 +17,12 @@ from .fts import MemoryDocumentIndex
 from .gateway import Gateway
 from .owner_auth import OwnerAuth
 from .policy import Decision, Policy, bearer_token
+from .sessions import (
+    SessionRegistry,
+    clear_session_cookie,
+    read_session_cookie,
+    session_cookie,
+)
 from .store import StoreError
 
 
@@ -90,6 +96,7 @@ class KnowledgeService:
         engine: EngineClient,
         owner: OwnerAuth | None = None,
         store: object | None = None,
+        sessions: SessionRegistry | None = None,
     ) -> None:
         self.config = config
         self.catalog = catalog
@@ -101,6 +108,11 @@ class KnowledgeService:
         self.engine = engine
         self.owner = owner or OwnerAuth(None, None)
         self.store = store
+        self.sessions = sessions or SessionRegistry(
+            idle_seconds=config.session_idle_seconds,
+            absolute_seconds=config.session_absolute_seconds,
+            reauth_seconds=config.session_reauth_seconds,
+        )
 
     def health(self) -> dict[str, Any]:
         return {
@@ -129,6 +141,7 @@ class KnowledgeService:
         headers: dict[str, str],
         query: dict[str, str],
         body: Any,
+        cookie_out: list[str] | None = None,
     ) -> tuple[int, dict[str, Any]]:
         normalized = {key.lower(): value for key, value in headers.items()}
         if method == "GET" and path == "/health":
@@ -138,7 +151,7 @@ class KnowledgeService:
         if not self.config.enabled:
             return 503, {"error": {"code": "swade_ontology_disabled", "service": "SWADE"}}
         if path.startswith("/v1/admin"):
-            return self._admin(method, path, normalized, body)
+            return self._admin(method, path, normalized, body, cookie_out if cookie_out is not None else [])
         decision = self.policy.authenticate(normalized)
         if not decision.allowed:
             self.audit.record(decision, "authenticate")
@@ -166,13 +179,33 @@ class KnowledgeService:
         self.audit.record(missing, path)
         return 404, self._error(missing)
 
-    def _admin(self, method: str, path: str, headers: dict[str, str], body: Any) -> tuple[int, dict[str, Any]]:
-        decision = self.owner.verify(bearer_token(headers) or "")
-        if not decision.ok or decision.owner is None:
-            denied = self.policy._deny(decision.status, decision.code, None)
-            self.audit.record(denied, "admin.authenticate")
-            return decision.status, {"error": {"code": decision.code, "service": "SWADE"}}
-        owner = decision.owner
+    def _admin(
+        self,
+        method: str,
+        path: str,
+        headers: dict[str, str],
+        body: Any,
+        cookie_out: list[str],
+    ) -> tuple[int, dict[str, Any]]:
+        if method == "POST" and path == "/v1/admin/session":
+            return self._open_session(headers, body, cookie_out)
+        if method == "POST" and path == "/v1/admin/session/sign-out":
+            return self._sign_out(headers, cookie_out, everywhere=False)
+        if method == "POST" and path == "/v1/admin/session/sign-out-everywhere":
+            return self._sign_out(headers, cookie_out, everywhere=True)
+        code, session = self._current_session(headers, cookie_out)
+        if session is None:
+            denied = self.policy._deny(401, code, None)
+            self.audit.record(denied, "admin.session")
+            return 401, {"error": {"code": code, "service": "SWADE"}}
+        if method == "GET" and path == "/v1/admin/session":
+            return 200, _session_body(session, self.sessions)
+        if _sensitive_admin(method, path) and self.sessions.needs_reauth(session):
+            denied = self.policy._deny(403, "reauth_required", None)
+            self.audit.record(denied, "admin.reauth")
+            return 403, {"error": {"code": "reauth_required", "service": "SWADE"}}
+        owner_email = session.owner_email
+        owner_subject = session.owner_subject
         if method == "GET" and path == "/v1/admin/approvals":
             allowed = self.policy._deny(200, "allow", None)
             self.audit.record(allowed, "admin.approvals", None)
@@ -186,21 +219,85 @@ class KnowledgeService:
                         "owner_subject": item.owner_subject,
                     }
                     for item in self.policy.approvals
-                    if item.owner_email == owner.email
+                    if item.owner_email == owner_email
                 ]
             }
         if method == "POST" and path == "/v1/admin/credentials":
-            return self._issue(owner.email, owner.subject, body)
+            return self._issue(owner_email, owner_subject, body)
         if method == "POST" and path.startswith("/v1/admin/credentials/"):
             remainder = path.removeprefix("/v1/admin/credentials/")
             credential_id, _, action = remainder.partition("/")
             if action == "approve":
-                return self._owner_action(owner.email, owner.subject, credential_id, "approve")
+                return self._owner_action(owner_email, owner_subject, credential_id, "approve")
             if action == "revoke":
-                return self._owner_action(owner.email, owner.subject, credential_id, "revoke")
+                return self._owner_action(owner_email, owner_subject, credential_id, "revoke")
         missing = self.policy._deny(404, "not_found", None)
         self.audit.record(missing, "admin.unknown")
         return 404, {"error": {"code": "not_found", "service": "SWADE"}}
+
+    def _open_session(
+        self,
+        headers: dict[str, str],
+        body: Any,
+        cookie_out: list[str],
+    ) -> tuple[int, dict[str, Any]]:
+        access_token = ""
+        if isinstance(body, dict) and isinstance(body.get("access_token"), str):
+            access_token = body["access_token"].strip()
+        if not access_token:
+            access_token = bearer_token(headers) or ""
+        verified = self.owner.verify(access_token)
+        if not verified.ok or verified.owner is None:
+            denied = self.policy._deny(verified.status, verified.code, None)
+            self.audit.record(denied, "admin.session")
+            return verified.status, {"error": {"code": verified.code, "service": "SWADE"}}
+        existing_code, existing = self._current_session(headers, cookie_out, touch=False)
+        try:
+            if existing is not None and existing.owner_subject == verified.owner.subject:
+                self.sessions.reauthenticate(existing, verified.owner)
+                session = existing
+                secret = _cookie_secret(headers)
+                cookie_value = f"{session.session_id}.{secret}" if secret else ""
+                if not cookie_value:
+                    _session, cookie_value = self.sessions.start(verified.owner)
+                    session = _session
+            else:
+                session, cookie_value = self.sessions.start(verified.owner)
+        except StoreError:
+            failed = self.policy._deny(503, "credential_store_unavailable", None)
+            self.audit.record(failed, "admin.session")
+            return 503, self._error(failed)
+        cookie_out.append(session_cookie(cookie_value, self.sessions.cookie_max_age(session)))
+        self.audit.record(self.policy._deny(200, "allow", None), "admin.session")
+        body_out = _session_body(session, self.sessions)
+        if cookie_value.split(".", 1)[-1] in str(body_out):
+            raise RuntimeError("session secret leaked into the response body")
+        return 200, body_out
+
+    def _sign_out(self, headers: dict[str, str], cookie_out: list[str], *, everywhere: bool) -> tuple[int, dict[str, Any]]:
+        code, session = self._current_session(headers, cookie_out, touch=False)
+        if session is None:
+            cookie_out.append(clear_session_cookie())
+            return 401, {"error": {"code": code, "service": "SWADE"}}
+        if everywhere:
+            self.sessions.revoke_all(session.owner_subject)
+            action = "admin.session.sign_out_everywhere"
+        else:
+            self.sessions.revoke(session.session_id)
+            action = "admin.session.sign_out"
+        cookie_out.append(clear_session_cookie())
+        self.audit.record(self.policy._deny(200, "allow", None), action)
+        return 200, {"signed_out": "everywhere" if everywhere else "device"}
+
+    def _current_session(self, headers: dict[str, str], cookie_out: list[str], touch: bool = True):
+        code, session = self.sessions.resolve(read_session_cookie(headers.get("cookie")))
+        if session is not None and touch:
+            secret = _cookie_secret(headers)
+            if secret:
+                cookie_out.append(
+                    session_cookie(f"{session.session_id}.{secret}", self.sessions.cookie_max_age(session))
+                )
+        return code, session
 
     def _issue(self, owner_email: str, owner_subject: str, body: Any) -> tuple[int, dict[str, Any]]:
         if not isinstance(body, dict):
@@ -598,6 +695,35 @@ class KnowledgeService:
                 "caller_id": decision.caller.caller_id,
             }
         return body
+
+
+def _sensitive_admin(method: str, path: str) -> bool:
+    if method != "POST":
+        return False
+    if path == "/v1/admin/credentials":
+        return True
+    return path.startswith("/v1/admin/credentials/") and (
+        path.endswith("/approve") or path.endswith("/revoke")
+    )
+
+
+def _cookie_secret(headers: dict[str, str]) -> str:
+    raw = read_session_cookie(headers.get("cookie"))
+    if not raw or "." not in raw:
+        return ""
+    return raw.split(".", 1)[1]
+
+
+def _session_body(session: object, registry: SessionRegistry) -> dict[str, Any]:
+    return {
+        "session_id": session.session_id,
+        "owner_email": session.owner_email,
+        "owner_subject": session.owner_subject,
+        "authenticated_at": session.authenticated_at,
+        "idle_seconds": registry.idle_seconds,
+        "absolute_seconds": registry.absolute_seconds,
+        "reauth_seconds": registry.reauth_seconds,
+    }
 
 
 def extract_term_ids(catalog: Catalog, question: str) -> list[str]:

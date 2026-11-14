@@ -33,6 +33,17 @@ CREATE TABLE IF NOT EXISTS swade_ontology.approvals (
   created_at timestamptz NOT NULL DEFAULT now()
 );
 
+CREATE TABLE IF NOT EXISTS swade_ontology.admin_sessions (
+  session_id text PRIMARY KEY,
+  secret_hash text NOT NULL,
+  owner_email text NOT NULL,
+  owner_subject text NOT NULL,
+  created_at timestamptz NOT NULL,
+  last_seen_at timestamptz NOT NULL,
+  authenticated_at timestamptz NOT NULL,
+  revoked boolean NOT NULL DEFAULT false
+);
+
 CREATE TABLE IF NOT EXISTS swade_ontology.audit_events (
   id bigserial PRIMARY KEY,
   decision_id text NOT NULL,

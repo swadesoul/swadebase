@@ -60,6 +60,7 @@ def service_for(enabled: bool = True, **overrides: object) -> KnowledgeService:
     brain = overrides.pop("brain", BrainClient(None, None))
     owner = overrides.pop("owner", None)
     store = overrides.pop("store", None)
+    sessions = overrides.pop("sessions", None)
     documents = overrides.pop("documents", documents)
     return KnowledgeService(
         config=config(enabled),
@@ -72,6 +73,7 @@ def service_for(enabled: bool = True, **overrides: object) -> KnowledgeService:
         engine=EngineClient(None, load_config({}).pin),
         owner=owner,
         store=store,
+        sessions=sessions,
     )
 
 
@@ -90,6 +92,26 @@ def grant(policy: Policy, token: str, app_id: str, tenant_id: str, tenant_class:
 
 def auth(token: str) -> dict[str, str]:
     return {"authorization": f"Bearer {token}", "x-swadebots-client": "swadebots"}
+
+
+def operator_headers(service: KnowledgeService, access_token: str) -> dict[str, str]:
+    cookies: list[str] = []
+    status, body = service.dispatch(
+        "POST",
+        "/v1/admin/session",
+        {},
+        {},
+        {"access_token": access_token},
+        cookies,
+    )
+    if status != 200:
+        raise AssertionError((status, body))
+    header = cookies[-1]
+    secret = header.split(";", 1)[0].split(".", 1)[1]
+    encoded = json.dumps(body)
+    if secret in encoded or access_token in encoded:
+        raise AssertionError("session response exposed a token")
+    return {"cookie": header.split(";", 1)[0]}
 
 
 class ConfigTests(unittest.TestCase):
@@ -687,7 +709,7 @@ class OwnerApprovalTests(unittest.TestCase):
 
         owner = OwnerAuth("https://swadebase.cloud/auth/v1", "owner@example.com", transport)
         self.service = service_for(owner=owner)
-        self.headers = {"authorization": "Bearer owner-access-token"}
+        self.headers = operator_headers(self.service, "owner-access-token")
 
     def test_pending_is_denied_until_owner_approval_and_revoke_denies_again(self) -> None:
         status, issued = self.service.dispatch(
@@ -765,35 +787,183 @@ class OwnerApprovalTests(unittest.TestCase):
         self.assertEqual(status, 201)
         status, body = self.service.dispatch(
             "POST",
-            f"/v1/admin/credentials/{issued['credential_id']}/approve",
-            {"authorization": "Bearer other-access-token"},
+            "/v1/admin/session",
             {},
             {},
+            {"access_token": "other-access-token"},
         )
         self.assertEqual(status, 403)
         self.assertEqual(body["error"]["code"], "owner_mismatch")
         status, body = self.service.dispatch(
             "POST",
-            f"/v1/admin/credentials/{issued['credential_id']}/approve",
-            {"authorization": "Bearer email-access-token"},
+            "/v1/admin/session",
             {},
             {},
+            {"access_token": "email-access-token"},
         )
         self.assertEqual(status, 403)
         self.assertEqual(body["error"]["code"], "google_required")
 
     def test_admin_routes_fail_closed_without_swadebase_auth(self) -> None:
         bare = service_for()
-        status, body = bare.dispatch("POST", "/v1/admin/credentials", self.headers, {}, {})
+        status, body = bare.dispatch(
+            "POST",
+            "/v1/admin/session",
+            {},
+            {},
+            {"access_token": "owner-access-token"},
+        )
         self.assertEqual(status, 503)
         self.assertEqual(body["error"]["code"], "owner_not_configured")
 
     def test_disabled_facade_does_not_issue_credentials(self) -> None:
         disabled = service_for(False, owner=self.service.owner)
+        self.calls.clear()
         status, body = disabled.dispatch("POST", "/v1/admin/credentials", self.headers, {}, {})
         self.assertEqual(status, 503)
         self.assertEqual(body["error"]["code"], "swade_ontology_disabled")
         self.assertEqual(self.calls, [])
+
+
+class ManualClock:
+    def __init__(self) -> None:
+        self.now = 1_000_000.0
+
+    def __call__(self) -> float:
+        return self.now
+
+
+class SessionTests(unittest.TestCase):
+    def setUp(self) -> None:
+        from swade_ontology.sessions import SessionRegistry
+
+        self.clock = ManualClock()
+        self.sessions = SessionRegistry(idle_seconds=100, absolute_seconds=500, reauth_seconds=30, clock=self.clock)
+
+        def transport(url: str, headers: dict[str, str]) -> tuple[int, bytes]:
+            token = headers["authorization"].removeprefix("Bearer ")
+            if token == "owner-access-token":
+                return 200, google_user("owner@example.com", "google", True, "owner-sub")
+            return 401, b"{}"
+
+        self.service = service_for(
+            owner=OwnerAuth("https://swadebase.cloud/auth/v1", "owner@example.com", transport),
+            sessions=self.sessions,
+        )
+
+    def test_cookie_is_http_only_and_secret_stays_out_of_the_body(self) -> None:
+        cookies: list[str] = []
+        status, body = self.service.dispatch(
+            "POST",
+            "/v1/admin/session",
+            {},
+            {},
+            {"access_token": "owner-access-token"},
+            cookies,
+        )
+        self.assertEqual(status, 200)
+        header = cookies[0]
+        self.assertIn("HttpOnly", header)
+        self.assertIn("Secure", header)
+        self.assertIn("SameSite=Lax", header)
+        self.assertNotIn("Domain=", header)
+        self.assertNotIn("localStorage", json.dumps(body))
+        secret = header.split(";", 1)[0].split(".", 1)[1]
+        self.assertNotIn(secret, json.dumps(body))
+
+    def test_issuance_and_approval_require_recent_sign_in(self) -> None:
+        headers = operator_headers(self.service, "owner-access-token")
+        self.clock.now += 31
+        status, body = self.service.dispatch(
+            "POST",
+            "/v1/admin/credentials",
+            headers,
+            {},
+            {
+                "app_id": "maestro-radio",
+                "tenant_id": ALPHA,
+                "tenant_class": "customer",
+                "caller_id": "swadebots.maestro-radio",
+                "caller_kind": "swadebots",
+                "plan": "free",
+            },
+        )
+        self.assertEqual(status, 403)
+        self.assertEqual(body["error"]["code"], "reauth_required")
+        refreshed: list[str] = []
+        status, _body = self.service.dispatch(
+            "POST",
+            "/v1/admin/session",
+            headers,
+            {},
+            {"access_token": "owner-access-token"},
+            refreshed,
+        )
+        self.assertEqual(status, 200)
+        fresh = {"cookie": refreshed[-1].split(";", 1)[0]}
+        status, issued = self.service.dispatch(
+            "POST",
+            "/v1/admin/credentials",
+            fresh,
+            {},
+            {
+                "app_id": "maestro-radio",
+                "tenant_id": ALPHA,
+                "tenant_class": "customer",
+                "caller_id": "swadebots.maestro-radio",
+                "caller_kind": "swadebots",
+                "plan": "free",
+            },
+        )
+        self.assertEqual(status, 201)
+        self.assertEqual(issued["status"], "pending")
+
+    def test_idle_session_expires_and_activity_rolls_it_forward(self) -> None:
+        headers = operator_headers(self.service, "owner-access-token")
+        self.clock.now += 50
+        refreshed: list[str] = []
+        status, _body = self.service.dispatch("GET", "/v1/admin/session", headers, {}, None, refreshed)
+        self.assertEqual(status, 200)
+        self.assertIn("Max-Age=100", refreshed[-1])
+        self.clock.now += 100
+        status, body = self.service.dispatch("GET", "/v1/admin/session", headers, {}, None)
+        self.assertEqual(status, 401)
+        self.assertEqual(body["error"]["code"], "session_expired")
+
+    def test_absolute_lifetime_ends_even_when_the_session_is_active(self) -> None:
+        headers = operator_headers(self.service, "owner-access-token")
+        self.clock.now += 50
+        self.service.dispatch("GET", "/v1/admin/session", headers, {}, None, [])
+        self.clock.now += 460
+        status, body = self.service.dispatch("GET", "/v1/admin/session", headers, {}, None)
+        self.assertEqual(status, 401)
+        self.assertEqual(body["error"]["code"], "session_expired")
+
+    def test_sign_out_revokes_one_device_or_every_device(self) -> None:
+        first = operator_headers(self.service, "owner-access-token")
+        second = operator_headers(self.service, "owner-access-token")
+        cleared: list[str] = []
+        status, body = self.service.dispatch("POST", "/v1/admin/session/sign-out", first, {}, {}, cleared)
+        self.assertEqual(status, 200)
+        self.assertEqual(body["signed_out"], "device")
+        self.assertIn("Max-Age=0", cleared[-1])
+        status, body = self.service.dispatch("GET", "/v1/admin/session", first, {}, None)
+        self.assertEqual(body["error"]["code"], "session_revoked")
+        status, body = self.service.dispatch("GET", "/v1/admin/session", second, {}, None)
+        self.assertEqual(status, 200)
+        status, body = self.service.dispatch("POST", "/v1/admin/session/sign-out-everywhere", second, {}, {})
+        self.assertEqual(body["signed_out"], "everywhere")
+        status, body = self.service.dispatch("GET", "/v1/admin/session", second, {}, None)
+        self.assertEqual(body["error"]["code"], "session_revoked")
+
+    def test_api_credentials_and_human_sessions_do_not_cross(self) -> None:
+        grant(self.service.policy, "maestro-alpha-token", "maestro-radio", ALPHA, "customer")
+        status, body = self.service.dispatch("POST", "/v1/admin/credentials", auth("maestro-alpha-token"), {}, {})
+        self.assertEqual(status, 401)
+        self.assertEqual(body["error"]["code"], "unauthenticated")
+        headers = operator_headers(self.service, "owner-access-token")
+        status, body = self.service.dispatch("GET", "/v1/terms", headers, {}, None)
+        self.assertEqual(status, 401)
 
 
 class ScriptedDatabase:
@@ -894,7 +1064,7 @@ class StoreTests(unittest.TestCase):
         status, issued = scoped.dispatch(
             "POST",
             "/v1/admin/credentials",
-            {"authorization": "Bearer owner-access-token"},
+            operator_headers(scoped, "owner-access-token"),
             {},
             {
                 "app_id": "maestro-radio",
