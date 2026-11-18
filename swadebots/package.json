@@ -1,0 +1,14 @@
+{
+  "name": "swadebots",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "SWADEBOTS console. Separated from the upstream Supabase fork. Feature flag off by default.",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test --test-concurrency=1 test/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
