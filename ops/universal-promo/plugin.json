@@ -1,0 +1,39 @@
+{
+  "id": "swade-universal-promo",
+  "name": "Swade Universal Promo",
+  "version": "1.0.1",
+  "contract": "SWADE Adapter Contract v1",
+  "kind": "site_adapter",
+  "runtime": "existing swadebase-adapters service",
+  "capabilities": [
+    "public-site-promo-config",
+    "host-native-homepage-widget",
+    "standard-campaign-preview",
+    "local-campaign-brief"
+  ],
+  "public": {
+    "script": "https://swadebase.cloud/adapters/promo/widget.js",
+    "config": "https://swadebase.cloud/adapters/promo/config.json?site={site}",
+    "details": "https://swadebase.cloud/adapters/promo/?site={site}",
+    "health": "https://swadebase.cloud/adapters/promo/health",
+    "bootstrapTemplate": "https://swadebase.cloud/adapters/promo/swade-promo-loader.js",
+    "notes": "Static public promotion metadata is expressly authorized for public homepage display; operational status and instructions remain protected."
+  },
+  "private": {
+    "instructions": "/api/adapters/swade-universal-promo/skill",
+    "authorization": "existing owner session or adapter checker credential; server-side only",
+    "status": "/api/adapters/swade-universal-promo/status"
+  },
+  "killSwitch": {
+    "registryId": "swade-universal-promo",
+    "publicConfigCacheSeconds": 5
+  },
+  "theme": "host typography, colors, primary action, isolated site-specific composition",
+  "phase": "alpha-preview",
+  "checkoutEnabled": false,
+  "productionEnabled": false,
+  "trackingEnabled": false,
+  "mediaStorage": "Backblaze references when production media is connected; no copied media",
+  "module": "promo.campaign-intro",
+  "contractReady": false
+}

@@ -1,0 +1,42 @@
+{
+  "instructors": [
+    {
+      "id": "swarvis", "name": "Swarvis", "slug": "swarvis", "title": "AI & agents, with a plan you can follow",
+      "bio": "Relaxed energy. Clear directions. Swarvis is your animated instructor for turning AI and agents into useful client services. He walks you through the work, the human review, and the next practical step—with a little humor along the way. Build something useful first; real sales depend on the client, the quality, and the follow-through.",
+      "avatar_url": "/images/swarvis-studio.jpg", "cover_url": "/images/swarvis-studio.jpg",
+      "expertise": ["AI & agents", "Client services", "Useful workflows"], "status": "active", "featured": true
+    }
+  ],
+  "subjects": [
+    {"id":"ai-agents","name":"AI & agents","slug":"ai-agents","description":"Build useful workflows with a human review before action.","color":"#315549","icon":"Workflow"},
+    {"id":"content-services","name":"Content services","slug":"content-services","description":"Turn approved source material into deliverables a client can use.","color":"#D97838","icon":"Clapperboard"},
+    {"id":"creative-business","name":"Creative business","slug":"creative-business","description":"Package what you know into a clear offer and repeatable process.","color":"#86689A","icon":"Palette"}
+  ],
+  "courses": [
+    {
+      "id":"swarvis-first-content-pack","slug":"your-first-client-content-pack","title":"Your first client content pack",
+      "summary":"A written walkthrough for turning one approved recording into a small, reviewed content package. Finish with a sample deliverable and a clear offer you can discuss with a real client.",
+      "subject_id":"content-services","instructor_id":"swarvis","cover_url":"","level":"Beginner","duration_minutes":15,"format":"Training","status":"published","price_cents":0,"currency":"usd","product_slug":"sssbrain",
+      "outcomes":["Define a small deliverable a client can evaluate","Create a draft from an approved source without inventing facts","Use a human review checklist before delivery","Package the work into a clear service offer"],
+      "tags":["Written guide","Client services","Human review"],"source_url":"","embed_url":"","community_url":"",
+      "lessons":[
+        {"id":"content-brief","title":"Pick one client problem","position":0,"duration_minutes":3,"preview":true,"body":"Start with a person who already has something worth saying: a consultant, creator, local business owner, or instructor. Ask which approved recording they want to reuse and who should see the finished content. Define a small package: one short summary, three social post drafts, and one email draft. Get permission to use the recording and agree on what information must stay private. Your first visible result is a written brief—not a promised sale. Write down the audience, the source, the tone, the deliverables, and the review deadline. If you do not have a client yet, practice on your own recording and label the result a sample."},
+        {"id":"content-draft","title":"Create a draft with a clear source","position":1,"duration_minutes":4,"preview":true,"body":"Transcribe the approved recording using a tool you already have access to. Read the transcript and correct names, dates, and any obvious transcription errors. Then ask your AI tool: ‘Using only this approved transcript, draft a 100-word summary, three distinct social posts, and one short email. Keep the speaker’s meaning. Do not invent claims, results, quotes, prices, or links. Mark uncertain details as NEEDS REVIEW. For each draft, identify the source passage that supports it.’ Keep the transcript, the prompt, and the drafts together. This is the first useful artifact: a traceable draft pack you can inspect."},
+        {"id":"content-review","title":"Make the human review count","position":2,"duration_minutes":4,"preview":true,"body":"Compare every claim against the source. Check names, numbers, links, spelling, permissions, and tone. Remove repeated ideas and any claim the source does not support. Read the drafts aloud; they should sound like the client, not a generic advertisement. Keep a short change log so the client can see what you corrected. If an agent is helping, leave sending and publishing disabled until a person approves the final version. Share the draft pack for review through the client’s agreed process. A draft is not an approval, and an approval is not a payment receipt."},
+        {"id":"content-offer","title":"Turn the result into a clear offer","position":3,"duration_minutes":4,"preview":true,"body":"Describe exactly what the client receives, the source length you will accept, the turnaround you can meet, and the number of revisions included. Agree on the fee and payment terms before paid work begins. Track preparation time and any tool costs so the service makes sense for you. After delivery, ask whether the package saved the client time and what should change next time. A completed sample can help start that conversation; it does not guarantee an order. When you are ready to manage repeated jobs, use SSS Brain as the place to monitor the workflow and human approvals. Solo starters can use Brainiak templates to organize the first version. Cut the noise, and let's put it on the board."}
+      ]
+    },
+    {
+      "id":"swarvis-agent-intake-draft","slug":"build-a-reviewed-lead-intake-workflow","title":"Build a reviewed lead intake workflow","summary":"Episode draft: collect an approved inquiry, prepare a response, and hold the action for human approval.",
+      "subject_id":"ai-agents","instructor_id":"swarvis","cover_url":"/images/swarvis-studio.jpg","level":"Beginner","duration_minutes":4,"format":"Mini class","status":"draft","price_cents":0,"currency":"usd","product_slug":"sssbrain",
+      "outcomes":["Define the intake fields","Draft a response from approved facts","Require human approval before sending"],"lessons":[],"tags":["Episode draft","Agents"],"source_url":"","embed_url":"","community_url":""
+    }
+  ],
+  "sites": [
+    {"id":"sssbrain","name":"SSS Brain","slug":"sssbrain","origin":"https://sssbrain.live","enabled":true,"description":"AI and agent training linked to monitored business workflows."},
+    {"id":"brainiak","name":"Brainiak","slug":"brainiak","origin":"https://brainiak.live","enabled":true,"description":"Starter classes for templates, playbooks, and lightweight setups."},
+    {"id":"swadesoul","name":"Swade Soul","slug":"swadesoul","origin":"https://swadesoul.com","enabled":true,"description":"Creative and business learning across the Swade ecosystem."},
+    {"id":"teachvirt","name":"TeachVirt","slug":"teachvirt","origin":"https://teachvirt.courses","enabled":true,"description":"Canonical course authoring and class enrollment."},
+    {"id":"virtteach","name":"VirtTeach Community","slug":"virtteach","origin":"https://virtteach.study","enabled":true,"description":"The community learning destination for course-based groups."}
+  ]
+}

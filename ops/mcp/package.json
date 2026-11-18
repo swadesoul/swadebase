@@ -1,0 +1,25 @@
+{
+  "name": "swadebase-ecosystem-mcp",
+  "version": "1.0.0",
+  "description": "Authenticated MCP adapter and operator routing for existing SWADEBASE services",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test *.test.mjs",
+    "check": "node --check route.mjs && node --check service.mjs && node --check protocol.mjs",
+    "audit:production": "npm audit --omit=dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@modelcontextprotocol/node": "2.1.2",
+    "@modelcontextprotocol/server": "2.4.0",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/client": "2.4.0"
+  },
+  "private": true,
+  "type": "module"
+}
+

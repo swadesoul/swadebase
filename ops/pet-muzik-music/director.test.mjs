@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {AGENT,normalizeIntake,reviewIntake,reviewLyrics,authorizeGeneration,validateAudioDelivery} from './director.mjs';
+const valid={pet_name:'Husky',story:'Husky was a loyal farm dog who helped move cows and followed the children on their bicycles.',genre:'country',vocal:'male',language:'English',family_names:['Harold']};
+test('agent scoped identity',()=>assert.equal(AGENT.id,'pet-muzik-music-director'));
+test('normalizes voice filled input',()=>{let x=normalizeIntake({...valid,pet_name:'  Husky  '});assert.equal(x.pet_name,'Husky');});
+test('story intake needs all required fields',()=>{assert.equal(reviewIntake(valid).ok,true); assert.equal(reviewIntake({pet_name:'Husky'}).ok,false);});
+test('names and family must be present in lyrics',()=>{assert.equal(reviewLyrics(valid,'My friend Husky was a beautiful dog who chased the cows and was Harold\'s loyal companion in our fields, each and every day.').ok,true);assert.equal(reviewLyrics(valid,'Something something about a dog down on the farm without any names and stories in this long line.').ok,false);});
+test('paid generation locked by default',()=>{let x=authorizeGeneration({intake:valid,lyrics:'Husky was my buddy, Harold called him a friend, he guided cattle on the farm all the way till the end.',request_id:'test-id-123456789'});assert.equal(x.approved,false);assert.ok(x.errors.includes('payment_not_verified'));});
+test('delivery requires real download proof',()=>{assert.equal(validateAudioDelivery({content_type:'audio/mpeg',file_name:'song.mp3',size_bytes:150000,playable:true,b2_readback:true,download_verified:true}).ready,true);assert.equal(validateAudioDelivery({content_type:'text/plain',file_name:'song.txt'}).ready,false);});

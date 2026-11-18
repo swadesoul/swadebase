@@ -1,0 +1,23 @@
+swade_migration:
+  version: 1
+  site_id: swadebase
+  domain: swadebase.cloud
+  hosting:
+    provider: hostinger
+    runtime: hostinger-coolify
+  backend:
+    provider: swadebase
+    url: https://swadebase.cloud
+  auth:
+    provider: swadebase
+    google: required
+    callback:
+    - https://swadebase.cloud/auth/callback
+  storage:
+    provider: backblaze
+  secrets:
+    provider: sssbrain-vault
+  monitoring:
+    swadepower: required
+  certification:
+    live_domain_required: true

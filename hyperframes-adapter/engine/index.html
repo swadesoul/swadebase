@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+      #root { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center;
+              justify-content: center; font-family: Georgia, "Times New Roman", serif; }
+      #title { color: #d4af37; font-size: 180px; font-weight: 700; letter-spacing: 0.04em; }
+      #card { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+      #rule { width: 600px; height: 4px; background: #d4af37; margin-top: 24px; transform-origin: center; }
+    </style>
+  </head>
+  <body>
+    <!-- 5-second 1920x1080 title card: gold on black, fade + slide -->
+    <div id="root" data-composition-id="main" data-start="0" data-duration="5" data-width="1920" data-height="1080">
+      <div id="card" class="clip" data-start="0" data-duration="5" data-track-index="0">
+        <h1 id="title">SSS Brain</h1>
+        <div id="rule"></div>
+      </div>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#title", { opacity: 0, y: 80 }, { opacity: 1, y: 0, duration: 1.2, ease: "power3.out" }, 0.2);
+      tl.fromTo("#rule", { scaleX: 0 }, { scaleX: 1, duration: 1, ease: "power2.out" }, 0.8);
+      tl.to(["#title", "#rule"], { opacity: 0, duration: 0.6 }, 4.4);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

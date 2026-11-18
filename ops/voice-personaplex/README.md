@@ -1,0 +1,6 @@
+# SWADE Voice PersonaPlex adapter candidate — NOT ACTIVE
+Staged source of NVIDIA PersonaPlex from https://github.com/NVIDIA/personaplex at SHA 16419a2. Only source is downloaded (no model weights, no HF token, no inference process, no GPU, no use of OpenAI credits). Its code is MIT; model weights have a separate NVIDIA Open Model license requiring acceptance at Hugging Face.
+
+Approval pathway: (1) Verify HF model terms and authenticated owner license acceptance; (2) qualify an existing authorized GPU (24GB+ VRAM is a conservative starting test class; official PersonaPlex GPU specification not asserted); (3) start manually on non-production GPU; (4) bridge streaming audio to SWADE Voice Studio with server-side authentication; (5) benchmark full duplex, interruption, intelligibility and time-to-first-audio against GPT Live and Moshi; (6) audit voice data retention/consent, instrument metered GPU usage with zero auto start, rollback; (7) enable only if benchmarks and owner spending approval pass.
+
+The CPU fallback already provided by SWADE Voice Studio remains separate and may take several seconds. Inference endpoint is intentionally not installed here because this Hostinger CPU node lacks a supported NVIDIA GPU. This manifest is a disabled candidate, not a working fallback.

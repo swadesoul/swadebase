@@ -1,0 +1,17 @@
+# ABAGALE approved source and Chief of Staff inbox
+
+October 26, 2026 America/Chicago; server date October 27 UTC.
+
+Approved uploaded original logo transferred unchanged from the ChatGPT workspace to the existing authorized server. Byte count416794 and SHA256 a8a1bdb877ae7bfb740610e2fea874f56be5a2c48713d919d7985392f6ba5dce matched before and after Backblaze storage. Destination was verified against active ABAGALE backend configuration and private bucket ACL before the upload. The original remains in a private prefix excluded from public image proxies. No public URL was generated. Initial unverified-destination upload was blocked by automatic review; only the later verified/private destination was used.
+
+Registered source asset80aef528-2df6-4c2b-892f-df2ba307fa19 in existing abagale.merch_design_assets as user_upload/draft, not selected or print-ready. Canvas2000x2000; visible logo bounding box160,633,1806,1336; visible width1646px supports about5.487in at300DPI. Do not claim upscaling restores original detail. Larger use needs better source or explicitly disclosed effective DPI. Source storage receipt lives at /opt/sssbrain-ops/merch/approved-logo.json. Catalog snapshot and scoped MCP read expose approved_logo metadata without storage keys or signed/public download links. Native transport readback passed.
+
+No existing Chief of Staff bot was found in the owner workspace. Created Chief of Staff bot cmvpzp01r0000m5s2p1ib839p and thread cmvpzp01y0001m5s2wvqks1nb, with no production credentials or automatic paid routines. Imported actual report91 as message cmvpzp02c0002m5s28g6ey4t2 using the existing createThreadMessage helper. Message readback verified ownership and content. Handoff91 metadata now says delivered_to_inbox_not_acknowledged; status remains open. No AI review, acknowledgement or model run is claimed. Existing message_bot can deliver future reports during budget-authorized native runs, but an automatic queue-consuming agent is not yet operating.
+
+Prepared next design concept SIGNAL / AFTER DARK with separately art-directed navy/cyan/gold and ivory/charcoal treatments. Read-only Printify blueprint281/provider10 query verified24 variants and their front/back/left/right sleeve placeholders; full per-variant manifest saved at /opt/sssbrain-ops/merch/signal-after-dark-plan.json. No artwork or Printify product was created. Current store markup observed30%; future actual per-variant pricing must be confirmed, not inherited from older25% notes.
+
+Existing WAN image adapter routes to paid Alibaba; DiffusionGemma gateway has no configured GPU worker and is not an image-production substitute. External generation budget remains zero pending founder ceiling and verified rate/cost enforcement. Native product-creation routines remain paused.
+
+Verification: 11 focused merchandise access/idempotency/catalog-metadata tests passed; service restarted and health passed after startup. Native encrypted connection returned approved logo metadata and original report delivery readback. No publishing, purchases, paid model runs or changes to existing products.
+
+Recovery: preserve the private original and audit receipts. Catalog metadata code backup /opt/swadebase/backups/merch-before-logo-metadata.mjs. Revert only added source metadata behavior if needed; do not revoke working read/report connection or change existing product/catalog access. Chief of Staff inbox can be archived through owner controls only if requested; never erase historical reports.

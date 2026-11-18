@@ -1,0 +1,14 @@
+import test from 'node:test';import assert from 'node:assert/strict';import http from 'node:http';
+import {Client,StreamableHTTPClientTransport} from '@modelcontextprotocol/client';
+import {serveProtocol} from './protocol.mjs';
+test('official SDK client discovers and invokes deployed-shaped tools/resources/prompts',async()=>{
+ const service={bible:async()=>({status:'available',content:'# Fixture Bible'}),search:async()=>({items:[]}),capabilities:async()=>({items:[]}),plan:async()=>({status:'prepared',execution_authorized:false}),createTask:async()=>({status:'awaiting_approval'}),getTask:async()=>({task:{id:'1'}})};
+ const app=http.createServer((req,res)=>serveProtocol(req,res,service,{id:'fixture',scopes:[]}));await new Promise(r=>app.listen(0,'127.0.0.1',r));
+ const client=new Client({name:'fixture-client',version:'1.0.0'});try{await client.connect(new StreamableHTTPClientTransport(new URL(`http://127.0.0.1:${app.address().port}/mcp`)));
+  const tools=await client.listTools();assert.equal(tools.tools.length,6);assert(tools.tools.some(t=>t.name==='swade_route_request'));
+  const result=await client.callTool({name:'swade_route_request',arguments:{request:'Prepare a song'}});assert.equal(result.structuredContent.status,'prepared');
+  const bad=await client.callTool({name:'swade_route_request',arguments:{request:'x'}});assert.equal(bad.isError,true);
+  const resources=await client.listResources();assert.equal(resources.resources.length,1);const read=await client.readResource({uri:'swadebase://bibles/swadebase'});assert.equal(read.contents[0].text,'# Fixture Bible');
+  const prompts=await client.listPrompts();assert.equal(prompts.prompts.length,1);
+ }finally{await client.close();await new Promise(r=>app.close(r));}
+});

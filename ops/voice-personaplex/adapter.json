@@ -1,0 +1,13 @@
+{
+  "adapter": "voice.personaplex",
+  "service": "swade-personaplex",
+  "contractVersion": 1,
+  "version": "0.1.0-staged",
+  "ready": false,
+  "enabled": false,
+  "source": {"repository":"https://github.com/NVIDIA/personaplex","revision":"16419a2","code_license":"MIT","model_license":"NVIDIA Open Model (acceptance required)"},
+  "capabilities": {"actions":["status","start_session","stop_session"],"async":false,"callbacks":false,"formats":["streaming-audio"],"providers":["personaplex"]},
+  "blockers": ["GPU inference endpoint not provisioned or benchmarked","Hugging Face model license acceptance and authorized token not verified","Streaming proxy, authentication and latency tests not implemented","Not connected to SWADE Voice Studio or GPT Live router"],
+  "cost_guard": {"new_external_spend_usd":0,"gpu_auto_start":false,"allow_paid_fallback":false,"fallback_if_unavailable":"existing approved free CPU or device speech"},
+  "deployment": {"status":"source_only","live_audio_enabled":false,"target":"existing SWADEBASE voice routing adapter"}
+}

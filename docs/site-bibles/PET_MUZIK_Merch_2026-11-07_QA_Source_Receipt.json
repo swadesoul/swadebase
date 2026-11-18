@@ -1,0 +1,28 @@
+{
+  "recorded_utc": "2026-11-07T14:06:35.596Z",
+  "site_project_id": "appgprj_6ae11e774ba88191ba4898e90c08dea6",
+  "opened_site_version": 23,
+  "opened_commit": "944f6dbc599b686b9771d74c3fe04bec3bfd0701",
+  "saved_site_version": 24,
+  "saved_version_id": "appgprj_6ae11e774ba88191ba4898e90c08dea6~appgver_01456305502881918e067670a0acebc9",
+  "saved_commit": "a0699da525bd2b766c3a06e6216d2686af8d214e",
+  "archive_content_hash": "sha256:c5d53353cb63b41562a65873febee1523a438fc1b3977c721bb96cc58c18dfd7",
+  "archive_size_bytes": 19404800,
+  "archive_file_count": 81,
+  "deployment_id": null,
+  "counts": {
+    "created_today": 3,
+    "created_during_qa": 0,
+    "site_visible": 0,
+    "held": 3,
+    "approved_finished_listings": 0
+  },
+  "dist_unchanged": true,
+  "voice_studio_unchanged": true,
+  "shop_id": 29509155,
+  "product_ids": [
+    "6aef09b3fdd097ce5a0557b1",
+    "6aef09b707e5f5f771083f33",
+    "6aef09bbb7a964b43b0d22fc"
+  ]
+}

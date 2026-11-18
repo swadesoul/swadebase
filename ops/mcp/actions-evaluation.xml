@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<evaluation>
+  <qa_pair><question>In MCP actions fixture v1, inspect action discovery and owner route policy. Can an MCP bearer token approve its own payment or change the payment rules?</question><answer>No. Approval and payment-rule changes require the separate signed-in owner console.</answer></qa_pair>
+  <qa_pair><question>In fixture v1, compare scope parsing with action tool discovery. Does an existing ecosystem:read connection automatically gain action execution?</question><answer>No. actions:prepare and actions:execute require explicit authorization.</answer></qa_pair>
+  <qa_pair><question>In fixture v1, compare the proposal and execution handlers. What happens when an unapproved email proposal is executed?</question><answer>approval_required; no provider dispatch.</answer></qa_pair>
+  <qa_pair><question>In fixture v1, inspect the PostgreSQL concurrency scenario and payment policy. With a 150-minor-unit daily cap, can two distinct 100-minor-unit payments both receive approval?</question><answer>One approval succeeds; the other exceeds the daily cap.</answer></qa_pair>
+  <qa_pair><question>In fixture v1, compare the execution claim and receipt-failure tests. Can repeating a claimed action after its final receipt write fails dispatch the provider a second time?</question><answer>No. The durable executing claim prevents another dispatch.</answer></qa_pair>
+  <qa_pair><question>In fixture v1, inspect deletion preview and execution. Does delete_draft erase user content or delete a VPS?</question><answer>No. It archives an owned wiki draft and retains its content.</answer></qa_pair>
+  <qa_pair><question>In fixture v1, compare repair provider execution and merge policy. Does creating a repair PR prove the code passed tests or repaired the live site?</question><answer>No. Tests, merge and deployment verification remain separate.</answer></qa_pair>
+  <qa_pair><question>In fixture v1, inspect release-tag validation and approved commit binding. What happens when an existing tag points to another commit?</question><answer>stale_code; publication is blocked.</answer></qa_pair>
+  <qa_pair><question>In fixture v1, compare payment rules with dispatch preflight. What source-account or live/test-mode mismatch is permitted?</question><answer>None. The mismatch blocks the transfer before payment dispatch.</answer></qa_pair>
+  <qa_pair><question>In fixture v1, inspect uncertain-payment state and the business-reference guard. Can a fresh request key bypass a pending, uncertain or completed payment with the same payee and reference?</question><answer>No. The duplicate payment reference remains blocked.</answer></qa_pair>
+</evaluation>

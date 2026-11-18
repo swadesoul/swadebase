@@ -2,6 +2,20 @@ import * as jose from 'jsr:@panva/jose@6'
 
 console.log('main function started')
 
+// SWADEBASE per-app routing: each app's functions talk to a gateway that pins REST calls to that app's schema.
+// Edit main/app-routes.json to add an app; no function code changes needed.
+const APP_ROUTES: Record<string, string> = (() => {
+  try {
+    const raw = JSON.parse(Deno.readTextFileSync('/home/deno/functions/main/app-routes.json'))
+    const m: Record<string, string> = {}
+    for (const app of Object.keys(raw)) for (const fn of raw[app].functions ?? []) m[fn] = raw[app].url
+    return m
+  } catch (e) {
+    console.error('app-routes.json not loaded', e)
+    return {}
+  }
+})()
+
 const JWT_SECRET = Deno.env.get('JWT_SECRET')
 const SUPABASE_JWKS = parseJwks(Deno.env.get('SUPABASE_JWKS'))
 const VERIFY_JWT = Deno.env.get('VERIFY_JWT') === 'true'
@@ -145,18 +159,22 @@ Deno.serve(async (req: Request) => {
   const servicePath = `/home/deno/functions/${service_name}`
   console.error(`serving the request with ${servicePath}`)
 
-  const memoryLimitMb = 150
-  const workerTimeoutMs = 1 * 60 * 1000
+  const memoryLimitMb = 256
+  const workerTimeoutMs = APP_ROUTES[service_name]?.endsWith('/app/videosaywhat') ? 90 * 60 * 1000 : 4 * 60 * 1000
+  // Oathloom builds run several long AI calls in the background (EdgeRuntime.waitUntil); 4 minutes killed them mid-build (stuck at 62%).
+  const effectiveWorkerTimeoutMs = service_name === 'oathloom-build' ? 60 * 60 * 1000 : workerTimeoutMs
   const noModuleCache = false
   const importMapPath = null
   const envVarsObj = Deno.env.toObject()
+  // Functions must hand browsers reachable links (signed media URLs), so they use the public base URL, not the internal one.
+  envVarsObj['SUPABASE_URL'] = APP_ROUTES[service_name] ?? 'https://swadebase.cloud'
   const envVars = Object.keys(envVarsObj).map((k) => [k, envVarsObj[k]])
 
   try {
     const worker = await EdgeRuntime.userWorkers.create({
       servicePath,
       memoryLimitMb,
-      workerTimeoutMs,
+      workerTimeoutMs: effectiveWorkerTimeoutMs,
       noModuleCache,
       importMapPath,
       envVars,

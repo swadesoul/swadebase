@@ -1,0 +1,46 @@
+<!doctype html><html><head><meta charset="utf-8"/><script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script><style>
+*{box-sizing:border-box}html,body{margin:0;width:960px;height:540px;overflow:hidden}#root{position:relative;width:960px;height:540px;overflow:hidden;font-family:Arial,sans-serif;background:#efb22e;color:#fff}
+.sky{position:absolute;inset:0;background:linear-gradient(#f74a59,#f7b54e)}.sun{position:absolute;left:685px;top:55px;width:155px;height:155px;border-radius:50%;background:#ffe19a;box-shadow:0 0 60px #f9b85c}
+.ground{position:absolute;left:-100px;top:344px;width:1200px;height:240px;background:#d67827;border-radius:52% 50% 0 0}
+.fence{position:absolute;top:300px;left:-50px;width:1100px;height:75px;border-top:12px solid #8d5035;border-bottom:10px solid #8d5035;opacity:.8}.fence:after{content:"";position:absolute;top:-35px;left:0;width:1200px;height:140px;background:repeating-linear-gradient(90deg,transparent 0 92px,#70432d 93px 113px,transparent 114px 180px)}
+#dust{position:absolute;left:300px;top:300px;width:400px;height:120px;background:radial-gradient(ellipse,#eec18d99 0%,transparent 70%);opacity:0}
+#dog{position:absolute;left:130px;top:205px;width:365px;height:265px;filter:drop-shadow(5px 12px 0 #2c252537);transform-origin:50% 90%}
+#body{position:absolute;left:70px;top:98px;width:238px;height:115px;border-radius:50% 53% 48% 50%;background:#24272d;border:7px solid #17151b}
+#belly{position:absolute;left:98px;top:145px;width:180px;height:76px;border-radius:60%;background:#f7f5f0}
+.leg{position:absolute;top:175px;width:43px;height:91px;background:#f6f4ee;border:6px solid #21252a;border-radius:25px;transform-origin:50% 0}.leg.a{left:112px}.leg.b{left:248px}.leg.c{left:162px;background:#22272c}.leg.d{left:291px;background:#22272c}
+#tail{position:absolute;left:278px;top:48px;width:59px;height:100px;border:22px solid #24272d;border-left:0;border-bottom:0;border-radius:0 85px 0 0;transform-origin:0 100%}
+#head{position:absolute;left:5px;top:1px;width:157px;height:161px;background:#272c32;border:7px solid #18191b;border-radius:54% 52% 48% 48%;transform-origin:60% 70%}
+#head:before,#head:after{content:"";position:absolute;top:-64px;width:53px;height:103px;background:#262a30;border:7px solid #17181b;clip-path:polygon(48% 0%,100% 100%,0 100%)}#head:before{left:2px;transform:rotate(-13deg)}#head:after{right:0;transform:rotate(14deg)}
+#mask{position:absolute;left:27px;top:46px;width:96px;height:104px;border-radius:50% 50% 45% 45%;background:#f5f4ed;clip-path:polygon(0 7%,45% 30%,50% 0,55% 30%,100% 7%,99% 100%,0 100%)}
+.eye{position:absolute;top:71px;width:20px;height:23px;background:#88c6d7;border:5px solid #15171b;border-radius:50%;z-index:3}.eye.left{left:35px}.eye.right{left:102px}
+#nose{position:absolute;z-index:4;left:64px;top:108px;width:30px;height:19px;background:#17161a;border-radius:50%}
+#mouth{position:absolute;left:57px;top:130px;width:43px;height:10px;border-radius:0 0 50% 50%;background:#6f2636;z-index:4;transform-origin:50% 0}
+#badge{position:absolute;left:158px;top:115px;width:65px;height:65px;background:#ffd66c;clip-path:polygon(50% 0,64% 28%,96% 20%,81% 51%,98% 82%,64% 76%,50% 100%,36% 76%,2% 82%,19% 51%,4% 20%,36% 28%);filter:drop-shadow(3px 4px 0 #3d2b22);display:flex;align-items:center;justify-content:center;color:#554020;font:900 11px Arial}
+.animal{position:absolute;font-size:100px;filter:drop-shadow(5px 8px 0 #34261c44)}#cow{left:775px;top:252px}#chicken{left:665px;top:340px;font-size:70px}
+#title{position:absolute;left:25px;top:15px;font-size:68px;letter-spacing:2px;color:#ffef45;text-shadow:5px 6px 0 #131923;transform:rotate(-3deg)}
+#speech{position:absolute;right:45px;top:125px;background:#fff9e8;color:#15202b;border:6px solid #222;border-radius:24px;padding:20px 28px;font:900 32px Arial;max-width:390px;opacity:0;box-shadow:8px 8px 0 #0008}
+#caption{position:absolute;left:0;right:0;bottom:5px;text-align:center;font:900 28px Arial;color:#fff;letter-spacing:2px;text-shadow:3px 4px #17151c}
+#speed{position:absolute;left:0;top:0;right:0;bottom:0;pointer-events:none;background:repeating-linear-gradient(155deg,transparent 0 40px,#fff3 41px 45px,transparent 46px 90px);opacity:0}
+#slam{position:absolute;inset:0;display:grid;place-content:center;background:#efb22e;color:#ffef45;font-size:106px;text-align:center;opacity:0;text-shadow:7px 9px #16171c}
+</style></head><body><main id="root" data-composition-id="main" data-start="0" data-duration="12" data-width="960" data-height="540" data-fps="24">
+<div class="sky"></div><div class="sun"></div><div class="ground"></div><div class="fence"></div><div id="dust"></div><div id="speed"></div>
+<div id="cow" class="animal">🐄</div><div id="chicken" class="animal">🐔</div>
+<div id="dog"><div id="tail"></div><div class="leg c"></div><div class="leg d"></div><div id="body"></div><div id="belly"></div><div class="leg a"></div><div class="leg b"></div><div id="head"><div id="mask"></div><div class="eye left"></div><div class="eye right"></div><div id="nose"></div><div id="mouth"></div></div><div id="badge">SHERIFF</div></div>
+<div id="title">BAM! SHERIFF HUSKY!</div><div id="speech">NOT ON MY WATCH!</div><div id="caption">HEAD OF FARM SECURITY</div>
+<div id="slam">PET MUZIK<br><small style="font-size:35px;color:#fff">EVERY PET IS A STAR</small></div></main>
+<script>window.__timelines=window.__timelines||{};const tl=gsap.timeline({paused:true});tl.fromTo('#title',{y:-150,rotation:-12},{y:0,rotation:-3,duration:.7,ease:'back.out(2)'},0);
+tl.fromTo('#cow',{x:240,rotation:0},{x:-300,rotation:-8,duration:3.6,ease:'none'},.5);
+tl.fromTo('#chicken',{x:250,y:0},{x:-650,y:-16,duration:3,ease:'none'},1.4);
+tl.fromTo('#dog',{x:-330,y:45,scale:.85},{x:120,y:0,scale:1.03,duration:2.9,ease:'power2.out'},1.7);
+for(const s of ['.leg.a','.leg.b','.leg.c','.leg.d']){tl.to(s,{rotation:s.includes('a')||s.includes('d')?24:-24,duration:.16,repeat:19,yoyo:true,ease:'sine.inOut'},1.7)}
+tl.to('#tail',{rotation:18,duration:.18,repeat:28,yoyo:true},1.7);
+tl.to('#dust',{opacity:.9,x:130,scale:1.2,duration:2},2);
+tl.to('#speed',{opacity:.85,duration:.3},2);tl.to('#speed',{opacity:0,duration:.4},5.5);
+tl.to('#dog',{x:220,rotation:-3,duration:1.1,ease:'power2.out'},4.7);
+tl.to('#speech',{opacity:1,duration:.35,ease:'back.out(2)'},5.7);
+tl.fromTo('#speech',{scale:.75},{scale:1,duration:.35,ease:'back.out(2)'},5.7);
+tl.to('#mouth',{scaleY:2.8,duration:.13,repeat:11,yoyo:true},5.8);
+tl.to('#speech',{opacity:0,y:-40,duration:.4},8.1);
+tl.to('#dog',{scale:1.25,x:300,y:-28,duration:1},8.2);
+tl.to('#slam',{opacity:1,duration:.4},10);
+window.__timelines.main=tl;tl.seek(0);</script></body></html>

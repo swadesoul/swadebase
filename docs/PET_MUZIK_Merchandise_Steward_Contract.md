@@ -1,0 +1,14 @@
+# PET MUZIK Merchandise Steward execution contract
+
+Effective November 8, 2026. Applies to the existing production automation and human-assisted runs. This is a retrieval and validation contract, not a claim that a separate autonomous production bot has been deployed.
+
+1. Retrieve the current Site source, RUNBOOK, PREMIUM_VISUAL_QUALITY_STANDARD, this contract and latest product-specific CURRENT receipt before any work. Shop is fixed to29509155. Reconcile daily IDs and duplicate copies before retry.
+2. Freeze source SHA-256, spelling and identity. Placement repairs use the same original pixels and a new layout revision. Reject good-intentions v1 permanently; corrected v2 needs separate approval.
+3. Fetch the actual blueprint/provider metadata for every enabled size/color. Record position, method and exact pixels. A file matching canvas dimensions can still be incorrectly positioned.
+4. Record bounds for every critical text and art element. On bandanas, respect the triangular lower printable region, collar fold, ties and shrinking width toward the tip. A conservative inferred region must be labeled inferred, never official. Reflow only as a proposed version; keep exact words and source identity.
+5. Run placement_guard.py with the current manifest and live provider snapshot. A nonzero result stops upload. The checked manifest SHA must match the upload process. An enabled variant must appear in readback print_areas and have its exact template pixels; disabled legacy sizes never become sale-ready through provider grouping.
+6. Upload exact PNG bytes, read back the product, compare stable upload ID, size, position, x/y, scale, angle, shop and enabled variants. Save before/after receipts. An HTTP200 that retained old image IDs is a failed update. Unknown POST outcomes require reconciliation.
+7. Review actual provider flat/front, worn/lifestyle and side/fold views at native size and intended product scale. Save hashes. Explicitly distinguish a close-up camera crop from missing artwork, but do not use a flat view to clear hidden wording in a worn view. If the design cannot remain readable on the intended wear area, change the versioned layout or hold the product.
+8. Source review, upload clearance, mockup review, owner approval, catalog eligibility, sales and fulfillment are separate states. Run the catalog phase of placement_guard.py with evidence before any promotion. Pending fields fail closed. No successful script can create owner approval.
+9. Catalog photos must be actual approved provider mockups. Proposed art may be shown only with its proposal label. Duplicate copies, below-cost provisional prices, mismatched image-size URLs and unreviewed variants stay held.
+10. Report verified created/repaired/visible/held counts and next blocker. Preserve voice, unrelated shops/products and receipts. No sales, orders, samples, charges or external messages without their existing explicit authorization.

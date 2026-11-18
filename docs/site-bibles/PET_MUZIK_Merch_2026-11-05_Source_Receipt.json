@@ -1,0 +1,24 @@
+{
+  "recorded_at_utc": "2026-11-05T11:42:20.324Z",
+  "project_id": "appgprj_6ae11e774ba88191ba4898e90c08dea6",
+  "version_number": 19,
+  "commit_sha": "bf498dbcc7ff9ca042b32c009839d92ff4efb990",
+  "archive_sha256": "sha256:c5d53353cb63b41562a65873febee1523a438fc1b3977c721bb96cc58c18dfd7",
+  "deployment_id": null,
+  "day": "2026-11-05",
+  "created_originals": 3,
+  "created_hidden_drafts": 3,
+  "new_site_visible": 0,
+  "held": 3,
+  "approved_listings": 0,
+  "product_ids": [
+    "6aec65b8fdc1bda5320e9677",
+    "6aec65bb902ad8910b0415f2",
+    "6aec65bd902ad8910b0415fa"
+  ],
+  "current_layout_revision": "v2",
+  "cost_each_cents": 1453,
+  "publication_hold": "alternate side-wrap/finish/owner approval/physical printing/pricing and public-versus-owner-private access",
+  "voice_runtime_unchanged": true,
+  "external_charges": 0
+}

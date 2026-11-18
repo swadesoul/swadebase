@@ -1,0 +1,16 @@
+# Repo Scout brief — 2026-11-04 — The Next New Thing
+
+Video: "Playbook for creating your agency" (https://www.youtube.com/watch?v=UTlkkHrOqIg), uploaded 2026-11-04. Interview with an agency (Singular) that builds client agents on Hyper Agent. Status: PROPOSALS awaiting Harold. Written by Claude (scheduled Repo Scout, 2026-11-06 ~21:20 CT). Redundancy check: Site Bible names + grep of docs/, site-agents/, /opt/sssbrain/docs and /opt listing on swadesoul (not a deep code audit). No GitHub repos mentioned.
+
+| # | Item | Verdict | Where it fits / what we already have | Cost | First test |
+|---|---|---|---|---|---|
+| 1 | Agent-setup agency offer: $5,000 first agent from a template menu + $2,000/mo elastic maintenance | EXTEND (play) | We already have the parts: Rakazo/CoS bot roster, Rakiza agent adaptor area, SWOSTing (managed hosting + Support Desk), queue #6 free bot templates as lead magnet. Gap: a priced "Agents for your business" package on SWOSTing (setup + monthly care), with DNA Front voice agent as a template. Pricing/publication is Harold's call. | $0 | Draft a 1-page offer + 5 template agents for approval |
+| 2 | Hyper Agent platform (agency tooling, BYO models) | WATCH | Paid third-party control plane; conflicts with ownership rule. We would host on SWADEBASE instead. | Paid | None |
+| 3 | "Rooms": humans + several specialist agents debate in one thread and produce an artifact | EXTEND | SSS Brain + CoS already route work to specialist bots; Slack-style channels not built. Gap: a Room view in SSS Brain where Harold pulls 2-3 bots (e.g. CMO + data analyst) into one thread that ends in a decision card. | $0 (uses existing model routing/caps) | Mock one Room: CMO bot + Finance bot on a Black Tales promo plan |
+| 4 | Specialist agents with delegation (CMO delegates scraping, analysis, outreach) | EXISTS | Rakazo bots under Chief of Staff with agents-first rule 13; site-agents runbooks. | — | — |
+| 5 | Lookalike-client outbound scoring (client similarity, urgency signal, budget fit, verified DM access) + "approve outreach" button | EXTEND | RhoWatt CRM and SWOSTing lead work. Gap: a scoring sheet that ranks prospects like our best existing clients (e.g. ATTOBAHN-type) and queues drafts; sending stays approval-gated (rules 5/13). | $0 | Score 10 space-economy prospects for RhoWatt, drafts only |
+| 6 | Company brain: read before every task, write back after | EXISTS | SSS Brain knowledge sync + Bible-first gate (rule 11) + Bible sync (rule 17). Possible engine upgrade covered by brief 2026-11-06 #4 (Claude Mem). | — | — |
+| 7 | Rubric quality gate (grader agent; keep working until score ≥ 9) | EXTEND | Incident criticalness rubric exists (site-agents D-10), PET MUZIK has a visual quality standard. Gap: a generic output rubric gate for bot deliverables (copy, designs, briefs) before they reach Harold, with a retry cap so it can't burn tokens. | $0 within caps | Add a rubric + 2-retry cap to the PET MUZIK merch QA run |
+| 8 | Human approval before agents act externally | EXISTS | Founder Lock and approval gates (rules 5, 13, 19). | — | — |
+
+Top 3 recommended: #1 "Agents for your business" package on SWOSTing (direct revenue from what we already run), #7 rubric gate with retry cap (quality without babysitting), #3 Rooms in SSS Brain (multi-bot decisions in one place).

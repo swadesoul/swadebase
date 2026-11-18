@@ -1,0 +1,27 @@
+{
+  "day": "2026-11-07",
+  "project_id": "appgprj_6ae11e774ba88191ba4898e90c08dea6",
+  "version_number": 23,
+  "version_id": "appgprj_6ae11e774ba88191ba4898e90c08dea6~appgver_d2d91160f2108191ad5464460b6dcd61",
+  "commit_sha": "944f6dbc599b686b9771d74c3fe04bec3bfd0701",
+  "deployment_id": null,
+  "publication": "HELD_PUBLIC_ACCESS_FINISH_SIZE_OWNER_PHYSICAL_PRICING",
+  "created_design_families": 3,
+  "hidden_drafts": 3,
+  "new_site_visible": 0,
+  "held": 3,
+  "approved_finished_listings": 0,
+  "exact_print_files": 12,
+  "live_panel_mappings_verified": 12,
+  "product_views_reviewed": 48,
+  "size_charts_reviewed": 3,
+  "product_ids": [
+    "6aef09b3fdd097ce5a0557b1",
+    "6aef09b707e5f5f771083f33",
+    "6aef09bbb7a964b43b0d22fc"
+  ],
+  "knowledge_doc_sha256": "a5bf65517a82ffcbb9a0cdb2f8b8f041dd2a7c303ce367c9062f6e653e289491",
+  "retrieval_verified": "zoomies strolling:1",
+  "voice_runtime_changed": false,
+  "external_charges": 0
+}

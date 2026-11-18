@@ -1,0 +1,551 @@
+[
+  {
+    "url": "https://teachvirt.com",
+    "error": "URLError:<urlopen error [Errno -2] Name or service not known>"
+  },
+  {
+    "url": "https://oathloom.com",
+    "final": "https://oathloom.com",
+    "http": 200,
+    "title": "OATHLOOM \u00b7 Describe it. Watch it weave.",
+    "icon": "/favicon.ico",
+    "og": "",
+    "reasons": [
+      "NO_SOCIAL_IMAGE",
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://swadez.com",
+    "error": "URLError:<urlopen error [Errno -2] Name or service not known>"
+  },
+  {
+    "url": "https://sssbrain.lovable.app",
+    "final": "https://sssbrain.lovable.app/?focus=false",
+    "http": 200,
+    "title": "SSS Brain \u2014 your own AI business brain, under your name",
+    "icon": "/favicon.png",
+    "og": "https://sssbrain.live/og-image.jpg",
+    "reasons": [
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://swadesoul.com",
+    "final": "https://swadesoul.com",
+    "http": 200,
+    "title": "Swade Soul \u2014 AI Systems for Media, Music, Agents & Capital",
+    "icon": "/favicon.png",
+    "og": "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1773857377311-IMG_7348.webp",
+    "reasons": [
+      "BUILDER_SOCIAL_IMAGE",
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://abagale.live",
+    "final": "https://abagale.live",
+    "http": 200,
+    "title": "ABAGALE \u2014 Own Your Broadcast Network",
+    "icon": "/favicon.png",
+    "og": "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1776182559617-IMG_8109.webp",
+    "reasons": [
+      "BUILDER_SOCIAL_IMAGE"
+    ]
+  },
+  {
+    "url": "https://swadesoul.world",
+    "final": "https://swadesoul.world",
+    "http": 200,
+    "title": "SWADE Soul World \u2014 A City You Can Own",
+    "icon": "/favicon.svg",
+    "og": "https://swadesoul.world/media/og-swadesoul-world.jpg",
+    "reasons": []
+  },
+  {
+    "url": "https://swadeholdings.com",
+    "final": "https://swadeholdings.com",
+    "http": 200,
+    "title": "SWADE Soul Holdings \u2014 International AI Agency",
+    "icon": "/swade-logo.png",
+    "og": "/swade-logo.png",
+    "reasons": [
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://haroldwhaley.com",
+    "final": "https://haroldwhaley.com",
+    "http": 200,
+    "title": "Harold \"SWADE Soul\" Whaley \u2014 Press Play",
+    "icon": "/favicon.png",
+    "og": "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1774677068527-IMG_7567.webp",
+    "reasons": [
+      "BUILDER_SOCIAL_IMAGE"
+    ]
+  },
+  {
+    "url": "https://makemycoin.cash",
+    "error": "URLError:<urlopen error [Errno -2] Name or service not known>"
+  },
+  {
+    "url": "https://rwafactory.cash",
+    "error": "URLError:<urlopen error [Errno -2] Name or service not known>"
+  },
+  {
+    "url": "https://xrplfactory.cash",
+    "error": "URLError:<urlopen error [Errno -2] Name or service not known>"
+  },
+  {
+    "url": "https://keyvity.live",
+    "final": "https://keyvity.live",
+    "http": 200,
+    "title": "Keyvity \u2014 Create Your Digital Key",
+    "icon": "/favicon.png",
+    "og": "https://lovable.dev/opengraph-image-p98pqg.png",
+    "reasons": [
+      "BUILDER_SOCIAL_IMAGE",
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://tokencsi.com",
+    "final": "https://tokencsi.com",
+    "http": 200,
+    "title": "Token CSI \u2014 Blockchain Forensic Intelligence",
+    "icon": "/favicon.png",
+    "og": "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1773706114549-IMG_7256.webp",
+    "reasons": [
+      "BUILDER_SOCIAL_IMAGE",
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://recapcoin.cash",
+    "error": "URLError:<urlopen error [Errno -2] Name or service not known>"
+  },
+  {
+    "url": "https://pinhub.live",
+    "final": "https://pinhub.live",
+    "http": 200,
+    "title": "PinHub.live - IPFS Storage & FirstClaim Registry",
+    "icon": "/pinhub-logo.png",
+    "og": "",
+    "reasons": [
+      "NO_SOCIAL_IMAGE",
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://grwnup.digital",
+    "error": "URLError:<urlopen error [Errno -2] Name or service not known>"
+  },
+  {
+    "url": "https://idonfts.com",
+    "final": "https://idonfts.com",
+    "http": 200,
+    "title": "IDO NFT's - AI Musical Artist \u2022 AI Radio Station \u2022 AI Song Building \u2022 AI Communi",
+    "icon": "/favicon.png",
+    "og": "/favicon.png",
+    "reasons": [
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://mydistribution.music",
+    "final": "https://mydistribution.music",
+    "http": 200,
+    "title": "MYDistribution \u2014 Release like a label. Move like a machine.",
+    "icon": "",
+    "og": "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1784260751025-IMG_0372.webp",
+    "reasons": [
+      "NO_ICON_LINK",
+      "BUILDER_SOCIAL_IMAGE"
+    ]
+  },
+  {
+    "url": "https://resinglab.com",
+    "final": "https://resinglab.com",
+    "http": 200,
+    "title": "Resinglab - AI Music Generation & Production Suite",
+    "icon": "",
+    "og": "https://resinglab.com/logo-light.png",
+    "reasons": [
+      "NO_ICON_LINK"
+    ]
+  },
+  {
+    "url": "https://sonikyn.com",
+    "final": "https://sonikyn.com",
+    "http": 200,
+    "title": "SONIKYN \u2014 Build the Artist. Direct the World.",
+    "icon": "/favicon.png",
+    "og": "https://sonikyn.com/og-image.jpg",
+    "reasons": []
+  },
+  {
+    "url": "https://maestroradio.live",
+    "final": "https://maestroradio.live",
+    "http": 200,
+    "title": "",
+    "icon": "",
+    "og": "",
+    "reasons": [
+      "NO_ICON_LINK",
+      "NO_SOCIAL_IMAGE",
+      "NO_DESCRIPTION",
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://maestroradio.app",
+    "final": "https://maestroradio.app",
+    "http": 200,
+    "title": "Maestro Radio Factory",
+    "icon": "",
+    "og": "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1777572082732-IMG_8650.webp",
+    "reasons": [
+      "NO_ICON_LINK",
+      "BUILDER_SOCIAL_IMAGE",
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://midnightcircuit.live",
+    "final": "https://midnightcircuit.live",
+    "http": 200,
+    "title": "Midnight Circuit",
+    "icon": "/favicon.webp",
+    "og": "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/aebf03e3-cf58-4f5e-8766-52ca1f6b0bf5/id-preview-d01cd367--09c6de04-acad-4817-a467-429c7bbeefa8.lov",
+    "reasons": [
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://swideo.live",
+    "error": "URLError:<urlopen error [Errno -2] Name or service not known>"
+  },
+  {
+    "url": "https://swideo.com",
+    "final": "https://swideo.com",
+    "http": 200,
+    "title": "Swideo \u2014 Videos Built to Be Watched, Shared, and Grown",
+    "icon": "",
+    "og": "https://swideo.com/og-image.jpg",
+    "reasons": [
+      "NO_ICON_LINK"
+    ]
+  },
+  {
+    "url": "https://videosaywhat.com",
+    "final": "https://videosaywhat.com",
+    "http": 200,
+    "title": "VideoSayWhat \u2014 AI Video & Audio Transcription",
+    "icon": "/favicon-source.png",
+    "og": "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1758858514546-IMG_4209.jpeg",
+    "reasons": [
+      "BUILDER_SOCIAL_IMAGE",
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://swoney.live",
+    "final": "https://swoney.live",
+    "http": 200,
+    "title": "Swoney \u2014 Your AI Business Workforce",
+    "icon": "/swoney-logo.png",
+    "og": "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1778981819979-IMG_9033.webp",
+    "reasons": [
+      "BUILDER_SOCIAL_IMAGE"
+    ]
+  },
+  {
+    "url": "https://virtteach.study",
+    "final": "https://virtteach.study",
+    "http": 200,
+    "title": "Virt Teach",
+    "icon": "",
+    "og": "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1774280173058-IMG_7455.webp",
+    "reasons": [
+      "NO_ICON_LINK",
+      "BUILDER_SOCIAL_IMAGE",
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://workscratcher.live",
+    "final": "https://workscratcher.live",
+    "http": 200,
+    "title": "Work Scratcher \u2014 Migration Intelligence Platform",
+    "icon": "/favicon.ico",
+    "og": "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/efdb225f-95f8-4583-95fc-e614963a7a3b/id-preview-3ab1d3f5--6523a61d-9a77-4dd9-ab36-a7a0cbb0469b.lov",
+    "reasons": []
+  },
+  {
+    "url": "https://onyourterms.app",
+    "final": "https://onyourterms.app",
+    "http": 200,
+    "title": "On Your Terms \u2014 Living Legal Protection for Modern Websites",
+    "icon": "/__l5e/assets-v1/26adee99-c14d-4727-ae87-f6aa43ac3467/favicon-32x32.png",
+    "og": "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/834940dd-72b2-4342-8d7b-43314740b505/id-preview-971e5001--4f9a618c-184c-455e-a93c-56e6119e69c1.lov",
+    "reasons": []
+  },
+  {
+    "url": "https://seedleaker.com",
+    "final": "https://seedleaker.com",
+    "http": 200,
+    "title": "SeedLeaker \u2014 Universal Funding & Deal Intelligence Platform",
+    "icon": "/logo.png",
+    "og": "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1774548999533-IMG_7491.webp",
+    "reasons": [
+      "BUILDER_SOCIAL_IMAGE",
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://thefreq.cloud",
+    "final": "https://thefreq.cloud",
+    "http": 200,
+    "title": "The FREQ - Precision Healing Frequencies",
+    "icon": "",
+    "og": "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1779496306668-IMG_9251.webp",
+    "reasons": [
+      "NO_ICON_LINK",
+      "BUILDER_SOCIAL_IMAGE",
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://publiswade.site",
+    "final": "https://publiswade.site",
+    "http": 200,
+    "title": "Lovable App",
+    "icon": "",
+    "og": "https://lovable.dev/opengraph-image-p98pqg.png",
+    "reasons": [
+      "NO_ICON_LINK",
+      "BUILDER_SOCIAL_IMAGE",
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://corpvault.live",
+    "final": "https://corpvault.live",
+    "http": 200,
+    "title": "CorpVault AI \u2014 Build the vault around your company",
+    "icon": "/favicon.png",
+    "og": "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/e0aefacd-356c-4281-8918-8c7d96a03d29",
+    "reasons": [
+      "BUILDER_SOCIAL_IMAGE",
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://cmvault.email",
+    "error": "URLError:<urlopen error [Errno -2] Name or service not known>"
+  },
+  {
+    "url": "https://grwnx.io",
+    "error": "URLError:<urlopen error [Errno -2] Name or service not known>"
+  },
+  {
+    "url": "https://sterline.digital",
+    "error": "URLError:<urlopen error [Errno -2] Name or service not known>"
+  },
+  {
+    "url": "https://fortavaz.replit.app",
+    "error": "HTTPError:HTTP Error 404: Not Found"
+  },
+  {
+    "url": "https://shamoneswade.com",
+    "error": "URLError:<urlopen error [Errno -2] Name or service not known>"
+  },
+  {
+    "url": "https://digidollz.xyz",
+    "final": "https://digidollz.xyz",
+    "http": 200,
+    "title": "digidollz.xyz\u00a0-\u00a0This website is for sale!\u00a0-\u00a0digidollz Resources and Information.",
+    "icon": "//img.sedoparking.com/templates/logos/sedo_logo.png",
+    "og": "",
+    "reasons": [
+      "NO_SOCIAL_IMAGE",
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://aimaestro.consulting",
+    "error": "URLError:<urlopen error [Errno -2] Name or service not known>"
+  },
+  {
+    "url": "https://aba.gold",
+    "final": "https://expireddomains.com/domain/aba.gold?utm_source=redi",
+    "http": 200,
+    "title": "aba.gold \u2014 5y \u00b7 2 refs | ExpiredDomains.com",
+    "icon": "/favicon.ico",
+    "og": "https://new.expireddomains.com/api/public/og/aba.gold",
+    "reasons": []
+  },
+  {
+    "url": "https://attobahn.live",
+    "final": "https://attobahn.live",
+    "http": 200,
+    "title": "ATTOBAHN \u2014 A new chapter is taking shape",
+    "icon": "/remodel-assets/favicon.ico",
+    "og": "",
+    "reasons": [
+      "NO_SOCIAL_IMAGE",
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://agentmarketplace.diy",
+    "final": "https://agentmarketplace.diy",
+    "http": 200,
+    "title": "Agent DNA Marketplace \u2014 Prebuilt AI Workflows",
+    "icon": "",
+    "og": "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1779760224450-IMG_9332.webp",
+    "reasons": [
+      "NO_ICON_LINK",
+      "BUILDER_SOCIAL_IMAGE"
+    ]
+  },
+  {
+    "url": "https://swadesaidit-rose.vercel.app",
+    "error": "HTTPError:HTTP Error 404: Not Found"
+  },
+  {
+    "url": "https://holistichive.health",
+    "error": "URLError:<urlopen error [Errno -2] Name or service not known>"
+  },
+  {
+    "url": "https://blacktales.online",
+    "final": "https://blacktales.online",
+    "http": 200,
+    "title": "Black Tales \u2014 A Streaming Theater District for Black Film",
+    "icon": "/favicon.png",
+    "og": "https://blacktales.online/media/brand/black-tales-tv-logo.png",
+    "reasons": []
+  },
+  {
+    "url": "https://swadespace.com",
+    "final": "https://swadespace.com",
+    "http": 200,
+    "title": "SwadeSpace | Cultural Gateway to the New Space Economy",
+    "icon": "https://swadespace.com/swadespace-logo.png",
+    "og": "https://swadespace.com/swadespace-hero.png",
+    "reasons": [
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://swadebase.cloud",
+    "final": "https://swadebase.cloud/console/",
+    "http": 200,
+    "title": "SWADEBASE \u2014 Your Workspace",
+    "icon": "",
+    "og": "",
+    "reasons": [
+      "NO_ICON_LINK",
+      "NO_SOCIAL_IMAGE",
+      "NO_DESCRIPTION",
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://ownmode.live",
+    "error": "HTTPError:HTTP Error 404: Not Found"
+  },
+  {
+    "url": "https://dnafront.com",
+    "final": "https://dnafront.com",
+    "http": 200,
+    "title": "FrontDesk DNA \u2014 Your Business Phone Brain",
+    "icon": "",
+    "og": "https://storage.googleapis.com/gpt-engineer-file-uploads/9IsNZ7GsNabbw3GdRtu9gyBf2OH3/social-images/social-1779575413698-IMG_9287.webp",
+    "reasons": [
+      "NO_ICON_LINK",
+      "BUILDER_SOCIAL_IMAGE",
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://video.frequencyrun.space",
+    "final": "https://video.frequencyrun.space",
+    "http": 200,
+    "title": "",
+    "icon": "",
+    "og": "",
+    "reasons": [
+      "NO_ICON_LINK",
+      "NO_SOCIAL_IMAGE",
+      "NO_DESCRIPTION",
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://swadepower.cloud",
+    "final": "https://swadepower.cloud",
+    "http": 200,
+    "title": "Swade Power OS",
+    "icon": "",
+    "og": "",
+    "reasons": [
+      "NO_ICON_LINK",
+      "NO_SOCIAL_IMAGE",
+      "NO_DESCRIPTION",
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://kynavo.swadeswade-s-8788.chatgpt.site",
+    "final": "https://kynavo.swadeswade-s-8788.chatgpt.site",
+    "http": 200,
+    "title": "KYNAVO \u2014 The Vision",
+    "icon": "",
+    "og": "",
+    "reasons": [
+      "NO_ICON_LINK",
+      "NO_SOCIAL_IMAGE",
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://stage-resinglab.swadebase.cloud",
+    "final": "https://stage-resinglab.swadebase.cloud",
+    "http": 200,
+    "title": "Resinglab - AI Music Generation & Production Suite",
+    "icon": "/resing-icon-32.png?v=20261115",
+    "og": "https://resinglab.com/logo-light.png",
+    "reasons": []
+  },
+  {
+    "url": "https://themaestroradio.com",
+    "final": "https://themaestroradio.com",
+    "http": 200,
+    "title": "The Maestro Radio \u2014 Listen, submit, and build a station",
+    "icon": "/brand/maestro-radio-pro-sm.png",
+    "og": "https://themaestroradio.com/og-image.png",
+    "reasons": []
+  },
+  {
+    "url": "https://brainiak.live",
+    "final": "https://swadebase.cloud/brainiak",
+    "http": 200,
+    "title": "Brainiak \u2014 Powered by SSS Brain",
+    "icon": "/brainiak/brand/brainiak-logo.png",
+    "og": "",
+    "reasons": [
+      "NO_SOCIAL_IMAGE",
+      "NO_CANONICAL"
+    ]
+  },
+  {
+    "url": "https://swosting.com",
+    "final": "https://swosting.com",
+    "http": 200,
+    "title": "SWOSTing \u2014 Your website. Taken care of.",
+    "icon": "/favicon.png",
+    "og": "https://swosting.com/media/og.png",
+    "reasons": []
+  }
+]

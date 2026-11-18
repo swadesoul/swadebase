@@ -1,0 +1,17 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {makeMerch,MERCH_SHOP,MERCH_STORE} from './merch.mjs';
+const a={id:'owner',scopes:['merch:read','merch:report']},id='11111111-1111-4111-8111-111111111111',key='22222222-2222-4222-8222-222222222222';
+function fixture({wrong=false,paused=false}={}){let writes=0;const rows=[];const calls=[];const c={release(){},async query(q,args=[]){calls.push(q);if(q.startsWith('select id,status'))return {rows:rows.filter(r=>r.meta.actor_id===args[0]&&r.meta.idempotency_key===args[1])};if(q.startsWith('insert')){writes++;const r={id:1,status:'open',meta:args[2]};rows.push(r);return{rows:[r]};}return {rows:[]}}};const service=makeMerch({pool:{connect:async()=>c},guard:async(actor,s)=>{if(paused)throw Error('paused');if(!actor.scopes.includes(s))throw Error('forbidden');},readSnapshot:async()=>({store_id:wrong?'wrong':MERCH_STORE,shop_id:MERCH_SHOP,checked_at:'fixture',approved_logo:{asset_id:'fixture-logo',print_ready:false},items:[{id,title:'Fixture product'}]})});return {service,writes:()=>writes,calls};}
+const review={idempotency_key:key,product_ids:[id],outcome:'needs_revision',summary:'Fixture evidence: logo is clipped on the front panel.'};
+test('catalog is scoped and excludes production',async()=>{const r=await fixture().service.catalog(a);assert.equal(r.store_id,MERCH_STORE);assert.equal(r.items.length,1);assert.equal(r.production_enabled,false);assert.equal(r.approved_logo.asset_id,'fixture-logo');assert.equal(r.approved_logo.print_ready,false)});
+test('catalog read scope enforced',async()=>{await assert.rejects(fixture().service.catalog({...a,scopes:[]}))});
+test('paused registry enforced through shared guard',async()=>{await assert.rejects(fixture({paused:true}).service.catalog(a),/paused/)});
+test('wrong snapshot store denied',async()=>{await assert.rejects(fixture({wrong:true}).service.catalog(a),/snapshot/)});
+test('pagination bounds and empty page',async()=>{for(const limit of [0,21,-1])await assert.rejects(fixture().service.catalog(a,{limit}));assert.equal((await fixture().service.catalog(a,{offset:1})).items.length,0)});
+test('report requires write scope',async()=>{await assert.rejects(fixture().service.report({...a,scopes:['merch:read']},review))});
+test('out of store product denied before writes',async()=>{const f=fixture();await assert.rejects(f.service.report(a,{...review,product_ids:['other-store-product']}),/outside/);assert.equal(f.writes(),0)});
+test('invalid outcomes, summary, and UUID rejected',async()=>{for(const patch of [{outcome:'publish'},{summary:'short'},{idempotency_key:'bad'}])await assert.rejects(fixture().service.report(a,{...review,...patch}))});
+test('report idempotent with no production and fixed recipient',async()=>{const f=fixture();const r=await f.service.report(a,review);const replay=await f.service.report(a,review);assert.equal(f.writes(),1);assert.equal(replay.replayed,true);assert.equal(r.production_started,false);assert.equal(r.delivery,'queued_not_acknowledged');assert(f.calls.some(q=>q.includes("'cos'")))});
+test('conflicting idempotency rejects and rolls back',async()=>{const f=fixture();await f.service.report(a,review);await assert.rejects(f.service.report(a,{...review,summary:review.summary+' Changed.'}),/different/);assert(f.calls.includes('rollback'));assert.equal(f.writes(),1)});
+
+test('ordinary ecosystem credentials do not grant new merchandise access',async()=>{await assert.rejects(fixture().service.catalog({...a,scopes:['ecosystem:read','operator:plan','tasks:write']}));});
+

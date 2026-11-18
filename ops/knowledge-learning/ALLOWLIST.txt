@@ -1,0 +1,21 @@
+# SWADEBASE knowledge allowlist (proposed). One glob per line, relative to /opt/swadebase/docs.
+# Everything matched is indexed for SSS Brain / Swarvis retrieval after the secret guard.
+STANDING_RULES.md
+site-bibles/*.md
+learning-approved/*.md
+site-agents/*.md
+site-agents/runbooks/*.md
+SWADE_*.md
+KNOWLEDGE_LEARNING.md
+SSSBRAIN_*.md
+REA_*.md
+DEPLOY_LOCK.md
+ACTIVE_REPAIRS_*.md
+BRAINIAK_*.md
+PET_MUZIK_*.md
+LOVABLE_MIGRATION_BRANDING_RULE.md
+client/*.md
+artists/**/*.md
+daily/*.md
+repo-scout/*.md
+# Deliberately NOT included until Swade says so: DANNY_BYERS_LEGAL_REVIEW_*, DEVIN_ALTERNATIVES_*, any archive/ folder.

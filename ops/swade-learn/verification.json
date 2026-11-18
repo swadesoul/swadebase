@@ -1,0 +1,20 @@
+{
+  "verified_at": "2026-11-05T19:33:55.288993+00:00",
+  "bible": {
+    "doc_path": "site-bibles/SWADE_Learn_Master_Site_Bible.md",
+    "doc_sha": "8c10e94b73960624ac1147b6779698f4c366eaa236d002dd042118e7fc583708",
+    "chunk_count": 5,
+    "updated_at": "2026-11-05T19:32:46.364051+00:00"
+  },
+  "full_text_search_hits": 5,
+  "backend_checks_passed": 17,
+  "approved_image_roundtrips_passed": 2,
+  "hosted_catalog_status": 200,
+  "hosted_catalog_classes": 11,
+  "hosted_admin_without_identity": 401,
+  "hosted_private_media_status": 404,
+  "site_url": "https://swade-learn.swadeswade-s-8788.chatgpt.site",
+  "source_commit": "ad17488a8b0ebeaf38cd025b39c912ce03886877",
+  "deployment": "appgdep_6aecd8dae1848191bc26a796212a304f",
+  "release_event_id": "b31304a7-79ec-4fb4-89d2-56ffb14d3e7f"
+}
