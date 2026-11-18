@@ -1,0 +1,46 @@
+[
+  {
+    "name": "bridge list",
+    "passed": true
+  },
+  {
+    "name": "bad token denied",
+    "passed": true
+  },
+  {
+    "name": "bad actor denied",
+    "passed": true
+  },
+  {
+    "name": "save",
+    "passed": true
+  },
+  {
+    "name": "persistent read",
+    "passed": true
+  },
+  {
+    "name": "actor isolation",
+    "passed": true
+  },
+  {
+    "name": "stale write denied",
+    "passed": true
+  },
+  {
+    "name": "revision update",
+    "passed": true
+  },
+  {
+    "name": "render safely blocked",
+    "passed": true
+  },
+  {
+    "name": "unsupported mutation denied",
+    "passed": true
+  },
+  {
+    "name": "fixture cleanup",
+    "passed": true
+  }
+]

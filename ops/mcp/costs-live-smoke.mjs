@@ -14,3 +14,4 @@ try {
   await assert.rejects(costs.report({id: 'smoke'}, {period: 'forever'}));
   console.log(JSON.stringify({ok: true, providers: r.provider_balances.length, calls: r.totals.calls, qwen_flash: cards.items.map(c => `${c.unit} $${c.usd} ${c.per}`)}));
 } finally { await pool.end(); }
+

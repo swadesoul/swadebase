@@ -38,3 +38,4 @@ try{
  sql(`delete from swadebase_ops.admin_sessions where id_hash=${str(sha(session))};`);
  if(clientId)sql(`delete from swadebase_ops.mcp_tokens where client_id=${str(clientId)};delete from swadebase_ops.mcp_codes where client_id=${str(clientId)};delete from swadebase_ops.mcp_pending where client_id=${str(clientId)};delete from swadebase_ops.mcp_clients where id=${str(clientId)};`);
 }
+

@@ -167,3 +167,27 @@ keys.json
 examples/**/package-lock.json
 examples/**/yarn.lock
 examples/**/pnpm-lock.yaml
+# --- Phase-0 safety (2026-11-17, approved by owner): never commit secrets or env backups ---
+/secrets/
+*.secret
+docker/.env.*
+!docker/.env.example
+docker/functions.env
+docker/functions.env.*
+docs/RESINGLAB_MASTER_API_KEY.md
+# --- Phase-1 sync (2026-11-17): server-local material that must not go to the public repo ---
+/venvs/
+/ffmpeg-static/
+/backups/
+/var/
+/qa/
+/artifacts/
+/world/releases/
+/docs/legal/
+/docs/chats/
+/docs/client/
+/docs/handoffs/
+*.bak
+*.bak-*
+*.bak.*
+*.mutex

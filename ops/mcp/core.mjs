@@ -4,15 +4,18 @@ export const ORIGIN='https://swadebase.cloud';
 export const RESOURCE=ORIGIN+BASE;
 export const SCOPES=['ecosystem:read','operator:plan','tasks:write'];
 export const MERCH_SCOPES=['merch:read','merch:report'];
-export const SUPPORTED_SCOPES=[...SCOPES,...MERCH_SCOPES];
+export const ACTION_SCOPES=['actions:prepare','actions:execute','payments:execute'];
+export const SUPPORTED_SCOPES=[...SCOPES,...MERCH_SCOPES,...ACTION_SCOPES];
 export const sha=s=>createHash('sha256').update(s).digest('hex');
 export const opaque=()=>randomBytes(32).toString('base64url');
 export const pkce=s=>createHash('sha256').update(s).digest('base64url');
 export function equal(a,b){const x=Buffer.from(String(a)),y=Buffer.from(String(b));return x.length===y.length&&timingSafeEqual(x,y);}
-export function scopeList(s){const a=String(s||'ecosystem:read operator:plan').split(/\s+/).filter(Boolean);if(!a.length||a.some(x=>!SUPPORTED_SCOPES.includes(x))||(a.includes('operator:plan')&&!a.includes('ecosystem:read'))||(a.includes('merch:report')&&!a.includes('merch:read'))||(a.includes('tasks:write')&&(!a.includes('operator:plan')||!a.includes('ecosystem:read'))))throw Error('invalid_scope');return [...new Set(a)];}
+export function scopeList(s){const a=String(s||'ecosystem:read operator:plan').split(/\s+/).filter(Boolean);if(!a.length||a.some(x=>!SUPPORTED_SCOPES.includes(x))||(a.includes('operator:plan')&&!a.includes('ecosystem:read'))||(a.includes('merch:report')&&!a.includes('merch:read'))||(a.includes('tasks:write')&&(!a.includes('operator:plan')||!a.includes('ecosystem:read'))))throw Error('invalid_scope');if((a.some(x=>ACTION_SCOPES.includes(x))&&!a.includes('ecosystem:read'))||(a.includes('actions:execute')&&!a.includes('actions:prepare'))||(a.includes('payments:execute')&&!a.includes('actions:execute')))throw Error('invalid_scope');return [...new Set(a)];}
 export function redirectUri(s){const u=new URL(s);if(u.username||u.password||u.hash||s.length>2000||!(u.protocol==='https:'||(u.protocol==='http:'&&['127.0.0.1','[::1]'].includes(u.hostname))))throw Error('invalid_redirect_uri');return s;}
 export function requireScope(actor,scope){if(!actor?.scopes?.includes(scope))throw Object.assign(Error('Required permission: '+scope),{code:'forbidden',status:403});}
 export const PROGRAMS=[
+ {id:'mcpactions',name:'MCP Actions',role:'Typed code, deployment, email, publishing, archival and payment proposals with separate founder approval and payment rules',terms:/\b(mcp|repair code|payment rules|deployment approval)\b/i,adapters:['swadebase-mcp']},
+ {id:'veteran-bridge',name:'Veteran Bridge',role:'Veteran navigation, local AI and generic next-step planning; VA records and filing are not connected',terms:/\bveteran[ -]?bridge\b/i,adapters:['veteran-bridge']},
  {id:'brainiak',name:'Brainiak',role:'Personal and business workspaces, notes and tasks',terms:/\b(brainiak|brainiac)\b/i,adapters:[]},
  {id:'sssbrain',name:'SSS Brain',role:'Research, knowledge, tasks and ecosystem coordination',terms:/\b(brain|research|knowledge|task|plan|organize|organise|report|email|github)\b/i,adapters:[]},
  {id:'resinglab',name:'ReSing Lab',role:'Music and audio production',terms:/\b(song|music|anthem|mix|stems?|mastering|audio|instrumental|beat)\b/i,adapters:['resing-mix-worker','swade-music-gpu-adapter']},
@@ -26,3 +29,4 @@ export function routePrograms(text){const found=PROGRAMS.filter(p=>p.terms.test(
 export function safeProgram(id){if(!PROGRAMS.some(p=>p.id===id)&&id!=='swadebase')throw Error('Unknown program.');return id;}
 export function cleanRequest(s){if(typeof s!=='string'||s.trim().length<3||s.length>4000)throw Object.assign(Error('Request must contain 3–4000 characters.'),{status:400});return s.trim();}
 export function limiter(max,ms){const map=new Map();let nextSweep=0;return key=>{const now=Date.now();if(now>nextSweep){for(const [k,v]of map)if(v.until<now)map.delete(k);nextSweep=now+60000;}const old=map.get(key);if(!old||old.until<now){if(map.size>10000)return false;map.set(key,{n:1,until:now+ms});return true;}return ++old.n<=max;};}
+

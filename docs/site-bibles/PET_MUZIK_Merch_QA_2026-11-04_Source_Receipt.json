@@ -1,0 +1,17 @@
+{
+  "recorded_at_utc": "2026-11-04T14:10:34.527Z",
+  "project_id": "appgprj_6ae11e774ba88191ba4898e90c08dea6",
+  "version_number": 18,
+  "commit_sha": "abefdce247f17d435b6e6c4103dbb1e4820dcee6",
+  "archive_sha256": "sha256:c5d53353cb63b41562a65873febee1523a438fc1b3977c721bb96cc58c18dfd7",
+  "deployment_id": null,
+  "created_today": 3,
+  "new_in_qa": 0,
+  "new_site_visible": 0,
+  "held": 3,
+  "approved_listings": 0,
+  "verification": "3 original / 18 print / 15 snapshot hashes match;24 live panel mappings and3 fresh provider backs verified;3 hidden IDs preserved",
+  "publication_hold": "public access conflicts with owner-private; owner/provider/pricing acceptance pending",
+  "voice_unchanged": true,
+  "charges": 0
+}

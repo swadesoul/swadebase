@@ -1,0 +1,39 @@
+{
+  "actor": "4382c2fda88dcca6290c1fee3e8492e9770204bbfd5602df0cf1ce61e36a0ca5",
+  "project": "ddb949de-0fbd-4c55-85ff-397ce9676baf",
+  "token_hash": "64306ff5046b7c01b733bf8daeb1c066bf3302d3fd0fadbd33efe5cd2c50a0ca",
+  "assets": [
+    "26cbe7c2-c2c0-4dd6-997b-7c3c80cd7c91",
+    "f4b1dc31-1033-436c-8b8e-609040c688ad",
+    "121ac3c3-4c98-4971-960e-925c355d49b9",
+    "112af0fb-c7c2-4e4c-97ae-b00fb9fb8b89",
+    "121ac3c3-4c98-4971-960e-925c355d49b9",
+    "99abc541-10d2-45d2-9747-93e894d4a337"
+  ],
+  "checks": [
+    "save_http",
+    "two_video_uploads_b2",
+    "durable_queue_cpu_worker_complete",
+    "download_master_b2_timing_audio_verified",
+    "durable_queue_cpu_worker_complete",
+    "download_master_b2_timing_audio_verified",
+    "voice_studio_cpu_line_saved_to_b2"
+  ],
+  "job_id": "f75ed53d-fa64-48b4-a7c3-45b863a9d7ec",
+  "status": "passed",
+  "token_hashes": [
+    "ff40ee950fe4031ba442435ba2b61fb0a2f673375063c0456cd5a53003addb51",
+    "9ccd4e8fd5b9838c9cb6192a89ad764c35e8c42bf04e5aaa24cf4028aa72cfdf",
+    "9ccd4e8fd5b9838c9cb6192a89ad764c35e8c42bf04e5aaa24cf4028aa72cfdf",
+    "64306ff5046b7c01b733bf8daeb1c066bf3302d3fd0fadbd33efe5cd2c50a0ca"
+  ],
+  "output_seconds": 3.51,
+  "audio": true,
+  "output_sha256": "82469d980035928b1bfd4bd5bab528dbb74b7cd9682348ad5d8a90dd9d3a6e23",
+  "stock_voice_count": 65,
+  "cleanup": {
+    "owned_test_objects_removed": 8,
+    "fixture_rows_removed": true,
+    "fixture_tokens_removed": true
+  }
+}

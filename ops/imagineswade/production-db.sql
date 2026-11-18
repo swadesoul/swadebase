@@ -1,0 +1,26 @@
+DO $$DECLARE t text:='imagineswade-fixture-token-not-a-production-secret';w text:='imagineswade-worker-fixture-not-a-production-secret';a text:=repeat('a',64);b text:=repeat('b',64);p uuid:=extensions.gen_random_uuid();v uuid:=extensions.gen_random_uuid();r uuid:=extensions.gen_random_uuid();j jsonb;d jsonb;checks int:=0;
+BEGIN
+INSERT INTO public.imagineswade_tokens(hash,enabled) VALUES(encode(extensions.digest(t,'sha256'),'hex'),true);
+INSERT INTO public.imagineswade_workers(hash) VALUES(encode(extensions.digest(w,'sha256'),'hex'));
+BEGIN PERFORM public.imagineswade_v2('bad',a,'workspace','{}','x@example.invalid');RAISE EXCEPTION 'bad token accepted';EXCEPTION WHEN SQLSTATE 'PT401' THEN checks:=checks+1;END;
+d:=public.imagineswade_v2(t,a,'workspace','{}','swadesoul@gmail.com');ASSERT (d->>'founder')::boolean;ASSERT (d->'member'->>'exempt')::boolean;checks:=checks+2;
+PERFORM public.imagineswade_v2(t,b,'workspace','{}','creator@example.invalid');
+BEGIN PERFORM public.imagineswade_v2(t,b,'admin_overview','{}','creator@example.invalid');RAISE EXCEPTION 'nonadmin allowed';EXCEPTION WHEN SQLSTATE 'PT403' THEN checks:=checks+1;END;
+PERFORM public.imagineswade_v2(t,a,'admin_gift',jsonb_build_object('actor',b,'count',1,'requestId',r),'swadesoul@gmail.com');
+PERFORM public.imagineswade_v2(t,a,'admin_gift',jsonb_build_object('actor',b,'count',1,'requestId',r),'swadesoul@gmail.com');ASSERT (SELECT free_videos=1 FROM public.imagineswade_members WHERE actor=b);checks:=checks+1;
+d:=jsonb_build_object('id',p,'title','Disposable assembly fixture','description','No customer media','format','16:9','look','Cinematic','shots',jsonb_build_array(jsonb_build_object('id',extensions.gen_random_uuid(),'title','Scene','prompt','Red test','duration',1.25,'clipAssetId',v)));
+PERFORM public.imagineswade_v2(t,a,'save',d,'swadesoul@gmail.com');checks:=checks+1;
+BEGIN PERFORM public.imagineswade_v2(t,b,'asset_begin',jsonb_build_object('id',v,'projectId',p,'name','fixture.mp4','bytes',100,'mime','video/mp4','role','clip'),'creator@example.invalid');RAISE EXCEPTION 'cross owner upload';EXCEPTION WHEN SQLSTATE 'PT404' THEN checks:=checks+1;END;
+PERFORM public.imagineswade_v2(t,a,'asset_begin',jsonb_build_object('id',v,'projectId',p,'name','fixture.mp4','bytes',100,'mime','video/mp4','role','clip'),'swadesoul@gmail.com');
+BEGIN PERFORM public.imagineswade_v2(t,a,'assemble',jsonb_build_object('projectId',p,'revision',1,'requestId',extensions.gen_random_uuid()),'swadesoul@gmail.com');RAISE EXCEPTION 'pending media allowed';EXCEPTION WHEN SQLSTATE 'PT400' THEN checks:=checks+1;END;
+PERFORM public.imagineswade_v2(t,a,'asset_ready',jsonb_build_object('id',v),'swadesoul@gmail.com');
+BEGIN PERFORM public.imagineswade_v2(t,b,'asset_get',jsonb_build_object('id',v),'creator@example.invalid');RAISE EXCEPTION 'cross owner download';EXCEPTION WHEN SQLSTATE 'PT404' THEN checks:=checks+1;END;
+r:=extensions.gen_random_uuid();j:=public.imagineswade_v2(t,a,'assemble',jsonb_build_object('projectId',p,'revision',1,'requestId',r),'swadesoul@gmail.com');
+ASSERT public.imagineswade_v2(t,a,'assemble',jsonb_build_object('projectId',p,'revision',1,'requestId',r),'swadesoul@gmail.com')->'job'->>'id'=j->'job'->>'id';checks:=checks+1;
+ASSERT (SELECT snapshot_hash IS NOT NULL FROM public.imagineswade_jobs WHERE id=(j->'job'->>'id')::uuid);checks:=checks+1;
+PERFORM public.imagineswade_v2(t,b,'cancel',jsonb_build_object('id',j->'job'->>'id'),'creator@example.invalid');ASSERT (SELECT status='queued' FROM public.imagineswade_jobs WHERE id=(j->'job'->>'id')::uuid);checks:=checks+1;
+PERFORM public.imagineswade_v2(t,a,'cancel',jsonb_build_object('id',j->'job'->>'id'),'swadesoul@gmail.com');ASSERT (SELECT status='cancelled' FROM public.imagineswade_jobs WHERE id=(j->'job'->>'id')::uuid);checks:=checks+1;
+BEGIN PERFORM public.imagineswade_worker('bad','claim');RAISE EXCEPTION 'worker token accepted';EXCEPTION WHEN SQLSTATE 'PT401' THEN checks:=checks+1;END;
+ASSERT NOT has_table_privilege('anon','public.imagineswade_assets','SELECT');ASSERT NOT has_table_privilege('authenticated','public.imagineswade_jobs','SELECT');checks:=checks+2;
+RAISE NOTICE 'PASS % production database assertions (transaction rolled back)',checks;
+END $$;

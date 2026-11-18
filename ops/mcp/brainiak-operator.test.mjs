@@ -5,3 +5,4 @@ test('Brainiak bridge uses verified user token server-side, no paid fallback or 
  assert.equal(await routeExistingOutcome('Hello',{},()=>{throw Error('unexpected')}),null);
  assert.equal(await routeExistingOutcome('Create a team anthem',{operatorAccessToken:'customer'},async()=>({status:403})),null);
 });
+

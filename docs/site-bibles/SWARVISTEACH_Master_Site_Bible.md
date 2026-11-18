@@ -1,0 +1,43 @@
+# SWARVISTEACH — Master Site Bible
+
+**Current checkpoint:** 2026-11-17 UTC. Actor: ChatGPT. **Status:** Existing Episode 001 source verified; cinematic V2 design/code staged, **not rendered and not deployed**.
+
+## Identity and purpose
+SWARVISTEACH delivers Swarvis-led 3–5 minute practical learning episodes. SWADEBASE's existing motion/video adapter is the central production control plane. SSS Brain is the primary operational teaching destination; Brainiak is the starter path. Do not duplicate production queues, identities or B2 storage.
+
+## Episode 001 original, immutable master
+- Original media: `/opt/brainiak/media/swarvis-episode-001-80b0614b281c226305e451dc3bfa163f.mp4`.
+- Source checksum SHA-256: `d2c819f686932a6fd130b31a10e30d07ba26c04a518fbff853ca74372e29a926`.
+- Verified with ffprobe: 240.000 seconds, 1920x1080, H.264 video, AAC audio, 11,115,050 bytes.
+- Episode remake request: preserve approved Swarvis face, glasses, hair, wardrobe within the episode, youthfully confident presentation and one single-character voice. Preserve episode's accurate instructional content, all real original speech and accessibility captions when available; do not invent transcript or replace original without review.
+- Production architecture: five presenter sections C1=15s, C2=5s, C3=5s, C4=5s, C5=15s; four graphics G1=45s, G2=65s, G3=60s, G4=25s. This 45+195=240s split is the approved proposed remake timing architecture, **not yet verified against the original completed file's actual scene boundaries**.
+
+## Cinematic V2 first implementation (staged)
+- SWADEBASE source `/opt/swadebase-motion-src/motion/cinematic/` includes versioned shot schema (`director.mjs`), story-specific v2 plan (`swarvis-001-v2.plan.mjs`) and 15-passing-check test (`test.mjs`), with no silent primitive fallback, no unapproved GPU spend, and mandatory owner visual review before publishing.
+- Export `/opt/swadebase/docs/releases/motion-cinematic-20261117/swarvis-episode-001-cinematic-v2.plan.json` has 9 sections and 7,200 30fps frames.
+- Local Blender 4.5.15 LTS executable reused from existing `/opt/swade-character-factory/blender-4.5.15-linux-x64/blender` to build an isolated procedural 3D title scene at `/opt/swadebase/ops/motion-cinematic-stage/swarvis001-proof.blend`. No full render output; bounded Eevee CPU render test terminated due slow throughput. GPU model/provider unselected; original episode preserved.
+- No production adapter, source video, schema, billing, DNS, Cloudflare settings or service restarted or deployed; no paid AI calls or externally incurred GPU render charges.
+
+## Gaps to finish (not claimed)
+1. Recover and verify original Episode 001 script/transcript, scene/audio timing and approved likeness/voice reference assets; map exact shot boundaries before re-edit.
+2. Connect cinematic plan to authenticated SWADEBASE Motion Studio and existing persistent jobs with staged versioning and a human approval UI.
+3. Validate real GPU Blender or existing ComfyUI/LTX/WAN performance and licensing before enabling charged rendering, with clear budgets and cost receipts.
+4. Render and inspect 3D/2.5D camera movement, kinetic typography, material/composite effects and full 240s lesson. Preserve and independently verify original soundtrack, captions, timing and character continuity.
+5. Render 16:9 master, portrait reflow when requested, archive to B2 with integrity test, pass Safari and user acceptance, then publish only after approval.
+
+## Recovery and sources
+Release report: `/opt/swadebase/docs/releases/motion-cinematic-20261117/IMPLEMENTATION_REPORT.md` and SWADEBASE Master Site Bible checkpoint. Stage files can be removed without affecting the existing live service; never overwrite Episode 001 original. Follow deployment lock and rollback standing rules for any production change.
+
+## Update — isolated 3-second motion-pipeline proof, 2026-11-17
+Created 36 Workbench proxy frames from the staged Blender `.blend` scene at 12 fps, then assembled private `swarvis001-cinematic-proof-draft.mp4` using 3 seconds of original Episode 001 soundtrack. ffprobe verified a 3.000-second H264/AAC 432x244 result. First encode failed because odd height 243; pad-to-even fixed it. **Visual quality failed**: text overlaps scene and clips out of frame, no premium lighting/materials or presenter continuity. `QUALITY_REVIEW.json` records this as rejected, not published. Existing four-minute master remains unchanged. The demonstration verifies only Blender-to-FFmpeg technical plumbing, not the requested full cinematic remake.
+
+## Episode 001 source-content verification — 2026-11-17
+Representative original frames visually inspected at 12, 35, 65, 120, 142, 185, 215 and 230 seconds. The original title is **THE RELEASE RESCUE — Fix your song before it drops**. Its fictional demonstration illustrates authorized source-vs-distributor metadata discrepancies (`Night Shift Radio` vs `Nightshift Radio`, featured artist Mika Vale, explicit `NO` vs `YES`, missing producer Aster Echo), warns that an unverified ISRC must BLOCK distribution rather than invent a code, and delivers a corrected worksheet, issues report and **unsent** correction request. A hypothetical $49 service quote is shown as example, not verified revenue. Proposed SSS Brain supervision is explicitly marked `CONNECTION NOT TESTED`, with Brainiak as starter route. Source-evidence notes now added to `/opt/swadebase-motion-src/motion/cinematic/swarvis-001-v2.plan.mjs` and exported JSON. Full transcript/audio line timing still needs verification; these notes are sourced from inspected frames, not inferred speech. Existing master remains unmodified.
+
+## Original Swarvis Voice Chatter voice development — 2026-11-17 (ChatGPT; owner direction)
+Owner designated ElevenLabs library voice ID `zs057lc0shdaAFXkm2Fm` (Patrick — an engaging audiobook narrator) as the current **licensed provider reference voice** for Swarvis. ElevenLabs workspace voice listing confirmed the ID accessible, but a provider voice ID does not grant rights to clone or train on a third-party library actor's performance. User requests acoustic research (pitch contour, cadence/rhythm, resonance, diction, pauses, tone/flow), save recordings through SWADEBASE and create a persistent new character voice in the existing Voice Chatter system. **Boundary:** design a distinct original voice from general vocal attributes and owner-authorized / licensed performance recordings, not a near-duplicate or training from library samples unless rights explicitly permit cloning. Preserve source rights, consent, profile provenance, version and deletion controls. No reference audio has been measured and no new clone exists yet.
+Existing reusable production path identified: `/opt/swade-voice-worker/worker.py` has `resinglab_designed_voices` recording capture, `Voicebox /profiles` and `/profiles/{id}/samples`, and optional SWADE voice service `IndexTTS2` voice profiles; verify which is currently active and exact Voice Chatter UI routing before modification. Existing character + video source `/opt/swadebase-motion-src/motion/cinematic/swarvis-voice-policy.json` stores the locked reference and safety requirements. Plan the voice vault under existing B2/media rules with metadata and SHA256, controlled recording intake, rights verification, acoustic analysis report, new original voice audition, owner selection, and cross-episode default. The chosen ElevenLabs reference is not the same as a SWADEBASE locally cloned voice; fallback to explicitly licensed ElevenLabs synthesis until original voice is approved.
+State: **VOICE DESIGN REQUIREMENTS RECORDED / NO LOCAL CLONE / NO PRODUCTION SWITCH / NO SPEND**. No deployment, model training, third-party provider audio capture, voice duplication, or site changes performed. Rollback: discard this policy addendum and development-only voice-policy JSON; keep existing provider selection and all existing audio unchanged.
+
+## Future video compute preference — 2026-11-17
+Owner clarified that RunPod is the preferred GPU compute provider for FUTURE SWARVISTEACH episodes; do not change provider or restart the in-progress Episode 002 ('The 404 Rescue Squad') render because of this directive. Future: reuse SWADEBASE/SSS Brain orchestration, existing RunPod/ComfyUI GPU capabilities after endpoint, availability, cost and rights verification; Backblaze B2 for durable media; review and shut down GPU when idle. KIE may remain an approved option, not an automatic switch. Status: policy recorded, no RunPod job launched, no deployment.

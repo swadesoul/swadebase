@@ -19,3 +19,4 @@ try{
  const model=await request('/adapters/mcp/knowledge',{question:'What caused the Brainiak voice upload HTTP 413, and what fixed it?'},headers);assert.equal(model.status,200);assert(['answered','retrieval_only'].includes(model.j.data.status));assert(model.j.data.sources.length);assert.equal(model.j.data.paid_fallback,false);
  console.log(JSON.stringify({https_auth:'unauthenticated, bad origin and bad CSRF denied',retrieval:'approved lesson and private owner sources passed',unknown:'no evidence explicitly reported',secret_input:'rejected',model_status:model.j.data.status,model_reason:model.j.data.reason||null,answer:model.j.data.answer.slice(0,1400),sources:model.j.data.sources.map(s=>({label:s.label,path:s.doc_path})),training_used:false,paid_calls:0}));
 }finally{sql(`delete from swadebase_ops.admin_sessions where id_hash=${str(sha(session))};`);}
+

@@ -1,0 +1,17 @@
+{
+  "name": "hyperframes-kit",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "setup": "bash scripts/setup.sh",
+    "preview": "hyperframes preview",
+    "check": "hyperframes check",
+    "lint": "hyperframes lint",
+    "render": "hyperframes render --output renders/example.mp4",
+    "doctor": "hyperframes doctor"
+  },
+  "devDependencies": {
+    "hyperframes": "0.8.156"
+  }
+}

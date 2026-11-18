@@ -1,6 +1,7 @@
+import {makeActionRoutes} from './action-routes.mjs';
 import {randomUUID} from 'node:crypto';
 import {readFile} from 'node:fs/promises';
-import {BASE,ORIGIN,RESOURCE,SCOPES,SUPPORTED_SCOPES,sha,opaque,pkce,equal,scopeList,redirectUri,limiter} from './core.mjs';
+import {BASE,ORIGIN,RESOURCE,SCOPES,ACTION_SCOPES,SUPPORTED_SCOPES,sha,opaque,pkce,equal,scopeList,redirectUri,limiter} from './core.mjs';
 import {makeService,localClassifier} from './service.mjs';
 import {serveProtocol} from './protocol.mjs';
 const S='swadebase_ops',COOKIE='swade_mcp_pending';
@@ -11,11 +12,12 @@ function cookie(req){return String(req.headers.cookie||'').split(/;\s*/).find(x=
 async function body(req){let n=0,out=[];for await(const part of req){n+=part.length;if(n>16000)throw Object.assign(Error('Request too large.'),{status:413});out.push(part);}const text=Buffer.concat(out).toString();try{return String(req.headers['content-type']||'').startsWith('application/x-www-form-urlencoded')?Object.fromEntries(new URLSearchParams(text)):JSON.parse(text||'{}');}catch{throw Object.assign(Error('Invalid request.'),{status:400});}}
 const issuerMetadata={issuer:RESOURCE,authorization_endpoint:RESOURCE+'/oauth/authorize',token_endpoint:RESOURCE+'/oauth/token',registration_endpoint:RESOURCE+'/oauth/register',revocation_endpoint:RESOURCE+'/oauth/revoke',response_types_supported:['code'],grant_types_supported:['authorization_code'],token_endpoint_auth_methods_supported:['none'],code_challenge_methods_supported:['S256'],authorization_response_iss_parameter_supported:true,scopes_supported:SUPPORTED_SCOPES};
 const protectedMetadata={resource:RESOURCE,authorization_servers:[RESOURCE],scopes_supported:SUPPORTED_SCOPES,bearer_methods_supported:['header'],resource_name:'SWADEBASE Ecosystem MCP'};
-export default function mcpRoutes({pool,auth,admin,log=()=>{},classifier=localClassifier}){
+export default function mcpRoutes({pool,auth,admin,log=()=>{},classifier=localClassifier,entryContext}){
  const publicLimit=limiter(30,3600000),calls=limiter(60,60000),routing=limiter(10,3600000),modelLimit=limiter(10,3600000);let activePlans=0,activeModels=0;
- const service=makeService({pool,classifier,admitPlan:actor=>{if(activeModels>=2||!modelLimit(actor.id))return null;activeModels++;return ()=>activeModels--;}});
+ const service=makeService({pool,classifier,entryContext,admitPlan:actor=>{if(activeModels>=2||!modelLimit(actor.id))return null;activeModels++;return ()=>activeModels--;}});
  const query=async(sql,args=[])=> (await pool.query(sql,args)).rows;
  const actorFromSession=async s=>{if(!s?.userId||!await admin.isSuperAdmin(s.userId))return null;return {id:s.userId,scopes:SUPPORTED_SCOPES};};
+ const actionRoutes=makeActionRoutes({service,auth,actorFromSession,body,reply,go});
  async function actorFromBearer(req){const raw=String(req.headers.authorization||'').match(/^Bearer (swmcp_[A-Za-z0-9_-]{43})$/)?.[1];if(!raw)return null;const row=(await query(`select actor_id,scopes,client_id from ${S}.mcp_tokens where token_hash=$1 and issuer=$2 and audience=$2 and revoked_at is null and expires_at>now()`,[sha(raw),RESOURCE]))[0];if(!row||!await admin.isSuperAdmin(row.actor_id))return null;return {id:row.actor_id,scopes:row.scopes,clientId:row.client_id};}
  function validHost(req){const host=String(req.headers.host||'').split(':')[0];return ['swadebase.cloud','127.0.0.1','localhost'].includes(host);}
  function validOrigin(req){return !req.headers.origin||req.headers.origin===ORIGIN;}
@@ -25,9 +27,26 @@ export default function mcpRoutes({pool,auth,admin,log=()=>{},classifier=localCl
   if(!p.startsWith(BASE)&&!connectPage&&!p.startsWith('/adapters/api/mcp-connect')&&!p.startsWith('/adapters/operator/')&&!p.startsWith('/.well-known/oauth-'))return false;
   if(!validHost(req)||!validOrigin(req))return reply(res,403,{error:'forbidden_origin_or_host'});
   const ip=String(req.headers['x-real-ip']||req.socket?.remoteAddress||'unknown');
+  const actionResult=await actionRoutes(req,res,url,session);if(actionResult!==false)return actionResult;
   if(p==='/.well-known/oauth-authorization-server/adapters/mcp'||p===BASE+'/.well-known/oauth-authorization-server')return reply(res,200,issuerMetadata);
   if(p==='/.well-known/oauth-protected-resource/adapters/mcp'||p===BASE+'/.well-known/oauth-protected-resource')return reply(res,200,protectedMetadata);
-  if(p===BASE+'/health')return reply(res,200,{status:'ok',service:'swadebase-mcp',version:'1.0.0'});
+  if(p===BASE+'/health')return reply(res,200,{status:'ok',service:'swadebase-mcp',version:'1.1.1',actions:'owner_approval_required',payments:'rules_and_exact_approval_required'});
+  if(p===BASE+'/studio'&&req.method==='GET'){
+   if(!session)return go(res,'/adapters/login?next=%2Fadapters%2Fmcp%2Fstudio');
+   if(!await actorFromSession(session))return reply(res,403,{error:'operator_access_required'});
+   const page=await readFile(new URL('./studio.html',import.meta.url));res.writeHead(200,{'content-type':'text/html; charset=utf-8','cache-control':'no-store','content-security-policy':"default-src 'self'; script-src 'self'; style-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"});return res.end(page);
+  }
+  if([BASE+'/studio.js',BASE+'/studio.css'].includes(p)&&req.method==='GET'){
+   if(!await actorFromSession(session))return reply(res,403,{error:'operator_access_required'});
+   const file=p.endsWith('.js')?'studio.js':'studio.css';const content=await readFile(new URL('./'+file,import.meta.url));res.writeHead(200,{'content-type':file.endsWith('.js')?'text/javascript':'text/css','cache-control':'no-store'});return res.end(content);
+  }
+  if(p==='/adapters/api/mcp-connect/studio'&&req.method==='GET'){
+   const actor=await actorFromSession(session);if(!actor)return reply(res,403,{error:'operator_access_required'});
+   if(!calls(actor.id))return reply(res,429,{error:'rate_limited'});
+   const data=await service.studioOverview(actor,{offset:Number(url.searchParams.get('offset')??0),limit:Number(url.searchParams.get('limit')??20),period:url.searchParams.get('period')||'mtd'});
+   return reply(res,200,{ok:true,data});
+  }
+
   if(p===BASE+'/oauth/register'&&req.method==='POST'){
    if(!publicLimit('register:'+ip))return reply(res,429,{error:'rate_limited'});
    const b=await body(req);let uris;try{if(!Array.isArray(b.redirect_uris)||b.redirect_uris.length<1||b.redirect_uris.length>5)throw Error();uris=b.redirect_uris.map(redirectUri);if(b.token_endpoint_auth_method&&b.token_endpoint_auth_method!=='none')throw Error();}catch{return reply(res,400,{error:'invalid_client_metadata'});}
@@ -65,8 +84,20 @@ export default function mcpRoutes({pool,auth,admin,log=()=>{},classifier=localCl
    const actor=await actorFromSession(session);if(!actor||!auth.csrfOk(req,session))return reply(res,403,{error:'forbidden'});const b=await body(req);
    if(b.confirm!==true||b.request_id!==cookie(req)||!/^[0-9a-f-]{36}$/.test(b.request_id||''))return reply(res,400,{error:'invalid_consent'});
    const c=await pool.connect();try{await c.query('begin');const row=(await c.query(`select * from ${S}.mcp_pending where id=$1 and expires_at>now() and consumed_at is null for update`,[b.request_id])).rows[0];if(!row){await c.query('rollback');return reply(res,409,{error:'expired_or_consumed'});}
-    const code=opaque();await c.query(`insert into ${S}.mcp_codes(code_hash,client_id,actor_id,redirect_uri,challenge,scopes,resource,expires_at) values($1,$2,$3,$4,$5,$6,$7,now()+interval '2 minutes')`,[sha(code),row.client_id,actor.id,row.redirect_uri,row.challenge,row.scopes,RESOURCE]);await c.query(`update ${S}.mcp_pending set consumed_at=now() where id=$1`,[b.request_id]);await c.query('commit');await audit('mcp_authorized',actor.id,{client_id:row.client_id,scopes:row.scopes});const target=new URL(row.redirect_uri);target.searchParams.set('code',code);target.searchParams.set('state',row.state);target.searchParams.set('iss',RESOURCE);return reply(res,200,{ok:true,data:{redirect:target.href}});
+    const granted=scopeList([...row.scopes,...(b.enable_actions===true||b.enable_payments===true?ACTION_SCOPES.slice(0,2):[]),...(b.enable_payments===true?['payments:execute']:[])].join(' '));
+    const code=opaque();await c.query(`insert into ${S}.mcp_codes(code_hash,client_id,actor_id,redirect_uri,challenge,scopes,resource,expires_at) values($1,$2,$3,$4,$5,$6,$7,now()+interval '2 minutes')`,[sha(code),row.client_id,actor.id,row.redirect_uri,row.challenge,granted,RESOURCE]);await c.query(`update ${S}.mcp_pending set consumed_at=now() where id=$1`,[b.request_id]);await c.query('commit');await audit('mcp_authorized',actor.id,{client_id:row.client_id,scopes:granted});const target=new URL(row.redirect_uri);target.searchParams.set('code',code);target.searchParams.set('state',row.state);target.searchParams.set('iss',RESOURCE);return reply(res,200,{ok:true,data:{redirect:target.href}});
    }catch(e){await c.query('rollback');throw e;}finally{c.release();}
+  }
+  if(p==='/adapters/operator/knowledge'&&req.method==='POST'){
+   // Native app read bridge: original user JWT, current role, existing scoped knowledge service.
+   const raw=String(req.headers.authorization||'').match(/^Bearer ([A-Za-z0-9._-]+)$/)?.[1];
+   const u=raw&&!raw.startsWith('swmcp_')?await admin.verifyAccessToken(raw):null;
+   if(!u||!await admin.isSuperAdmin(u.id))return reply(res,403,{error:'operator_access_required'});
+   if(!calls('knowledge:'+u.id))return reply(res,429,{error:'rate_limited'});
+   const b=await body(req),actor={id:u.id,scopes:['ecosystem:read']};
+   const data=b.voice_reply===true?await service.voiceReply(actor,{question:b.question,history:b.history}):await service.askKnowledge(actor,{question:b.question,generate:false});
+   const capabilities=b.include_capabilities===true?await service.capabilities(actor,{limit:40}):undefined;
+   return reply(res,200,{ok:true,data:{...data,...(capabilities?{capabilities}:{}),checked_at:new Date().toISOString()}});
   }
   if(p==='/adapters/operator/route'&&req.method==='POST'){
    // Existing app bridge: verifies its user's original SWADEBASE token. Never accepts MCP tokens here or forwards them upstream.

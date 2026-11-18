@@ -1,0 +1,21 @@
+{
+  "project_id": "appgprj_6ae11e774ba88191ba4898e90c08dea6",
+  "source_commit": "80179355d1011d5e80e558e0f3268b4cfe449f43",
+  "version_number": 14,
+  "version_id": "appgprj_6ae11e774ba88191ba4898e90c08dea6~appgver_f2c56b0746888191a2fe6cc0d3027287",
+  "deployment_id": null,
+  "reason": "Held: Site is public; owner-private review requested. No frontend changes.",
+  "production_receipt": "production/daily/2026-10-30/CURRENT.json",
+  "draft_ids": [
+    "6ae46b895764082347013f7e",
+    "6ae46b8bfc0f61752e0509ff",
+    "6ae46b8d5764082347013f87"
+  ],
+  "counts": {
+    "created_designs": 3,
+    "created_drafts": 3,
+    "new_site_visible": 0,
+    "held": 3
+  },
+  "voice_changes": false
+}

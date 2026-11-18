@@ -1,0 +1,21 @@
+{
+  "project_id": "appgprj_6ae11e774ba88191ba4898e90c08dea6",
+  "source_commit": "4ee7462737f4aceccd3594038b49ca5fcb9cda8d",
+  "version_number": 15,
+  "version_id": "appgprj_6ae11e774ba88191ba4898e90c08dea6~appgver_33cfd471ccec81918aff566ddaa80eca",
+  "deployment_id": null,
+  "reason": "Held: public Site conflicts with owner-private review; owner, physical print and pricing approvals pending.",
+  "production_receipt": "production/daily/2026-11-03/CURRENT.json",
+  "draft_ids": [
+    "6ae9c0019c3c654b4c0fe649",
+    "6ae9c0079c3c654b4c0fe64f",
+    "6ae9c00b95b7de8001024126"
+  ],
+  "counts": {
+    "created_designs": 3,
+    "created_drafts": 3,
+    "new_site_visible": 0,
+    "held": 3
+  },
+  "voice_changes": false
+}

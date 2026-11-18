@@ -1,0 +1,20 @@
+{
+  "timestamp_utc": "2026-11-05T14:08:59.126Z",
+  "project_id": "appgprj_6ae11e774ba88191ba4898e90c08dea6",
+  "version_number": 20,
+  "commit_sha": "ac75e166c270d501864ab1912f2dd86a0c31816a",
+  "archive_sha256": "sha256:c5d53353cb63b41562a65873febee1523a438fc1b3977c721bb96cc58c18dfd7",
+  "deployment_id": null,
+  "created_today": 3,
+  "drafts_today": 3,
+  "new_in_qa": 0,
+  "new_site_visible": 0,
+  "held": 3,
+  "approved_listings": 0,
+  "verified": "3 original hashes,12 print hashes,15 current mockup hashes,3 live v2 mappings and3 fresh side-view hashes;19 products preserved",
+  "holds": "side-wrap/finish/owner/physical print/pricing/public-versus-owner-private access",
+  "cost_each_cents": 1453,
+  "voice_dist_ops_unchanged": true,
+  "external_charges": 0,
+  "external_messages": 0
+}

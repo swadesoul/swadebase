@@ -1,0 +1,16 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Owner approvals | SWADEBASE</title><link rel="stylesheet" href="/adapters/app.css"></head><body>
+<header class="top"><div class="brand">SWADE<b>BASE</b> · owner</div><nav class="tabs"><a href="/adapters/">Adapters</a><a href="/adapters/mcp-connect">MCP connection</a><a class="on" href="/adapters/mcp/actions">Owner approvals</a></nav></header>
+<main><h1>Owner approvals</h1><p class="sub">Review the exact request before approving it. A connected assistant can execute an approved request; it cannot approve through MCP.</p><p id="state" role="status">Checking owner access…</p>
+<section class="card"><h2>Available action connections</h2><ul id="capabilities"></ul></section>
+<section class="card"><h2>Requests and receipts</h2><p>Approval lasts up to ten minutes and applies to the displayed content only. Uncertain provider outcomes require reconciliation before another attempt.</p><div id="actions"></div></section>
+<section class="card"><h2>Payment rules</h2><p>Payments start disabled. Every payment needs its own approval, even after you enable these rules. Limits cover transfer amounts; provider fees follow your Stripe account terms. This integration supports Stripe balance transfers to allowed connected accounts; it does not purchase with a card or pay bank accounts.</p><button type="button" id="disable-payments">Disable payments</button><p>Disabling blocks new payment claims. Already running or submitted transfers require reconciliation with the provider.</p><button type="button" id="read-account">Read existing Stripe account identity</button><p id="account-state" role="status"></p><p id="current-rules"></p>
+<form id="rules"><label><input type="checkbox" id="enabled"> Enable payments under these rules</label>
+<label for="source-account">Verified source Stripe account</label><input id="source-account" required placeholder="acct_…">
+<label for="mode">Account mode</label><select id="mode"><option value="test">Test</option><option value="live">Live money</option></select>
+<label for="currency">Currency</label><select id="currency"><option value="usd">USD</option><option value="eur">EUR</option><option value="gbp">GBP</option></select>
+<label for="per-payment">Maximum per payment</label><input id="per-payment" required inputmode="decimal" value="0.00">
+<label for="daily-cap">Daily transfer amount cap (America/Chicago)</label><input id="daily-cap" required inputmode="decimal" value="0.00">
+<label for="payees">Allowed payees: one Stripe account ID | verified payee name per line</label><textarea id="payees" rows="4" maxlength="6000" placeholder="acct_… | Payee name"></textarea>
+<label for="expires">Rules expire (within 30 days)</label><input id="expires" type="datetime-local" required>
+<label for="rules-confirmation">Type SAVE PAYMENT RULES to confirm the displayed limits and payees</label><input id="rules-confirmation" required autocomplete="off">
+<button type="submit" id="save-rules">Save owner-approved rules</button></form></section></main><script src="/adapters/mcp/actions.js" defer></script></body></html>
