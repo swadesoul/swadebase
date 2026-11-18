@@ -172,6 +172,7 @@ examples/**/pnpm-lock.yaml
 *.secret
 docker/.env.*
 !docker/.env.example
+!docker/.env.hostinger.example
 docker/functions.env
 docker/functions.env.*
 docs/RESINGLAB_MASTER_API_KEY.md
