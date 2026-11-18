@@ -1,0 +1,473 @@
+{
+  "version": "2026.11.14",
+  "name": "SWADE",
+  "certification": "starter",
+  "personal_tenant_id": "swade-personal",
+  "apps": [
+    {
+      "id": "maestro-radio",
+      "product": "Maestro Radio",
+      "requires_tenant_class": "customer",
+      "terms": ["artist", "track", "station", "spin", "attribution"]
+    },
+    {
+      "id": "swade-radio",
+      "product": "SWADE Radio",
+      "requires_tenant_class": "customer",
+      "terms": ["artist", "track", "station", "spin", "attribution"]
+    },
+    {
+      "id": "resinglab",
+      "product": "ReSingLab",
+      "requires_tenant_class": "customer",
+      "terms": ["artist", "track", "station", "spin", "attribution"]
+    },
+    {
+      "id": "black-tales",
+      "product": "Black Tales",
+      "requires_tenant_class": "customer",
+      "terms": ["artist", "track", "station", "spin", "attribution", "consent", "book"]
+    },
+    {
+      "id": "teachvirt",
+      "product": "TeachVirt",
+      "requires_tenant_class": "customer",
+      "terms": ["course", "lesson", "exam", "source"]
+    },
+    {
+      "id": "virtteach",
+      "product": "VirtTeach",
+      "requires_tenant_class": "customer",
+      "terms": ["course", "lesson", "exam", "source"]
+    },
+    {
+      "id": "my-distribution",
+      "product": "My Distribution",
+      "requires_tenant_class": "customer",
+      "terms": ["order", "royalty", "consent", "tenant"]
+    },
+    {
+      "id": "sss-brain",
+      "product": "SSS Brain",
+      "requires_tenant_class": "customer",
+      "terms": ["order", "royalty", "consent", "tenant"]
+    },
+    {
+      "id": "swade-personal",
+      "product": "SWADE personal scope",
+      "requires_tenant_class": "personal",
+      "terms": [
+        "artist",
+        "track",
+        "station",
+        "spin",
+        "attribution",
+        "order",
+        "royalty",
+        "consent",
+        "course",
+        "lesson",
+        "exam",
+        "source",
+        "tenant",
+        "book"
+      ]
+    }
+  ],
+  "terms": [
+    {
+      "id": "artist",
+      "name": "Artist",
+      "description": "A performer or creator credited on a track.",
+      "synonyms": ["performer", "recording artist"],
+      "columns": [
+        {
+          "name": "artist_name",
+          "description": "Display name of the artist.",
+          "physical": false
+        }
+      ],
+      "sql_attributes": [
+        {
+          "id": "artist.name",
+          "description": "Canonical artist name.",
+          "expression": "artist.artist_name",
+          "executable": false,
+          "certification": "starter"
+        }
+      ]
+    },
+    {
+      "id": "track",
+      "name": "Track",
+      "description": "A recorded musical work that can air on a station.",
+      "synonyms": ["song", "recording"],
+      "columns": [
+        {
+          "name": "track_title",
+          "description": "Title of the recording.",
+          "physical": false
+        }
+      ],
+      "sql_attributes": [
+        {
+          "id": "track.title",
+          "description": "Canonical track title.",
+          "expression": "track.track_title",
+          "executable": false,
+          "certification": "starter"
+        }
+      ]
+    },
+    {
+      "id": "station",
+      "name": "Station",
+      "description": "A radio station or channel that airs tracks.",
+      "synonyms": ["channel", "broadcaster"],
+      "columns": [
+        {
+          "name": "station_name",
+          "description": "Station display name.",
+          "physical": false
+        }
+      ],
+      "sql_attributes": [
+        {
+          "id": "station.name",
+          "description": "Canonical station name.",
+          "expression": "station.station_name",
+          "executable": false,
+          "certification": "starter"
+        }
+      ]
+    },
+    {
+      "id": "spin",
+      "name": "Spin",
+      "description": "One airing of a track on a station.",
+      "synonyms": ["airing", "aired", "play"],
+      "columns": [
+        {
+          "name": "played_at",
+          "description": "Time the track aired.",
+          "physical": false
+        }
+      ],
+      "sql_attributes": [
+        {
+          "id": "spin.count",
+          "description": "Count of airings. Reuse this measure instead of inventing a per-app join.",
+          "expression": "count(spin.id)",
+          "executable": false,
+          "certification": "starter"
+        }
+      ]
+    },
+    {
+      "id": "attribution",
+      "name": "Attribution",
+      "description": "The link from an airing or referral to a downstream order or consent.",
+      "synonyms": ["credit", "referral"],
+      "columns": [
+        {
+          "name": "attribution_key",
+          "description": "Stable attribution identifier, including Black Tales radio attribution.",
+          "physical": false
+        }
+      ],
+      "sql_attributes": [
+        {
+          "id": "attribution.key",
+          "description": "Attribution identifier shared by radio products.",
+          "expression": "attribution.attribution_key",
+          "executable": false,
+          "certification": "starter"
+        }
+      ]
+    },
+    {
+      "id": "order",
+      "name": "Order",
+      "description": "A commercial order associated with attributed demand.",
+      "synonyms": ["purchase"],
+      "columns": [
+        {
+          "name": "order_id",
+          "description": "Order identifier in the product database.",
+          "physical": false
+        }
+      ],
+      "sql_attributes": [
+        {
+          "id": "order.id",
+          "description": "Order identifier.",
+          "expression": "commerce_order.order_id",
+          "executable": false,
+          "certification": "starter"
+        }
+      ]
+    },
+    {
+      "id": "royalty",
+      "name": "Royalty",
+      "description": "A payable share derived from an order.",
+      "synonyms": ["payout", "share"],
+      "columns": [
+        {
+          "name": "royalty_amount",
+          "description": "Amount owed for the share.",
+          "physical": false
+        }
+      ],
+      "sql_attributes": [
+        {
+          "id": "royalty.amount",
+          "description": "Royalty amount for an order share.",
+          "expression": "royalty.royalty_amount",
+          "executable": false,
+          "certification": "starter"
+        }
+      ]
+    },
+    {
+      "id": "consent",
+      "name": "Consent",
+      "description": "A recorded permission to attribute, air, or distribute a work.",
+      "synonyms": ["permission", "release"],
+      "columns": [
+        {
+          "name": "consent_state",
+          "description": "Whether consent is recorded.",
+          "physical": false
+        }
+      ],
+      "sql_attributes": [
+        {
+          "id": "consent.state",
+          "description": "Recorded consent state.",
+          "expression": "consent.consent_state",
+          "executable": false,
+          "certification": "starter"
+        }
+      ]
+    },
+    {
+      "id": "course",
+      "name": "Course",
+      "description": "A TeachVirt or VirtTeach course.",
+      "synonyms": ["class"],
+      "columns": [
+        {
+          "name": "course_title",
+          "description": "Course title.",
+          "physical": false
+        }
+      ],
+      "sql_attributes": [
+        {
+          "id": "course.title",
+          "description": "Course title.",
+          "expression": "course.course_title",
+          "executable": false,
+          "certification": "starter"
+        }
+      ]
+    },
+    {
+      "id": "lesson",
+      "name": "Lesson",
+      "description": "A lesson inside a course.",
+      "synonyms": ["module"],
+      "columns": [
+        {
+          "name": "lesson_title",
+          "description": "Lesson title.",
+          "physical": false
+        }
+      ],
+      "sql_attributes": [
+        {
+          "id": "lesson.title",
+          "description": "Lesson title.",
+          "expression": "lesson.lesson_title",
+          "executable": false,
+          "certification": "starter"
+        }
+      ]
+    },
+    {
+      "id": "exam",
+      "name": "Exam",
+      "description": "An exam gated by lesson progress. Citations of teaching material stay on Postgres full-text search.",
+      "synonyms": ["quiz", "assessment"],
+      "columns": [
+        {
+          "name": "exam_id",
+          "description": "Exam identifier.",
+          "physical": false
+        }
+      ],
+      "sql_attributes": [
+        {
+          "id": "exam.unlocked",
+          "description": "Whether a learner has unlocked an exam. This expression is not executed by SWADE.",
+          "expression": "exam_progress.unlocked",
+          "executable": false,
+          "certification": "starter"
+        }
+      ]
+    },
+    {
+      "id": "source",
+      "name": "Source",
+      "description": "A teacher-approved source. Quoted material is retrieved with Postgres full-text search over course sources, not from this catalog.",
+      "synonyms": ["course source", "material"],
+      "columns": [
+        {
+          "name": "source_title",
+          "description": "Title of the source material.",
+          "physical": false
+        }
+      ],
+      "sql_attributes": [
+        {
+          "id": "source.title",
+          "description": "Source title. Body text is not stored in the platform ontology.",
+          "expression": "course_source.source_title",
+          "executable": false,
+          "certification": "starter"
+        }
+      ]
+    },
+    {
+      "id": "tenant",
+      "name": "Tenant",
+      "description": "A customer workspace boundary. The personal scope is not a customer tenant.",
+      "synonyms": ["workspace"],
+      "columns": [
+        {
+          "name": "tenant_id",
+          "description": "Tenant identifier supplied by the caller credential, never by the question.",
+          "physical": false
+        }
+      ],
+      "sql_attributes": [
+        {
+          "id": "tenant.id",
+          "description": "Tenant identifier from the credential scope.",
+          "expression": "credential.tenant_id",
+          "executable": false,
+          "certification": "starter"
+        }
+      ]
+    },
+    {
+      "id": "book",
+      "name": "Book",
+      "description": "A Black Tales book that can be attributed from a radio airing.",
+      "synonyms": ["black tales book"],
+      "columns": [
+        {
+          "name": "book_title",
+          "description": "Book title.",
+          "physical": false
+        }
+      ],
+      "sql_attributes": [
+        {
+          "id": "book.title",
+          "description": "Book title.",
+          "expression": "book.book_title",
+          "executable": false,
+          "certification": "starter"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "id": "track-artist",
+      "source": "track",
+      "target": "artist",
+      "description": "A track is credited to an artist.",
+      "multiplicity": "many-to-one"
+    },
+    {
+      "id": "spin-track",
+      "source": "spin",
+      "target": "track",
+      "description": "A spin airs one track.",
+      "multiplicity": "many-to-one"
+    },
+    {
+      "id": "spin-station",
+      "source": "spin",
+      "target": "station",
+      "description": "A spin occurs on one station.",
+      "multiplicity": "many-to-one"
+    },
+    {
+      "id": "attribution-spin",
+      "source": "attribution",
+      "target": "spin",
+      "description": "An attribution may record the spin that produced it.",
+      "multiplicity": "many-to-one"
+    },
+    {
+      "id": "order-attribution",
+      "source": "order",
+      "target": "attribution",
+      "description": "An order may be tied to an attribution.",
+      "multiplicity": "many-to-one"
+    },
+    {
+      "id": "royalty-order",
+      "source": "royalty",
+      "target": "order",
+      "description": "A royalty is calculated from an order.",
+      "multiplicity": "many-to-one"
+    },
+    {
+      "id": "consent-attribution",
+      "source": "consent",
+      "target": "attribution",
+      "description": "Consent governs whether an attribution may be used.",
+      "multiplicity": "many-to-one"
+    },
+    {
+      "id": "book-attribution",
+      "source": "book",
+      "target": "attribution",
+      "description": "A book may be the destination of an attribution.",
+      "multiplicity": "many-to-one"
+    },
+    {
+      "id": "course-lesson",
+      "source": "course",
+      "target": "lesson",
+      "description": "A course contains lessons.",
+      "multiplicity": "one-to-many"
+    },
+    {
+      "id": "lesson-exam",
+      "source": "lesson",
+      "target": "exam",
+      "description": "A lesson gates an exam.",
+      "multiplicity": "one-to-many"
+    },
+    {
+      "id": "exam-source",
+      "source": "exam",
+      "target": "source",
+      "description": "An exam cites a source. The source body stays on Postgres full-text search.",
+      "multiplicity": "many-to-many"
+    },
+    {
+      "id": "order-tenant",
+      "source": "order",
+      "target": "tenant",
+      "description": "An order belongs to one tenant.",
+      "multiplicity": "many-to-one"
+    }
+  ]
+}

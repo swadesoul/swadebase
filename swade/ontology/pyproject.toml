@@ -1,0 +1,9 @@
+[project]
+name = "swade-ontology"
+version = "0.1.0"
+description = "SWADE semantic facade for SWADEBOTS and product apps"
+requires-python = ">=3.12"
+readme = "README.md"
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,10 @@
+{
+  "name": "swade-ontology-sdk",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "TypeScript client for SWADE. SWADEBOTS call the facade with a credential.",
+  "exports": {
+    ".": "./src/client.ts"
+  }
+}

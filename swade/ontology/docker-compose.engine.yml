@@ -1,0 +1,58 @@
+# Opt-in Auto Ontology engine. Do not start this with the default Coolify stack.
+# Select the engine profile only after the facade is reviewed.
+# The engine database is a separate Postgres 17 + pgvector instance.
+# It is not the SWADEBASE platform database.
+# Backend and ingestion listeners stay on the internal network.
+# Do not set a hosted NVIDIA API key. Do not set a Kumo table-upload key.
+# Point every model endpoint at SWADE_AI_GATEWAY_URL.
+
+name: swade-ontology-engine
+
+services:
+  swade-ontology-engine-db:
+    profiles: ["engine"]
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: swade_ontology_engine
+      POSTGRES_PASSWORD: ${SWADE_ONTOLOGY_ENGINE_DB_PASSWORD:?set SWADE_ONTOLOGY_ENGINE_DB_PASSWORD}
+      POSTGRES_DB: auto_ontology
+    volumes:
+      - swade_ontology_engine_db:/var/lib/postgresql/data
+    networks:
+      - swade_ontology_engine
+    restart: unless-stopped
+
+  swade-ontology-engine:
+    profiles: ["engine"]
+    image: ${SWADE_ONTOLOGY_ENGINE_IMAGE:-swade-ontology-engine:8ede47f7b67bf2612c5322c7a9adb8e0c6190e38}
+    environment:
+      POSTGRES_HOST: swade-ontology-engine-db
+      POSTGRES_PORT: "5432"
+      POSTGRES_USER: swade_ontology_engine
+      POSTGRES_PASSWORD: ${SWADE_ONTOLOGY_ENGINE_DB_PASSWORD:?set SWADE_ONTOLOGY_ENGINE_DB_PASSWORD}
+      POSTGRES_DATABASE: auto_ontology
+      DEFAULT_MODELS_ENDPOINT: ${SWADE_AI_GATEWAY_URL:?set SWADE_AI_GATEWAY_URL}
+      DEFAULT_MODELS_API_KEY: ${SWADE_AI_GATEWAY_KEY:?set SWADE_AI_GATEWAY_KEY}
+      DEFAULT_MODELS_MODEL: auto/offline
+      REASONING_ENDPOINT: ${SWADE_AI_GATEWAY_URL:?set SWADE_AI_GATEWAY_URL}
+      REASONING_API_KEY: ${SWADE_AI_GATEWAY_KEY:?set SWADE_AI_GATEWAY_KEY}
+      REASONING_MODEL: auto/offline
+      NON_REASONING_ENDPOINT: ${SWADE_AI_GATEWAY_URL:?set SWADE_AI_GATEWAY_URL}
+      NON_REASONING_API_KEY: ${SWADE_AI_GATEWAY_KEY:?set SWADE_AI_GATEWAY_KEY}
+      NON_REASONING_MODEL: auto/offline
+      EMBED_ENDPOINT: ${SWADE_AI_GATEWAY_URL:?set SWADE_AI_GATEWAY_URL}
+      EMBED_API_KEY: ${SWADE_AI_GATEWAY_KEY:?set SWADE_AI_GATEWAY_KEY}
+      EMBED_MODEL: ${SWADE_ONTOLOGY_EMBED_MODEL:-auto/offline}
+      RERANK_ENDPOINT: ${SWADE_AI_GATEWAY_URL:?set SWADE_AI_GATEWAY_URL}
+      RERANK_API_KEY: ${SWADE_AI_GATEWAY_KEY:?set SWADE_AI_GATEWAY_KEY}
+      RERANK_MODEL: ${SWADE_ONTOLOGY_RERANK_MODEL:-auto/offline}
+      INGESTION_SERVICE_URL: http://swade-ontology-engine:3002
+    networks:
+      - swade_ontology_engine
+    restart: unless-stopped
+
+networks:
+  swade_ontology_engine:
+
+volumes:
+  swade_ontology_engine_db:

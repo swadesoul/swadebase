@@ -1,0 +1,37 @@
+name: SWADE ontology
+
+on:
+  push:
+    branches: ['master']
+    paths:
+      - 'swade/ontology/**'
+      - '.github/workflows/swade-ontology.yml'
+  pull_request:
+    branches: ['master']
+    paths:
+      - 'swade/ontology/**'
+      - '.github/workflows/swade-ontology.yml'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: blacksmith-4vcpu-ubuntu-2404
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            swade/ontology
+
+      - name: Python tests
+        run: python3 -m unittest discover -s swade/ontology/tests -v
+
+      - name: TypeScript client tests
+        run: node --experimental-strip-types --test swade/ontology/sdk/typescript/src/client.test.ts
