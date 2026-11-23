@@ -98,3 +98,40 @@ How to use: Harold says "approve", "decline" or "later" for an item to SSS Brain
 | 2026-11-16 | SABM9uchEO4 | 1 | Own link shortener with click tracking (RhoWatt QR, SWOSTing tool) | NEW | pending (recommended) |
 | 2026-11-16 | SABM9uchEO4 | 4 | OpenScribe as owned meeting-notes engine (fold into 2026-11-02 #5) | EXTEND | pending (recommended) |
 | 2026-11-16 | SABM9uchEO4 | 6 | context.dev research MCP (pricing unverified) | WATCH | pending |
+| 2026-11-17 | vPQGXZMCkJU | 4 | Model + cost per SWADE BOTS thread, cheapest tier first (free tiers unverified) | EXTEND | pending |
+| 2026-11-17 | vPQGXZMCkJU | 6 | One calendar of all scheduled jobs (timers + AI scheduled tasks) in SSS Brain | EXTEND | pending (recommended) |
+| 2026-11-17 | vPQGXZMCkJU | 8 | QR one-use phone/iPad sign-in handoff (security review first) | EXTEND | pending |
+| 2026-11-17 | vPQGXZMCkJU | 10 | Parallel QA personas on staging + SWOSTing "launch stress test" | EXTEND | pending (recommended) |
+| 2026-11-17 | vPQGXZMCkJU | 11 | Live bot org chart in SWADE BOTS | EXTEND | pending |
+| 2026-11-17 | vPQGXZMCkJU | 13 | DuckDB "talk to your data" for Money Bar and client reports | NEW | pending (recommended) |
+| 2026-11-17 | vPQGXZMCkJU | 16 | Headscale private device network | WATCH | pending |
+| 2026-11-17 | vPQGXZMCkJU | 17 | Grok Bot export importer + SWAGENTS switch hook | EXTEND | pending |
+| 2026-11-18 | -rcNy4nN2lM | 1 | Sellbird as engine for Swail Room growth agent (eval vs human, drafts only) | EXTEND | pending |
+| 2026-11-18 | -rcNy4nN2lM | 2 | marketingskills pack in OATHLOOM/SWOSTing (comparison pages first) | NEW | pending (recommended) |
+| 2026-11-18 | -rcNy4nN2lM | 3 | Failed-payment / cancel win-back email sequence (Postal + Finance bot) | EXTEND | pending (recommended) |
+| 2026-11-18 | -rcNy4nN2lM | 5 | Chatwoot omnichannel inbox (SWOSTing catalog + vertical setup service) | EXTEND | pending |
+| 2026-11-18 | -rcNy4nN2lM | 6 | Mautic campaign model into Swail Broadcasts / SWOSTing catalog | EXTEND | pending |
+| 2026-11-18 | -rcNy4nN2lM | 8 | Papermark tracked data rooms (Site Standard data room; RhoWatt/Copernic decks) | NEW | pending (recommended) |
+| 2026-11-18 | -rcNy4nN2lM | 9 | GrowthBook A/B tests + feature flags | NEW | pending |
+| 2026-11-18 | -rcNy4nN2lM | 10 | Formbricks micro-surveys (exit/cancel questions) | NEW | pending |
+| 2026-11-18 | -rcNy4nN2lM | 11 | Meilisearch site search (Maestro catalog, Black Tales library) | NEW | pending |
+| 2026-11-18 | -rcNy4nN2lM | 15 | Geo city landing pages (fold into 2026-10-30 #2; RhoWatt cities) | EXTEND | pending |
+| 2026-11-19 | RweiB44H1n0 | 1 | GPT 6.2 Astra bake-off vs current default (only if no added cost) | WATCH | pending |
+| 2026-11-19 | RweiB44H1n0 | 2 | Google Genie 3 live-editable worlds for Frequency Run / Black Tales previs (waitlisted) | WATCH | pending |
+| 2026-11-19 | RweiB44H1n0 | 4 | "Deploy to SWOSTing" repo badge + agent install prompt (Every App catalog) | EXTEND | pending (recommended) |
+| 2026-11-19 | RweiB44H1n0 | 5 | Per-agent spend cap (default 0) for SWADE BOTS wallets | WATCH | pending |
+| 2026-11-19 | RweiB44H1n0 | 6 | Post-change impact check: affected routes + before/after screenshots before deploy | EXTEND | pending (recommended) |
+| 2026-11-19 | RweiB44H1n0 | 7 | iPad "snag" capture: screenshot + voice note -> Repair Kit fix queue + retest list | EXTEND | pending (recommended) |
+| 2026-11-19 | RweiB44H1n0 | 8 | ABA Training Camp themed journey course in SWADE Learn | EXTEND | pending |
+| 2026-11-19 | RweiB44H1n0 | 10 | Inbox Zero as triage reference for Swail Signals (license check first) | WATCH | pending |
+| 2026-11-20 | 9oPorHRKsoY | 2 | Lastbook offline kit + local LLM (Brainiak offline idea) | WATCH | pending |
+| 2026-11-20 | 9oPorHRKsoY | 4 | Plannotator as shared annotate-and-approve engine (Needs Harold queue; covers Circle-to-change/snag/annotation items) | EXTEND | pending (recommended) |
+| 2026-11-20 | 9oPorHRKsoY | 5 | Stitch MCP + skills in OATHLOOM design bake-off (free terms unverified) | EXTEND | pending |
+| 2026-11-20 | 9oPorHRKsoY | 6 | Chrome "modern web" agent guidance into OATHLOOM skills + readiness check (repo not found yet) | EXTEND | pending |
+| 2026-11-20 | 9oPorHRKsoY | 8 | Alibaba open-code-review in SwadePower + pre-deploy gate (local models only) | EXTEND | pending (recommended) |
+| 2026-11-20 | 9oPorHRKsoY | 9 | last30days skill for CoS tech intelligence + prospect research (free sources only) | EXTEND | pending |
+| 2026-11-20 | 9oPorHRKsoY | 10 | Chrome DevTools MCP in Browser Workspace for Repair Kit/SwadePower diagnosis | EXTEND | pending (recommended) |
+| 2026-11-20 | 9oPorHRKsoY | 12 | Claude trading skills (Swoney simulated demo only) | WATCH | pending |
+| 2026-11-20 | 9oPorHRKsoY | 13 | Agent-to-app streaming SDK (repo unidentified) | WATCH | pending |
+| 2026-11-20 | 9oPorHRKsoY | 14 | Meta Astryx as chat-UI baseline for SSS Brain/SWAGENTS/OATHLOOM | EXTEND | pending |
+| 2026-11-20 | 9oPorHRKsoY | 21 | "Last 7/30 days on X" cited org digest from knowledge sync | EXTEND | pending |

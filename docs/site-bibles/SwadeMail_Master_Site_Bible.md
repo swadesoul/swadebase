@@ -20,3 +20,10 @@ Existing 300 Black Businesses Daily task 6add1723a6c481919b19cac9c66c5cdc now in
 
 ## Recovery and limits
 Scoped baseline for changed Mail Center source: /opt/swadebase/backups/mail-device-setup-20261029. Restore touched files only if needed, then restart the adapter service; do not undo unrelated changes. Preserve imported CRM records and source references. Existing five external contact source connectors remain independently unverified; the previous source registry was a placeholder, not a searchable merged database.
+
+
+<!-- SWAGENTS-ROYAL-VOICE-MAIL-20261119-LIVE -->
+## 2026-11-19 — SWAGENTS dedicated specialist mail activated
+
+Recorded 2026-11-19T17:08:04.320140+00:00. Existing Mailcow supplies25 dedicated128MiB SWAGENTS mailboxes (24 catalog roles plus barber) and six specialist aliases. Domain mailbox cap is40; the existing20GiB domain storage quota and billing are unchanged, and info@ is untouched. App credentials are delivered through the scoped `70-support-mail-credential.conf` systemd credential; administrator Mailcow access is not exposed to the application. All25 identities authenticated without sending/reading message bodies; two controlled own-address messages then proved private case routing, idempotency and cleanup. Two synthetic server messages remain intentionally. Exact recipient/subject/body approval is required, and edits invalidate it. Case export/delete includes app mail records; remote/server and recipient copies have separate retention. SMTP acceptance does not prove delivery or a resolved case. Mail is LIVE at16:34:25UTC with25/25 bootstrap readiness; receipts and rollback are in `/opt/swagents/royal-stage-20261119/MAIL_DEPLOYMENT.json` and `/opt/swadebase/backups/swagents-mail-20261119T163424Z-9b7a99`. Retain boxes, aliases, additive tables and real customer data on rollback.
+

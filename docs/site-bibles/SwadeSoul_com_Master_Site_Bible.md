@@ -10,6 +10,7 @@
 
 | Date (America/Chicago) | Who | Change | Rollback |
 | --- | --- | --- | --- |
+| 2026-11-20 | Claude (Opus 5.5), owner said go | LIVE: Maestro Radio on the front page. PR #78 merged (f8bb3f1, CI green; includes Codex review fixes d387161: stream stops on page leave, stream follows the shown station). Lovable synced and published deployment 6df4e672-1193-4644-b76a-b1e2e4cdeb7c, which also put PR #77's design repair live (prior live deployment was 067d4252 from Nov 15). New `MaestroOnAir` section (`#ss-radio`) directly under the hero; hero player and battle banners removed from the homepage (files kept). Verified live ~13:10 CT in Chromium at desktop and iPad sizes: section directly under hero, 4 stations in the dial, real flagship stream played, no page errors, old 'Swade Soul Radio' player gone. Not yet checked by a person on iPad Safari. | Revert merge f8bb3f1 on `main`, let Lovable sync, republish. |
 | 2026-11-15 | Claude (Opus 5.5), Swade chose option 3 | Motion toggle: effects follow Reduce Motion by default; "Motion on/off" button (bottom-left) lets visitors opt in or out, remembered per device. PR #71 (merge 074a01c), deployment 067d4252. Replaces the always-on behavior of PR #70 after a Codex accessibility finding. | Revert 074a01c and republish. |
 | 2026-11-15 | Claude (Opus 5.5), owner-reported bug | Scroll fix: scroll-scrubbed effects now run with Reduce Motion on (PR #70, merge a5ba83c, deployment 8d810039). Verified in headless Chromium with and without reduced motion. | Revert a5ba83c and republish. |
 | 2026-11-15 | Claude (Opus 5.5), approved by Swade | Systems homepage: new positioning, SSS Brain pinned story, 3D platform ring, 10-act film section, artist lineup, founder story, OnePass rewrite, contact paths, 35 transparent platform logos. PR #69 (merge 6a0119e), CI build check added. | Revert merge commit 6a0119e on `main` and republish; the previous homepage is fully restored (old components were not deleted). |
@@ -36,6 +37,11 @@ The front door of the Swade Soul ecosystem. Positioning: "We build the systems t
 14. Footer (radio link now themaestroradio.com)
 
 Full directory: `/ecosystem-library`.
+
+## Maestro Radio on the homepage (since 2026-11-20)
+
+`src/components/home/MaestroOnAir.tsx` sits directly under the hero and is the only homepage music source besides the artist drawers. It reads the public AzuraCast API `https://radio.themaestroradio.com/api/nowplaying` (CORS open; polled every 15 s while the tab is visible and right after each song ends); every public station appears automatically. Per-station looks are in `src/data/maestroStations.ts`: Flagship 99.9 gold grooves, Hip-Hop 101.1 orange stripes, Pop 104.3 pink halftone, PET MUZIK 88.7 teal bubbles; unknown stations get a generated look. Dial numbers are display only, not FM frequencies. Playback uses its own `<audio>` registered with `GlobalAudioContext`, so an artist-drawer song pauses the radio and vice versa; a paused stream is dropped and reconnects at the live edge, it stops when the visitor leaves the page, and it follows the station shown if a poll changes it. Offer cards link to themaestroradio.com `/submit-music`, `/help` (sponsor desk), `/pricing` (stations, pop-ups), `/free`, and `#contact`. Product chain: SONIKYN, ReSingLab, Publiswade, Maestro Radio, MYDistribution (opens EcosystemDrawer). The hero no longer reads `site_settings.hero_mode`; HeroPlayer, HeroBattleBanner and BattleDrawer remain in the repo.
+Open items: station-owner sponsor revenue share is not shown until it is live in Maestro; themaestroradio.com `/pricing` links to `/rotation`, which has no route there (Maestro-side).
 
 ## Platform registry
 

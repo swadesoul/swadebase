@@ -1,0 +1,15 @@
+# Maestro Radio — The Next Wave: Authentic Website Edition (2026-11-14)
+
+Status: VIDEO COMPLETED, HIGGSFIELD DELIVERED, OWNED BACKBLAZE BACKUP VERIFIED, PUBLIC MAESTRO SITE UNCHANGED.
+
+User asked to fix previous generic-looking all-Higgsfield video by adding actual screenshots from the real website. Reused all 12 previously generated Higgsfield moving live-action scenes and original narration, music and accurate final end card. Captured real current public pages with headless Chromium on 2026-11-14 and integrated actual moving browser recordings into 11 of 12 scenes (12th is the cinematic opening); for account-gated features reused authenticated UI screenshots from existing verified Maestro testing. Every product scene maintains cinematic action before and after each real Maestro interface view. No additional Higgsfield video, image or audio generation jobs were run; **0 additional generation credits**.
+
+Public live sources: /radio/ (actual now playing, history, shoutout and schedule), homepage (real station dial and calls to action), actual click on "+ Your station here" redirecting unsigned visitors to /auth, /artists, /behind-the-rotation, /maestro-mix/, /education/. Each captured at 1280×720 using Playwright Chromium, verified HTTP 200 with zero JS errors. Previous authenticated Maestro images: artist office verified synthetic-account browser capture (75px nav cropped for privacy), station library, schedule and station-create entry. These are genuine screen captures, not invented AI interface typography. Private /artist-office and /stations still require authentication; the movie uses reference screenshots, **not an assertion of current owner-session end-to-end testing**. The earlier issue of the Behind the Rotation public page document title reading "Page not found" was not modified by this video edit.
+
+Final review movie: 120.0s 1920×1080 H.264/AAC, 24fps. Confirmed Higgsfield owned media ID d86f8579-5986-4f56-85c5-5bd4b00854ba. Link https://d2ol7oe51mr4n9.cloudfront.net/user_323Yv9kPimOK6dbhorbwpLEoHcf/d86f8579-5986-4f56-85c5-5bd4b00854ba.mp4 . SHA256 c1d988f73bfcab1e207a43349db4e6ad64641173f7162b3862727ca4f41e8bb6; size 74,571,567 bytes. Passed entire audio/video decode, all 12 scenes exactly 10sec, and confirmed inserted UI scenes were not black. Original movie untouched, as were live radio, private site features and homepage intro.
+
+B2 verified originals:
+- maestro-radio/explainers/20261114/authentic-real-website-edition/Maestro_Radio_Next_Wave_Authentic_Website_Edit_2026.mp4 (74,571,567 bytes)
+- maestro-radio/explainers/20261114/authentic-real-website-edition/Maestro_Radio_Authentic_Website_Edit_SOURCES.zip (9,279,025 bytes, real browser recordings, four verified authenticated screenshots, FFmpeg compositing script and shot/source map). Original 12 Higgsfield footage and sound are preserved in the preceding 2026-11-14 editable full source ZIP; this new ZIP is the compositing delta only.
+
+Release is privately owned/delivered for user review. It was NOT placed on the Maestro homepage, replaced the existing 45-second intro, auto-sent, or broadcast. No website deploy or payment.

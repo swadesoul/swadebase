@@ -1,0 +1,39 @@
+{
+  "site_id": "appgprj_6adf8e8b912481918cb6cfc01f2db308",
+  "brand": "BYERS",
+  "version": 5,
+  "commit_sha": "ec4139a5427f43498bbf96dff338858976d0ba90",
+  "deployment_id": "appgdep_6afaf1a8c5848191b72d70f894b0a4b3",
+  "deployment_status": "succeeded",
+  "platform_url": "https://byers.swadeswade-s-8788.chatgpt.site",
+  "existing_domain": "https://cochranailaw.live/",
+  "audience": "public (preserved)",
+  "recorded_at": "2026-11-16T12:08:50.197433+00:00",
+  "verified": [
+    "native deployment succeeded",
+    "live custom-domain BYERS title/logo/text/orb observed on v4",
+    "native film playback advanced beyond15seconds;72second duration and EN/ES/FR tracks",
+    "seven-focus module syntax and source checks; criminal UI release v5",
+    "Spanish/French navigation and fictional French brief download",
+    "360px content viewport had no horizontal overflow in375px QA frame",
+    "three existing oracle tests passed",
+    "no real mic/device permission or live legal backend tested",
+    "live custom domain v5 criminal path selected and displayed correct questions/evidence; new screenshot observed"
+  ],
+  "pending": [
+    "product superadmin grants and exemptions",
+    "durable confidential BYERS matters",
+    "live legal research/citator",
+    "global law watch",
+    "case/custody/judge connectors",
+    "credit ledger, checkout, grants and CMS",
+    "human service booking/engagement"
+  ],
+  "rollback": "Use prior Sites saved version2 / source8277c8a4eaa0f3b0979c7880978d2ddd1c0781a6; preserve current records. Version4 is the immediate pre-criminal preview. Restore metadata title/slug only if reverting the rebrand is authorized; no DNS or shared service changed.",
+  "knowledge_index": {
+    "verified_at": "2026-11-16T12:13:26.573194+00:00",
+    "documents": 6,
+    "chunks": 158,
+    "embedding_status": "text/fts refreshed; no embedding API spend"
+  }
+}

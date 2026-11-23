@@ -1,0 +1,10 @@
+{
+  "name": "Maestro Country",
+  "slug": "maestro-country",
+  "genre": "Country",
+  "library_mode": "mixed",
+  "visibility": "private",
+  "description": "Modern country radio: country pop, traditional and neotraditional, country rap, Southern rock, bluegrass color, and country gospel. A dedicated home for country on Maestro Radio.",
+  "sftp": true,
+  "start_broadcast": false
+}

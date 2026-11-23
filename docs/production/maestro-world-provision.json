@@ -1,0 +1,10 @@
+{
+  "name": "Maestro World",
+  "slug": "maestro-world",
+  "genre": "World",
+  "library_mode": "mixed",
+  "visibility": "private",
+  "description": "Broad global crossover and regional discovery. Original music from Africa, the Caribbean, Latin America, the Middle East, East Asia, and beyond.",
+  "sftp": true,
+  "start_broadcast": false
+}

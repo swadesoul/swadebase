@@ -344,7 +344,11 @@ services:
   - name: functions-v1
     _comment: 'Edge Functions: /functions/v1/* -> http://functions:9000/*'
     url: http://functions:9000/
-    read_timeout: 150000
+    # 2026-11-23: raised from 150000. generate-lyrics (SWADE AI llama3.2:3b) can take >150s;
+    # workerTimeoutMs in functions/main is already 4 minutes, nginx allows 3600s.
+    connect_timeout: 60000
+    write_timeout: 300000
+    read_timeout: 300000
     routes:
       - name: functions-v1-all
         strip_path: true

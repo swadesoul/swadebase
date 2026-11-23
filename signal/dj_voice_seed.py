@@ -21,7 +21,7 @@ import voicestudio_b2 as b2  # noqa: E402  (shared B2 client used by the voice s
 def envfile(p):
     return {k: v.strip().strip('\'"') for k, v in (l.split('=', 1) for l in open(p) if '=' in l and not l.startswith('#'))}
 
-XI_KEY = envfile('/opt/swade-secrets/swideo.env')['ELEVENLABS_API_KEY']
+XI_KEY = envfile('/opt/swadebase/docker/functions.env')['ELEVENLABS_API_KEY']  # 2026-11-19: one ElevenLabs account (Coolify-synced key)
 VENV = envfile('/opt/swade-secrets/voice-service.env')
 VURL = 'http://172.16.0.1:8790'
 VTOK = VENV['VOICE_SERVICE_TOKEN']

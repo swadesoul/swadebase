@@ -2,7 +2,8 @@
 # AI DJ voice renderer (host side, no time limit): segments marked 'rendering' -> Voice Studio -> radio engine playlist.
 import base64, fcntl, json, re, sys, urllib.request, urllib.error
 sys.path.insert(0, '/opt/swadebase/signal')
-from clean_tail import clean_tail, dj_polish   # 2026-11-11: cut garbled babble after the last word; DJ pace + sound
+from clean_tail import clean_tail, dj_polish
+import resing_voice   # 2026-11-21: ReSing Lab voice for DJ breaks   # 2026-11-11: cut garbled babble after the last word; DJ pace + sound
 lock = open('/tmp/dj_render.lock', 'w')
 try: fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
 except OSError: sys.exit(0)
@@ -31,7 +32,9 @@ for seg in db('GET', 'ai_dj_segments?status=eq.rendering&order=created_at&limit=
         voice = (db('GET', f"ai_dj_voice?dj_id=eq.{dj['id']}") or [{}])[0].get('voice_profile_id')
         st = db('GET', f"stations?id=eq.{dj['station_id']}")[0]; sid = st['azuracast_station_id']
         if not voice or not sid: raise RuntimeError('DJ needs a voice and a station on the radio engine')
-        audio, ctype = http('POST', VURL + '/v1/voicebox/speak', {'text': seg['script'], 'voice_profile_id': voice},
+        # 2026-11-21: DJs with a ReSing Lab voice speak through ReSing Lab's Voicebox (CPU, no GPU); others keep the old path.
+        rs = resing_voice.speak(dj['id'], seg['script'])
+        audio, ctype = rs if rs else http('POST', VURL + '/v1/voicebox/speak', {'text': seg['script'], 'voice_profile_id': voice},
                             {'authorization': 'Bearer ' + VTOK, 'content-type': 'application/json'}, raw=True, timeout=1500)
         ext = 'mp3' if 'mpeg' in ctype else 'wav'
         audio, cut = clean_tail(audio, ext, seg['script'], VURL, VTOK)

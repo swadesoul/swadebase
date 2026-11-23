@@ -8,7 +8,8 @@ airs. If there isn't time to re-voice, it does nothing rather than risk dead air
 import base64, datetime, fcntl, json, re, sys, time, requests
 from zoneinfo import ZoneInfo
 sys.path.insert(0, '/opt/swadebase/signal')
-from clean_tail import clean_tail, dj_polish   # 2026-11-11: cut garbled babble after the last word; DJ pace + sound
+from clean_tail import clean_tail, dj_polish
+import resing_voice   # 2026-11-21: ReSing Lab voice for DJ breaks   # 2026-11-11: cut garbled babble after the last word; DJ pace + sound
 lock = open('/tmp/dj_cue_fix.lock', 'w')
 try: fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
 except OSError: sys.exit(0)
@@ -127,15 +128,20 @@ def main():
             voice = (db('GET', f"ai_dj_voice?dj_id=eq.{dj['id']}&select=voice_profile_id") or [{}])[0].get('voice_profile_id')
             if not voice or not seg.get('azuracast_path'): continue
             new = rewrite(seg['script'], prev, nxt, air_str, add_time)
-            v = requests.post(VURL + '/v1/voicebox/speak', headers={**UA, 'authorization': 'Bearer ' + VTOK, 'content-type': 'application/json'},
-                              json={'text': new, 'voice_profile_id': voice}, timeout=max(30, int(lead - 30)))
-            v.raise_for_status()
-            audio = v.content
+            # 2026-11-21: DJs with a ReSing Lab voice speak through ReSing Lab's Voicebox (CPU, no GPU).
+            rs = resing_voice.speak(dj['id'], new, timeout=max(30, int(lead - 30)))
+            if rs:
+                audio, vctype = rs
+            else:
+                v = requests.post(VURL + '/v1/voicebox/speak', headers={**UA, 'authorization': 'Bearer ' + VTOK, 'content-type': 'application/json'},
+                                  json={'text': new, 'voice_profile_id': voice}, timeout=max(30, int(lead - 30)))
+                v.raise_for_status()
+                audio, vctype = v.content, v.headers.get('content-type', 'audio/mpeg')
             left = (row.get('played_at') or 0) - time.time()
             if left > 150:   # only when there is time to check; otherwise air the fresh take as is
-                audio, cut = clean_tail(audio, 'mp3' if 'mpeg' in v.headers.get('content-type', 'audio/mpeg') else 'wav', new, VURL, VTOK, timeout=int(min(60, left / 3)), max_probes=3)
+                audio, cut = clean_tail(audio, 'mp3' if 'mpeg' in vctype else 'wav', new, VURL, VTOK, timeout=int(min(60, left / 3)), max_probes=3)
                 if cut: log('trimmed', cut, 's of garbled tail', seg['id'][:8])
-            audio, sp = dj_polish(audio, 'mp3' if 'mpeg' in v.headers.get('content-type', 'audio/mpeg') else 'wav', new)
+            audio, sp = dj_polish(audio, 'mp3' if 'mpeg' in vctype else 'wav', new)
             if sp: log('paced', seg['id'][:8], f'x{sp}')
             # re-check: still not handed to the player?
             row2 = next((r for r in (eng('GET', f'/api/station/{sid}/queue') or []) if str((r.get('song') or {}).get('album')) == 'seg-' + seg['id'][:8]), None)
