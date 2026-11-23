@@ -1,0 +1,818 @@
+[
+  {
+    "id": "real-asset-proof",
+    "topic_ids": [
+      "proof"
+    ],
+    "keywords": [
+      "real asset",
+      "real assets",
+      "identify assets",
+      "asset proof",
+      "prove an asset",
+      "verify an asset",
+      "authentic asset"
+    ],
+    "source_ids": [],
+    "article_ids": [
+      "AM-FOUNDATIONS-002",
+      "AM-FOUNDATIONS-004",
+      "AM-FOUNDATIONS-005"
+    ],
+    "plain": "An asset review starts with six separate questions: what exists, who owns it, who can control it, what it is worth, whether it can be transferred, and whether a buyer or lender will accept it. A photograph, certificate, receipt, or wallet balance usually answers only part of that inquiry. Identify the exact asset and jurisdiction, then obtain current records from the relevant issuer, registry, custodian, or independent examiner. Keep unresolved ownership, liens, custody, and valuation questions visible. No single document establishes every part of the claim.",
+    "professional": "Assess the claim across six distinct dimensions: existence, legal ownership, custody or control, valuation, transferability, and counterparty acceptance. A photograph, certificate, custody receipt, or ledger balance generally supports only a limited proposition. Establish the exact asset and relevant jurisdiction, then obtain current evidence from the appropriate issuer, registry, custodian, or independent examiner. Record unresolved title, encumbrance, custody, and valuation issues explicitly. The resulting assessment should state the scope of each finding; no individual document establishes every element of the asset claim."
+  },
+  {
+    "id": "document-proof-limits",
+    "topic_ids": [
+      "proof"
+    ],
+    "keywords": [
+      "notarized",
+      "notary",
+      "apostille",
+      "document hash",
+      "hash proves",
+      "certificate authentic",
+      "document authentication"
+    ],
+    "source_ids": [
+      "F01",
+      "F03",
+      "F04",
+      "T09"
+    ],
+    "article_ids": [
+      "AM-FOUNDATIONS-003",
+      "AM-DIGITAL-ASSETS-017"
+    ],
+    "plain": "Document authentication and asset verification are separate tasks. A notarial act or apostille can help establish a signature, seal, or document origin within its scope; it does not establish the economic truth of the contents. A matching hash establishes that the compared digital bytes match, not that the asset exists or belongs to the presenter. Verify the issuing source independently, identify exactly what was certified, and connect the document to current ownership and custody records. An authentic report can still concern an asset the presenter does not own.",
+    "professional": "Distinguish document authentication from verification of the underlying asset. A notarial act or apostille addresses specified signatures, seals, or origin features within its scope; it does not establish the economic accuracy of the document. A matching hash establishes equivalence of the compared digital bytes, not asset existence or title. Independently verify the issuing source and the precise certification, then reconcile the document with current ownership and custody evidence. An authentic report can concern property that the presenter has no right to transfer."
+  },
+  {
+    "id": "bond-authenticity",
+    "topic_ids": [
+      "bonds",
+      "proof"
+    ],
+    "keywords": [
+      "verify bond",
+      "verify bonds",
+      "bond authenticity",
+      "bond certificate",
+      "cusip",
+      "isin",
+      "bond serial",
+      "bond",
+      "bonds"
+    ],
+    "source_ids": [
+      "B01",
+      "B02",
+      "B04",
+      "B05",
+      "B16",
+      "B15"
+    ],
+    "article_ids": [
+      "AM-BANK-INSTRUMENTS-002"
+    ],
+    "plain": "A bond generally represents money lent to an issuer under stated repayment terms. To review a bond, identify its legal issuer, security identifier, governing terms, and the person claiming the holding. Then seek current confirmation from the issuer, transfer agent, or appropriate custodian through independently verified contact details. A serial number, CUSIP, or ISIN helps identify a security but does not establish that the presenter owns it or that it remains payable. Check maturity, redemption, cancellation, corporate changes, transfer restrictions, and any competing claims. A certificate image alone cannot establish a current enforceable entitlement.",
+    "professional": "A bond generally evidences an issuer’s debt obligation under specified repayment terms. Identify the legal issuer, security identifier, governing documents, and asserted holder. Obtain current confirmation through independently verified issuer, transfer agent, or custodian channels. A CUSIP, ISIN, or serial number identifies a security or record; it does not establish the presenter’s entitlement or continuing payment obligation. Review maturity, redemption, cancellation, corporate changes, restrictions, and competing claims. A certificate image alone is insufficient evidence of a current enforceable holding."
+  },
+  {
+    "id": "historical-bond-status",
+    "topic_ids": [
+      "bonds",
+      "inheritance"
+    ],
+    "keywords": [
+      "historical bond",
+      "historical bonds",
+      "historic bond",
+      "old bond",
+      "old bonds",
+      "1934",
+      "antique bond",
+      "100 million bond",
+      "hundred million bond",
+      "collectible bond"
+    ],
+    "source_ids": [
+      "B01",
+      "B02",
+      "B04",
+      "B05",
+      "B16"
+    ],
+    "article_ids": [
+      "AM-BANK-INSTRUMENTS-002",
+      "AM-INHERITED-AND-PHYSICAL-ASSETS-004"
+    ],
+    "plain": "A historical bond may be a genuine old document without representing a collectible debt today. It may have been repaid, called, cancelled, replaced, or affected by a merger or reorganization; it may have only collectible value. A large printed amount, old date, seal, or family history does not resolve its present status. Preserve the original and identify the issuer and instrument precisely. Establish current entitlement through issuer, transfer agent, custodian, and relevant historical records before discussing valuation or financing. Do not treat printed face value as available money.",
+    "professional": "A genuine historical certificate does not necessarily evidence a currently collectible obligation. The security may have been redeemed, called, cancelled, replaced, or affected by corporate reorganization, leaving only collectible value. Printed denomination, age, seals, and family provenance do not determine present enforceability. Preserve the original and establish the precise issuer and instrument. Reconcile issuer, transfer agent, custodian, and relevant historical records before assessing entitlement, valuation, or collateral suitability. The certificate’s face amount must not be represented as presently available funds."
+  },
+  {
+    "id": "bond-face-market-value",
+    "topic_ids": [
+      "bonds"
+    ],
+    "keywords": [
+      "face value",
+      "bond value",
+      "bond price",
+      "par value",
+      "market value of bond",
+      "bond worth"
+    ],
+    "source_ids": [
+      "B03",
+      "B06",
+      "B15"
+    ],
+    "article_ids": [
+      "AM-BANK-INSTRUMENTS-002",
+      "AM-BANK-INSTRUMENTS-005"
+    ],
+    "plain": "A bond’s face value is an amount specified by its terms; it is not automatically its current selling price or available loan value. Market value can depend on interest rates, credit quality, remaining term, call provisions, and liquidity. First establish that the holding and obligation are current. Then compare relevant market information and actual transaction terms, allowing for costs and restrictions. A lender makes a separate acceptance and collateral decision. Neither an authentic certificate nor a quoted price guarantees a buyer, a loan, or a particular advance rate.",
+    "professional": "Distinguish contractual face amount, current market value, and collateral value. A bond’s realizable price may reflect interest rates, credit quality, remaining maturity, call provisions, and liquidity. First establish the continuing obligation and the claimant’s holding; then assess relevant market evidence and transaction terms, including costs and restrictions. Financing requires a separate lender acceptance decision. Neither authentication of a certificate nor a market quotation guarantees executable liquidity, a credit facility, or a particular advance rate."
+  },
+  {
+    "id": "skr-meaning",
+    "topic_ids": [
+      "skr"
+    ],
+    "keywords": [
+      "what is skr",
+      "what are skrs",
+      "safekeeping receipt",
+      "safekeeping receipts",
+      "safe keeping receipt",
+      "safe keeping receipts",
+      "skr meaning",
+      "skr",
+      "skrs"
+    ],
+    "source_ids": [
+      "B07",
+      "B08"
+    ],
+    "article_ids": [
+      "AM-BANK-INSTRUMENTS-003"
+    ],
+    "plain": "An SKR, or safekeeping receipt, records a custody arrangement whose meaning depends on the receipt, the custody agreement, and applicable law. It may concern securities, warehouse property, a sealed package, or another arrangement. Start by identifying the custodian, customer, property, location, date, and release conditions. The receipt alone does not establish the contents, value, ownership, or absence of liens. Obtain current confirmation from the custodian through independently verified channels. The letters SKR do not turn a document into cash, a bank guarantee, or automatically acceptable collateral.",
+    "professional": "A safekeeping receipt records a custody relationship whose effect depends on its wording, the custody agreement, and applicable law. The subject may be securities, warehouse property, a sealed package, or another arrangement. Identify the custodian, customer, property, location, date, and release conditions, and obtain current confirmation through independently verified channels. The receipt alone does not establish contents, valuation, title, or freedom from encumbrances. The designation SKR does not convert the record into cash, a bank undertaking, or automatically acceptable collateral."
+  },
+  {
+    "id": "skr-financeability-custody",
+    "topic_ids": [
+      "skr",
+      "proof"
+    ],
+    "keywords": [
+      "skr monetization",
+      "monetize skr",
+      "skr financeable",
+      "skr not financeable",
+      "skr collateral",
+      "skr loan",
+      "sealed box",
+      "sealed container",
+      "custodian confirms"
+    ],
+    "source_ids": [
+      "B07",
+      "B08"
+    ],
+    "article_ids": [
+      "AM-BANK-INSTRUMENTS-003",
+      "AM-BANK-INSTRUMENTS-005"
+    ],
+    "plain": "An SKR is not automatically financeable. A lender needs to understand the actual property, the claimant’s rights, custody, liens, release conditions, and whether the proposed security can be enforced. A receipt for a sealed container may establish receipt of that container without establishing its contents or quality. Request the custody agreement, current inventory, amendments, and authorized custodian confirmation of the exact scope of custody. If access or confirmation is unavailable, record the issue as unresolved. Confidentiality or a refusal to disclose is not, by itself, proof of fraud.",
+    "professional": "An SKR does not establish automatic financeability. A proposed lender must assess the identified property, claimant’s rights, custody arrangement, encumbrances, release conditions, and enforceability of the proposed security. Receipt of a sealed container may be confirmed without verification of its contents or quality. Review the custody agreement, current inventory, amendments, and authorized custodian confirmation, recording precisely what each establishes. Unavailable access or confirmation remains an unresolved diligence issue. Confidentiality restrictions or refusal to disclose do not independently establish fraud."
+  },
+  {
+    "id": "sblc-terms-drawing",
+    "topic_ids": [
+      "sblc"
+    ],
+    "keywords": [
+      "what is sblc",
+      "standby letter of credit",
+      "standby letters of credit",
+      "sblc draw",
+      "sblc expiry",
+      "sblc beneficiary",
+      "sblc",
+      "sblcs"
+    ],
+    "source_ids": [
+      "B09",
+      "B10",
+      "B14"
+    ],
+    "article_ids": [
+      "AM-BANK-INSTRUMENTS-004"
+    ],
+    "plain": "An SBLC is a bank undertaking governed by its actual wording, applicable law, and any incorporated rules. It often supports payment or performance after a specified default, but its amount is not unrestricted cash in the beneficiary’s account. Review the issuer, applicant, beneficiary, amount, expiry, presentation place and method, required drawing documents, and amendments. An authentic undertaking can still be unsuitable for a proposed transaction. Have the relevant bank and qualified adviser confirm its operative terms and the requirements for a complying presentation before relying on it.",
+    "professional": "An SBLC is a bank undertaking whose effect depends on its operative wording, applicable law, and incorporated rules. It commonly supports payment or performance following a specified default; its stated amount is not unrestricted beneficiary cash. Review the issuing bank, applicant, beneficiary, amount, expiry, presentation location and method, required drawing documents, and amendments. Authentication does not establish suitability for the proposed transaction. The relevant bank and qualified adviser should confirm the operative terms and requirements for a complying presentation before reliance."
+  },
+  {
+    "id": "mt760-mt799",
+    "topic_ids": [
+      "sblc",
+      "proof"
+    ],
+    "keywords": [
+      "mt760",
+      "mt 760",
+      "mt799",
+      "mt 799",
+      "swift message",
+      "swift screenshot",
+      "blocked funds"
+    ],
+    "source_ids": [
+      "B11"
+    ],
+    "article_ids": [
+      "AM-BANK-INSTRUMENTS-004"
+    ],
+    "plain": "MT760 and MT799 serve different messaging purposes. An MT760 can carry the issuance of a guarantee or standby letter of credit, so its actual content and status matter. An MT799 is a free format message; that label alone does not establish blocked funds, collateral, or a binding funding commitment. A screenshot is not confirmation that an authenticated message was received and accepted by the relevant bank. Ask the receiving bank to confirm the message, parties, content, and operative effect through its authorized process. Interpret the undertaking, not just the message number.",
+    "professional": "Distinguish the message type from the legal effect of its content. An MT760 can communicate issuance of a guarantee or standby letter of credit, subject to its actual wording and status. An MT799 is a free format message; its designation alone establishes neither blocked funds nor collateral nor a binding financing commitment. A screenshot does not establish authenticated receipt or acceptance. Obtain receiving bank confirmation of the parties, message content, status, and operative effect through its authorized process."
+  },
+  {
+    "id": "monetization-funding-fees",
+    "topic_ids": [
+      "bonds",
+      "skr",
+      "sblc"
+    ],
+    "keywords": [
+      "monetize",
+      "monetization",
+      "funding guarantee",
+      "guaranteed funding",
+      "unlock fee",
+      "clearance fee",
+      "advance rate",
+      "bank instrument funding"
+    ],
+    "source_ids": [
+      "F05",
+      "F06"
+    ],
+    "article_ids": [
+      "AM-BANK-INSTRUMENTS-005",
+      "AM-BANK-INSTRUMENTS-004",
+      "AM-FOUNDATIONS-006"
+    ],
+    "plain": "Authenticity and financeability are different decisions. Funding depends on the underlying rights, current value, transferability, custody, restrictions, and a specific lender’s written requirements. No certificate, SKR, SBLC, or quoted face amount creates an automatic funding entitlement. Request the proposed transaction structure, responsible regulated parties where applicable, fee basis, conditions, and enforceable documents before relying on promises. Do not send an unlock, clearance, or insurance payment solely because someone presents an image or promises a large payout. Independent verification should resolve the asset and undertaking before a financing decision.",
+    "professional": "Authentication and financeability require separate determinations. Financing depends on the underlying rights, current value, transferability, custody, restrictions, and the identified lender’s written criteria. No certificate, SKR, SBLC, or face amount creates an automatic funding entitlement. Examine the proposed structure, responsible regulated parties where applicable, fee basis, conditions, and enforceable documentation. An image or promised payout is insufficient justification for an unlock, clearance, or insurance payment. Independently establish the asset and relevant undertaking before relying on a proposed financing arrangement."
+  },
+  {
+    "id": "inheritance-authority",
+    "topic_ids": [
+      "inheritance",
+      "proof"
+    ],
+    "keywords": [
+      "inherited documents",
+      "inheritance documents",
+      "executor",
+      "probate",
+      "estate authority",
+      "death certificate",
+      "letters of administration",
+      "a will",
+      "the will",
+      "my will",
+      "last will",
+      "inheritance",
+      "inherited"
+    ],
+    "source_ids": [
+      "I01",
+      "I02",
+      "I03",
+      "I04"
+    ],
+    "article_ids": [
+      "AM-INHERITED-AND-PHYSICAL-ASSETS-001",
+      "AM-INHERITED-AND-PHYSICAL-ASSETS-002"
+    ],
+    "plain": "Inherited documents can establish different facts. A death certificate records a death; a will describes instructions; appointment documents may establish a representative’s authority. None should be treated as a universal substitute for the others. The required process depends on the asset, registration, estate arrangement, and jurisdiction. Not every estate requires the same probate procedure, and being named executor does not by itself resolve current authority. Confirm the representative’s appointment, powers, limits, and any competing claims through the appropriate court, registry, trustee, or receiving institution before a transfer.",
+    "professional": "Separate evidence of death, testamentary instructions, and authority to administer or transfer property. A death certificate, will, and representative appointment document establish different matters and are not universally interchangeable. Requirements depend on the asset, registration, estate structure, and jurisdiction; probate procedures are not uniform. Nomination as executor does not alone establish current authority. Confirm appointment, applicable powers and limitations, and competing claims through the relevant court, registry, trustee, or receiving institution before proceeding with a transfer."
+  },
+  {
+    "id": "inherited-securities",
+    "topic_ids": [
+      "inheritance",
+      "bonds"
+    ],
+    "keywords": [
+      "inherited bonds",
+      "inherited bond",
+      "inherited shares",
+      "inherited securities",
+      "savings bond",
+      "savings bonds",
+      "deceased owner"
+    ],
+    "source_ids": [
+      "I05",
+      "I06",
+      "I07",
+      "I14",
+      "B16"
+    ],
+    "article_ids": [
+      "AM-INHERITED-AND-PHYSICAL-ASSETS-004",
+      "AM-BANK-INSTRUMENTS-002"
+    ],
+    "plain": "For inherited securities, establish both the current holding and the authority to transfer or redeem it. Old certificates may require issuer and corporate history checks before any value can be assessed. The receiving issuer, transfer agent, or custodian should identify the documents required for that registration and estate situation. Savings bonds may involve different procedures depending on registration, a surviving coowner, a beneficiary, or estate administration. A signature guarantee and a notarization serve different purposes. Preserve originals and use the relevant institution’s current official process before sending documents or attempting a sale.",
+    "professional": "For inherited securities, verify the continuing holding separately from the authority to transfer or redeem it. Historical certificates may require issuer and corporate history analysis before valuation. Obtain the receiving issuer’s, transfer agent’s, or custodian’s current documentation requirements for the particular registration and estate circumstances. Savings bond procedures can vary with registration, surviving coownership, beneficiary designation, or estate administration. Distinguish a signature guarantee from notarization. Preserve originals and follow the appropriate institution’s official process before transmitting documents or attempting disposition."
+  },
+  {
+    "id": "gold-testing",
+    "topic_ids": [
+      "gold",
+      "proof"
+    ],
+    "keywords": [
+      "test gold",
+      "gold testing",
+      "real gold",
+      "gold authentic",
+      "gold assay",
+      "gold purity",
+      "xrf",
+      "gold bar genuine",
+      "gold",
+      "bullion"
+    ],
+    "source_ids": [
+      "G02",
+      "G03"
+    ],
+    "article_ids": [
+      "AM-INHERITED-AND-PHYSICAL-ASSETS-009",
+      "AM-INHERITED-AND-PHYSICAL-ASSETS-010"
+    ],
+    "plain": "To assess gold, define the item and document its weight, markings, dimensions, claimed fineness, location, and custody history. A photograph, hallmark, magnet result, or surface reading alone does not establish the composition of an entire bar. Use an independent qualified examiner and a testing method appropriate to the item and claim; surface methods have limits. Match the tested item or sample to the inventory and preserve the custody record. An assay addresses composition within its scope. It does not establish ownership, clear liens, access to the metal, or an achievable sale price.",
+    "professional": "Define the material claim and record item identity, weight, markings, dimensions, asserted fineness, location, and custody history. Photographs, hallmarks, magnetic responses, and surface readings do not individually establish the composition of an entire bar. Engage an independent qualified examiner using methods appropriate to the item and claim, recognizing surface testing limitations. Reconcile the tested item or sample with the inventory and custody record. An assay supports composition findings within its scope; it does not establish title, absence of liens, physical access, or realizable sale proceeds."
+  },
+  {
+    "id": "gold-allocated-unallocated",
+    "topic_ids": [
+      "gold",
+      "skr"
+    ],
+    "keywords": [
+      "allocated gold",
+      "unallocated gold",
+      "gold account",
+      "gold custody",
+      "gold inventory",
+      "bullion account",
+      "gold receipt"
+    ],
+    "source_ids": [
+      "G01",
+      "G02",
+      "B07",
+      "B08"
+    ],
+    "article_ids": [
+      "AM-INHERITED-AND-PHYSICAL-ASSETS-008",
+      "AM-INHERITED-AND-PHYSICAL-ASSETS-009",
+      "AM-BANK-INSTRUMENTS-003"
+    ],
+    "plain": "First distinguish specific physical gold from an account claim or a promise of delivery. An allocated arrangement should be assessed against identifiable inventory and the custody contract; an unallocated account may represent a different entitlement. The exact rights depend on the agreement and applicable law. Review the custodian, customer, bar identifiers, weight, fineness, location, withdrawal terms, substitution or lending permissions, and treatment if a party fails. A receipt or account statement is useful evidence within its scope, but it does not by itself establish unrestricted access or clear ownership.",
+    "professional": "Distinguish identified physical metal from an account entitlement or delivery promise. Assess an allocated arrangement against identifiable inventory and its custody contract; an unallocated account may confer a different entitlement. The agreement and applicable law determine the precise rights. Review the custodian and customer, bar identifiers, weight, fineness, location, withdrawal conditions, substitution or lending permissions, and consequences of party failure. Receipts and account statements support specified propositions but do not independently establish unrestricted access or unencumbered ownership."
+  },
+  {
+    "id": "gem-report-match",
+    "topic_ids": [
+      "gems",
+      "proof"
+    ],
+    "keywords": [
+      "gem report",
+      "gem certificate",
+      "diamond certificate",
+      "gia report",
+      "report check",
+      "gemstone report",
+      "diamond inscription",
+      "gems",
+      "gemstones",
+      "diamonds"
+    ],
+    "source_ids": [
+      "G07",
+      "G09",
+      "G10",
+      "G15"
+    ],
+    "article_ids": [
+      "AM-INHERITED-AND-PHYSICAL-ASSETS-015"
+    ],
+    "plain": "Checking a gemstone report with the issuing laboratory helps establish that a report record exists. It does not establish that the stone offered is the same stone or that the presenter owns it. A qualified examiner should compare the actual stone with the report’s weight, dimensions, shape, identifying features, comments, and any inscription. Settings can limit examination, and inscriptions can be counterfeit. Treat report authentication, physical matching, ownership, and valuation as separate inquiries. A genuine report attached to a photograph is not enough to establish the entire asset claim.",
+    "professional": "Verification through a laboratory’s report service establishes the existence of a report record within that service’s scope. It does not establish that the offered stone matches the examined item or that the presenter holds title. A qualified examiner should reconcile weight, dimensions, shape, identifying features, comments, and inscriptions against the physical stone. Settings may restrict examination, and inscriptions may be counterfeit. Treat report authentication, physical matching, ownership, and valuation as separate inquiries; a genuine report accompanying a photograph does not establish the complete asset claim."
+  },
+  {
+    "id": "gem-origin-value",
+    "topic_ids": [
+      "gems"
+    ],
+    "keywords": [
+      "gem value",
+      "gemstone value",
+      "diamond value",
+      "lab grown",
+      "laboratory grown",
+      "simulant",
+      "natural diamond",
+      "gem appraisal",
+      "diamond appraisal",
+      "treated gemstone"
+    ],
+    "source_ids": [
+      "G06",
+      "G11",
+      "G08"
+    ],
+    "article_ids": [
+      "AM-INHERITED-AND-PHYSICAL-ASSETS-014",
+      "AM-INHERITED-AND-PHYSICAL-ASSETS-016"
+    ],
+    "plain": "Gem identification and valuation answer different questions. Establish whether the material is natural, laboratory grown, or a simulant, and whether relevant treatments are present. A laboratory grown diamond is a diamond of a different origin; a simulant is a different material. A grading or identification report is not automatically an appraisal or a purchase offer. For value, identify the appraisal’s purpose, date, market, currency, and assumptions. Insurance replacement, retail, wholesale, and liquidation figures can differ. An achievable sale depends on the actual stone, condition, market, costs, and buyer.",
+    "professional": "Separate material identification, origin, treatment assessment, grading, and valuation. Determine whether the material is natural, laboratory grown, or a simulant, and identify relevant treatments. A laboratory grown diamond is a diamond with a different origin; a simulant is a different material. A grading or identification report is not necessarily an appraisal or executable purchase offer. Review any valuation’s purpose, date, market, currency, and assumptions. Insurance replacement, retail, wholesale, and liquidation measures may differ; realizable proceeds depend on the actual stone, condition, market, costs, and buyer."
+  },
+  {
+    "id": "wallet-control-ownership",
+    "topic_ids": [
+      "wallets",
+      "proof"
+    ],
+    "keywords": [
+      "watch only",
+      "watch-only",
+      "wallet ownership",
+      "wallet control",
+      "public wallet",
+      "wallet screenshot",
+      "signature proves ownership",
+      "signature prove ownership",
+      "signature legal title",
+      "wallet",
+      "wallets"
+    ],
+    "source_ids": [
+      "W01",
+      "W02",
+      "W04"
+    ],
+    "article_ids": [
+      "AM-DIGITAL-ASSETS-001",
+      "AM-DIGITAL-ASSETS-003"
+    ],
+    "plain": "A wallet display can show a public address without giving the viewer control over it. A watch only wallet therefore does not prove ownership or spending authority. A correctly verified, narrowly scoped signature can support control of a signing method at a particular time, but it does not establish legal ownership, authority to act for someone else, or freedom from liens. Contract and multisignature wallets need verification appropriate to their rules. Keep technical control, identity, legal title, and custody obligations separate when assessing any digital asset claim.",
+    "professional": "A displayed address does not establish signing or spending authority; watch only access can reproduce public holdings without control. A correctly verified and narrowly scoped signature may support control of a signing method at the stated time. It does not establish legal title, representative authority, or freedom from encumbrances. Contract wallets and multisignature arrangements require verification appropriate to their governing rules. Maintain separate findings for technical control, identity, ownership, and custody obligations when evaluating a digital asset holding."
+  },
+  {
+    "id": "safe-wallet-signatures",
+    "topic_ids": [
+      "wallets"
+    ],
+    "keywords": [
+      "sign message",
+      "sign a message",
+      "wallet signature",
+      "verify wallet safely",
+      "seed phrase",
+      "private key",
+      "signature request",
+      "gasless signature",
+      "permit signature"
+    ],
+    "source_ids": [
+      "W03",
+      "W04",
+      "W05"
+    ],
+    "article_ids": [
+      "AM-DIGITAL-ASSETS-003"
+    ],
+    "plain": "A control check should never require your seed phrase, private key, wallet password, transfer, deposit, token approval, permit, or spending authorization. Read the exact request before signing; gasless does not mean harmless. For a supported Ethereum sign in check, use a clearly identified domain and purpose, the correct chain and address, a fresh unpredictable nonce, issue time, and short expiry. The verifier must check and consume the challenge. Contract wallets need their supported verification method. A successful check supports only the stated control claim, not legal title or asset value.",
+    "professional": "A control verification must not require seed phrases, private keys, wallet passwords, transfers, deposits, approvals, permits, or spending authorizations. Inspect the complete signing request; absence of a gas charge does not establish safety. For supported Ethereum sign in verification, bind the challenge to an identified domain and purpose, correct chain and address, fresh unpredictable nonce, issue time, and short expiry. The verifier must validate and consume that challenge. Contract wallets require supported verification methods. Success establishes only the specified control proposition, not title or value."
+  },
+  {
+    "id": "exact-token-identity",
+    "topic_ids": [
+      "wallets",
+      "tokenization"
+    ],
+    "keywords": [
+      "token contract",
+      "contract address",
+      "which token",
+      "fake token",
+      "token symbol",
+      "token logo",
+      "network address",
+      "chain id",
+      "nft id",
+      "usdt",
+      "token named",
+      "token identity",
+      "genuine token"
+    ],
+    "source_ids": [
+      "W06",
+      "W11"
+    ],
+    "article_ids": [
+      "AM-DIGITAL-ASSETS-002"
+    ],
+    "plain": "Identify a digital asset by its exact network, address, and token contract, plus the token identifier where relevant. Names, logos, and ticker symbols are not unique identifiers. Confirm the intended contract through reliable issuer information and inspect the same asset on the stated chain. A similarly named token, a wrapped representation, or a bridge asset may carry different risks and rights. Record the exact identifiers before discussing balances or value. A familiar label in a wallet does not establish authentic issuance, backing, redemption rights, or a market for the token.",
+    "professional": "Identify the asset by network, address, token contract, and token identifier where applicable. Names, logos, and ticker symbols are not unique identifiers. Reconcile the intended contract with reliable issuer information and inspect that exact asset on the stated chain. Similarly named tokens, wrapped representations, and bridge assets may entail different rights and risks. Record the identifiers before assessing balances or valuation. A familiar wallet label does not establish authentic issuance, underlying backing, enforceable redemption rights, or an available market."
+  },
+  {
+    "id": "transaction-finality",
+    "topic_ids": [
+      "wallets"
+    ],
+    "keywords": [
+      "transaction hash",
+      "transaction confirmed",
+      "transaction pending",
+      "transaction finality",
+      "confirmations",
+      "tx hash",
+      "received tokens",
+      "block confirmation"
+    ],
+    "source_ids": [
+      "W08"
+    ],
+    "article_ids": [
+      "AM-DIGITAL-ASSETS-004"
+    ],
+    "plain": "A transaction hash identifies a transaction record; it does not alone establish that the intended payment arrived. Check the correct network, execution status, recipient, token contract, amount, and resulting balance change. Record the block reference, time, and confirmation or finality status used for the review. Networks have different settlement properties, so there is no universal confirmation count that proves every transfer final. Refresh the evidence before relying on it. A confirmed onchain transfer also does not establish the sender’s legal ownership, the token’s backing, or a right to redeem it.",
+    "professional": "A transaction hash identifies a record but does not independently establish receipt of the intended payment. Verify network, execution status, recipient, token contract, amount, and resulting balance changes. Record the block reference, observation time, and confirmation or finality status supporting the assessment. Settlement properties differ across networks; no universal confirmation count establishes finality for every transfer. Refresh the evidence before reliance. Confirmation of an onchain transfer does not independently establish the sender’s legal title, the token’s backing, or an enforceable redemption entitlement."
+  },
+  {
+    "id": "token-controls-market-value",
+    "topic_ids": [
+      "wallets",
+      "tokenization"
+    ],
+    "keywords": [
+      "token admin",
+      "mint function",
+      "freeze token",
+      "blacklist",
+      "paused token",
+      "proxy contract",
+      "token liquidity",
+      "wallet balance value",
+      "token worth"
+    ],
+    "source_ids": [
+      "W07",
+      "W12"
+    ],
+    "article_ids": [
+      "AM-DIGITAL-ASSETS-005",
+      "AM-DIGITAL-ASSETS-006"
+    ],
+    "plain": "A token balance and displayed price do not guarantee that you can transfer or sell the holding at that price. Review the contract’s minting, burning, pause, freezing, blacklist, upgrade, and administrator powers, together with holder eligibility and transfer restrictions. Verified source code is not itself an audit or proof of backing. Assess actual liquidity, likely slippage, fees, custody limits, and redemption conditions. A small quoted trade can be a poor guide to proceeds from a large position. Technical functions, legal rights, and achievable value each need their own evidence.",
+    "professional": "Separate recorded balance, transfer capability, and realizable market value. Review mint, burn, pause, freeze, blacklist, upgrade, and administrator powers, together with holder eligibility and transfer restrictions. Verified source code is not itself an audit or evidence of underlying backing. Assess executable liquidity, expected slippage, fees, custody constraints, and redemption conditions. A quotation based on a small trade may not support the same proceeds for a larger position. Technical functionality, legal rights, and achievable value require distinct supporting evidence."
+  },
+  {
+    "id": "tokenization-legal-rights",
+    "topic_ids": [
+      "tokenization"
+    ],
+    "keywords": [
+      "what is tokenization",
+      "tokenize asset",
+      "tokenize assets",
+      "real world asset token",
+      "token holder rights",
+      "tokenized ownership",
+      "tokenisation",
+      "tokenization",
+      "tokenize",
+      "tokenisation"
+    ],
+    "source_ids": [
+      "T01",
+      "T08"
+    ],
+    "article_ids": [
+      "AM-DIGITAL-ASSETS-009",
+      "AM-DIGITAL-ASSETS-010",
+      "AM-DIGITAL-ASSETS-011"
+    ],
+    "plain": "Tokenization records or represents an asset related interest using a digital token. The essential question is what enforceable right the holder receives: title, a custody entitlement, debt, equity, a fund interest, a redemption claim, or another defined right. Minting a token does not fix missing ownership, establish the underlying asset, or create automatic liquidity. Identify the issuer, asset holder, custodian, administrator, and servicing responsibilities. Connect the token records to the governing documents, eligible holders, transfer rules, and failure procedures before describing what the token represents.",
+    "professional": "Tokenization records or represents an asset related interest through a digital token. Identify the enforceable entitlement conveyed: title, custody entitlement, debt, equity, fund interest, redemption claim, or another defined right. Minting does not cure defective ownership, establish the underlying asset’s existence, or create automatic liquidity. Identify the issuer, asset holder, custodian, administrator, and servicing responsibilities. Reconcile the token records with governing documents, eligible holder requirements, transfer restrictions, and failure procedures before representing the nature or extent of the holder’s rights."
+  },
+  {
+    "id": "token-backing-redemption",
+    "topic_ids": [
+      "tokenization",
+      "proof"
+    ],
+    "keywords": [
+      "token backing",
+      "backed token",
+      "double tokenization",
+      "duplicate claims",
+      "double count",
+      "token redemption",
+      "redeem token",
+      "underlying asset",
+      "gold backing",
+      "minting a token",
+      "prove backing"
+    ],
+    "source_ids": [],
+    "article_ids": [
+      "AM-DIGITAL-ASSETS-011",
+      "AM-DIGITAL-ASSETS-013",
+      "AM-DIGITAL-ASSETS-014"
+    ],
+    "plain": "Backing requires more than a token supply number or a photograph of an asset. Reconcile the identified underlying property, ownership and custody records, outstanding tokens, other receipts or pledges, and completed redemptions. Review every relevant chain and arrangement so the same backing is not counted twice. Define who can redeem, minimum amounts, fees, timing, delivery conditions, and what happens if an issuer or custodian fails. A register can organize known claims, but it does not automatically exclude undisclosed external claims. Keep unresolved shortfalls, liens, and conflicting interests explicit.",
+    "professional": "Assess backing through reconciliation of identified property, ownership and custody evidence, outstanding tokens, other receipts or pledges, and completed redemptions. Token supply figures or asset photographs are insufficient independently. Review all relevant chains and arrangements to identify duplicate backing claims. Define redemption eligibility, minimum quantities, fees, timing, delivery conditions, and issuer or custodian failure procedures. A register organizes disclosed claims but does not exclude undisclosed external interests. Record unresolved shortfalls, encumbrances, and conflicting claims explicitly rather than treating reconciliation as a universal guarantee."
+  },
+  {
+    "id": "tokenization-regulatory-status",
+    "topic_ids": [
+      "tokenization"
+    ],
+    "keywords": [
+      "regulation crypto assets",
+      "crypto proposal",
+      "safe harbor",
+      "safe harbour",
+      "sec rule",
+      "tokenization legal",
+      "tokenisation legal",
+      "securities law",
+      "regulatory status"
+    ],
+    "source_ids": [
+      "T02",
+      "T03",
+      "T04",
+      "T05",
+      "T06",
+      "T07"
+    ],
+    "article_ids": [
+      "AM-DIGITAL-ASSETS-015",
+      "AM-DIGITAL-ASSETS-016"
+    ],
+    "plain": "Tokenization does not itself provide a legal exemption. Requirements depend on the rights offered, the transaction, the activities performed, and the relevant jurisdictions. Distinguish an operative rule or order from a proposal, interpretation, or staff statement, and check its scope and effective date. The knowledge base’s November 3, 2026 review identifies Regulation Crypto Assets as proposed, not an operative safe harbor. Limited conditional relief for a specific activity is not blanket permission. Before an offering or service begins, obtain a current review of the actual structure, parties, and applicable obligations.",
+    "professional": "Tokenization does not itself confer a legal exemption. Applicable obligations depend on the rights, transaction structure, activities, parties, and jurisdictions. Distinguish operative rules and orders from proposals, interpretations, and staff statements, considering scope and effective dates. The knowledge base’s November 3, 2026 research treats Regulation Crypto Assets as proposed rather than an operative safe harbor. Conditional relief for a specified activity does not provide general authorization. Before commencing an offering or service, obtain a current assessment of the actual structure and applicable obligations."
+  },
+  {
+    "id": "proof-reserves-solvency",
+    "topic_ids": [
+      "wallets",
+      "proof"
+    ],
+    "keywords": [
+      "proof of reserves",
+      "proof-of-reserves",
+      "reserve report",
+      "reserves prove solvency",
+      "reserve attestation",
+      "merkle proof",
+      "solvent exchange"
+    ],
+    "source_ids": [
+      "W10"
+    ],
+    "article_ids": [
+      "AM-DIGITAL-ASSETS-007"
+    ],
+    "plain": "Proof of reserves does not by itself prove solvency. A reserve exercise may show selected balances or customer inclusion at a particular time while leaving liabilities, borrowed assets, ownership, encumbrances, and later changes unresolved. Read who performed the work, the date, procedures, scope, exclusions, and what was actually concluded. A customer inclusion proof does not establish that every liability was included or that the assets remain available. Compare reserve evidence with obligations and legal rights before drawing a broader conclusion. Do not describe a reserve snapshot as a complete financial audit.",
+    "professional": "Proof of reserves is not independently a solvency determination. A reserve exercise may establish selected balances or customer inclusion at an observation time while omitting liabilities, borrowing, title, encumbrances, or subsequent changes. Examine the practitioner, date, procedures, scope, exclusions, and actual conclusion. Inclusion of one customer does not establish completeness of liabilities or continuing asset availability. Reconcile reserve evidence with obligations and enforceable rights before drawing broader conclusions. A reserve snapshot must not be characterized as a complete financial audit."
+  },
+  {
+    "id": "gold-token-clarification",
+    "topic_ids": [
+      "gold",
+      "tokenization"
+    ],
+    "keywords": [
+      "gold token",
+      "gold tokens",
+      "gold backed token",
+      "gold-backed token",
+      "tokenized gold",
+      "gold coin token",
+      "gold tokenization"
+    ],
+    "source_ids": [
+      "G01",
+      "W06",
+      "W11",
+      "T01"
+    ],
+    "article_ids": [
+      "AM-INHERITED-AND-PHYSICAL-ASSETS-008",
+      "AM-DIGITAL-ASSETS-002",
+      "AM-DIGITAL-ASSETS-009"
+    ],
+    "plain": "Do you mean physical gold you want to tokenize, an existing token said to be backed by gold, or a collectible token with a gold related name? These require different evidence. For physical gold, begin with identity, composition, ownership, and custody. For an existing token, identify the exact chain and contract, then examine the issuer’s documents, backing records, holder rights, and redemption terms. A token’s name or logo does not establish gold backing. Please specify which arrangement you mean and the asset or token’s exact identity; do not share wallet secrets.",
+    "professional": "Please distinguish physical gold proposed for tokenization, an existing token represented as gold backed, and a collectible token bearing a gold related name. These present different verification questions. Physical metal requires evidence of identity, composition, ownership, and custody. An existing token requires exact network and contract identification, followed by review of issuer documentation, backing records, holder rights, and redemption conditions. Branding does not establish gold backing. Specify the arrangement and exact asset or token identity without disclosing wallet secrets."
+  },
+  {
+    "id": "inherited-gold-tokenization",
+    "topic_ids": [
+      "inheritance",
+      "gold",
+      "tokenization"
+    ],
+    "keywords": [
+      "tokenize inherited gold",
+      "tokenise inherited gold",
+      "inherited gold bar",
+      "inherited gold token",
+      "inheritance gold tokenization",
+      "inherit gold tokenize",
+      "estate gold token"
+    ],
+    "source_ids": [
+      "I01",
+      "I02",
+      "I03",
+      "G01",
+      "G02",
+      "G03",
+      "T01"
+    ],
+    "article_ids": [
+      "AM-INHERITED-AND-PHYSICAL-ASSETS-001",
+      "AM-INHERITED-AND-PHYSICAL-ASSETS-002",
+      "AM-INHERITED-AND-PHYSICAL-ASSETS-008",
+      "AM-INHERITED-AND-PHYSICAL-ASSETS-009",
+      "AM-INHERITED-AND-PHYSICAL-ASSETS-010",
+      "AM-DIGITAL-ASSETS-009",
+      "AM-DIGITAL-ASSETS-012"
+    ],
+    "plain": "Before tokenizing inherited gold, establish who currently has authority to deal with it. Estate, trust, beneficiary, or other transfer requirements depend on the asset and jurisdiction. Then identify and independently assess the actual gold, reconcile custody and inventory, and resolve ownership and relevant competing claims. The proposed token documents must define the holder’s enforceable rights, custody, transfer restrictions, redemption, and failure procedures. Minting cannot substitute for estate authority or gold verification. Start with the inheritance arrangement, the gold’s location and custodian, and the intended token holder’s rights.",
+    "professional": "Establish current authority to deal with the inherited property before considering token issuance. Estate, trust, beneficiary, and transfer requirements depend on the asset and jurisdiction. Identify and independently assess the gold, reconcile inventory and custody, and resolve ownership and relevant competing claims. Proposed token documentation must define enforceable holder rights, custody, transfer restrictions, redemption, and failure procedures. Minting cannot replace valid estate authority or verification of the metal. Begin with the inheritance arrangement, physical location, custodian, and intended token holder entitlement."
+  },
+  {
+    "id": "clarify-unknown-asset",
+    "topic_ids": [
+      "proof"
+    ],
+    "keywords": [
+      "unknown asset",
+      "unknown label",
+      "golden dragon",
+      "dragon bond",
+      "unrecognized instrument",
+      "not sure what asset",
+      "no match"
+    ],
+    "source_ids": [],
+    "article_ids": [
+      "AM-FOUNDATIONS-002",
+      "AM-FOUNDATIONS-009",
+      "AM-BANK-INSTRUMENTS-001"
+    ],
+    "plain": "I need the underlying asset or document type to answer accurately. A name, nickname, seal, or large printed amount is not enough to identify an enforceable claim. Is this a bond, safekeeping receipt, standby letter of credit, inheritance document, physical gold or gemstone, wallet balance, or token? Please give the exact title, named issuer or custodian, date, jurisdiction, and what you want to establish: authenticity, ownership, control, value, transferability, or financing. Keep private keys, seed phrases, passwords, account access details, and sensitive personal documents out of a public conversation.",
+    "professional": "The underlying asset or document must be classified before an accurate assessment is possible. A nickname, seal, or large printed amount does not identify an enforceable entitlement. Specify whether the subject is a bond, safekeeping receipt, SBLC, inheritance document, physical metal or gemstone, wallet balance, or token. Provide its exact title, named issuer or custodian, date, jurisdiction, and the proposition to be established: authenticity, title, control, valuation, transferability, or financeability. Exclude private keys, recovery phrases, passwords, account access information, and sensitive personal documents from public discussion."
+  },
+  {
+    "id": "historical-treasury-warning",
+    "topic_ids": [
+      "bonds",
+      "proof"
+    ],
+    "keywords": [
+      "1934 federal reserve",
+      "100 million federal reserve",
+      "federal reserve bond",
+      "hundred million federal reserve"
+    ],
+    "plain": "Treasury publishes warnings about historical-bond schemes and examples of phony securities, including purported 1934 Federal Reserve documents in very large denominations. A description overlapping those examples is a serious screening flag, not a determination that your particular document is genuine or false. Preserve the original and compare its exact issuer, denomination, wording, dates, and format with the official warnings. Seek confirmation through independently located official channels before paying fees or discussing financing. A printed amount, seal, family history, or certificate of authentication does not establish a current redeemable debt.",
+    "professional": "Treasury’s published warnings address historical bond schemes and phony securities, including purported 1934 Federal Reserve documents with very large denominations. Correspondence with those examples warrants a serious screening flag; it does not determine the authenticity of the specific document presented. Preserve the original and compare issuer, denomination, wording, dates, and format against the official material. Obtain confirmation through independently located official channels before paying fees or pursuing financing. Printed amounts, seals, family provenance, and authentication certificates do not establish a currently redeemable obligation.",
+    "source_ids": [
+      "B01",
+      "B02"
+    ],
+    "article_ids": [
+      "AM-BANK-INSTRUMENTS-002",
+      "AM-BANK-INSTRUMENTS-006"
+    ]
+  }
+]

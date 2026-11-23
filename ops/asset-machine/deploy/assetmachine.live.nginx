@@ -1,0 +1,37 @@
+server {
+ listen 80; listen [::]:80;
+ server_name assetmachine.live www.assetmachine.live;
+ location ^~ /.well-known/acme-challenge/ { root /var/www/asset-machine-domain; default_type text/plain; }
+ location / { return 301 https://assetmachine.live$request_uri; }
+}
+server {
+ listen 443 ssl; listen [::]:443 ssl;
+ server_name www.assetmachine.live;
+ ssl_certificate /etc/letsencrypt/live/assetmachine.live/fullchain.pem;
+ ssl_certificate_key /etc/letsencrypt/live/assetmachine.live/privkey.pem;
+ return 301 https://assetmachine.live$request_uri;
+}
+server {
+ listen 443 ssl; listen [::]:443 ssl;
+ server_name assetmachine.live;
+ ssl_certificate /etc/letsencrypt/live/assetmachine.live/fullchain.pem;
+ ssl_certificate_key /etc/letsencrypt/live/assetmachine.live/privkey.pem;
+ add_header X-Content-Type-Options nosniff always;
+ add_header Referrer-Policy no-referrer always;
+ location = / {
+  proxy_pass http://127.0.0.1:18795/adapters/asset-machine/;
+  proxy_set_header Host swadebase.cloud;
+ }
+ location = /adapters/asset-machine/api/session {
+  default_type application/json;
+  add_header Cache-Control no-store;
+  return 200 '{"user":null}';
+ }
+ location ^~ /adapters/asset-machine/api/ { return 403; }
+ location ^~ /adapters/asset-machine/auth/ { return 302 https://swadebase.cloud$request_uri; }
+ location /adapters/asset-machine/ {
+  proxy_pass http://127.0.0.1:18795;
+  proxy_set_header Host swadebase.cloud;
+ }
+ location / { return 404; }
+}

@@ -1,0 +1,121 @@
+[
+  {
+    "slug": "bonds",
+    "plain": "A bond records a promise to pay under specified terms. Start by identifying the issuer, the type of bond and whether an obligation remains outstanding. A printed amount is not the same as today’s value.",
+    "professional": "Classify the debt instrument, identify the obligor and distinguish the stated denomination from outstanding principal, redemption entitlement and supported market or collectible value.",
+    "checks": [
+      "Exact issuer name, country, instrument type and identifier, if present.",
+      "Issue date, maturity, coupon, amendments and cancellation markings.",
+      "Evidence of ownership and the institution that can confirm the position."
+    ],
+    "steps": [
+      "Record the wording and photograph both sides.",
+      "Compare the instrument with the relevant issuer/reference records.",
+      "Ask the issuer, successor, transfer agent or custodian what remains payable and what evidence they require."
+    ],
+    "name": "Bonds and financial certificates",
+    "url": "https://assetmachine.live/#learn/bonds"
+  },
+  {
+    "slug": "sblc",
+    "plain": "An SBLC is a bank undertaking to pay a beneficiary when a demand meets its terms. It is not a promise that any holder can turn its face amount into cash. Start with the business purpose and the banks involved.",
+    "professional": "Review the undertaking’s issuer, applicant, beneficiary, operative terms, expiry, presentation requirements, applicable rules and amendments. Distinguish issuance/advising evidence from an uploaded purported SWIFT message.",
+    "checks": [
+      "Issuing/advising bank, applicant, beneficiary and undertaking reference.",
+      "Amount, currency, expiry, drawing conditions and all amendments.",
+      "Authority to request information and an independently established institutional confirmation channel."
+    ],
+    "steps": [
+      "If applying, explain the underlying obligation to your bank’s trade-finance team.",
+      "Ask the bank which application, credit, collateral and fee requirements apply to your case.",
+      "If holding a document, obtain authorized institutional confirmation before relying on it."
+    ],
+    "name": "SBLCs and bank guarantees",
+    "url": "https://assetmachine.live/#learn/sblc"
+  },
+  {
+    "slug": "inherited",
+    "plain": "First identify the exact asset. Savings bonds, outstanding securities and collectible certificates follow different paths. Inheriting the paper does not by itself establish who can redeem or transfer the asset.",
+    "professional": "Identify the security and registration, establish estate or beneficiary authority, and investigate the current issuer/successor and obligation status. Separate transferable or redeemable rights from scripophily value.",
+    "checks": [
+      "Names and registration on the document, series, dates and serial/identifier.",
+      "Any named co-owner or beneficiary and evidence of estate authority.",
+      "Issuer/successor status and whether a redemption or transfer process applies."
+    ],
+    "steps": [
+      "Keep originals safe; start with copies for preliminary research.",
+      "Use the issuer’s official deceased-owner or transfer instructions.",
+      "Ask an estate professional or the relevant institution which authority documents are needed."
+    ],
+    "name": "Inherited bonds and documents",
+    "url": "https://assetmachine.live/#learn/inherited"
+  },
+  {
+    "slug": "physical",
+    "plain": "Start with what the object or material is, where it is, who owns it and what independent testing supports the description. A photograph, stamped number or report cannot answer every question about the physical item.",
+    "professional": "Document identification, quantity/weight, fineness or grade, assay or laboratory evidence, provenance, chain of custody, title and location. Distinguish report-record matching from physical authentication and valuation.",
+    "checks": [
+      "Photographs, markings, measured quantity and current physical location.",
+      "Refiner, assay or gem laboratory report and its scope/date.",
+      "Ownership, custody and any transfer or shipment restrictions requiring specialist review."
+    ],
+    "steps": [
+      "Identify the relevant specialist: assay/refinery for metals, gem laboratory for stones, qualified laboratory for mineral samples.",
+      "Check report details using the issuing organization’s official service when available.",
+      "Arrange an appropriate physical inspection before relying on a sale or valuation claim."
+    ],
+    "name": "Gold, gemstones and minerals",
+    "url": "https://assetmachine.live/#learn/physical"
+  },
+  {
+    "slug": "unknown",
+    "plain": "That is a valid starting point. Names such as “golden dragon,” “golden drum” or “golden gun” need context. We should not assume they identify a recognized financial instrument, a particular material or an item with redeemable value.",
+    "professional": "Treat informal labels as unclassified claims. Establish the object/document, issuer or maker, provenance and relevant jurisdiction before assigning an instrument class or economic interpretation.",
+    "checks": [
+      "Exact wording, language, photographs, markings and dimensions.",
+      "Who supplied the description and what evidence supports it.",
+      "Whether this is a document, a commodity, a collectible or another physical object."
+    ],
+    "steps": [
+      "Describe only what you can observe, separately from what someone told you.",
+      "Open a private project to organize the evidence.",
+      "Choose the appropriate qualified specialist after initial classification; actual firearms require an appropriate specialist route."
+    ],
+    "name": "Unfamiliar names and unidentified items",
+    "url": "https://assetmachine.live/#learn/unknown"
+  },
+  {
+    "slug": "desks",
+    "plain": "“Trade desk” can mean very different things. A securities desk, a bank’s trade-finance department and a bullion desk handle different needs. Start with your asset and goal, then check the organization’s stated services and eligibility.",
+    "professional": "Route by instrument, transaction objective, jurisdiction and counterparty mandate. Distinguish securities execution/distribution from documentary trade finance and physical commodity dealing; institutional acceptance remains case-specific.",
+    "checks": [
+      "Does the organization publicly document the service you need?",
+      "Which customers, jurisdictions, instruments and minimum sizes does it accept?",
+      "Are the representative, mandate and official contact channel independently established?"
+    ],
+    "steps": [
+      "For SBLCs/guarantees, ask for the bank’s trade-finance or guarantees team.",
+      "For securities, identify an appropriate broker/dealer, transfer agent or custodian according to the objective.",
+      "For metals, choose a relevant bullion dealer/refiner and inspection/custody specialist."
+    ],
+    "name": "Find the right desk or professional",
+    "url": "https://assetmachine.live/#learn/desks"
+  },
+  {
+    "slug": "digital",
+    "plain": "A token is a digital record. It needs a clear explanation of the rights it represents. Recording a claim on a blockchain does not make the underlying asset genuine, valuable or acceptable to a lender.",
+    "professional": "Separate ledger observations, control evidence, legal title, underlying custody, token-holder rights, issuance permissions and transfer restrictions. Oracle outputs are source-dependent attestations, not independent asset authentication.",
+    "checks": [
+      "Network, public wallet/contract address and claimed rights.",
+      "Underlying asset evidence and the custodian or responsible issuer.",
+      "Legal terms, permitted transfers and the exact scope/freshness of any attestation."
+    ],
+    "steps": [
+      "Organize the underlying rights and evidence first.",
+      "Review public ledger observations and obtain suitable technical/legal review.",
+      "Consider issuance only after the required approvals and operating arrangements exist."
+    ],
+    "name": "Wallets, contracts and tokenization",
+    "url": "https://assetmachine.live/#learn/digital"
+  }
+]

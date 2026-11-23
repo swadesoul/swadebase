@@ -1,0 +1,1666 @@
+{
+  "version": "1.0.0",
+  "topics": [
+    {
+      "id": "start",
+      "title": "Start an asset review",
+      "summary": "Create a private project to describe what you have and organize supporting evidence. Opening a project does not verify the asset.",
+      "details": [
+        "Begin with the exact item or right, your relationship to it, and the outcome you want. You can read the public guides before signing in.",
+        "Keep an owner-supplied statement separate from facts independently confirmed by a qualified source."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-004",
+        "AM-FOUNDATIONS-009"
+      ]
+    },
+    {
+      "id": "explanation-style",
+      "title": "Plain or professional explanations",
+      "summary": "Choose everyday language or more technical wording for introductory guides and public answers. The underlying evidence requirements stay the same.",
+      "details": [
+        "You can switch styles as your understanding grows. This setting changes how explanations are presented; it does not approve an asset or change a review result."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-001",
+        "AM-FOUNDATIONS-002"
+      ]
+    },
+    {
+      "id": "sign-in",
+      "title": "Your private workspace",
+      "summary": "Sign in with the approved account used for your workspace access. Public guides and general questions are available without signing in.",
+      "details": [
+        "A project keeps documents, project conversations and released reports together according to your access. Having a sign-in link alone does not grant access.",
+        "Use the same approved email when choosing Google sign-in. Never enter a wallet private key or recovery phrase as an account credential."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-008",
+        "AM-DIGITAL-ASSETS-003"
+      ]
+    },
+    {
+      "id": "choose-asset",
+      "title": "Choose the closest asset type",
+      "summary": "Choose the category that best describes the item or right. If you are unsure, preserve its exact wording and explain the uncertainty.",
+      "details": [
+        "Bonds, bank instruments and physical property can start in the instrument category. Wallets, smart contracts and digital preparation have their own starting categories.",
+        "A category is an organizing choice, not a conclusion about authenticity, ownership or value."
+      ],
+      "article_ids": [
+        "AM-BANK-INSTRUMENTS-001",
+        "AM-FOUNDATIONS-009"
+      ]
+    },
+    {
+      "id": "bonds",
+      "title": "Understanding a bond",
+      "summary": "A bond describes a debt obligation under stated terms. Its printed face amount is not the same as current sale value or a confirmed payable balance.",
+      "details": [
+        "Identify the issuer, exact issue, holder, maturity and current status. Obtain the appropriate issuer, registrar or custody evidence before relying on the claim.",
+        "An old or convincing certificate may require corporate-action, estate or redemption checks."
+      ],
+      "article_ids": [
+        "AM-BANK-INSTRUMENTS-002",
+        "AM-INHERITED-AND-PHYSICAL-ASSETS-004"
+      ]
+    },
+    {
+      "id": "skr",
+      "title": "What an SKR establishes",
+      "summary": "An SKR is a safekeeping receipt whose exact custody terms need checking. A receipt alone does not establish the contents, ownership, value or financing availability.",
+      "details": [
+        "Ask what was received, whether it was inspected, what is held now, who may obtain delivery and which charges or claims apply.",
+        "Connect the receipt, custody agreement and identified property through direct confirmation from the appropriate custodian."
+      ],
+      "article_ids": [
+        "AM-BANK-INSTRUMENTS-003",
+        "AM-BANK-INSTRUMENTS-007"
+      ]
+    },
+    {
+      "id": "sblc",
+      "title": "Understanding an SBLC",
+      "summary": "An SBLC is a bank undertaking with specific terms and drawing conditions. Its stated amount is not unrestricted cash available to the beneficiary.",
+      "details": [
+        "Identify the applicant, issuing bank, beneficiary, expiry, applicable terms and any advising or confirming bank. Verification should reach the bank through an independently established channel.",
+        "A message label or supplied SWIFT copy does not settle the undertaking, current availability or a lender’s decision."
+      ],
+      "article_ids": [
+        "AM-BANK-INSTRUMENTS-004",
+        "AM-BANK-INSTRUMENTS-005"
+      ]
+    },
+    {
+      "id": "inheritance",
+      "title": "Inherited documents and authority",
+      "summary": "Inherited papers can be useful evidence, but the right to act for an estate or transfer an asset must also be established.",
+      "details": [
+        "Preserve originals and identify the asset’s registration, the relevant estate or trust, and the person currently authorized to act.",
+        "A will, beneficiary arrangement, trust and court appointment can have different roles. The applicable process depends on the asset and jurisdiction."
+      ],
+      "article_ids": [
+        "AM-INHERITED-AND-PHYSICAL-ASSETS-001",
+        "AM-INHERITED-AND-PHYSICAL-ASSETS-002",
+        "AM-INHERITED-AND-PHYSICAL-ASSETS-007"
+      ]
+    },
+    {
+      "id": "gold",
+      "title": "Gold: identity, custody and value",
+      "summary": "Identify whether the claim concerns physical metal, an account entitlement or another right. Testing, ownership, custody and valuation answer different questions.",
+      "details": [
+        "Match bar or item identifiers, weight, stated fineness, inspection records and custody evidence. Use a test method suitable for the item and the claim.",
+        "A photograph, hallmark or price calculation alone does not establish the metal’s composition or availability for delivery."
+      ],
+      "article_ids": [
+        "AM-INHERITED-AND-PHYSICAL-ASSETS-008",
+        "AM-INHERITED-AND-PHYSICAL-ASSETS-009",
+        "AM-INHERITED-AND-PHYSICAL-ASSETS-010"
+      ]
+    },
+    {
+      "id": "gems",
+      "title": "Gems: identify the actual stone",
+      "summary": "A gem report must be checked with its issuer and matched to the actual stone. Identification or grading is separate from ownership and achievable sale value.",
+      "details": [
+        "Record the material, natural or laboratory-created origin where applicable, treatments, dimensions and identifying features.",
+        "A matching report number supports the report record; it does not alone establish that the seller holds the described stone."
+      ],
+      "article_ids": [
+        "AM-INHERITED-AND-PHYSICAL-ASSETS-014",
+        "AM-INHERITED-AND-PHYSICAL-ASSETS-015",
+        "AM-INHERITED-AND-PHYSICAL-ASSETS-016"
+      ]
+    },
+    {
+      "id": "minerals",
+      "title": "Minerals and underground resources",
+      "summary": "A mineral deposit or mining interest is a different claim from metal already available for delivery. Review the rights and technical report that support the claim.",
+      "details": [
+        "Record the report’s author, qualifications, effective date, reporting standard and assumptions, along with the relevant property or mineral rights.",
+        "Do not describe an underground resource estimate as a deliverable vault inventory."
+      ],
+      "article_ids": [
+        "AM-INHERITED-AND-PHYSICAL-ASSETS-005",
+        "AM-INHERITED-AND-PHYSICAL-ASSETS-013"
+      ]
+    },
+    {
+      "id": "unknown-asset",
+      "title": "When you do not know the name",
+      "summary": "Use the exact wording, markings and description you can observe. An unfamiliar label should remain a question until the item is properly classified.",
+      "details": [
+        "Photograph both sides and preserve related records. Keep what someone told you separate from what the document or object actually shows.",
+        "Choose the appropriate specialist after clarifying the claim; do not infer a financial product from a nickname."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-004",
+        "AM-FOUNDATIONS-009",
+        "AM-BANK-INSTRUMENTS-001"
+      ]
+    },
+    {
+      "id": "professional",
+      "title": "Choose the appropriate professional",
+      "summary": "Match the professional to the question: legal authority, bank terms, physical testing, custody or market value may need different specialists.",
+      "details": [
+        "Check the organization, qualifications, official contact route, engagement scope and the report it will provide.",
+        "A securities desk, trade-finance team and bullion specialist perform different functions. Interest from a contact is not a financing commitment."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-007",
+        "AM-BANK-INSTRUMENTS-007"
+      ]
+    },
+    {
+      "id": "wallets",
+      "title": "What a wallet can show",
+      "summary": "A public address can reveal ledger information on a specific network. Seeing a balance does not establish who controls it, owns it or may transfer it.",
+      "details": [
+        "Start with the exact network and public address. Separate observed balance, control evidence, legal title and economic value.",
+        "Never provide private keys or recovery phrases to establish an asset claim."
+      ],
+      "article_ids": [
+        "AM-DIGITAL-ASSETS-001",
+        "AM-DIGITAL-ASSETS-003",
+        "AM-DIGITAL-ASSETS-004"
+      ]
+    },
+    {
+      "id": "contracts",
+      "title": "Review the exact smart contract",
+      "summary": "A token name or ticker is not enough to identify a contract. Record its network and exact address, then examine the relevant controls and restrictions.",
+      "details": [
+        "The review may need to identify who can mint, pause, freeze, change fees or upgrade the contract. A proxy can point to separate implementation code.",
+        "A contract or ledger observation does not by itself establish off-chain asset backing or legal rights."
+      ],
+      "article_ids": [
+        "AM-DIGITAL-ASSETS-002",
+        "AM-DIGITAL-ASSETS-005",
+        "AM-DIGITAL-ASSETS-009"
+      ]
+    },
+    {
+      "id": "tokenization",
+      "title": "What a token represents",
+      "summary": "Tokenization records or represents a defined right. The holder’s enforceable rights, responsible parties and redemption terms need to be clear.",
+      "details": [
+        "Review the underlying asset, authority, custody, restrictions and proposed holder rights before considering issuance.",
+        "Creating a digital record does not establish the underlying asset’s authenticity, value or acceptance by a lender."
+      ],
+      "article_ids": [
+        "AM-DIGITAL-ASSETS-009",
+        "AM-DIGITAL-ASSETS-010",
+        "AM-DIGITAL-ASSETS-011"
+      ]
+    },
+    {
+      "id": "journey",
+      "title": "The five-stage asset journey",
+      "summary": "Verify, structure, connect, settle and monitor describe distinct stages. Each stage requires its own evidence, responsible parties and approvals.",
+      "details": [
+        "The current workspace organizes evidence, screening, review and preparation. A stage label is not proof that a financial transaction has occurred.",
+        "Follow the current availability notes beside each stage. External issuance, settlement and attestation arrangements require their own connections and terms."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-004",
+        "AM-DIGITAL-ASSETS-011"
+      ]
+    },
+    {
+      "id": "verify",
+      "title": "Verify the specific claim",
+      "summary": "Collect records and identify which facts need independent confirmation. Existence, ownership, custody, value and transferability must be assessed separately.",
+      "details": [
+        "Screening can point out observations and missing information. Record who confirmed each fact, when, by which method and within what scope."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-002",
+        "AM-FOUNDATIONS-003",
+        "AM-FOUNDATIONS-004"
+      ]
+    },
+    {
+      "id": "structure",
+      "title": "Define the rights first",
+      "summary": "Describe exactly what right a holder would receive, against whom it can be enforced and what restrictions apply.",
+      "details": [
+        "Link the proposed structure to ownership and authority evidence, custody arrangements, transfer terms and any redemption obligations.",
+        "Digital preparation in this workspace does not issue a token."
+      ],
+      "article_ids": [
+        "AM-DIGITAL-ASSETS-009",
+        "AM-DIGITAL-ASSETS-010",
+        "AM-DIGITAL-ASSETS-012"
+      ]
+    },
+    {
+      "id": "connect",
+      "title": "Prepare a factual introduction",
+      "summary": "Build a sourced briefing for an appropriate professional, buyer or lender. Their eligibility and acceptance still need confirmation.",
+      "details": [
+        "Separate known facts, owner-supplied claims and unresolved questions. Review every statement and the information intended for sharing.",
+        "Saving a contact or briefing does not send a message or create a commitment."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-007",
+        "AM-BANK-INSTRUMENTS-005",
+        "AM-BANK-INSTRUMENTS-007"
+      ]
+    },
+    {
+      "id": "settle",
+      "title": "Agree how the transfer completes",
+      "summary": "A completed transaction needs the responsible parties to agree on payment, delivery, rights transfer and any escrow or custody requirements.",
+      "details": [
+        "Identify what must happen, who performs each step and what happens if a step fails.",
+        "This workspace does not move funds or complete settlement."
+      ],
+      "article_ids": [
+        "AM-BANK-INSTRUMENTS-005",
+        "AM-DIGITAL-ASSETS-014"
+      ]
+    },
+    {
+      "id": "monitor",
+      "title": "Keep evidence current",
+      "summary": "An earlier confirmation describes its recorded scope and time. Review changes, expiry and unresolved conditions before relying on it again.",
+      "details": [
+        "Identify the source, observation date, exact assertion and refresh requirements. A changed custody position or legal restriction can affect the next action.",
+        "External monitoring feeds are not connected merely because an evidence record exists."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-008",
+        "AM-DIGITAL-ASSETS-013",
+        "AM-DIGITAL-ASSETS-017"
+      ]
+    },
+    {
+      "id": "oracle",
+      "title": "What an oracle can establish",
+      "summary": "An oracle relays information or an attestation from a source. Its output depends on that source’s scope and freshness.",
+      "details": [
+        "Ask who made the assertion, what was checked, when it was checked and how it relates to the particular asset.",
+        "An oracle is not independent bond authentication, a valuation guarantee or a funding commitment. External attestation feeds are currently awaiting connection."
+      ],
+      "article_ids": [
+        "AM-DIGITAL-ASSETS-017",
+        "AM-FOUNDATIONS-003"
+      ]
+    },
+    {
+      "id": "public-questions",
+      "title": "Ask a general asset question",
+      "summary": "Ask about the published guides or how the site works. Use your private project for questions involving your documents or personal financial information.",
+      "details": [
+        "The public assistant explains supported subjects and links to relevant reading. It does not inspect your holdings or certify an asset.",
+        "Choose Plain language or Professional terms above, then speak or type. If a question is unclear, try naming the asset and the specific point you want explained."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-001",
+        "AM-DIGITAL-ASSETS-018"
+      ]
+    },
+    {
+      "id": "public-microphone",
+      "title": "Speak to Asset Machine",
+      "summary": "Tap the disc and allow microphone access, then tap it again to finish your question. You can always type instead.",
+      "details": [
+        "A recording ends automatically after about 25 seconds. When the disc is preparing or speaking a reply, tapping it stops the current voice activity.",
+        "Keep the public question general. Do not speak account credentials, recovery phrases or private document details here."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-001",
+        "AM-DIGITAL-ASSETS-003"
+      ]
+    },
+    {
+      "id": "public-stop",
+      "title": "Stop the current voice activity",
+      "summary": "Stop ends the current public recording, pending reply or playback. If you were recording, use the disc to finish and submit your question instead.",
+      "details": [
+        "The disc finishes a recording and asks the question; the separate Stop control cancels the current activity. You can start a new question afterward."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-001"
+      ]
+    },
+    {
+      "id": "public-replay",
+      "title": "Listen to the reply again",
+      "summary": "Play reply restarts the latest prepared spoken answer. The written answer and its reference links remain available for reading.",
+      "details": [
+        "If your browser blocks automatic playback, press Play reply. If audio is unavailable, use the text and follow its linked sources."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-001"
+      ]
+    },
+    {
+      "id": "reference-sources",
+      "title": "Sources, dates and scope",
+      "summary": "A source supports the particular statement within its scope. Check its date, jurisdiction and limitations before applying it to an asset claim.",
+      "details": [
+        "Article links explain the subject; primary-source links take you to the underlying institution or publication. A research date is not a fresh confirmation of an individual holding.",
+        "Reading a source or finding a report number does not itself establish ownership, value or permission to transfer."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-003",
+        "AM-FOUNDATIONS-007",
+        "AM-DIGITAL-ASSETS-015"
+      ]
+    },
+    {
+      "id": "library",
+      "title": "The full knowledge base",
+      "summary": "Explore the detailed public reference library by topic or search term. Open Knowledge & help anywhere to read without leaving your current work.",
+      "details": [
+        "The library covers evidence, bonds, SKRs, SBLCs, inherited assets, gold, gems, wallets and tokenization.",
+        "Use the article’s source links and scope notes for deeper checking. The library provides education, not a finding about a specific asset."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-001",
+        "AM-FOUNDATIONS-002"
+      ]
+    },
+    {
+      "id": "library-search",
+      "title": "Find a specific explanation",
+      "summary": "Search article titles, reference text and topic terms. A few precise words usually work best, such as SKR, assay, MT799 or redemption.",
+      "details": [
+        "A selected topic narrows the results. Clear the query or choose All topics to broaden the search.",
+        "The public library searches published explanations, not your private project documents."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-001"
+      ]
+    },
+    {
+      "id": "topic-filter",
+      "title": "Browse by subject",
+      "summary": "Choose a topic to narrow the library, then use search to find a specific question within it.",
+      "details": [
+        "An article can belong to several topics when the same evidence issue affects more than one asset type. Choose All topics to restore the complete library."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-001",
+        "AM-FOUNDATIONS-002"
+      ]
+    },
+    {
+      "id": "evidence-checklists",
+      "title": "Use the evidence checklist",
+      "summary": "Download a working checklist to organize the records and confirmations needed for an asset review. A checked box needs supporting evidence.",
+      "details": [
+        "Record the source, date, scope and unresolved questions for each relevant item. The checklist does not replace the appropriate professional’s examination or decision."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-004",
+        "AM-FOUNDATIONS-008"
+      ]
+    },
+    {
+      "id": "article-downloads",
+      "title": "Save a complete reference article",
+      "summary": "Download Markdown for formatted reuse or plain text for easy reading. Both include the article’s reference information and source links.",
+      "details": [
+        "These downloads contain public educational material. They do not export your private project, uploaded documents or attorney work."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-001",
+        "AM-FOUNDATIONS-003"
+      ]
+    },
+    {
+      "id": "guide-share",
+      "title": "Share the public explanation",
+      "summary": "Share or download the introductory guide for someone who needs context. The educational link or card does not include your private project details.",
+      "details": [
+        "The explanation card is a short introduction; use the guide text or full knowledge article for more detail.",
+        "Sharing a guide is not an asset verification statement or permission to share client documents."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-001",
+        "AM-FOUNDATIONS-008"
+      ]
+    },
+    {
+      "id": "project-name",
+      "title": "Name your project clearly",
+      "summary": "Use a recognizable name for the holding or question. A project name is a label, not an authentication or valuation statement.",
+      "details": [
+        "For example, identify the asset type and the review purpose without putting sensitive account credentials in the title."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-008",
+        "AM-FOUNDATIONS-009"
+      ]
+    },
+    {
+      "id": "owner-description",
+      "title": "Describe the claim in your words",
+      "summary": "Explain what you believe you hold, how you obtained it and what you want to do. This is recorded as your statement until supporting evidence establishes the facts.",
+      "details": [
+        "Include the exact document wording or observable features when the classification is uncertain. Distinguish what you saw from what someone else told you."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-004",
+        "AM-FOUNDATIONS-009"
+      ]
+    },
+    {
+      "id": "issuer",
+      "title": "Stated issuer or creator",
+      "summary": "Enter the issuer or creator as shown on the record. A printed name or logo still needs to be linked to the appropriate independent source.",
+      "details": [
+        "Keep the issuer, intermediary and custodian distinct. If you are unsure which role a named organization has, say so in the description."
+      ],
+      "article_ids": [
+        "AM-BANK-INSTRUMENTS-001",
+        "AM-BANK-INSTRUMENTS-002",
+        "AM-BANK-INSTRUMENTS-004"
+      ]
+    },
+    {
+      "id": "face-value",
+      "title": "Claimed amount versus current value",
+      "summary": "Record the amount and currency stated in the claim. Face value, an appraisal, a displayed balance and likely sale proceeds are different measures.",
+      "details": [
+        "Use the description to identify where the figure came from and its date. Do not present an entered number as a verified valuation or financing offer."
+      ],
+      "article_ids": [
+        "AM-BANK-INSTRUMENTS-002",
+        "AM-INHERITED-AND-PHYSICAL-ASSETS-012",
+        "AM-DIGITAL-ASSETS-006"
+      ]
+    },
+    {
+      "id": "issue-date",
+      "title": "Record the stated date",
+      "summary": "Copy the issue date exactly as shown and explain any uncertainty. An old or recent date alone does not establish current validity.",
+      "details": [
+        "Where several dates appear, distinguish issuance, maturity, inspection and confirmation dates in your description or evidence."
+      ],
+      "article_ids": [
+        "AM-BANK-INSTRUMENTS-002",
+        "AM-FOUNDATIONS-008"
+      ]
+    },
+    {
+      "id": "network",
+      "title": "Choose the correct blockchain network",
+      "summary": "The same-looking address or token name can appear on different networks. Choose the actual network relevant to the holding or contract.",
+      "details": [
+        "The network and exact asset identifier must be assessed together. A supported selection does not by itself prove control, ownership or token value."
+      ],
+      "article_ids": [
+        "AM-DIGITAL-ASSETS-001",
+        "AM-DIGITAL-ASSETS-002",
+        "AM-DIGITAL-ASSETS-004"
+      ]
+    },
+    {
+      "id": "public-address",
+      "title": "Public wallet or contract address",
+      "summary": "Enter the public address for the selected network. Never enter a private key, recovery phrase or account password.",
+      "details": [
+        "A public address lets a reviewer identify ledger information. It does not establish that you control the address or have legal authority to sell or pledge its assets.",
+        "For a token or NFT, the contract address and any applicable token ID may also be needed."
+      ],
+      "article_ids": [
+        "AM-DIGITAL-ASSETS-001",
+        "AM-DIGITAL-ASSETS-002",
+        "AM-DIGITAL-ASSETS-003"
+      ]
+    },
+    {
+      "id": "goal",
+      "title": "Explain the intended next step",
+      "summary": "State the question you want resolved: identification, ownership, inheritance transfer, sale, redemption, financing or tokenization.",
+      "details": [
+        "The intended action determines which evidence and specialist review are relevant. Asking for an outcome does not mean it is available or approved."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-009",
+        "AM-BANK-INSTRUMENTS-005",
+        "AM-DIGITAL-ASSETS-011"
+      ]
+    },
+    {
+      "id": "optional-details",
+      "title": "Add particulars you can support",
+      "summary": "Add issuer, amount, dates and network details when you know them. You can leave unknown particulars blank and explain the gaps.",
+      "details": [
+        "Keep uncertain information qualified. Supporting documents and independent confirmations are more useful than guessing a technical field."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-004",
+        "AM-FOUNDATIONS-009"
+      ]
+    },
+    {
+      "id": "project-status",
+      "title": "What the project status means",
+      "summary": "The status describes the project’s place in the review workflow. It is not an asset authenticity, value or financing rating.",
+      "details": [
+        "A queued project awaits review steps. A released report means the approved report is available; its actual conclusions and limitations still control."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-005",
+        "AM-FOUNDATIONS-008"
+      ]
+    },
+    {
+      "id": "next-step",
+      "title": "Your next suggested action",
+      "summary": "The workspace suggests a next step from the documents, findings and reports currently recorded. Review the underlying evidence before acting.",
+      "details": [
+        "Typical next steps are adding originals, checking extracted text, reviewing screening questions and reading an independently released report."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-004",
+        "AM-FOUNDATIONS-008"
+      ]
+    },
+    {
+      "id": "action-summary",
+      "title": "Download the project action summary",
+      "summary": "This download summarizes the project description, document references, recorded findings and suggested next steps. It is separate from the released legal report.",
+      "details": [
+        "The summary is generated from current project information and can include private project details. Review it before sharing.",
+        "It does not include private attorney notes or unreleased drafts. Download any released legal report separately from Legal review."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-008",
+        "AM-FOUNDATIONS-003"
+      ]
+    },
+    {
+      "id": "evidence-room",
+      "title": "Build the evidence file",
+      "summary": "Keep original records and a clear explanation of what each item supports. A document’s presence does not mean its contents have been independently verified.",
+      "details": [
+        "For documents, include both sides and relevant attachments. For physical assets, connect photographs and reports to the specific item or inventory.",
+        "Record independent confirmations, their dates and any remaining gaps alongside the submitted material."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-003",
+        "AM-FOUNDATIONS-008",
+        "AM-INHERITED-AND-PHYSICAL-ASSETS-007"
+      ]
+    },
+    {
+      "id": "document-upload",
+      "title": "Upload supporting originals",
+      "summary": "Add PDF, PNG, JPEG or text files, up to 10 MB each and 30 documents per project. Check that every file belongs to this project.",
+      "details": [
+        "Include front and back where relevant. Keep the physical original safe and retain information about its source.",
+        "After upload, inspect the extracted text for errors in names, identifiers, dates and amounts."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-003",
+        "AM-INHERITED-AND-PHYSICAL-ASSETS-007"
+      ]
+    },
+    {
+      "id": "ocr",
+      "title": "Inspect and correct extracted text",
+      "summary": "OCR is a working transcription and can misread important details. Correcting it changes the transcription; the original file remains intact.",
+      "details": [
+        "Compare names, serial numbers, dates, decimal places and currency symbols with the original. Explain unclear or missing wording instead of inventing it."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-003",
+        "AM-FOUNDATIONS-008"
+      ]
+    },
+    {
+      "id": "original-file",
+      "title": "Download the uploaded original",
+      "summary": "Original downloads the source file stored with this project. Preserve it separately from any corrected transcription or later summary.",
+      "details": [
+        "The original may contain private information. Check the intended recipient and sharing authority before sending it elsewhere."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-008",
+        "AM-INHERITED-AND-PHYSICAL-ASSETS-007"
+      ]
+    },
+    {
+      "id": "hash",
+      "title": "What the file hash proves",
+      "summary": "A SHA-256 hash helps check whether a file’s bytes match a recorded version. It does not establish that the document’s claims are true.",
+      "details": [
+        "Use the hash alongside the file’s source, identity and review history. Matching bytes are not proof of asset ownership, authenticity or value."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-003",
+        "AM-DIGITAL-ASSETS-017"
+      ]
+    },
+    {
+      "id": "screening",
+      "title": "What automated screening does",
+      "summary": "Run screening to record observations, concerns and missing evidence from the available material. It does not authenticate an instrument or establish legal title.",
+      "details": [
+        "Inspect extracted text first. Read each finding’s scope and source, then seek the appropriate independent confirmation for material claims.",
+        "A supported ledger observation is a technical finding at a point in time, not a complete asset or ownership review."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-003",
+        "AM-FOUNDATIONS-004",
+        "AM-DIGITAL-ASSETS-004"
+      ]
+    },
+    {
+      "id": "finding-scope",
+      "title": "Read each finding within its scope",
+      "summary": "A finding records an observation, concern or gap with a stated scope. A concern prompts further review; it is not automatically a fraud accusation.",
+      "details": [
+        "Check what was examined, the source, the recorded date and the unanswered questions. Keep source-matched facts separate from claims still awaiting confirmation."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-005",
+        "AM-FOUNDATIONS-006"
+      ]
+    },
+    {
+      "id": "review-request",
+      "title": "Submit a project for legal review",
+      "summary": "Submission places the project in the review queue. Active legal review still requires accepted engagement and the applicable payment arrangements.",
+      "details": [
+        "Organize the evidence and your questions before submitting. The attorney’s released report, not submission alone, provides the scoped legal analysis."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-007",
+        "AM-FOUNDATIONS-008"
+      ]
+    },
+    {
+      "id": "legal-review",
+      "title": "Independent legal review",
+      "summary": "Legal review addresses the agreed questions and evidence within an accepted engagement. The displayed project review is subject to scope, conflicts and jurisdiction checks.",
+      "details": [
+        "The standard review price shown here is $500 per project; additional representation is separate. Payment records and any applicable exemption are handled in the workspace.",
+        "Legal review does not automatically supply physical testing, issuer confirmation, valuation or financing acceptance."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-007",
+        "AM-FOUNDATIONS-008",
+        "AM-BANK-INSTRUMENTS-005"
+      ]
+    },
+    {
+      "id": "engagement",
+      "title": "Accept the review engagement",
+      "summary": "The assigned reviewer confirms the agreed scope, applicable conflict check and ability to undertake the matter in the relevant jurisdiction.",
+      "details": [
+        "Confirm each acknowledgment based on the actual professional checks. Accepting an engagement does not by itself approve the report or resolve missing evidence."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-007",
+        "AM-FOUNDATIONS-008"
+      ]
+    },
+    {
+      "id": "payment-record",
+      "title": "Record a confirmed review payment",
+      "summary": "This records an independently confirmed external review-payment receipt. It does not charge a card or transfer money.",
+      "details": [
+        "Enter the actual receipt or transaction reference only after confirming the payment through the agreed process. The acknowledgment records that confirmation."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-008"
+      ]
+    },
+    {
+      "id": "private-notes",
+      "title": "Private reviewer working notes",
+      "summary": "Use this area for the assigned reviewer’s working analysis. These notes are separate from the client report and are not released with it.",
+      "details": [
+        "Keep the client-facing conclusions in the report draft. Save the review version when notes or the draft change."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-008"
+      ]
+    },
+    {
+      "id": "report-draft",
+      "title": "Prepare the client report draft",
+      "summary": "Write the analysis intended for the client, including the scope, evidence considered, conclusions and unresolved questions.",
+      "details": [
+        "This is a working draft until the reviewer saves, approves and releases the appropriate version. Editing is not the same as releasing a report."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-008",
+        "AM-FOUNDATIONS-005"
+      ]
+    },
+    {
+      "id": "ai-draft",
+      "title": "Review every AI-assisted draft",
+      "summary": "Prepare AI draft creates suggested report text from the permitted case material. The assigned reviewer must check, edit and save it before approval.",
+      "details": [
+        "Confirm factual statements, source references and missing-evidence qualifications. An AI draft does not approve itself or release a client report.",
+        "Save or copy current unsaved edits before replacing the draft."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-008",
+        "AM-DIGITAL-ASSETS-018"
+      ]
+    },
+    {
+      "id": "save-version",
+      "title": "Save a review version",
+      "summary": "Save the current notes and draft as a review version. Saving preserves the work but does not approve or release it.",
+      "details": [
+        "Approval applies to an exact saved version. After editing, save and review the resulting version before approval."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-008",
+        "AM-FOUNDATIONS-005"
+      ]
+    },
+    {
+      "id": "approve-version",
+      "title": "Approve the exact saved report",
+      "summary": "Approval records the assigned reviewer’s judgment on the exact saved version. Unsaved changes must be resolved first.",
+      "details": [
+        "Approval and release are separate steps. Changes to the relevant draft or evidence require renewed review rather than reliance on an earlier approval."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-005",
+        "AM-FOUNDATIONS-008"
+      ]
+    },
+    {
+      "id": "release-report",
+      "title": "Release the approved report",
+      "summary": "Release makes the approved report version available in the authenticated client portal. It does not send an external email.",
+      "details": [
+        "Confirm the exact saved and approved version before releasing it. Clients see the released report, not private notes or unreleased drafts."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-008",
+        "AM-FOUNDATIONS-005"
+      ]
+    },
+    {
+      "id": "report-download",
+      "title": "Download the released legal report",
+      "summary": "Download the specific released report version shown here. Read its scope, findings and limitations before relying on it.",
+      "details": [
+        "Earlier released versions may also appear. Check the version and release date, and treat the downloaded report as private project material."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-008",
+        "AM-FOUNDATIONS-005"
+      ]
+    },
+    {
+      "id": "audio-excerpts",
+      "title": "Listen to a text excerpt",
+      "summary": "Listen plays a limited excerpt of the displayed answer or report. Read or download the complete text for the full analysis and references.",
+      "details": [
+        "Audio is a reading aid. It does not add a verification or professional approval to the underlying text."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-003",
+        "AM-FOUNDATIONS-008"
+      ]
+    },
+    {
+      "id": "contacts",
+      "title": "Prepare the next conversation",
+      "summary": "Record a prospective contact and a factual briefing from attributable sources. A saved prospect is not an introduction, endorsement or commitment.",
+      "details": [
+        "Verify the person, organization, relevant services and authority independently. Keep claims about your asset within the evidence actually available.",
+        "Saving this information does not initiate outreach."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-007",
+        "AM-BANK-INSTRUMENTS-005",
+        "AM-BANK-INSTRUMENTS-007"
+      ]
+    },
+    {
+      "id": "contact-details",
+      "title": "Identify the actual contact",
+      "summary": "Record the person’s name, organization and professional email from a source you can verify. Do not assume a familiar name or domain establishes authority.",
+      "details": [
+        "Keep the supporting source and unresolved identity questions in the briefing. Check contact details independently before sharing private material."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-007"
+      ]
+    },
+    {
+      "id": "contact-role",
+      "title": "Record the contact’s actual authority",
+      "summary": "Describe the person’s documented role and what decisions they can make. Interest in a proposal is not authority to approve funding or a transaction.",
+      "details": [
+        "Separate a broker, introducer, adviser and final decision-maker. Note any authority that has not yet been independently established."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-007",
+        "AM-BANK-INSTRUMENTS-005"
+      ]
+    },
+    {
+      "id": "source-url",
+      "title": "Keep an attributable source",
+      "summary": "Enter a public HTTPS page that supports the contact’s identity, role or services. A pasted link is a reference to check, not independent confirmation.",
+      "details": [
+        "Prefer an independently located official organization page or appropriate professional register. Record any facts the page does not establish."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-007",
+        "AM-BANK-INSTRUMENTS-007"
+      ]
+    },
+    {
+      "id": "documented-interest",
+      "title": "Explain the documented fit",
+      "summary": "Describe why the proposed conversation fits the contact’s publicly stated interests or services. Keep an assumption clearly labeled as an assumption.",
+      "details": [
+        "Refer to specific evidence of the organization’s scope or eligibility requirements. Do not present likely interest as an agreed mandate or offer."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-007",
+        "AM-BANK-INSTRUMENTS-005"
+      ]
+    },
+    {
+      "id": "diligence",
+      "title": "Record the unresolved questions",
+      "summary": "List the counterparty checks completed and the issues still open, including identity, authority, service eligibility and proposed terms.",
+      "details": [
+        "A concise record of what remains unknown is more useful than an unsupported claim that a contact or asset is fully verified."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-007",
+        "AM-FOUNDATIONS-008",
+        "AM-BANK-INSTRUMENTS-007"
+      ]
+    },
+    {
+      "id": "briefing-download",
+      "title": "Download a draft briefing",
+      "summary": "The briefing organizes the proposed conversation and suggested opening. It remains a draft and has not been sent.",
+      "details": [
+        "Review its claims, contact details and sharing permissions before using it. Private legal notes and reports are not automatically included."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-008",
+        "AM-BANK-INSTRUMENTS-007"
+      ]
+    },
+    {
+      "id": "project-history",
+      "title": "Understand the activity history",
+      "summary": "Project history records workflow actions and their times. It helps you follow what happened in the workspace.",
+      "details": [
+        "An activity record is not independent confirmation of the underlying asset. Read the associated evidence and any released review for the substantive findings."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-008",
+        "AM-DIGITAL-ASSETS-017"
+      ]
+    },
+    {
+      "id": "member-access",
+      "title": "Manage workspace access",
+      "summary": "Use the access controls available to your role to add permitted users or manage access. Saving access does not send an invitation email automatically.",
+      "details": [
+        "The person must sign in with the approved account. Choose only the access appropriate to their actual responsibilities."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-008"
+      ]
+    },
+    {
+      "id": "approved-email",
+      "title": "Use the approved account email",
+      "summary": "Enter the email the person will use for their confirmed sign-in. A different Google account will not match the approved access.",
+      "details": [
+        "Check the address carefully before saving. Share the sign-in link through your agreed process; saving an access record does not send an email."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-008"
+      ]
+    },
+    {
+      "id": "roles",
+      "title": "Choose the appropriate role",
+      "summary": "Clients work with their own projects and released reports; reviewers work on assigned legal matters; administrators manage projects within their permissions.",
+      "details": [
+        "Only grant the role needed for the person’s responsibilities. Role assignment does not make private notes or unreleased drafts public."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-008"
+      ]
+    },
+    {
+      "id": "client-invites",
+      "title": "Permission to invite clients",
+      "summary": "This permission allows an administrator to invite clients when authorized. It does not grant authority to change privileged roles or waive payments.",
+      "details": [
+        "An invitation still requires the recipient to authenticate with the approved email. Share the provided sign-in link after saving; no email is sent automatically."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-008"
+      ]
+    },
+    {
+      "id": "payment-exemption",
+      "title": "Site payment exemption",
+      "summary": "An authorized exemption changes the person’s applicable site-payment requirement. It does not establish that an external bill has been paid.",
+      "details": [
+        "Only the owner can grant or change this setting. Engagement acceptance and professional review requirements remain separate."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-008"
+      ]
+    },
+    {
+      "id": "suspend-access",
+      "title": "Suspend workspace access",
+      "summary": "Suspension stops the person’s workspace access. It does not delete their identity or the project’s evidence and review history.",
+      "details": [
+        "Check the selected person and role before confirming. Access changes should match the owner’s authorized decision."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-008"
+      ]
+    },
+    {
+      "id": "invite-link",
+      "title": "Share the sign-in link",
+      "summary": "Copy the link for the intended person to open with the approved account. The link alone does not grant access.",
+      "details": [
+        "No email is sent automatically. Verify the recipient and the approved account before sharing the link."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-008"
+      ]
+    },
+    {
+      "id": "connections",
+      "title": "Read each connection’s status",
+      "summary": "Available, connected, pending and not enabled describe different states. A pending service is not performed by opening or reviewing a project.",
+      "details": [
+        "Check the relevant workflow’s current availability before promising an outcome. Evidence preparation does not by itself enable issuance, outreach, checkout or settlement."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-001",
+        "AM-DIGITAL-ASSETS-011"
+      ]
+    },
+    {
+      "id": "project-assistant",
+      "title": "Ask about this project",
+      "summary": "The project assistant uses the case material permitted for your access and can point to public educational references. Its replies are drafts to review.",
+      "details": [
+        "Ask about missing evidence, the meaning of a finding or a practical next step. Distinguish general education from facts established in this particular case.",
+        "An answer does not approve an asset, replace the assigned reviewer’s judgment or release a legal report."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-008",
+        "AM-DIGITAL-ASSETS-018"
+      ]
+    },
+    {
+      "id": "dictation",
+      "title": "Dictate, then check the text",
+      "summary": "Record a short statement to add a transcription to the selected field. Check the words, names and numbers before saving or sending.",
+      "details": [
+        "Use the recording control again to stop; short recordings end automatically. Microphone permission is required, and you can type instead.",
+        "Dictation adds working text. It does not save a review version or approve a report."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-003",
+        "AM-FOUNDATIONS-008"
+      ]
+    },
+    {
+      "id": "preparation-record",
+      "title": "Digital preparation record",
+      "summary": "This download contains preparation metadata linked to the project. It is not a minted token or a transferable financial instrument.",
+      "details": [
+        "Define the underlying rights, authority, custody, restrictions and proposed responsibilities before any separate issuance decision.",
+        "The preparation record may contain private project information. Review it before sharing."
+      ],
+      "article_ids": [
+        "AM-DIGITAL-ASSETS-009",
+        "AM-DIGITAL-ASSETS-010",
+        "AM-DIGITAL-ASSETS-011"
+      ]
+    },
+    {
+      "id": "proof-limits",
+      "title": "The different meanings of proof",
+      "summary": "Evidence of existence, ownership, control, value, transferability and financeability answers different questions. One positive result does not establish all six.",
+      "details": [
+        "Ask exactly what a record, test or confirmation proves and what remains unresolved. A screenshot, hash, certificate or token is not a complete asset verification by itself."
+      ],
+      "article_ids": [
+        "AM-FOUNDATIONS-002",
+        "AM-FOUNDATIONS-003",
+        "AM-BANK-INSTRUMENTS-005"
+      ]
+    }
+  ],
+  "placements": [
+    {
+      "selector": "#start",
+      "topic": "start",
+      "position": "after"
+    },
+    {
+      "selector": "#closing-start",
+      "topic": "start",
+      "position": "after"
+    },
+    {
+      "selector": "label.experience-control",
+      "topic": "explanation-style",
+      "position": "after"
+    },
+    {
+      "selector": "#account",
+      "topic": "sign-in",
+      "position": "after"
+    },
+    {
+      "selector": "#login-form label[for=\"email\"]",
+      "topic": "sign-in",
+      "position": "after"
+    },
+    {
+      "selector": "#start-here h2",
+      "topic": "choose-asset",
+      "position": "append"
+    },
+    {
+      "selector": "#asset-cinema-title",
+      "topic": "choose-asset",
+      "position": "append"
+    },
+    {
+      "selector": "#asset-types h2",
+      "topic": "choose-asset",
+      "position": "append"
+    },
+    {
+      "selector": "#asset-types [data-type=\"wallet\"]",
+      "topic": "wallets",
+      "position": "after"
+    },
+    {
+      "selector": "#asset-types [data-type=\"contract\"]",
+      "topic": "contracts",
+      "position": "after"
+    },
+    {
+      "selector": "#asset-types [data-type=\"digital\"]",
+      "topic": "tokenization",
+      "position": "after"
+    },
+    {
+      "selector": "[data-help-subject=\"proof\"]",
+      "topic": "proof-limits",
+      "position": "append"
+    },
+    {
+      "selector": "[data-help-subject=\"all\"]",
+      "topic": "library",
+      "position": "append"
+    },
+    {
+      "selector": "[data-help-subject=\"bonds\"]",
+      "topic": "bonds",
+      "position": "append"
+    },
+    {
+      "selector": "[data-help-subject=\"skr\"]",
+      "topic": "skr",
+      "position": "append"
+    },
+    {
+      "selector": "[data-help-subject=\"sblc\"]",
+      "topic": "sblc",
+      "position": "append"
+    },
+    {
+      "selector": "[data-help-subject=\"inheritance\"]",
+      "topic": "inheritance",
+      "position": "append"
+    },
+    {
+      "selector": "[data-help-subject=\"gold\"]",
+      "topic": "gold",
+      "position": "append"
+    },
+    {
+      "selector": "[data-help-subject=\"gems\"]",
+      "topic": "gems",
+      "position": "append"
+    },
+    {
+      "selector": "[data-help-subject=\"wallets\"]",
+      "topic": "wallets",
+      "position": "append"
+    },
+    {
+      "selector": "[data-help-subject=\"tokenization\"]",
+      "topic": "tokenization",
+      "position": "append"
+    },
+    {
+      "selector": "#process .section-title h2",
+      "topic": "journey",
+      "position": "append"
+    },
+    {
+      "selector": "#stage-detail[data-help-stage=\"verify\"] h3",
+      "topic": "verify",
+      "position": "append"
+    },
+    {
+      "selector": "#stage-detail[data-help-stage=\"structure\"] h3",
+      "topic": "structure",
+      "position": "append"
+    },
+    {
+      "selector": "#stage-detail[data-help-stage=\"connect\"] h3",
+      "topic": "connect",
+      "position": "append"
+    },
+    {
+      "selector": "#stage-detail[data-help-stage=\"settle\"] h3",
+      "topic": "settle",
+      "position": "append"
+    },
+    {
+      "selector": "#stage-detail[data-help-stage=\"monitor\"] h3",
+      "topic": "monitor",
+      "position": "append"
+    },
+    {
+      "selector": "#oracle h2",
+      "topic": "oracle",
+      "position": "append"
+    },
+    {
+      "selector": "#legal h2",
+      "topic": "legal-review",
+      "position": "append"
+    },
+    {
+      "selector": "#public-voice-title",
+      "topic": "public-questions",
+      "position": "append"
+    },
+    {
+      "selector": "#public-voice-disc",
+      "topic": "public-microphone",
+      "position": "after"
+    },
+    {
+      "selector": "#public-voice-stop",
+      "topic": "public-stop",
+      "position": "after"
+    },
+    {
+      "selector": "#public-voice-replay",
+      "topic": "public-replay",
+      "position": "after"
+    },
+    {
+      "selector": "label[for=\"public-voice-input\"]",
+      "topic": "public-questions",
+      "position": "after"
+    },
+    {
+      "selector": "#public-voice-log .voice-sources",
+      "topic": "reference-sources",
+      "position": "append"
+    },
+    {
+      "selector": ".kb-intro > h1",
+      "topic": "library",
+      "position": "append"
+    },
+    {
+      "selector": "label[for=\"kb-search\"]",
+      "topic": "library-search",
+      "position": "after"
+    },
+    {
+      "selector": "label[for=\"guide-search\"]",
+      "topic": "library-search",
+      "position": "after"
+    },
+    {
+      "selector": ".kb-topics",
+      "topic": "topic-filter",
+      "position": "after"
+    },
+    {
+      "selector": ".kb-intro a[download=\"Asset_Machine_Evidence_Checklists.csv\"]",
+      "topic": "evidence-checklists",
+      "position": "after"
+    },
+    {
+      "selector": ".kb-meta",
+      "topic": "reference-sources",
+      "position": "append"
+    },
+    {
+      "selector": "#kb-sources-title",
+      "topic": "reference-sources",
+      "position": "append"
+    },
+    {
+      "selector": "#kb-download-md",
+      "topic": "article-downloads",
+      "position": "after"
+    },
+    {
+      "selector": "#kb-download-text",
+      "topic": "article-downloads",
+      "position": "after"
+    },
+    {
+      "selector": "#share-guide",
+      "topic": "guide-share",
+      "position": "after"
+    },
+    {
+      "selector": "#guide-card",
+      "topic": "guide-share",
+      "position": "after"
+    },
+    {
+      "selector": "#save-guide",
+      "topic": "guide-share",
+      "position": "after"
+    },
+    {
+      "selector": "#new-case",
+      "topic": "start",
+      "position": "after"
+    },
+    {
+      "selector": "#empty-create",
+      "topic": "start",
+      "position": "after"
+    },
+    {
+      "selector": "#case-form label[for=\"title\"]",
+      "topic": "project-name",
+      "position": "after"
+    },
+    {
+      "selector": "#case-form label[for=\"asset_type\"]",
+      "topic": "choose-asset",
+      "position": "after"
+    },
+    {
+      "selector": "#case-form label[for=\"description\"]",
+      "topic": "owner-description",
+      "position": "after"
+    },
+    {
+      "selector": "#case-form label[for=\"issuer\"]",
+      "topic": "issuer",
+      "position": "after"
+    },
+    {
+      "selector": "#case-form label[for=\"face_amount\"]",
+      "topic": "face-value",
+      "position": "after"
+    },
+    {
+      "selector": "#case-form label[for=\"issue_date\"]",
+      "topic": "issue-date",
+      "position": "after"
+    },
+    {
+      "selector": "#case-form label[for=\"chain\"]",
+      "topic": "network",
+      "position": "after"
+    },
+    {
+      "selector": "#case-form label[for=\"address\"]",
+      "topic": "public-address",
+      "position": "after"
+    },
+    {
+      "selector": "#case-form label[for=\"goal\"]",
+      "topic": "goal",
+      "position": "after"
+    },
+    {
+      "selector": "#case-form .advanced-fields > summary",
+      "topic": "optional-details",
+      "position": "after"
+    },
+    {
+      "selector": ".case-header .row-actions > .pill",
+      "topic": "project-status",
+      "position": "after"
+    },
+    {
+      "selector": "#case-panel .next-step > h3",
+      "topic": "next-step",
+      "position": "append"
+    },
+    {
+      "selector": "#action-report",
+      "topic": "action-summary",
+      "position": "after"
+    },
+    {
+      "selector": "#case-panel[data-help-section=\"evidence\"] .panel > h3",
+      "topic": "evidence-room",
+      "position": "append"
+    },
+    {
+      "selector": "label[for=\"upload\"]",
+      "topic": "document-upload",
+      "position": "after"
+    },
+    {
+      "selector": "#case-panel [data-text]",
+      "topic": "ocr",
+      "position": "after"
+    },
+    {
+      "selector": "label[for=\"extracted\"]",
+      "topic": "ocr",
+      "position": "after"
+    },
+    {
+      "selector": "#case-panel [data-download]",
+      "topic": "original-file",
+      "position": "after"
+    },
+    {
+      "selector": "#case-panel .doc-row:first-of-type > div:first-child > p:last-child",
+      "topic": "hash",
+      "position": "append"
+    },
+    {
+      "selector": "#screen",
+      "topic": "screening",
+      "position": "after"
+    },
+    {
+      "selector": "#case-panel[data-help-section=\"findings\"] .work-header h3",
+      "topic": "finding-scope",
+      "position": "append"
+    },
+    {
+      "selector": "#submit-review",
+      "topic": "review-request",
+      "position": "after"
+    },
+    {
+      "selector": "#review-nav",
+      "topic": "review-request",
+      "position": "after"
+    },
+    {
+      "selector": "#case-panel[data-help-section=\"legal\"] > .notice",
+      "topic": "legal-review",
+      "position": "append"
+    },
+    {
+      "selector": "#payment",
+      "topic": "payment-record",
+      "position": "after"
+    },
+    {
+      "selector": "#payment-form label[for=\"reference\"]",
+      "topic": "payment-record",
+      "position": "after"
+    },
+    {
+      "selector": "#payment-form label.check",
+      "topic": "payment-record",
+      "position": "after"
+    },
+    {
+      "selector": "#engage",
+      "topic": "engagement",
+      "position": "after"
+    },
+    {
+      "selector": "#engagement-form label.check",
+      "topic": "engagement",
+      "position": "after"
+    },
+    {
+      "selector": "label[for=\"private-notes\"]",
+      "topic": "private-notes",
+      "position": "after"
+    },
+    {
+      "selector": "label[for=\"draft\"]",
+      "topic": "report-draft",
+      "position": "after"
+    },
+    {
+      "selector": "#draft-ai",
+      "topic": "ai-draft",
+      "position": "after"
+    },
+    {
+      "selector": "#save-review",
+      "topic": "save-version",
+      "position": "after"
+    },
+    {
+      "selector": "#approve",
+      "topic": "approve-version",
+      "position": "after"
+    },
+    {
+      "selector": "#release",
+      "topic": "release-report",
+      "position": "after"
+    },
+    {
+      "selector": "#case-panel [data-report]",
+      "topic": "report-download",
+      "position": "after"
+    },
+    {
+      "selector": "#case-panel [data-read-report]",
+      "topic": "audio-excerpts",
+      "position": "after"
+    },
+    {
+      "selector": "#case-panel[data-help-section=\"contacts\"] .work-header h3",
+      "topic": "contacts",
+      "position": "append"
+    },
+    {
+      "selector": "#add-contact",
+      "topic": "contacts",
+      "position": "after"
+    },
+    {
+      "selector": "#contact-form label[for=\"contact-name\"]",
+      "topic": "contact-details",
+      "position": "after"
+    },
+    {
+      "selector": "#contact-form label[for=\"contact-firm\"]",
+      "topic": "contact-details",
+      "position": "after"
+    },
+    {
+      "selector": "#contact-form label[for=\"contact-email\"]",
+      "topic": "contact-details",
+      "position": "after"
+    },
+    {
+      "selector": "#contact-form label[for=\"contact-role\"]",
+      "topic": "contact-role",
+      "position": "after"
+    },
+    {
+      "selector": "#contact-form label[for=\"source_url\"]",
+      "topic": "source-url",
+      "position": "after"
+    },
+    {
+      "selector": "#contact-form label[for=\"interest\"]",
+      "topic": "documented-interest",
+      "position": "after"
+    },
+    {
+      "selector": "#contact-form label[for=\"diligence\"]",
+      "topic": "diligence",
+      "position": "after"
+    },
+    {
+      "selector": "#case-panel [data-brief]",
+      "topic": "briefing-download",
+      "position": "after"
+    },
+    {
+      "selector": "#case-panel[data-help-section=\"activity\"] h3",
+      "topic": "project-history",
+      "position": "append"
+    },
+    {
+      "selector": "#access-nav",
+      "topic": "member-access",
+      "position": "after"
+    },
+    {
+      "selector": "#add-member",
+      "topic": "member-access",
+      "position": "after"
+    },
+    {
+      "selector": "#member-form label[for=\"member-email\"]",
+      "topic": "approved-email",
+      "position": "after"
+    },
+    {
+      "selector": "#member-form label[for=\"member-role\"]",
+      "topic": "roles",
+      "position": "after"
+    },
+    {
+      "selector": "#member-form label.check:has(input[name=\"can_invite\"])",
+      "topic": "client-invites",
+      "position": "after"
+    },
+    {
+      "selector": "#member-form label.check:has(input[name=\"payment_exempt\"])",
+      "topic": "payment-exemption",
+      "position": "after"
+    },
+    {
+      "selector": "#work-content [data-suspend]",
+      "topic": "suspend-access",
+      "position": "after"
+    },
+    {
+      "selector": "label[for=\"invite-link\"]",
+      "topic": "invite-link",
+      "position": "after"
+    },
+    {
+      "selector": "#copy-invite",
+      "topic": "invite-link",
+      "position": "after"
+    },
+    {
+      "selector": "#work-content .connection-grid",
+      "topic": "connections",
+      "position": "after"
+    },
+    {
+      "selector": "#case-chat",
+      "topic": "project-assistant",
+      "position": "after"
+    },
+    {
+      "selector": "#assistant .assistant-head h3",
+      "topic": "project-assistant",
+      "position": "append"
+    },
+    {
+      "selector": "label[for=\"chat-input\"]",
+      "topic": "project-assistant",
+      "position": "after"
+    },
+    {
+      "selector": "#record",
+      "topic": "dictation",
+      "position": "after"
+    },
+    {
+      "selector": "#dictate-notes",
+      "topic": "dictation",
+      "position": "after"
+    },
+    {
+      "selector": "#dictate-draft",
+      "topic": "dictation",
+      "position": "after"
+    },
+    {
+      "selector": "#messages [data-speak]",
+      "topic": "audio-excerpts",
+      "position": "after"
+    },
+    {
+      "selector": "#manifest",
+      "topic": "preparation-record",
+      "position": "after"
+    },
+    {
+      "selector": "[data-help-subject=\"professional\"]",
+      "topic": "professional",
+      "position": "append"
+    },
+    {
+      "selector": "[data-help-subject=\"unknown-asset\"]",
+      "topic": "unknown-asset",
+      "position": "append"
+    },
+    {
+      "selector": "[data-help-subject=\"minerals\"]",
+      "topic": "minerals",
+      "position": "append"
+    }
+  ]
+}
