@@ -29,7 +29,9 @@ def call(path, body=None):
     try: return json.load(urllib.request.urlopen(req, timeout=120))
     except urllib.error.HTTPError as e: return {'http_error': e.code, 'body': e.read().decode()[:400]}
 
-if sys.argv[1] == 'generate':
+if __name__ != '__main__':
+    pass   # imported (e.g. by morning_mix_bed.py): helpers only, never generate
+elif sys.argv[1] == 'generate':
     print(json.dumps(call('/v1/generate', {'title': 'Maestro Morning Mix Theme', 'lyrics': LYRICS, 'prompt': LYRICS,
                                               'style': STYLE, 'instrumental': False, 'duration': 60})))
 elif sys.argv[1] == 'status':

@@ -113,3 +113,18 @@ New additive database objects: cos_revenue_briefs, cos_revenue_opportunities, co
 **PENDING (do not claim shipped):** Signed Rakazo job bridge and per-task computer lease; GitHub scoped read app; production deploy execution and test/rollback worker chain; new SWAGENTS website and domain; paid-product conversion analytics and reconciled revenue; dynamic external competitor research and cross-site user funnel tracking. Owner plan approval is not execution approval.
 
 Rollback: before modification, snapshots of route, JS, HTML, CSS in `/opt/swadebase/backups/cos-revenue-director-20261114/`. To revert interface, restore those four files then restart only swadebase-adapters. To disable daily scan, `systemctl disable --now cos-revenue-director.timer`. Keep additive proposal, decision and brief data for audit continuity; do not drop tables or modify pre-existing signed-in sessions. Release snapshot in `/opt/swadebase/ops/releases/cos-revenue-director-20261114/`.
+
+
+<!-- swagents-team-20261120:start -->
+## SWAGENTS agent coordination and credential boundaries — November 19, 2026, Central
+
+The deployed SWAGENTS Team room provides persisted specialist contributions and CROWN summaries. A lease-bound worker coordinates up to three specialists; each step sees only its task's saved contributions. Owners can inspect or cancel work. Expired/interrupted tasks are marked failed and are not automatically replayed. Current admission limits are two active tasks globally, one per owner, and a single local inference lane for team turns, with a 120-second task deadline. Team generation uses local models without a paid-provider fallback.
+
+Credentials remain outside agent conversation and memory. A customer may save encrypted connections and assign direct agent grants or a CROWN parent grant with explicit allowed recipients, operation, origin and expiry. The owner creates narrower child grants through the UI. CROWN's model is not permitted to invent recipients, broaden scopes or grant itself tool authority. A child cannot delegate further; revocation of a parent denies later child checks.
+
+An advisory task lease never authorizes secret use. The connected broker requires a separately owner-created `connection_check` task with the exact server-persisted agent, connection, grant, provider and operation. The active lease and current agent are rechecked in PostgreSQL. Only fixed read-only GitHub and ElevenLabs authentication checks are connected; account response bodies are discarded. Password storage/assignment is available, while browser autofill/login and general online-account work remain unconnected. Treat phone/email operation and broader GROKBOT parity as separate acceptance work.
+
+The core release passed **321 checks**, including synthetic credential storage, execution and revocation through the real application role. Two synthetic owners completed 6 real local specialist/CROWN turns over two tasks in approximately 64 and 71 seconds, with zero observed errors. This is a smoke test, not a concurrency capacity promise, real customer authentication test or physical Safari certification.
+
+Final 54-file public source is reviewed version **13**, hash `d116ac033d48314a9ff8a687dab4295ba1a8a2c89cc3b509f82e893cd61b8534`, including the separately verified homepage app-script cache reference. It is saved and mirrored to SSS Brain; preceding versions remain. Evidence and operational limits: `site-bibles/SWAGENTS_AGENT_TEAM_RELEASE_20261119.md`.
+<!-- swagents-team-20261120:end -->

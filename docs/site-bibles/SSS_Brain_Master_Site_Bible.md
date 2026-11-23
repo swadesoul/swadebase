@@ -320,3 +320,67 @@ New additive database objects: cos_revenue_briefs, cos_revenue_opportunities, co
 **PENDING (do not claim shipped):** Signed Rakazo job bridge and per-task computer lease; GitHub scoped read app; production deploy execution and test/rollback worker chain; new SWAGENTS website and domain; paid-product conversion analytics and reconciled revenue; dynamic external competitor research and cross-site user funnel tracking. Owner plan approval is not execution approval.
 
 Rollback: before modification, snapshots of route, JS, HTML, CSS in `/opt/swadebase/backups/cos-revenue-director-20261114/`. To revert interface, restore those four files then restart only swadebase-adapters. To disable daily scan, `systemctl disable --now cos-revenue-director.timer`. Keep additive proposal, decision and brief data for audit continuity; do not drop tables or modify pre-existing signed-in sessions. Release snapshot in `/opt/swadebase/ops/releases/cos-revenue-director-20261114/`.
+
+
+## Agent Marketplace shared skills and stores — November 19, 2026
+
+**PREPARED SOURCE / NOT DEPLOYED.** Founder prioritizes agentmarketplace.diy as the first storefront launch and wants one reusable skills store for Maestro Radio, ReSingLab, SWAGENTS and other Web Family sites. Forty repository candidates plus three discovery/specification references are recorded with role/job fit, licenses, dependencies, cost policy and disabled/unlisted status. These are metadata-reviewed candidates, not installed capabilities or approved products.
+
+Agent Marketplace draft PR 4: https://github.com/swadesoul/agentmarketplacediy/pull/4 (source e36f5a4cfd762281dbb712ac721f513479179d09). Prepared public feed/embed, explicit admin product assignment, Maestro/ReSingLab/SWAGENTS profiles, current pricing/ownership UI and atomic license-specific purchase preparation. Local validation: 97 application tests, 14 isolated PostgreSQL fixture tests, TypeScript and production build passed. Fixture testing does not establish production RLS, real Stripe delivery, iPad acceptance or multi-connection load.
+
+SSS Brain draft PR 128: https://github.com/swadesoul/sssbrain/pull/128 (source 27380c22d456761256c183278e3f6226782dbcda). Explicit-only Agent Marketplace marketing target; wrong-target fallback and cross-product draft reuse repaired in source. Seven focused tests passed; full SSS repository gates remain unrun. No campaign was sent or published.
+
+The SWAGENTS executable skill attachment/entitlement-to-worker bridge is still proposed. Its observed catalog lists agent identities/plans. Reuse documented SSS Agent OS workers/workflows/runs/run steps and SWADEBASE identity/adapters, with selected pinned skills loaded only when a job needs them. No second agent runtime or paid recommendation call is added.
+
+Launch gate: the marketplace browser client targets SWADEBASE agentmarketplace schema while server authentication/admin source retains legacy SUPABASE_* public defaults; actual deployed identity/schema alignment must be verified. Review SQL is outside auto-migrations and must be adapted only after that verification. Purchase-to-delivery, legacy sessions, stale pending recovery, refund/dispute, protected downloads, host audio/mobile and load acceptance remain open. No production schema, billing, DNS, site embed or runtime change was made.
+
+Full source/design/research: https://github.com/swadesoul/agentmarketplacediy/tree/review/shared-skills-marketplace-20261119/docs . Canonical summary: site-bibles/Agent_Marketplace_Master_Site_Bible.md . Full candidate evidence: learning-approved/agentmarketplace-skill-catalog-2026-11-19.md .
+
+
+## Agent Marketplace SSS CI follow-up — November 19, 2026
+
+Draft SSS Brain PR 128 now includes follow-up commit 2f701508c1b535081307a0b3edb88052a62f6300. The seven-case review harness retains all cases and works in Node 24 and CI Bun 1.4.5; targeted Bun verification with the distribution suite passed 14/14. The full SSS CI remains unverified/blocked: its unchanged workflow uses bun test while package.json specifies Vitest, and existing tests call unsupported Bun stubGlobal/unstubAllGlobals APIs. Earlier CI also reported unresolved shared-knowledge/server-config failures. The initial harness incompatibility was fixed; no app tests were hidden or removed. Build/lint/typecheck in the failed full CI run were skipped. Marketplace PR 4 remains locally verified with 97 tests, 14 isolated SQL fixture tests, TypeScript and exact-source production build. Both PRs remain drafts; no runtime deployment occurred.
+
+
+<!-- site-design-repair:sss-brain:2026-11-19:start -->
+## 2026-11-19 — Private Site Design Repair memory
+
+The earlier note describing SWAGENTS as an undeployed planned site is historical. SWAGENTS is live, and its cinematic release was verified through all 24 public release files on November 19. Telephone execution and automatic customer-account writes remain off; this visual release does not change those separate capability limits.
+
+The narrow function `swadebase_ops.site_design_repair_save_memory(project_uuid, operation_uuid)` mirrors verified private design conversations and operation outcomes into existing owner-scoped `sssbrain.brain_sources`, `knowledge_entries` and the project wiki. It checks the current super-admin role and project/operation ownership; operation idempotency prevents duplicate knowledge entries. Public execution is revoked and only the required existing adapter-role grant is used.
+
+Only allowlisted conversation/outcome fields are copied. Source snapshots and unrelated result fields are excluded. Copied conversation remains private; the function does not generally redact secrets an owner types into an allowed message field. Keep secrets out of design messages. A successful receipt is required before the UI says saved to SSS Brain. Project history remains available if the mirror fails; reopening retries bounded completed unsynchronized operations.
+
+Actual acceptance verified memory writes/readback and foreign-owner exclusion. **All 25 supplied owner requests were imported privately into three actual SSS Brain records, with readback passed.** Record this acceptance fact without publishing transcript content or owner/project/operation identifiers. Evidence: `/opt/swadebase-adapters/var/site-design-repair-owner-history-import.json` (restricted), `/opt/swadebase-adapters/var/site-design-repair-runtime-acceptance.json`, and `/opt/swadebase/ops/site-design-repair-20261119/MEMORY_ACCEPTANCE.json`.
+
+The current implementation uses the primary SSS Brain database path. Owners mapped to a separate provisioned tenant database remain held with `tenant_memory_bridge_required`. Do not remove tenant mappings or treat a primary-database write as successful delivery into a customer's separate database; implement the existing tenant bridge first.
+
+Shared Site Bibles, the playbook and the daily learning note contain reusable operating guidance only. After installation, sync them with `/opt/swadebase/ops/knowledge-learning/sync.py` and verify indexed paths/content hashes. Memory/index writes do not retrain model weights or guarantee future ChatGPT retrieval without the normal context-loading workflow.
+
+Hub final release/verification: `2026-11-19T22:15:17.239543+00:00; final preview/source-check correction activated 2026-11-19T22:43:07.343624+00:00` / `LIVE; health 200; final 19/19 authenticated public HTTPS checks passed at 2026-11-19T22:43:17.717568+00:00, including actual scanner, saved workspace, isolated artwork/font preview, source classification and SSS Brain receipts; 318 references verified, 0 failed, 44 runtime/external references explicitly require live review; 17/17 real database/local-model/memory acceptance checks passed`; receipt `/opt/swadebase/ops/site-design-repair-20261119/ADAPTER_DEPLOYMENT.json, PREVIEW_SOURCE_FOLLOWUP_DEPLOYMENT.json and PUBLIC_HTTP_ACCEPTANCE.json`. Source branch `site-design-repair-20261119`, commit `3a996fb5c363a4de1be468906beda4f5a2d2b34d`, draft PR `https://github.com/swadesoul/swade-ecosystem-hub/pull/75`. Canonical reference: `Site_Design_Repair_Master_Site_Bible.md`.
+<!-- site-design-repair:sss-brain:2026-11-19:end -->
+
+
+<!-- marketplace-pricing-delivery-20261119 -->
+## Marketplace pricing, game skills and execution readiness — November 19, 2026
+
+Owner priority remains agentmarketplace.diy, with one reusable catalog/store for Maestro Radio, ReSingLab and SWAGENTS. Source is prepared, not deployed by this task. No live skill price, checkout, credential, customer grant or hosting account was changed.
+
+The latest commercial rule is $1 small skills, $5 individual skills, $10–$50 heavy packages, $5 known bundles and $20 mystery boxes. EVERY mystery box retains 21–25 distinct $1 products, guaranteeing at least $21 actual standalone catalog value; any $5/$10/$20/$25/$50 extras are additional. This supersedes the earlier two-$10 guarantee. No bonus probabilities are selected. Exact duplicate delivered content is rejected in policy v3, and editorial review must reject semantic duplicates. The observed catalog has no qualifying active $1 inventory.
+
+Inventory: 32 saved custom skills, four SWADEBASE registry records, 53 inspected MarketingSkills files, 25 proposed $1 variants, and 30 proposed original game-building offers. None of the 30 game offers is certified for sale; named AI/model, engine, hardware, visual output, rights and export checks remain required. Twenty unverified ABAGALE error records were excluded.
+
+Marketplace draft PR 4 is at 9c8f8b7f8e4f51fc961d2184d5d2039eca59401a: https://github.com/swadesoul/agentmarketplacediy/pull/4 . Final tests 127/127, TypeScript and current-source production build pass. Existing 14 isolated SQL fixtures pass; they do not prove real checkout, RLS or independent concurrent transactions. Browser/server schema alignment and real purchase/refund/protected delivery remain launch gates. Pricing policy returns checkout disabled and is not live fulfillment.
+
+Zapier MCP is the existing connection path found inside SSS Brain: one encrypted saved grant and 17 cached generic tools, last cached probe September 25. Access token expired; APP_USER_CONNECTION_KEY_SECRET is absent from observed live runtime and inspected approved configuration locations. No replacement key or credential refresh was attempted. Cached tools do not establish Gmail/GitHub scopes. Composio code exists but no configured key was found. SWADE Connect is an ecosystem/site registry, not the third-party OAuth connection.
+
+SSS Brain draft PR 129 at 752d7f9844ef86a32c3f78fe6222762002b1b473: https://github.com/swadesoul/sssbrain/pull/129 . It fixes stale token fallback, owner-scoped conditional refresh saves, safe metadata-only status and Zapier refresh/disconnect UI. Twenty isolated tests and focused TypeScript pass; full app/CI and credentialed refresh are not established. Process-local coordination is not a distributed provider lease. Prior marketing-target PR 128 remains separate at 2f701508c1b535081307a0b3edb88052a62f6300.
+
+SWAGENTS draft PR 2 at fe79b95c7f5ec2aab22637ee6fee68c4ed5948df: https://github.com/swadesoul/swagents/pull/2 . Reuses support cases/tasks/receipts for a founder/admin-only pinned marketing-ideas local draft pilot; ordinary customer entitlement mapping is not enabled. Sixty-four Node tests and 7 PGlite SQL fixtures pass. The isolated Node 20 real-model canary FAILED with no draft, canary_timeout and zero output samples; cleanup was independently verified. An abort-timer repair is in source only. Automatic approval review rejected writing that repair to the staged model module because it interpreted staging permission as limited to the backend lease refresh. The rejection was not bypassed and no further inference was run. Production readiness stays false.
+
+Every retail skill must provide a tested result, exact app/model/engine and hardware, original/licensed assets, useful return links, a local/own-server/optional SWOSTING route, itemized upfront and ongoing costs, and buyer-scoped API/MCP permissions. An optional SWAGENTS selling/publishing workflow requires its own verified capabilities, rights and operation scope. These are documented requirements, not universally implemented gates. SWOSTING public intake is live; paid fulfillment remains disabled. Historical service rates are not new gamer-hosting quotes.
+
+Complete inventory/prices and cost sources: learning-approved/marketplace-pricing-delivery-2026-11-19.md and marketplace PR 4 docs/research. Workbook: SWADE_Skill_Pricing_2026-11-19.xlsx, file_id libfile_8d4f0bdc55008191b0430e4f3bf06882. No new paid service or subscription was purchased.
+
+## 2026-11-20 — SSS Brain hand-held conversational interface to SWADE SOUL operating system (founder direction)
+SWADE SOUL is the business; SWADEBASE is system of record and central operator; SSS Brain is the handheld/voice/text interactive agent layer used to ask for information, receive bounded plans and approve authorized actions over typed SWADEBASE adapters. SSS Brain is not granted universal autonomous access to VPS purchases, Namecheap domains, client accounts, finance, licenses or production deployment. Vendor action readiness and provider billing ownership must be verified per adapter. New non-destructive architecture index: `/opt/swadebase/docs/SWADE_SOUL_OPERATING_CONSTITUTION_INDEX_V2_20261120.md`; all current operational limitations in this Bible remain authoritative. No voice endpoint or provider action changed.

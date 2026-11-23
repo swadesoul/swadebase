@@ -100,3 +100,20 @@ Validation: 39 focused source tests passed; the actual legacy renderer sample pa
 Swade confirmed: basic on-page SEO for everyone; optional advanced SEO/maps add-ons for free accounts; specified services included in paid-plan entitlements with no duplicate charge. The suggested $5 installation fee and ongoing provider usage must be treated separately. These constraints are now builder instructions; this release does not implement entitlement enforcement or change billing. The existing swade-maps service is enabled; no Monid installation or paid call was established.
 
 Canonical operator detail: `site-bibles/OATHLOOM_Master_Site_Bible.md`. Runtime evidence: `releases/oathloom-design-20261107/runtime-receipt.json`. Backups precede changes. Do not describe `automated_pass` as desktop/mobile visual approval or a fully connected paid feature.
+
+
+<!-- site-design-repair:developer-studio:2026-11-19:start -->
+## 2026-11-19 — Managed existing-site design projects
+
+Site Design Repair reuses existing Oathloom projects/files/versions and `swadebase_ops.developer_studio_operations`; it introduces no standalone project database or scheduler. A project marked `theme.site_design_repair` is private, owner-scoped and bound to its registered production origin with `releaseDestination: existing-site-reviewed-release`.
+
+For these managed projects, generic Studio **chat, work, GitHub, deploy and rollback dispatch reject the request before provider/publishing dispatch**. This prevents paid generic-builder fallback and accidental publication of private conversations to an unrelated Oathloom destination. Ordinary Studio projects retain their current behavior. Private reads, source export, file editing, versions and previews remain available.
+
+The dedicated worker uses existing loopback Ollama and installed models. It accepts only a bounded structured visual recipe, validates contrast/type/control limits, then adds a dedicated stylesheet and marked links to the existing pages. It verifies owner, operation, current source and protected JS/JSON/SVG before atomic version/outcome commit. Idempotency, global/per-owner concurrency limits and timeouts apply. A failed job does not claim an applied draft. This mode does not promise arbitrary framework refactoring, new functions or automatic finished cinematic direction.
+
+Actual local runtime acceptance passed 17 checks; evidence `/opt/swadebase-adapters/var/site-design-repair-runtime-acceptance.json`. It exercised real local chat/work, versions, protected-file preservation and owner-isolated memory. The secure preview/navigation UI evidence uses synthetic backend fixtures and is recorded separately under `/opt/swadebase/ops/site-design-repair-ui-integration-20261119/`.
+
+Hub final release/guard verification: `2026-11-19T22:15:17.239543+00:00; final preview/source-check correction activated 2026-11-19T22:43:07.343624+00:00` / `LIVE; health 200; final 19/19 authenticated public HTTPS checks passed at 2026-11-19T22:43:17.717568+00:00, including actual scanner, saved workspace, isolated artwork/font preview, source classification and SSS Brain receipts; 318 references verified, 0 failed, 44 runtime/external references explicitly require live review; 17/17 real database/local-model/memory acceptance checks passed`; receipt `/opt/swadebase/ops/site-design-repair-20261119/ADAPTER_DEPLOYMENT.json, PREVIEW_SOURCE_FOLLOWUP_DEPLOYMENT.json and PUBLIC_HTTP_ACCEPTANCE.json`. Source branch `site-design-repair-20261119`, commit `3a996fb5c363a4de1be468906beda4f5a2d2b34d`, draft PR `https://github.com/swadesoul/swade-ecosystem-hub/pull/75`. Use separate reviewed live/repository patches; do not replace the current live adapter tree with the older repository snapshot or merge directly to main.
+
+Canonical details: `Site_Design_Repair_Master_Site_Bible.md`, `SITE_DESIGN_REPAIR_PLAYBOOK.md`. Physical Safari remains untested; existing telephone/account-write limits are unchanged.
+<!-- site-design-repair:developer-studio:2026-11-19:end -->

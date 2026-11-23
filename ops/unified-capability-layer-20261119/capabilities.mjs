@@ -1,0 +1,52 @@
+// SWADEBASE unified capability contract, 2026-11-19. Evidence-aware, never confuses a catalog entry with a live provider.
+export const CAPABILITIES=Object.freeze({
+  conversation:{category:'intelligence',modelTask:'conversation',tools:['swade-ai-gateway'],risk:'low'},
+  business:{category:'business',modelTask:'business',tools:['swade-product-operator'],risk:'low'},
+  reasoning:{category:'intelligence',modelTask:'reasoning',tools:['swade-ai-gateway'],risk:'low'},
+  code:{category:'engineering',modelTask:'code',tools:['developer-studio'],risk:'medium'},
+  visual_analysis:{category:'vision',modelTask:'visual_analysis',tools:['swade-media-core'],risk:'low'},
+  video_analysis:{category:'video',modelTask:'visual_analysis',tools:['swade-media-core'],risk:'low'},
+  video_generation:{category:'video',modelTask:'creative',tools:['runpod-video-gpu','higgsfield'],risk:'medium'},
+  music_generation:{category:'audio',modelTask:'creative',tools:['swade-music-gpu-adapter','suno'],risk:'medium'},
+  voice_conversation:{category:'audio',modelTask:'voice',tools:['swade-voice-gateway','elevenlabs'],risk:'medium'},
+  voice_synthesis:{category:'audio',modelTask:'creative',tools:['swade-voice-service','elevenlabs'],risk:'medium'},
+  office_documents:{category:'documents',modelTask:'business',tools:['document-extraction','microsoft-365'],risk:'low'},
+  seo:{category:'marketing',modelTask:'business',tools:['google-search-console'],risk:'medium'},
+  meeting_intelligence:{category:'productivity',modelTask:'business',tools:['granola'],risk:'sensitive'},
+  knowledge_workspaces:{category:'productivity',modelTask:'conversation',tools:['notion'],risk:'medium'},
+  music_notation:{category:'audio',modelTask:'creative',tools:['music-notation'],risk:'low'},
+  legal_research:{category:'legal',modelTask:'reasoning',tools:['cochrane','harvey'],risk:'regulated'},
+  asset_due_diligence:{category:'finance',modelTask:'reasoning',tools:['asset-machine'],risk:'regulated'},
+  hosting:{category:'infrastructure',modelTask:'code',tools:['swadebase-hostinger'],risk:'protected'},
+  computer_operations:{category:'agents',modelTask:'code',tools:['swade-bots','grokbot'],risk:'protected'},
+  storage:{category:'storage',modelTask:'conversation',tools:['backblaze-b2'],risk:'medium'},
+  publishing:{category:'distribution',modelTask:'business',tools:['swade-product-operator'],risk:'protected'}
+});
+// Observed status is a boundary: enabled adapter != live verified end-to-end connection.
+export const PROVIDERS=Object.freeze({
+ 'swade-ai-gateway':{name:'Swade AI Gateway',status:'registered_live',cost:'controlled',capabilities:['conversation','reasoning'],evidence:'swadebase_ops.adapters_registry live enabled, not enforcing'},
+ 'swade-product-operator':{name:'Swade Product Operator',status:'registered_live',cost:'local_first',capabilities:['business','publishing'],evidence:'swadebase_ops.adapters_registry live'},
+ 'developer-studio':{name:'Swade Developer Studio',status:'registered_live',cost:'local_first',capabilities:['code'],evidence:'swadebase_ops.adapters_registry live enforcing'},
+ 'swade-media-core':{name:'Swade Media Core',status:'registered_live',cost:'existing_compute',capabilities:['visual_analysis','video_analysis'],evidence:'swadebase_ops.adapters_registry live; video understanding end-to-end not verified'},
+ 'runpod-video-gpu':{name:'Swade RunPod Video GPU',status:'registered_live',cost:'gpu_metered',capabilities:['video_generation'],evidence:'swadebase_ops.adapters_registry live; current per-job readiness unverified'},
+ 'higgsfield':{name:'Higgsfield',status:'prior_jobs_verified',cost:'credits',capabilities:['video_generation'],evidence:'past completed Maestro projects, not universal autonomous permission'},
+ 'swade-music-gpu-adapter':{name:'Swade Music Generator',status:'inactive',cost:'existing_compute',capabilities:['music_generation'],evidence:'swadebase_ops.adapters_registry inactive'},
+ 'suno':{name:'Suno',status:'partial',cost:'metered_or_licensed',capabilities:['music_generation'],evidence:'Maestro approved OAuth/music intake, owner token and download not confirmed'},
+ 'swade-voice-gateway':{name:'Swade Voice Gateway',status:'registered_live',cost:'existing_compute',capabilities:['voice_conversation'],evidence:'adapter live, true continuous speech-to-speech not verified'},
+ 'swade-voice-service':{name:'Swade Voice Service',status:'registered_live',cost:'existing_compute',capabilities:['voice_synthesis'],evidence:'adapter live, Kokoro self-hosted'},
+ 'elevenlabs':{name:'ElevenLabs',status:'connected_external_chatgpt',cost:'credits',capabilities:['voice_synthesis','voice_conversation'],evidence:'existing ElevenLabs plugin and workspace; not yet universal shared live adapter'},
+ 'document-extraction':{name:'Document Extraction',status:'installed_not_shared_adapter_registry',cost:'existing_compute',capabilities:['office_documents'],evidence:'existing SWADEBASE document extraction module'},
+ 'microsoft-365':{name:'Microsoft Office / 365',status:'not_verified_runtime',cost:'oauth_or_subscription',capabilities:['office_documents'],evidence:'no live SWADEBASE Microsoft 365 adapter verified'},
+ 'google-search-console':{name:'Google Search Console',status:'not_verified_runtime',cost:'oauth',capabilities:['seo'],evidence:'no general authenticated SEO adapter verified'},
+ 'granola':{name:'Granola meeting notes',status:'not_verified_runtime',cost:'provider',capabilities:['meeting_intelligence'],evidence:'no SWADEBASE user-authorized Granola MCP verified'},
+ 'notion':{name:'Notion knowledge',status:'not_verified_runtime',cost:'oauth_or_subscription',capabilities:['knowledge_workspaces'],evidence:'no SWADEBASE Notion OAuth/MCP verified; user term notation ambiguous'},
+ 'music-notation':{name:'Music notation',status:'not_verified_runtime',cost:'existing_compute',capabilities:['music_notation'],evidence:'notation intent may refer to written sheet music, not Notion'},
+ 'cochrane':{name:'Cochrane legal layer',status:'known_internal_project',cost:'local_first',capabilities:['legal_research'],evidence:'SWADEBASE legal bible/project; universal integration not verified'},
+ 'harvey':{name:'Harvey legal AI',status:'reference_only',cost:'licensed',capabilities:['legal_research'],evidence:'competitive capability reference; no licensed account/API in SWADEBASE verified'},
+ 'asset-machine':{name:'Asset Machine',status:'known_internal_project',cost:'local_first',capabilities:['asset_due_diligence'],evidence:'asset review component exists; complete live legal/financial oracle not verified'},
+ 'swadebase-hostinger':{name:'Hostinger / SWOSTing',status:'verified_hosting',cost:'existing_monthly',capabilities:['hosting'],evidence:'existing Hostinger VPS, Coolify and native deployments'},
+ 'swade-bots':{name:'SWADE BOTS',status:'registered_live',cost:'existing_compute',capabilities:['computer_operations'],evidence:'SWADEBASE bot profile system exists; autonomous executions gated'},
+ 'grokbot':{name:'GROKBOT',status:'device_online_not_workflow',cost:'unknown',capabilities:['computer_operations'],evidence:'Grok Bot remote device online; no autonomous delegated execution verified'},
+ 'backblaze-b2':{name:'Backblaze B2',status:'verified_storage',cost:'existing_storage',capabilities:['storage'],evidence:'canonical SWADEBASE durable media provider'}
+});
+export const RELEASE_RULES=Object.freeze({tenantRequired:true,projectRequired:true,publicPaidActionsRequireApproval:true,allowUnverifiedToolAutostart:false,allowCreditSpendByModelRouter:false,baseStorage:'backblaze-b2',userFacingModelChoices:['auto','qwen3.5:9b','gemma4:12b','granite4.2:8b-q4_K_M','ministral-3:8b','qwen3:4b'],commercialSourceRightsRequired:true});

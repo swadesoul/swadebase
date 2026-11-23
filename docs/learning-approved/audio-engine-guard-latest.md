@@ -1,9 +1,9 @@
-# Audio Engine Guard — 2026-11-17 19:23 CT
+# Audio Engine Guard — 2026-11-23 17:54 CT
 Checks every audio program every 15 minutes for the RK-013 family (silent pause, stuck queue, provider down). Catalog: repair-kit-known-failures.md.
 
 | Check | Result | Detail |
 |---|---|---|
-| Music provider (sunoapi.org) | OK | credit check answered; 29416.0 credits left |
+| Music provider (sunoapi.org) | OK | credit check answered; 27683.0 credits left |
 | Maestro generation switch | OK | on |
 | Maestro Radio song factory stuck work | WARN | 1 job(s) not moving for over 30 min (oldest update 2026-11-10 05:37) |
 | ReSing Lab generation stuck work | OK | none |

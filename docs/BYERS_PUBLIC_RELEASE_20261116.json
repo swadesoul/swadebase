@@ -1,0 +1,42 @@
+{
+  "site_id": "appgprj_6adf8e8b912481918cb6cfc01f2db308",
+  "version": 7,
+  "commit_sha": "318ed6d709c037537f48af976daf59dd8029c044",
+  "deployment_id": "appgdep_6afb1a7a239c8191b7605a481a0ced94",
+  "deployment_status": "succeeded",
+  "published_at": "2026-11-16T15:00:19.896953+00:00",
+  "primary_url": "https://byersai.com/",
+  "legacy_url": "https://cochranailaw.live/",
+  "pages": [
+    "https://byersai.com/whats-new",
+    "https://byersai.com/pricing",
+    "https://byersai.com/community"
+  ],
+  "domain_states": "apex/www for both byersai.com and cochranailaw.live active with active SSL from Sites readback",
+  "schedule": {
+    "id": "Automation_0fcddeb8dca081919963b0a77ac1279a",
+    "time": "09:00 America/Chicago daily",
+    "enabled": true,
+    "first_successful_run": "not verified"
+  },
+  "tests": [
+    "syntax and git diff checks passed",
+    "journal filter returned one planned entry; oldest-first returned October 26 2026",
+    "Spanish journal and French plans rendered",
+    "keyboard arrows switched pricing audience; personal 3 plans and professional 4 plans observed",
+    "three 390px iframe QA frames had 375px client and scroll width, no horizontal overflow",
+    "native v7 publication succeeded",
+    "browser live apex/new www and legacy address loaded BYERS notice",
+    "browser live journal 8 entries, pricing both audiences and community in-development page observed"
+  ],
+  "pending": [
+    "live consumer case-question backend",
+    "secure firm backend and actual tenancy acceptance",
+    "paid checkout and credit ledger",
+    "live story submissions/comments/moderation and verified lawyer introductions",
+    "physical iPad Safari and real microphone checks"
+  ],
+  "dns_backup": "/opt/swadebase/backups/byers-domain-20261116",
+  "rollback": "Restore Sites saved version5/source ec4139a5427f43498bbf96dff338858976d0ba90 for the earlier UI; domain registrations are independent. Keep the live legacy domains. To undo only byersai.com DNS use scoped before/after backup comparison preserving later records; never replace a zone blindly.",
+  "spending": "No purchase, paid provider inference, external messages or client-story publication."
+}

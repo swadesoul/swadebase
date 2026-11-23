@@ -1,0 +1,63 @@
+{
+  "version": "2026-11-20",
+  "status": "specification_only_not_deployed",
+  "submission": {
+    "max_audio_bytes_exclusive": 15000000,
+    "max_audio_bytes_accepted": 14999999,
+    "scope": "new_order_linked_artist_and_advertiser_email_form_only",
+    "accepted_audio_types": [
+      "audio/mpeg",
+      "audio/wav",
+      "audio/flac",
+      "audio/mp4"
+    ],
+    "server_must_verify": [
+      "byte_limit",
+      "media_magic",
+      "decoder",
+      "malware_screen",
+      "sha256",
+      "owner_order_entitlement",
+      "rights_attestation"
+    ],
+    "email_attachments": "untrusted_quarantine_requires_verified_order_and_signed_webhook"
+  },
+  "station": {
+    "key": "maestro-explicit",
+    "requested_age_floor": 16,
+    "auth_required": true,
+    "stream_access": "signed_in_and_server_verified_age_16plus",
+    "state": "disabled_pending_server_age_gate_and_direct_stream_protection",
+    "public_discovery": false,
+    "playlist_isolation": true,
+    "explicit_flag": true,
+    "profanity_allowed": true,
+    "illegal_or_unlicensed_content_allowed": false
+  },
+  "rollout": {
+    "priorities": [
+      "preserve_active_turntable_and_all_live_stations",
+      "backend_server_age_enforcement",
+      "secure_upload_email_intake",
+      "authenticated_stream_tests",
+      "separate_station_library_provisioning",
+      "producer_content_review",
+      "feature_flagged_release"
+    ],
+    "unverified": [
+      "Maestro dedicated sender domain",
+      "signed inbound webhook receiver",
+      "checkout to invite end-to-end",
+      "server-side verified_age 16plus",
+      "protected AzuraCast streaming origin",
+      "approved explicit station tracks",
+      "iPad Safari end-to-end"
+    ],
+    "new_media_generated": 0,
+    "customer_emails_sent": 0,
+    "production_code_changes": 0,
+    "production_station_creations": 0,
+    "deployments": 0,
+    "external_spend": 0
+  }
+}

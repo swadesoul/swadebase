@@ -246,3 +246,13 @@ Recovery: restore previous static symlink and scoped runtime files in the backup
 
 ## SWAGENTS Money Room shared-hosting addition (2026-11-15 UTC)
 Live preview at https://swagents.live/money-room on existing dedicated Hostinger swagents.service and namechecked as part of SWOSTing-owned SWAGENTS family site. No SWOSTing billing or customer hosting plan changed. Browser-local guided Money Room uses existing SSSBrain Money Bar model only as future connection proposal, not as an active cross-tenant data bridge. All outgoing actions remain gated, no shared hosting migration or second provider introduced. External HTTPS 200/TLS verified, 3 viewport QA passes. See SWAGENTS_Master_Site_Bible.md for full scope.
+
+
+<!-- marketplace-pricing-delivery-20261119 -->
+## Shared marketplace pricing and delivery update — November 19, 2026
+
+Agent Marketplace remains the central store; use site-specific catalog assignments for relevant artist/radio/music skills instead of duplicating accounts, checkout or licensing. Latest proposal: $1 small, $5 standalone, $10–$50 heavy, $5 known bundles and $20 mystery boxes with 21–25 distinct $1 base products plus optional extras. No qualifying active $1 inventory is live yet.
+
+The updated catalog covers 32 custom skills, 4 registered capabilities, 53 MarketingSkills sources and 30 original game-building proposals. Each product must state tested app/model/engine/hardware, required assets, local/own-server/optional SWOSTING setup, full upfront/recurring costs and a working support/return path. All gaming proposals still require acceptance. SWOSTING public intake is live but paid fulfillment is disabled; historical service prices do not quote gaming workloads.
+
+Marketplace PR 4 (127 tests, TypeScript, build) and the SSS PR 129 / SWAGENTS PR 2 connector/execution drafts are prepared, not deployed by this task. The existing Zapier connection has expired credentials and missing encryption configuration; the new SWAGENTS server canary failed and its corrected restaging was blocked by automatic approval review. No successful paid-customer skill run or live checkout readiness is claimed. Full findings: learning-approved/marketplace-pricing-delivery-2026-11-19.md . Workbook file_id: libfile_8d4f0bdc55008191b0430e4f3bf06882.

@@ -1,0 +1,208 @@
+{
+  "program": "Maestro World and Gospel - repeating 30 production card sets",
+  "date": "2026-11-21",
+  "status": "sequenced_cards_not_audio_jobs",
+  "stations": [
+    "world",
+    "africa",
+    "reggae",
+    "iran-iraq",
+    "japan",
+    "mexico",
+    "korea",
+    "china",
+    "russia",
+    "gospel"
+  ],
+  "unique_song_goal_per_station": 50,
+  "compositions_total": 500,
+  "workflow": [
+    "draft_complete_original_lyrics_and_local_authenticity_review",
+    "verify_provider_grant_credits_and_unique_task_receipts",
+    "generate_2_takes_per_song_if_provider_supports",
+    "decode_quality_listen_rights_review",
+    "radio_take_to_exact_station_library_and_verify_on_air",
+    "untouched_second_take_to_private_Maestro_Mix_vault_with_separate_rights",
+    "reconcile_30_cards_before_next_set"
+  ],
+  "policy": {
+    "repeat_next_set_after_previous": "only_on verified completion and separate bounded provider authorization; don't assert background scheduled operation",
+    "external_spend_approval": "required per bounded generation grant; earlier 25-pet-song grant not reusable",
+    "no_provider_retry_without_reconciliation": true,
+    "no_duplicate_titles_or_generation_tasks": true,
+    "no_unreviewed_broadcast": true,
+    "card_set_01_source": "/opt/swadebase/docs/production/Maestro_World_Gospel_Batch_01_30_Draft_20261121.json"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "planned_cards": 30,
+      "per_station": 3,
+      "sequence_rule": "finish previous set checks before opening this set",
+      "status": "30_cards_drafted_three_lyrics_written_27_pending",
+      "generation_tasks_accepted": 0,
+      "audio_masters_approved": 0,
+      "station_tracks_verified": 0
+    },
+    {
+      "set_number": 2,
+      "planned_cards": 30,
+      "per_station": 3,
+      "sequence_rule": "finish previous set checks before opening this set",
+      "status": "planned_not_started",
+      "generation_tasks_accepted": 0,
+      "audio_masters_approved": 0,
+      "station_tracks_verified": 0
+    },
+    {
+      "set_number": 3,
+      "planned_cards": 30,
+      "per_station": 3,
+      "sequence_rule": "finish previous set checks before opening this set",
+      "status": "planned_not_started",
+      "generation_tasks_accepted": 0,
+      "audio_masters_approved": 0,
+      "station_tracks_verified": 0
+    },
+    {
+      "set_number": 4,
+      "planned_cards": 30,
+      "per_station": 3,
+      "sequence_rule": "finish previous set checks before opening this set",
+      "status": "planned_not_started",
+      "generation_tasks_accepted": 0,
+      "audio_masters_approved": 0,
+      "station_tracks_verified": 0
+    },
+    {
+      "set_number": 5,
+      "planned_cards": 30,
+      "per_station": 3,
+      "sequence_rule": "finish previous set checks before opening this set",
+      "status": "planned_not_started",
+      "generation_tasks_accepted": 0,
+      "audio_masters_approved": 0,
+      "station_tracks_verified": 0
+    },
+    {
+      "set_number": 6,
+      "planned_cards": 30,
+      "per_station": 3,
+      "sequence_rule": "finish previous set checks before opening this set",
+      "status": "planned_not_started",
+      "generation_tasks_accepted": 0,
+      "audio_masters_approved": 0,
+      "station_tracks_verified": 0
+    },
+    {
+      "set_number": 7,
+      "planned_cards": 30,
+      "per_station": 3,
+      "sequence_rule": "finish previous set checks before opening this set",
+      "status": "planned_not_started",
+      "generation_tasks_accepted": 0,
+      "audio_masters_approved": 0,
+      "station_tracks_verified": 0
+    },
+    {
+      "set_number": 8,
+      "planned_cards": 30,
+      "per_station": 3,
+      "sequence_rule": "finish previous set checks before opening this set",
+      "status": "planned_not_started",
+      "generation_tasks_accepted": 0,
+      "audio_masters_approved": 0,
+      "station_tracks_verified": 0
+    },
+    {
+      "set_number": 9,
+      "planned_cards": 30,
+      "per_station": 3,
+      "sequence_rule": "finish previous set checks before opening this set",
+      "status": "planned_not_started",
+      "generation_tasks_accepted": 0,
+      "audio_masters_approved": 0,
+      "station_tracks_verified": 0
+    },
+    {
+      "set_number": 10,
+      "planned_cards": 30,
+      "per_station": 3,
+      "sequence_rule": "finish previous set checks before opening this set",
+      "status": "planned_not_started",
+      "generation_tasks_accepted": 0,
+      "audio_masters_approved": 0,
+      "station_tracks_verified": 0
+    },
+    {
+      "set_number": 11,
+      "planned_cards": 30,
+      "per_station": 3,
+      "sequence_rule": "finish previous set checks before opening this set",
+      "status": "planned_not_started",
+      "generation_tasks_accepted": 0,
+      "audio_masters_approved": 0,
+      "station_tracks_verified": 0
+    },
+    {
+      "set_number": 12,
+      "planned_cards": 30,
+      "per_station": 3,
+      "sequence_rule": "finish previous set checks before opening this set",
+      "status": "planned_not_started",
+      "generation_tasks_accepted": 0,
+      "audio_masters_approved": 0,
+      "station_tracks_verified": 0
+    },
+    {
+      "set_number": 13,
+      "planned_cards": 30,
+      "per_station": 3,
+      "sequence_rule": "finish previous set checks before opening this set",
+      "status": "planned_not_started",
+      "generation_tasks_accepted": 0,
+      "audio_masters_approved": 0,
+      "station_tracks_verified": 0
+    },
+    {
+      "set_number": 14,
+      "planned_cards": 30,
+      "per_station": 3,
+      "sequence_rule": "finish previous set checks before opening this set",
+      "status": "planned_not_started",
+      "generation_tasks_accepted": 0,
+      "audio_masters_approved": 0,
+      "station_tracks_verified": 0
+    },
+    {
+      "set_number": 15,
+      "planned_cards": 30,
+      "per_station": 3,
+      "sequence_rule": "finish previous set checks before opening this set",
+      "status": "planned_not_started",
+      "generation_tasks_accepted": 0,
+      "audio_masters_approved": 0,
+      "station_tracks_verified": 0
+    },
+    {
+      "set_number": 16,
+      "planned_cards": 30,
+      "per_station": 3,
+      "sequence_rule": "finish previous set checks before opening this set",
+      "status": "planned_not_started",
+      "generation_tasks_accepted": 0,
+      "audio_masters_approved": 0,
+      "station_tracks_verified": 0
+    },
+    {
+      "set_number": 17,
+      "planned_cards": 20,
+      "per_station": 2,
+      "sequence_rule": "finish previous set checks before opening this set",
+      "status": "planned_not_started",
+      "generation_tasks_accepted": 0,
+      "audio_masters_approved": 0,
+      "station_tracks_verified": 0
+    }
+  ]
+}
