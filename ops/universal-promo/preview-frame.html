@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Offer widget preview</title>
+  <style>
+    html,body{margin:0;background:#111;color:#eee;font:16px/1.5 system-ui,sans-serif}
+    main{min-height:28vh;padding:28px 20px}
+    footer{padding:18px 20px;border-top:1px solid #333}
+  </style>
+</head>
+<body>
+  <main><p>Staged widget preview. This is not a public homepage.</p></main>
+  <footer>Preview footer</footer>
+  <script>
+    (function(){
+      const site=new URLSearchParams(location.search).get('site')||'resinglab';
+      if(!/^[a-z0-9-]{2,64}$/.test(site))return;
+      const s=document.createElement('script');
+      s.src='./widget.js';
+      s.dataset.swadePromoSite=site;
+      s.dataset.swadePromoPreview='offers';
+      document.body.appendChild(s);
+    })();
+  </script>
+</body>
+</html>

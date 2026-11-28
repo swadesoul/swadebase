@@ -2,14 +2,15 @@
  const script=document.currentScript;
  if(!script||window.__swadePromoLoaded)return;
  const site=script.dataset.swadePromoSite;if(!/^[a-z0-9-]{2,64}$/.test(site||''))return;
+ const previewOffers=script.dataset.swadePromoPreview==='offers';
  window.__swadePromoLoaded=true;
  const base=new URL('.',script.src),hostName=location.hostname.replace(/^www\./,'').toLowerCase();
  let chooseTheme,data,element,lastPath='',mountTimer,routeTimer,destroyed=false;
  const abort=new AbortController();
  function teardown(){destroyed=true;abort.abort();element?.remove();clearInterval(mountTimer);clearInterval(routeTimer);removeEventListener('popstate',mount);removeEventListener('pageshow',mount);removeEventListener('swade-promo-hide',teardown);window.__swadePromoLoaded=false;}
  addEventListener('swade-promo-hide',teardown);
- const isHome=()=>data?.site.homePaths.includes(location.pathname)&&(
- data.site.hosts.includes(hostName)||(site==='brainiak'&&hostName==='swadebase.cloud'&&/^\/brainiak\/?$/.test(location.pathname)));
+ const isHome=()=>previewOffers||(data?.site.homePaths.includes(location.pathname)&&(
+ data.site.hosts.includes(hostName)||(site==='brainiak'&&hostName==='swadebase.cloud'&&/^\/brainiak\/?$/.test(location.pathname))));
  const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text)n.textContent=text;if(cls)n.className=cls;return n;};
  function sampleTheme(container){
   const body=getComputedStyle(document.body),c=getComputedStyle(container);
@@ -31,7 +32,42 @@
   const vars={'--sp-font':c.fontFamily||body.fontFamily,'--sp-heading':hs.fontFamily,'--sp-weight':hs.fontWeight,'--sp-ink':safe.ink,'--sp-surface':safe.surface,'--sp-accent':safe.accent,'--sp-button-ink':safe.buttonInk,'--sp-radius':getComputedStyle(container).borderRadius!=='0px'?c.borderRadius:'18px','--sp-button-radius':bs?.borderRadius||'10px'};
   for(const [k,v]of Object.entries(vars))if(v)element.style.setProperty(k,v);
  }
+ function placeTarget(){
+  let target=script.dataset.swadePromoMount?document.querySelector(script.dataset.swadePromoMount):null,place='afterend';
+  if(!target){const footers=[...document.querySelectorAll('footer')].filter(f=>!f.closest('swade-campaign-promo'));const footer=footers[footers.length-1];const main=document.querySelector('main');
+   if(footer){target=footer;place='beforebegin';}else if(main){target=main;place='beforeend';}else{target=document.body;place='beforeend';}}
+  return {target,place};
+ }
  function mount(){
+  if(destroyed||!data)return;if(!isHome()){teardown();return;}
+  if(element?.isConnected)return;
+  if(data.mode==='offers'){if(!(previewOffers||data.offer?.enabled)){teardown();return;}return mountOffers();}
+  return mountSponsor();
+ }
+ function mountOffers(){
+  const offer=data.offer||{};
+  const {target,place}=placeTarget();if(!target)return;
+  element=el('swade-campaign-promo');element.id='swade-universal-promo';element.setAttribute('aria-label',(offer.title||data.site.name));
+  const shadow=element.attachShadow({mode:'open'}),css=el('link');css.rel='stylesheet';css.href=new URL('widget.css',base).href;shadow.append(css);
+  const wrap=el('div',null,'layout-'+data.site.layout),section=el('section');
+  const eye=el('div',null,'eyebrow');eye.append(el('span',null,'dot'),el('span',data.site.name+(offer.enabled?'':' · Not on sale yet')));section.append(eye);
+  const grid=el('div',null,'grid'),left=el('div'),right=el('div');
+  left.append(el('h2',offer.title||data.site.title),el('p',offer.summary||data.site.summary));
+  const actions=el('div',null,'actions');
+  if(offer.enabled&&offer.primaryUrl){
+   const cta=el('a',null,'cta');cta.href=offer.primaryUrl;cta.target='_blank';cta.rel='noopener noreferrer';cta.append(el('span',offer.primaryLabel||'Buy'),el('span','↗','arrow'));actions.append(cta);
+   if(offer.secondaryUrl){const alt=el('a',offer.secondaryLabel||'Another option','cta-secondary');alt.href=offer.secondaryUrl;alt.target='_blank';alt.rel='noopener noreferrer';actions.append(alt);}
+  }else{
+   const pending=el('p',offer.pendingReason||'This offer is not on sale yet.','note');left.append(pending);
+   if(previewOffers&&offer.previewUrl){const cta=el('a',null,'cta-secondary');cta.href=offer.previewUrl;cta.target='_blank';cta.rel='noopener noreferrer';cta.append(el('span',(offer.primaryLabel||'Checkout link')+' (preview only)'));actions.append(cta);}
+  }
+  left.append(actions);
+  const ornament=el('div',null,'ornament');ornament.setAttribute('aria-hidden','true');for(let i=0;i<24;i++)ornament.append(el('i'));right.append(ornament);
+  grid.append(left,right);if(data.status)section.append(grid,el('p',data.status,'note'));else section.append(grid);wrap.append(section);shadow.append(wrap);
+  sampleTheme(document.querySelector('main')||(target===document.body?document.body:target.parentElement||document.body));
+  target.insertAdjacentElement(place,element);
+ }
+ function mountSponsor(){
   if(destroyed||!data)return;if(!isHome()){teardown();return;}
   if(element?.isConnected)return;
   // Placement rule (Founder, 2026-11-16): the promo always sits at the BOTTOM of the page,
@@ -54,7 +90,7 @@
   sampleTheme(document.querySelector('main')||(target===document.body?document.body:target.parentElement||document.body));
   target.insertAdjacentElement(place,element);
  }
- async function start(){try{chooseTheme=(await import(new URL('theme.mjs',base).href)).chooseTheme;if(destroyed)return;const timeout=setTimeout(()=>abort.abort(),6000);const r=await fetch(new URL('config.json?site='+encodeURIComponent(site),base),{credentials:'omit',signal:abort.signal,referrerPolicy:'no-referrer'});clearTimeout(timeout);if(!r.ok){teardown();return;}const j=await r.json();if(destroyed)return;data=j.data;if(!data?.site||!Array.isArray(data.tiers))return;mount();
+ async function start(){try{chooseTheme=(await import(new URL('theme.mjs',base).href)).chooseTheme;if(destroyed)return;const timeout=setTimeout(()=>abort.abort(),6000);const r=await fetch(new URL('config.json?site='+encodeURIComponent(site)+(previewOffers?'&preview=offers':''),base),{credentials:'omit',signal:abort.signal,referrerPolicy:'no-referrer'});clearTimeout(timeout);if(!r.ok){teardown();return;}const j=await r.json();if(destroyed)return;data=j.data;if(!data?.site||!Array.isArray(data.tiers))return;mount();
   let tries=0;mountTimer=setInterval(()=>{if(++tries>20){clearInterval(mountTimer);return;}mount();},500);
   addEventListener('popstate',mount);addEventListener('pageshow',mount);
   routeTimer=setInterval(()=>{if(document.hidden||destroyed)return;if(lastPath!==location.pathname||!element?.isConnected){lastPath=location.pathname;mount();}},1500);

@@ -32,3 +32,17 @@ Do not read private notes, users, mailbox/repository content or cookies to selec
 ## Verify and document
 
 Test unknown-site behavior, kill switch, protected instructions, public config, duplicate mount, SPA path guards, host-theme inheritance, narrow CSP, details link, phone overflow, keyboard controls and local brief generation. Run existing service regression checks. Verify each actual public homepage with dated evidence and report pending deployments separately. Update relevant Bibles, knowledge records, rollout manifest, What's New and daily handoff with source/deployment/recovery evidence. Keep backups and rollback only the scoped hook or adapter change.
+
+
+## Offer mode (staged until “promote”)
+
+The adapter has two modes, stored on the registry row as `connections.promoMode`:
+
+- `sponsor` (default, current live behavior): the existing campaign-planning preview. Checkout stays off.
+- `offers`: each participating homepage box points at that product’s real Stripe payment link.
+
+Live widgets must keep rendering the sponsor preview until the founder explicitly says “promote.” Staging is checked at `https://swadebase.cloud/adapters/promo/preview.html` and `config.json?site={site}&preview=offers`. Do not honor a `preview` query on a host marketing site. Do not add tracking parameters to buy links.
+
+Pending offers (Abagale Founding Pass, The League Sound) stay in the catalog but are not buyable until their blockers are cleared: a Founding Pass landing page, and confirmed League Sound pricing. After go-live, a site with no enabled offer hides the box rather than falling back to sponsor copy.
+
+Exact go-live and rollback commands are in `RUNBOOK.md`. Do not flip `promoMode` without the founder’s “promote” instruction.

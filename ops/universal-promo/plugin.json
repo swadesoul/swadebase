@@ -17,7 +17,9 @@
     "details": "https://swadebase.cloud/adapters/promo/?site={site}",
     "health": "https://swadebase.cloud/adapters/promo/health",
     "bootstrapTemplate": "https://swadebase.cloud/adapters/promo/swade-promo-loader.js",
-    "notes": "Static public promotion metadata is expressly authorized for public homepage display; operational status and instructions remain protected."
+    "notes": "Static public promotion metadata is expressly authorized for public homepage display; operational status and instructions remain protected.",
+    "preview": "https://swadebase.cloud/adapters/promo/preview.html",
+    "previewConfig": "https://swadebase.cloud/adapters/promo/config.json?site={site}&preview=offers"
   },
   "private": {
     "instructions": "/api/adapters/swade-universal-promo/skill",
@@ -35,5 +37,10 @@
   "trackingEnabled": false,
   "mediaStorage": "Backblaze references when production media is connected; no copied media",
   "module": "promo.campaign-intro",
-  "contractReady": false
+  "contractReady": false,
+  "promoModeDefault": "sponsor",
+  "promoModes": [
+    "sponsor",
+    "offers"
+  ]
 }
