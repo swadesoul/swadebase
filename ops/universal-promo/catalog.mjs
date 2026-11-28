@@ -45,4 +45,84 @@ const rows=[
 ];
 export const SITES=Object.fromEntries(rows.map(([id,name,hosts,category,title,summary,example,layout])=>[id,{id,name,hosts,category,title,summary,example,layout,homePaths:id==='brainiak'?['/brainiak','/brainiak/','/']:id==='teachvirt'?['/','/index.html','/home']:['/','/index.html']} ]));
 export const TIERS=[{id:'soft',name:'Soft',description:'Focused exposure around closely matched requests.',detail:'Start with a narrow audience and conservative frequency.'},{id:'medium',name:'Medium',description:'More eligible placements around relevant needs.',detail:'Expand approved messages across participating product audiences.'},{id:'heavy',name:'Heavy',description:'Broader relevant delivery with a planned radio allocation.',detail:'Coordinate eligible digital placements and scheduled radio within the purchased allowance.'}];
-export function configFor(id){const site=SITES[id];if(!site)return null;return {version:VERSION,site,tiers:TIERS,phase:'alpha-preview',checkoutEnabled:false,productionEnabled:false,primaryLabel:'Explore campaign options',primaryUrl:ORIGIN+BASE+'/?site='+encodeURIComponent(id),status:'Campaign planning preview. Paid delivery and checkout are not active.',theme:{source:'host-site',inherit:['heading font','body font','text color','surface color','CTA accent','button shape'],layout:site.layout},optionalTheme:'Optional company theme up to 60 seconds, planned as an included campaign option. Review and package limits apply.'};}
+export const DEFAULT_PROMO_MODE='sponsor';
+export function normalizePromoMode(value){return value==='offers'?'offers':'sponsor';}
+export const OFFERS={
+  resinglab:{
+    status:'live',enabled:true,
+    title:'Make a finished song in ReSing Lab.',
+    summary:'Start with an idea and leave with a finished, mastered song. ReSing Pro is $20. Studio is $49 if you want more room to work.',
+    primaryLabel:'Get ReSing Pro — $20',
+    primaryUrl:'https://buy.stripe.com/bJeaEQ2zg16ebJa1YwdfG02',
+    secondaryLabel:'Get ReSing Studio — $49',
+    secondaryUrl:'https://buy.stripe.com/dRm00c8XEcOW00sgTqdfG03'
+  },
+  maestroradio:{
+    status:'live',enabled:true,
+    title:'Put your music or business on Maestro Radio.',
+    summary:'Buy a paid airplay or business spot on the 24/7 stations. Spots play between songs.',
+    primaryLabel:'Buy paid airplay',
+    primaryUrl:'https://buy.stripe.com/14A5kw6Pw5mu8wY6eMdfG04'
+  },
+  videosaywhat:{
+    status:'live',enabled:true,
+    title:'Turn a video into a transcript and new formats.',
+    summary:'VideoSayWhat transcribes your video and helps you reshape it into written copy, captions and other formats.',
+    primaryLabel:'Get VideoSayWhat Starter',
+    primaryUrl:'https://buy.stripe.com/7sY9AM8XE7uC14wfPmdfG06',
+    secondaryLabel:'Get VideoSayWhat Creator',
+    secondaryUrl:'https://buy.stripe.com/cNiaEQfm22ai6oQfPmdfG07'
+  },
+  blacktales:{
+    status:'live',enabled:true,
+    title:'Open your virtual theater on Black Tales.',
+    summary:'A branded theater listing with a marquee, $20 a year.',
+    primaryLabel:'List your theater — $20 a year',
+    primaryUrl:'https://buy.stripe.com/28E4gsddU5mu7sUeLidfG08'
+  },
+  abagale:{
+    status:'pending',enabled:false,
+    pendingReason:'The Founding Pass landing page is not ready.',
+    title:'Become a founding member of Abagale TV.',
+    summary:'The Founding Pass is $99 and includes a numbered founder spot. This offer will open when the landing page is ready.',
+    primaryLabel:'Get the Founding Pass — $99',
+    primaryUrl:'https://buy.stripe.com/8x24gs2zg5mu8wYdHedfG05'
+  },
+  theleaguesound:{
+    status:'pending',enabled:false,
+    pendingReason:'Pricing has not been confirmed.',
+    title:'Original game-day music for schools.',
+    summary:'The League Sound makes original music for school teams and events. Pricing will be confirmed before this offer goes on sale.',
+    primaryLabel:'League Sound offer coming soon',
+    primaryUrl:''
+  }
+};
+function sponsorConfig(id){const site=SITES[id];if(!site)return null;return {version:VERSION,site,tiers:TIERS,phase:'alpha-preview',checkoutEnabled:false,productionEnabled:false,primaryLabel:'Explore campaign options',primaryUrl:ORIGIN+BASE+'/?site='+encodeURIComponent(id),status:'Campaign planning preview. Paid delivery and checkout are not active.',theme:{source:'host-site',inherit:['heading font','body font','text color','surface color','CTA accent','button shape'],layout:site.layout},optionalTheme:'Optional company theme up to 60 seconds, planned as an included campaign option. Review and package limits apply.'};}
+export function configFor(id,options){
+  const base=sponsorConfig(id);
+  if(!base)return null;
+  if(normalizePromoMode(options?.mode)!=='offers')return base;
+  const raw=OFFERS[id]||null;
+  const enabled=!!(raw&&raw.enabled&&raw.primaryUrl);
+  const offer=raw?{
+    status:raw.status,
+    enabled,
+    title:raw.title,
+    summary:raw.summary,
+    primaryLabel:raw.primaryLabel,
+    primaryUrl:enabled?raw.primaryUrl:'',
+    ...(enabled&&raw.secondaryUrl?{secondaryLabel:raw.secondaryLabel,secondaryUrl:raw.secondaryUrl}:{}),
+    ...(raw.pendingReason?{pendingReason:raw.pendingReason}:{}),
+    ...(!enabled&&raw.primaryUrl?{previewUrl:raw.primaryUrl}:{})
+  }:{status:'none',enabled:false,title:'',summary:'',primaryLabel:'',primaryUrl:''};
+  return {
+    ...base,
+    mode:'offers',
+    offer,
+    checkoutEnabled:enabled,
+    productionEnabled:false,
+    primaryLabel:enabled?raw.primaryLabel:base.primaryLabel,
+    primaryUrl:enabled?raw.primaryUrl:base.primaryUrl,
+    status:enabled?'Buy through the official checkout link. No tracking is added.':(raw?.pendingReason||'This offer is not on sale yet.')
+  };
+}
